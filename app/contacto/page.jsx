@@ -7,10 +7,10 @@ import Image from "next/image";
 export default function ContactPage() {
   return (
     <div className="min-h-screen bg-black">
-      <Header transparent={true} />
+      <Header transparent={true} border={true} />
 
       {/* Hero Section */}
-      <section className="relative h-96 lg:h-[400px] bg-gradient-to-r from-black to-gray-900 overflow-hidden">
+      <section className="relative h-96 lg:h-[500px] xl:h-[750px] bg-gradient-to-r from-black to-gray-900 overflow-hidden">
         {/* Background Image Placeholder - You can replace this with an actual car image */}
         <Image
           src="/bg-contacto.jpg"

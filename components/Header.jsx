@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function Header({ transparent = false }) {
+export default function Header({ transparent = false, border = false }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
@@ -58,7 +58,11 @@ export default function Header({ transparent = false }) {
         shouldBeTransparent ? "bg-transparent" : "bg-black/95 backdrop-blur-sm"
       }`}
     >
-      <div className="max-w-7xl mx-auto flex justify-between items-center border-b border-gray-50/50 pb-4">
+      <div
+        className={`max-w-7xl mx-auto flex justify-between items-center pb-4 ${
+          border ? "border-b border-gray-50/50" : ""
+        }`}
+      >
         {/* Logo */}
         <motion.div
           whileHover={{ scale: 1.05 }}

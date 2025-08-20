@@ -125,12 +125,12 @@ export default function QuoteForm() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Nombre y apellido */}
               <motion.div variants={formFieldVariants} className="relative">
-                <div className="flex items-center border-b border-gray-600 pb-2">
+                <div className="flex items-center border-b border-blue-500 pb-2">
                   <motion.div
                     whileHover={{ scale: 1.1 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <User className="w-5 h-5 text-gray-400 mr-3" />
+                    <User className="w-5 h-5 text-blue-500 mr-3" />
                   </motion.div>
                   <input
                     type="text"
@@ -146,12 +146,12 @@ export default function QuoteForm() {
 
               {/* Celular */}
               <motion.div variants={formFieldVariants} className="relative">
-                <div className="flex items-center border-b border-gray-600 pb-2">
+                <div className="flex items-center border-b border-blue-500 pb-2">
                   <motion.div
                     whileHover={{ scale: 1.1 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <Phone className="w-5 h-5 text-gray-400 mr-3" />
+                    <Phone className="w-5 h-5 text-blue-500 mr-3" />
                   </motion.div>
                   <input
                     type="tel"
@@ -167,12 +167,12 @@ export default function QuoteForm() {
 
               {/* Mail */}
               <motion.div variants={formFieldVariants} className="relative">
-                <div className="flex items-center border-b border-gray-600 pb-2">
+                <div className="flex items-center border-b border-blue-500 pb-2">
                   <motion.div
                     whileHover={{ scale: 1.1 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <Mail className="w-5 h-5 text-gray-400 mr-3" />
+                    <Mail className="w-5 h-5 text-blue-500 mr-3" />
                   </motion.div>
                   <input
                     type="email"
@@ -188,12 +188,12 @@ export default function QuoteForm() {
 
               {/* Cédula */}
               <motion.div variants={formFieldVariants} className="relative">
-                <div className="flex items-center border-b border-gray-600 pb-2">
+                <div className="flex items-center border-b border-blue-500 pb-2">
                   <motion.div
                     whileHover={{ scale: 1.1 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <CreditCard className="w-5 h-5 text-gray-400 mr-3" />
+                    <CreditCard className="w-5 h-5 text-blue-500 mr-3" />
                   </motion.div>
                   <input
                     type="text"
@@ -212,12 +212,12 @@ export default function QuoteForm() {
                 variants={formFieldVariants}
                 className="relative md:col-span-2"
               >
-                <div className="flex items-center border-b border-gray-600 pb-2">
+                <div className="flex items-center border-b border-blue-500 pb-2">
                   <motion.div
                     whileHover={{ scale: 1.1 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <MapPin className="w-5 h-5 text-gray-400 mr-3" />
+                    <MapPin className="w-5 h-5 text-blue-500 mr-3" />
                   </motion.div>
                   <input
                     type="text"
@@ -289,7 +289,7 @@ export default function QuoteForm() {
             <motion.div variants={itemVariants} className="mt-8 text-center">
               <motion.button
                 type="submit"
-                className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg flex items-center justify-center gap-3 mx-auto hover:bg-white hover:text-black transition-all duration-300"
+                className="bg-transparent border-2 border-blue-500 text-white px-8 py-2 rounded-full font-semibold text-lg flex items-center justify-center gap-3 mx-auto hover:bg-blue-500 hover:text-white transition-all duration-300"
                 whileHover={{
                   scale: 1.05,
                   boxShadow: "0 10px 25px rgba(255, 255, 255, 0.2)",

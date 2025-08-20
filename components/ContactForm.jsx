@@ -94,12 +94,12 @@ export default function ContactForm() {
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Nombre y apellido */}
         <motion.div variants={itemVariants} className="relative">
-          <div className="flex items-center border-b border-white pb-2">
+          <div className="flex items-center border-b border-blue-500 pb-2">
             <motion.div
               whileHover={{ scale: 1.1 }}
               transition={{ duration: 0.2 }}
             >
-              <User className="w-5 h-5 text-white mr-3" />
+              <User className="w-5 h-5 text-blue-500 mr-3" />
             </motion.div>
             <Input
               type="text"
@@ -115,12 +115,12 @@ export default function ContactForm() {
 
         {/* Email */}
         <motion.div variants={itemVariants} className="relative">
-          <div className="flex items-center border-b border-white pb-2">
+          <div className="flex items-center border-b border-blue-500 pb-2">
             <motion.div
               whileHover={{ scale: 1.1 }}
               transition={{ duration: 0.2 }}
             >
-              <Mail className="w-5 h-5 text-white mr-3" />
+              <Mail className="w-5 h-5 text-blue-500 mr-3" />
             </motion.div>
             <Input
               type="email"
@@ -136,12 +136,12 @@ export default function ContactForm() {
 
         {/* Ciudad */}
         <motion.div variants={itemVariants} className="relative">
-          <div className="flex items-center border-b border-white pb-2">
+          <div className="flex items-center border-b border-blue-500 pb-2">
             <motion.div
               whileHover={{ scale: 1.1 }}
               transition={{ duration: 0.2 }}
             >
-              <MapPin className="w-5 h-5 text-white mr-3" />
+              <MapPin className="w-5 h-5 text-blue-500 mr-3" />
             </motion.div>
             <Input
               type="text"
@@ -157,12 +157,12 @@ export default function ContactForm() {
 
         {/* Asunto */}
         <motion.div variants={itemVariants} className="relative">
-          <div className="flex items-center border-b border-white pb-2">
+          <div className="flex items-center border-b border-blue-500 pb-2">
             <motion.div
               whileHover={{ scale: 1.1 }}
               transition={{ duration: 0.2 }}
             >
-              <MoreHorizontal className="w-5 h-5 text-white mr-3" />
+              <MoreHorizontal className="w-5 h-5 text-blue-500 mr-3" />
             </motion.div>
             <Input
               type="text"
@@ -178,12 +178,12 @@ export default function ContactForm() {
 
         {/* Mensaje */}
         <motion.div variants={itemVariants} className="relative">
-          <div className="flex items-start border-b border-white pb-2">
+          <div className="flex items-start border-b border-blue-500 pb-2">
             <motion.div
               whileHover={{ scale: 1.1 }}
               transition={{ duration: 0.2 }}
             >
-              <MessageCircle className="w-5 h-5 text-white mr-3 mt-2" />
+              <MessageCircle className="w-5 h-5 text-blue-500 mr-3 mt-2" />
             </motion.div>
             <Textarea
               name="mensaje"
@@ -205,7 +205,7 @@ export default function ContactForm() {
           >
             <Button
               type="submit"
-              className="w-full border border-blue-500 bg-transparent text-white hover:bg-blue-500 hover:text-white transition-colors flex items-center justify-center gap-2"
+              className="bg-transparent border-2 border-blue-500 text-white px-8 py-2 rounded-full font-semibold text-lg flex items-center justify-center gap-3 mx-auto hover:bg-blue-500 hover:text-white transition-all duration-300"
             >
               Enviar
               <motion.div
