@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState } from "react";
 import { motion } from "framer-motion";
 import {
   User,
@@ -9,18 +9,19 @@ import {
   CreditCard,
   MapPin,
   ArrowRight,
+  CheckCircle,
+  AlertCircle,
 } from "lucide-react";
 import Image from "next/image";
+import { submitQuoteForm } from "@/app/actions/quote";
 
 export default function QuoteForm() {
-  const [formData, setFormData] = useState({
-    nombre: "",
-    celular: "",
-    mail: "",
-    cedula: "",
-    ciudad: "",
+  const [state, action, isPending] = useActionState(submitQuoteForm, {
+    errors: {},
+    message: "",
+    success: false,
+    values: {},
   });
-  const [selectedModel, setSelectedModel] = useState("T1");
 
   const carModels = [
     { id: "x70-sport", name: "X70 Sport", image: "/mini-car.png" },
@@ -31,27 +32,6 @@ export default function QuoteForm() {
     { id: "t2-hibrido", name: "T2 Híbrido", image: "/mini-car.png" },
     { id: "t1", name: "T1", image: "/mini-car.png" },
   ];
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log("Quote form submitted:", { ...formData, selectedModel });
-    // Reset form
-    setFormData({
-      nombre: "",
-      celular: "",
-      mail: "",
-      cedula: "",
-      ciudad: "",
-    });
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -115,12 +95,37 @@ export default function QuoteForm() {
           </motion.h2>
         </motion.div>
 
+        {/* Success/Error Message */}
+        {state.message && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className={`p-4 mb-4 rounded-lg flex items-center gap-3 ${
+              state.success
+                ? "bg-green-500/10 border border-green-500 text-green-400"
+                : "bg-red-500/10 border border-red-500 text-red-400"
+            }`}
+          >
+            {state.success ? (
+              <CheckCircle className="w-5 h-5" />
+            ) : (
+              <AlertCircle className="w-5 h-5" />
+            )}
+            <p>{state.message}</p>
+          </motion.div>
+        )}
+
         {/* Form */}
         <motion.div
           variants={itemVariants}
           className="bg-black rounded-2xl p-8 lg:p-12"
         >
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form
+            action={action}
+            noValidate
+            className="space-y-6"
+            id="quote-form"
+          >
             {/* Form Fields */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Nombre y apellido */}
@@ -135,13 +140,22 @@ export default function QuoteForm() {
                   <input
                     type="text"
                     name="nombre"
-                    value={formData.nombre}
-                    onChange={handleChange}
+                    defaultValue={state.values?.nombre || ""}
                     placeholder="Nombre y apellido"
                     className="flex-1 bg-transparent text-white placeholder-gray-400 focus:outline-none"
                     required
                   />
                 </div>
+                {state.errors?.nombre && (
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="text-red-400 text-sm mt-1 flex items-center gap-1"
+                  >
+                    <AlertCircle className="w-4 h-4" />
+                    {state.errors.nombre[0]}
+                  </motion.p>
+                )}
               </motion.div>
 
               {/* Celular */}
@@ -156,13 +170,22 @@ export default function QuoteForm() {
                   <input
                     type="tel"
                     name="celular"
-                    value={formData.celular}
-                    onChange={handleChange}
+                    defaultValue={state.values?.celular || ""}
                     placeholder="Celular"
                     className="flex-1 bg-transparent text-white placeholder-gray-400 focus:outline-none"
                     required
                   />
                 </div>
+                {state.errors?.celular && (
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="text-red-400 text-sm mt-1 flex items-center gap-1"
+                  >
+                    <AlertCircle className="w-4 h-4" />
+                    {state.errors.celular[0]}
+                  </motion.p>
+                )}
               </motion.div>
 
               {/* Mail */}
@@ -177,13 +200,22 @@ export default function QuoteForm() {
                   <input
                     type="email"
                     name="mail"
-                    value={formData.mail}
-                    onChange={handleChange}
+                    defaultValue={state.values?.mail || ""}
                     placeholder="Mail"
                     className="flex-1 bg-transparent text-white placeholder-gray-400 focus:outline-none"
                     required
                   />
                 </div>
+                {state.errors?.mail && (
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="text-red-400 text-sm mt-1 flex items-center gap-1"
+                  >
+                    <AlertCircle className="w-4 h-4" />
+                    {state.errors.mail[0]}
+                  </motion.p>
+                )}
               </motion.div>
 
               {/* Cédula */}
@@ -198,13 +230,22 @@ export default function QuoteForm() {
                   <input
                     type="text"
                     name="cedula"
-                    value={formData.cedula}
-                    onChange={handleChange}
+                    defaultValue={state.values?.cedula || ""}
                     placeholder="Cédula"
                     className="flex-1 bg-transparent text-white placeholder-gray-400 focus:outline-none"
                     required
                   />
                 </div>
+                {state.errors?.cedula && (
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="text-red-400 text-sm mt-1 flex items-center gap-1"
+                  >
+                    <AlertCircle className="w-4 h-4" />
+                    {state.errors.cedula[0]}
+                  </motion.p>
+                )}
               </motion.div>
 
               {/* Ciudad */}
@@ -222,15 +263,31 @@ export default function QuoteForm() {
                   <input
                     type="text"
                     name="ciudad"
-                    value={formData.ciudad}
-                    onChange={handleChange}
+                    defaultValue={state.values?.ciudad || ""}
                     placeholder="Ciudad"
                     className="flex-1 bg-transparent text-white placeholder-gray-400 focus:outline-none"
                     required
                   />
                 </div>
+                {state.errors?.ciudad && (
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="text-red-400 text-sm mt-1 flex items-center gap-1"
+                  >
+                    <AlertCircle className="w-4 h-4" />
+                    {state.errors.ciudad[0]}
+                  </motion.p>
+                )}
               </motion.div>
             </div>
+
+            {/* Hidden input for selectedModel */}
+            <input
+              type="hidden"
+              name="selectedModel"
+              value={state.values?.selectedModel || "t1"}
+            />
 
             {/* Model Selection */}
             <motion.div variants={itemVariants} className="mt-8">
@@ -256,9 +313,31 @@ export default function QuoteForm() {
                   >
                     <motion.button
                       type="button"
-                      onClick={() => setSelectedModel(model.id)}
+                      onClick={(e) => {
+                        const hiddenInput = e.target
+                          .closest("form")
+                          .querySelector('input[name="selectedModel"]');
+                        hiddenInput.value = model.id;
+                        // Update visual selection
+                        const allButtons = e.target
+                          .closest(".grid")
+                          .querySelectorAll("button");
+                        allButtons.forEach((btn) => {
+                          btn.classList.remove(
+                            "border-blue-500",
+                            "bg-blue-500/10"
+                          );
+                          btn.classList.add("border-gray-600");
+                        });
+                        e.target
+                          .closest("button")
+                          .classList.remove("border-gray-600");
+                        e.target
+                          .closest("button")
+                          .classList.add("border-blue-500", "bg-blue-500/10");
+                      }}
                       className={`w-full aspect-square rounded-lg border-2 transition-all duration-300 ${
-                        selectedModel === model.id
+                        (state.values?.selectedModel || "t1") === model.id
                           ? "border-blue-500 bg-blue-500/10"
                           : "border-gray-600 hover:border-gray-500"
                       }`}
@@ -283,26 +362,39 @@ export default function QuoteForm() {
                   </motion.div>
                 ))}
               </div>
+              {state.errors?.selectedModel && (
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="text-red-400 text-sm mt-2 flex items-center gap-1"
+                >
+                  <AlertCircle className="w-4 h-4" />
+                  {state.errors.selectedModel[0]}
+                </motion.p>
+              )}
             </motion.div>
 
             {/* Submit Button */}
             <motion.div variants={itemVariants} className="mt-8 text-center">
               <motion.button
                 type="submit"
-                className="bg-transparent border-2 border-blue-500 text-white px-8 py-2 rounded-full font-semibold text-lg flex items-center justify-center gap-3 mx-auto hover:bg-blue-500 hover:text-white transition-all duration-300"
+                disabled={isPending}
+                className="bg-transparent border-2 border-blue-500 text-white px-8 py-2 rounded-full font-semibold text-lg flex items-center justify-center gap-3 mx-auto hover:bg-blue-500 hover:text-white transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                 whileHover={{
                   scale: 1.05,
                   boxShadow: "0 10px 25px rgba(255, 255, 255, 0.2)",
                 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Cotizar ahora
-                <motion.div
-                  animate={{ x: [0, 5, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                >
-                  <ArrowRight className="w-5 h-5" />
-                </motion.div>
+                {isPending ? "Enviando..." : "Cotizar ahora"}
+                {!isPending && (
+                  <motion.div
+                    animate={{ x: [0, 5, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  >
+                    <ArrowRight className="w-5 h-5" />
+                  </motion.div>
+                )}
               </motion.button>
             </motion.div>
           </form>

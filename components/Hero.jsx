@@ -17,7 +17,7 @@ export default function Hero() {
           src="/home-bg.jpg"
           alt="Hero Background"
           fill
-          className="object-cover"
+          className="object-cover aspect-video"
         />
       </div>
 
@@ -34,8 +34,9 @@ export default function Hero() {
             <Image
               src="/logo-jetour-home-hero.png"
               alt="JETOUR"
-              width={600}
-              height={200}
+              width={1172}
+              height={142}
+              priority
             />
           </motion.div>
 

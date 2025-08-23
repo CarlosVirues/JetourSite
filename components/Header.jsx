@@ -93,7 +93,7 @@ export default function Header({ transparent = false, border = false }) {
                 href={item.href}
                 className={`transition-colors relative ${
                   isActive(item.href)
-                    ? "text-blue-400 font-semibold"
+                    ? "text-white font-semibold"
                     : "text-white hover:text-gray-300"
                 }`}
               >
@@ -105,7 +105,7 @@ export default function Header({ transparent = false, border = false }) {
                       animate={{ width: "100%" }}
                       exit={{ width: 0 }}
                       transition={{ duration: 0.3 }}
-                      className="absolute -bottom-1 left-0 right-0 h-0.5 bg-blue-400"
+                      className="absolute -bottom-1 left-0 right-0 h-0.5 bg-white"
                     />
                   )}
                 </AnimatePresence>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -11,39 +11,19 @@ import {
   MoreHorizontal,
   MessageCircle,
   ArrowRight,
+  CheckCircle,
+  AlertCircle,
 } from "lucide-react";
 import { motion } from "framer-motion";
+import { submitContactForm } from "@/app/actions/contact";
 
 export default function ContactForm() {
-  const [formData, setFormData] = useState({
-    nombre: "",
-    email: "",
-    ciudad: "",
-    asunto: "",
-    mensaje: "",
+  const [state, action, isPending] = useActionState(submitContactForm, {
+    errors: {},
+    message: "",
+    success: false,
+    values: {},
   });
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    // Here you would typically send the form data to your server
-    console.log("Form submitted:", formData);
-    // Reset form
-    setFormData({
-      nombre: "",
-      email: "",
-      ciudad: "",
-      asunto: "",
-      mensaje: "",
-    });
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
 
   const containerVariants = {
     hidden: { opacity: 0, y: 50 },
@@ -91,7 +71,27 @@ export default function ContactForm() {
         ¡Ponte en <span className="font-bold">contacto!</span>
       </motion.h3>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      {/* Success/Error Message */}
+      {state.message && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className={`p-4 mb-4 rounded-lg flex items-center gap-3 ${
+            state.success
+              ? "bg-green-500/10 border border-green-500 text-green-400"
+              : "bg-red-500/10 border border-red-500 text-red-400"
+          }`}
+        >
+          {state.success ? (
+            <CheckCircle className="w-5 h-5" />
+          ) : (
+            <AlertCircle className="w-5 h-5" />
+          )}
+          <p>{state.message}</p>
+        </motion.div>
+      )}
+
+      <form action={action} noValidate className="space-y-6">
         {/* Nombre y apellido */}
         <motion.div variants={itemVariants} className="relative">
           <div className="flex items-center border-b border-blue-500 pb-2">
@@ -104,13 +104,22 @@ export default function ContactForm() {
             <Input
               type="text"
               name="nombre"
-              value={formData.nombre}
-              onChange={handleChange}
+              defaultValue={state.values?.nombre || ""}
               placeholder="Nombre y apellido"
               className="bg-transparent border-none text-white placeholder:text-gray-300 focus:ring-0 focus:border-none p-0"
               required
             />
           </div>
+          {state.errors?.nombre && (
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-red-400 text-sm mt-1 flex items-center gap-1"
+            >
+              <AlertCircle className="w-4 h-4" />
+              {state.errors.nombre[0]}
+            </motion.p>
+          )}
         </motion.div>
 
         {/* Email */}
@@ -125,13 +134,22 @@ export default function ContactForm() {
             <Input
               type="email"
               name="email"
-              value={formData.email}
-              onChange={handleChange}
+              defaultValue={state.values?.email || ""}
               placeholder="Mail"
               className="bg-transparent border-none text-white placeholder:text-gray-300 focus:ring-0 focus:border-none p-0"
               required
             />
           </div>
+          {state.errors?.email && (
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-red-400 text-sm mt-1 flex items-center gap-1"
+            >
+              <AlertCircle className="w-4 h-4" />
+              {state.errors.email[0]}
+            </motion.p>
+          )}
         </motion.div>
 
         {/* Ciudad */}
@@ -146,13 +164,22 @@ export default function ContactForm() {
             <Input
               type="text"
               name="ciudad"
-              value={formData.ciudad}
-              onChange={handleChange}
+              defaultValue={state.values?.ciudad || ""}
               placeholder="Ciudad"
               className="bg-transparent border-none text-white placeholder:text-gray-300 focus:ring-0 focus:border-none p-0"
               required
             />
           </div>
+          {state.errors?.ciudad && (
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-red-400 text-sm mt-1 flex items-center gap-1"
+            >
+              <AlertCircle className="w-4 h-4" />
+              {state.errors.ciudad[0]}
+            </motion.p>
+          )}
         </motion.div>
 
         {/* Asunto */}
@@ -167,13 +194,22 @@ export default function ContactForm() {
             <Input
               type="text"
               name="asunto"
-              value={formData.asunto}
-              onChange={handleChange}
+              defaultValue={state.values?.asunto || ""}
               placeholder="Asunto"
               className="bg-transparent border-none text-white placeholder:text-gray-300 focus:ring-0 focus:border-none p-0"
               required
             />
           </div>
+          {state.errors?.asunto && (
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-red-400 text-sm mt-1 flex items-center gap-1"
+            >
+              <AlertCircle className="w-4 h-4" />
+              {state.errors.asunto[0]}
+            </motion.p>
+          )}
         </motion.div>
 
         {/* Mensaje */}
@@ -187,13 +223,22 @@ export default function ContactForm() {
             </motion.div>
             <Textarea
               name="mensaje"
-              value={formData.mensaje}
-              onChange={handleChange}
+              defaultValue={state.values?.mensaje || ""}
               placeholder="Mensaje"
               className="bg-transparent border-none text-white placeholder:text-gray-300 focus:ring-0 focus:border-none p-0 resize-none min-h-[80px]"
               required
             />
           </div>
+          {state.errors?.mensaje && (
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-red-400 text-sm mt-1 flex items-center gap-1"
+            >
+              <AlertCircle className="w-4 h-4" />
+              {state.errors.mensaje[0]}
+            </motion.p>
+          )}
         </motion.div>
 
         {/* Submit Button */}
@@ -205,15 +250,18 @@ export default function ContactForm() {
           >
             <Button
               type="submit"
-              className="bg-transparent border-2 border-blue-500 text-white px-8 py-2 rounded-full font-semibold text-lg flex items-center justify-center gap-3 mx-auto hover:bg-blue-500 hover:text-white transition-all duration-300"
+              disabled={isPending}
+              className="bg-transparent border-2 border-blue-500 text-white px-8 py-2 rounded-full font-semibold text-lg flex items-center justify-center gap-3 mx-auto hover:bg-blue-500 hover:text-white transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Enviar
-              <motion.div
-                animate={{ x: [0, 5, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-              >
-                <ArrowRight className="w-4 h-4" />
-              </motion.div>
+              {isPending ? "Enviando..." : "Enviar"}
+              {!isPending && (
+                <motion.div
+                  animate={{ x: [0, 5, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                >
+                  <ArrowRight className="w-4 h-4" />
+                </motion.div>
+              )}
             </Button>
           </motion.div>
         </motion.div>

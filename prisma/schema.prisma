@@ -1,0 +1,36 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Contact {
+  id        String   @id @default(cuid())
+  nombre    String
+  email     String
+  ciudad    String
+  asunto    String
+  mensaje   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("contacts")
+}
+
+model Quote {
+  id            String   @id @default(cuid())
+  nombre        String
+  celular       String
+  mail          String
+  cedula        String
+  ciudad        String
+  selectedModel String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("quotes")
+}

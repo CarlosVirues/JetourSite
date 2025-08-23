@@ -1,0 +1,50 @@
+"use server";
+
+import { z } from "zod";
+import { redirect } from "next/navigation";
+import { prisma } from "@/lib/db";
+
+// Zod schema for contact form validation
+const contactSchema = z.object({
+  nombre: z.string().min(2, "El nombre debe tener al menos 2 caracteres"),
+  email: z.string().email("Ingresa un email válido"),
+  ciudad: z.string().min(2, "La ciudad debe tener al menos 2 caracteres"),
+  asunto: z.string().min(3, "El asunto debe tener al menos 3 caracteres"),
+  mensaje: z.string().min(10, "El mensaje debe tener al menos 10 caracteres"),
+});
+
+export async function submitContactForm(prevState, formData) {
+  // Convert FormData to object using Object.entries
+  const data = Object.fromEntries(formData.entries());
+
+  // Validate with Zod
+  const validatedData = contactSchema.safeParse(data);
+
+  if (!validatedData.success) {
+    // Return flattened errors for each field and preserve form values
+    return {
+      errors: validatedData.error.flatten().fieldErrors,
+      message: "Existen errores en el formulario",
+      success: false,
+      values: data, // Return the submitted values to preserve them
+    };
+  }
+
+  try {
+    // Save to database
+    await prisma.contact.create({
+      data: validatedData.data,
+    });
+  } catch (error) {
+    console.error("Error submitting contact form:", error);
+    return {
+      errors: {},
+      message: "Error interno del servidor. Intenta nuevamente.",
+      success: false,
+      values: data, // Return the submitted values to preserve them
+    };
+  }
+
+  // Redirect to thank you page on success (outside try/catch)
+  redirect("/contacto/gracias#contact-form");
+}
