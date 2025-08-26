@@ -77,11 +77,10 @@ export default function Footer() {
             <ul className="space-y-2 text-sm">
               {[
                 { href: "/", label: "Home" },
-                { href: "/vehiculos-nuevos", label: "Vehículos Nuevos" },
+                { href: "/postventa", label: "Postventa" },
                 { href: "/concesionarios", label: "Concesionarios" },
-                { href: "/categorias", label: "Categorías" },
-                { href: "/vehiculos", label: "Vehículos" },
-                { href: "/promociones", label: "Promociones" },
+                { href: "/noticias", label: "Noticias" },
+                { href: "/contacto", label: "Contacto" },
               ].map((link, index) => (
                 <motion.li
                   key={link.href}
@@ -107,12 +106,12 @@ export default function Footer() {
             <h3 className="font-bold text-lg">Modelos</h3>
             <ul className="space-y-2 text-sm">
               {[
-                { href: "/modelos/t2", label: "T2" },
-                { href: "/modelos/t1", label: "T1" },
-                { href: "/modelos/x50", label: "X50" },
-                { href: "/modelos/x70", label: "X70" },
-                { href: "/modelos/x70-plus", label: "X70 Plus" },
-                { href: "/modelos/dashing", label: "Dashing" },
+                { href: "/vehiculos/t1", label: "T1" },
+                { href: "/vehiculos/t2", label: "T2 PHEV" },
+                { href: "/vehiculos/x50", label: "X50" },
+                { href: "/vehiculos/x70-sport", label: "X70 Sport" },
+                { href: "/vehiculos/x70-plus", label: "X70 PLUS" },
+                { href: "/vehiculos/dashing", label: "DASHING" },
               ].map((link, index) => (
                 <motion.li
                   key={link.href}
