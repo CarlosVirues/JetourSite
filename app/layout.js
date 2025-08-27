@@ -14,6 +14,7 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  const isProduction = process.env.NODE_ENV === "production";
   return (
     <html lang="es" className="scroll-smooth">
       {isProduction && (
