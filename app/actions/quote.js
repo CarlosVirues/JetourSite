@@ -46,6 +46,24 @@ export async function submitQuoteForm(prevState, formData) {
     };
   }
 
+  // Send data to Zapier webhook (separate from database operation)
+  try {
+    await fetch("https://hooks.zapier.com/hooks/catch/3497280/uhtax59/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...validatedData.data,
+        formType: "quote",
+        timestamp: new Date().toISOString(),
+      }),
+    });
+  } catch (webhookError) {
+    // Log webhook error but don't fail the entire process
+    console.error("Error sending data to webhook:", webhookError);
+  }
+
   // Redirect to thank you page on success (outside try/catch)
   redirect("/gracias#quote-form");
 }
