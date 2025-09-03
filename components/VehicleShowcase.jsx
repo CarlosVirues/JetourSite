@@ -60,18 +60,14 @@ export default function VehicleShowcase() {
           className="text-center mb-12 md:mb-16"
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-            Para todos los estilos de vida
+            Jetour no es solo un auto, es la decisión de apostar por ti.
           </h2>
           <p className="text-lg md:text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
-            Creemos que la innovación y el confort deben estar al alcance de
-            todos. Por eso, te ofrecemos una{" "}
-            <span className="text-white font-semibold">
-              línea completa de vehículos
-            </span>{" "}
-            que{" "}
-            <span className="text-white font-semibold">
-              se adapta a tus necesidades y a tu presupuesto.
-            </span>
+            Tecnología de vanguardia, diseño que rompe esquemas y espacio
+            pensado para cada momento de tu vida.
+          </p>
+          <p className="text-lg md:text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+            Sea cual sea tu camino, hay un Jetour hecho para ti.
           </p>
         </motion.div>
 
