@@ -25,6 +25,7 @@ export default function QuoteForm() {
 
   const carModels = [
     { id: "t1", name: "T1", image: "/mini-car.png" },
+    { id: "t2", name: "T2", image: "/mini-car.png" },
     { id: "t2-phev", name: "T2 PHEV", image: "/mini-car.png" },
     { id: "x50", name: "X50", image: "/mini-car.png" },
     { id: "x70-sport", name: "X70 Sport", image: "/mini-car.png" },
@@ -299,7 +300,7 @@ export default function QuoteForm() {
                 Selecciona tu modelo preferido
               </motion.h3>
 
-              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
                 {carModels.map((model, index) => (
                   <motion.div
                     key={model.id}

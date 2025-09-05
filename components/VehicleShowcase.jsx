@@ -34,6 +34,18 @@ export default function VehicleShowcase() {
       slug: "t1",
       image: "/models/model-t1.jpg",
     },
+    {
+      id: 5,
+      name: "T2 Hybrid",
+      slug: "t2-hybrid",
+      image: "/models/model-t2-hybrid.jpg",
+    },
+    {
+      id: 6,
+      name: "X70 Plus",
+      slug: "x70-plus",
+      image: "/models/model-x70-plus.jpg",
+    },
   ];
 
   const nextSlide = () => {
@@ -115,7 +127,7 @@ export default function VehicleShowcase() {
                   return (
                     <motion.div
                       key={`${vehicle.id}-${currentSlide}-${index}`}
-                      className={`relative rounded-xl overflow-hidden cursor-pointer transition-all duration-500 aspect-[540/714]`}
+                      className={`relative rounded-xl overflow-hidden cursor-pointer transition-all duration-500 aspect-[400/600]`}
                       onClick={() => goToSlide(vehicleIndex)}
                       whileHover={{ scale: 1.02 }}
                     >

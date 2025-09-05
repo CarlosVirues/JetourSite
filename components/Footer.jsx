@@ -107,7 +107,8 @@ export default function Footer() {
             <ul className="space-y-2 text-sm">
               {[
                 { href: "/vehiculos/t1", label: "T1" },
-                { href: "/vehiculos/t2", label: "T2 PHEV" },
+                { href: "/vehiculos/t2", label: "T2" },
+                { href: "/vehiculos/t2-phev", label: "T2 PHEV" },
                 { href: "/vehiculos/x50", label: "X50" },
                 { href: "/vehiculos/x70-sport", label: "X70 Sport" },
                 { href: "/vehiculos/x70-plus", label: "X70 PLUS" },
@@ -216,14 +217,13 @@ export default function Footer() {
               className="flex space-x-6 text-sm"
             >
               {[
-                { href: "/politica-cookies", label: "Política de cookies" },
                 {
-                  href: "/terminos-condiciones",
-                  label: "Términos y Condiciones",
+                  href: "/aviso-proteccion-datos",
+                  label: "Aviso de Protección de Datos",
                 },
                 {
-                  href: "/politicas-privacidad",
-                  label: "Políticas de Privacidad",
+                  href: "/proteccion-datos",
+                  label: "Política de Protección de Datos",
                 },
               ].map((link, index) => (
                 <motion.div

@@ -12,7 +12,7 @@ export default function GlobalStats() {
       mainNumber: "12 Millones",
       subtitle: "de Unidades Vendidas Globalmente",
       description: "",
-      backgroundImage: "/global-stats-1.jpg",
+      backgroundVideo: "/video/video-jetour-2023.mp4",
     },
     {
       id: 2,
@@ -22,7 +22,7 @@ export default function GlobalStats() {
       subtitle: "",
       description:
         "a nivel mundial en 2024, con un impresionante crecimiento del 60.5% año tras año",
-      backgroundImage: "/global-stats-2.jpg",
+      backgroundVideo: "/video/jetour-super-factory.mp4",
     },
     {
       id: 3,
@@ -32,7 +32,7 @@ export default function GlobalStats() {
       subtitle: "",
       description:
         "conquista mercados globales con un diseño de vanguardia y una ingeniería robusta.",
-      backgroundImage: "/global-stats-3.jpg",
+      backgroundVideo: "/video/auto-show-gags.mp4",
     },
   ];
 
@@ -93,16 +93,19 @@ export default function GlobalStats() {
                 className="relative group"
               >
                 <div className="relative h-80 md:h-96 rounded-2xl overflow-hidden bg-gradient-to-br from-gray-800/50 to-gray-900/80 backdrop-blur-sm border border-gray-700/50">
-                  {/* Background Image */}
+                  {/* Background Video */}
                   <div className="absolute inset-0">
-                    <div
-                      className="absolute inset-0 bg-cover bg-center"
-                      style={{
-                        backgroundImage: `url(${stat.backgroundImage})`,
-                      }}
-                    />
+                    <video
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      className="w-full h-full object-cover scale-150"
+                    >
+                      <source src={stat.backgroundVideo} type="video/mp4" />
+                    </video>
                     {/* Dark overlay for text readability */}
-                    {/* <div className="absolute inset-0 bg-black/60" /> */}
+                    <div className="absolute inset-0 bg-black/60" />
                   </div>
 
                   {/* Content */}
