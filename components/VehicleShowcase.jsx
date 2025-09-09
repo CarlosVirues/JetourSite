@@ -12,39 +12,39 @@ export default function VehicleShowcase() {
   const vehicles = [
     {
       id: 1,
-      name: "NEW X50",
-      slug: "new-x50",
-      image: "/models/model-x50.jpg",
-    },
-    {
-      id: 2,
-      name: "X70",
-      slug: "x70",
-      image: "/models/model-x70.jpg",
-    },
-    {
-      id: 3,
-      name: "T2",
-      slug: "t2",
-      image: "/models/model-t2.jpg",
-    },
-    {
-      id: 4,
       name: "T1",
       slug: "t1",
       image: "/models/model-t1.jpg",
     },
     {
+      id: 2,
+      name: "T2 PHEV",
+      slug: "t2-phev",
+      image: "/models/model-t2.jpg",
+    },
+    {
+      id: 3,
+      name: "X50",
+      slug: "x50",
+      image: "/models/model-x50.jpg",
+    },
+    {
+      id: 4,
+      name: "X70 Sport",
+      slug: "x70-sport",
+      image: "/models/model-x70.jpg",
+    },
+    {
       id: 5,
-      name: "T2 Hybrid",
-      slug: "t2-hybrid",
-      image: "/models/model-t2-hybrid.jpg",
+      name: "X70 PLUS",
+      slug: "x70-plus",
+      image: "/models/model-x70.jpg",
     },
     {
       id: 6,
-      name: "X70 Plus",
-      slug: "x70-plus",
-      image: "/models/model-x70-plus.jpg",
+      name: "DASHING",
+      slug: "dashing",
+      image: "/models/model-t1.jpg", // Imagen temporal hasta tener la específica
     },
   ];
 

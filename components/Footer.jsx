@@ -107,7 +107,6 @@ export default function Footer() {
             <ul className="space-y-2 text-sm">
               {[
                 { href: "/vehiculos/t1", label: "T1" },
-                { href: "/vehiculos/t2", label: "T2" },
                 { href: "/vehiculos/t2-phev", label: "T2 PHEV" },
                 { href: "/vehiculos/x50", label: "X50" },
                 { href: "/vehiculos/x70-sport", label: "X70 Sport" },

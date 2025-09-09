@@ -7,14 +7,17 @@ import JetourLife from "@/components/JetourLife";
 import VideoGallery from "@/components/VideoGallery";
 import QuoteForm from "@/components/QuoteForm";
 import Footer from "@/components/Footer";
+import { getHeroData } from "@/lib/hero-data";
 
 export default function HomePage() {
+  const heroConfig = getHeroData("home");
+
   return (
     <div className="min-h-screen bg-black text-white">
       <Header transparent={true} />
 
       {/* Hero Section - Full Screen */}
-      <Hero />
+      <Hero {...heroConfig} />
 
       {/* Vehicle Showcase Section */}
       <VehicleShowcase />

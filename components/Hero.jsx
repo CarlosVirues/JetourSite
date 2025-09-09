@@ -3,18 +3,27 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-export default function Hero() {
+export default function Hero({
+  backgroundImage,
+  logoImage,
+  logoAlt,
+  logoWidth,
+  logoHeight,
+  subtitle,
+  showScrollIndicator,
+  height,
+}) {
   return (
     <motion.section
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
-      className="relative min-h-screen w-full overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800"
+      className={`relative ${height} w-full overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800`}
     >
       {/* Background Image/Pattern */}
       <div className="absolute inset-0">
         <Image
-          src="/home-bg.jpg"
+          src={backgroundImage}
           alt="Hero Background"
           fill
           className="object-cover aspect-video"
@@ -22,56 +31,64 @@ export default function Hero() {
       </div>
 
       {/* Main Content */}
-      <div className="relative z-20 flex flex-col items-center justify-center min-h-screen px-6 lg:px-12">
+      <div
+        className={`relative z-20 flex flex-col items-center justify-center ${height} px-6 lg:px-12`}
+      >
         <div className="text-center max-w-4xl mx-auto">
-          {/* Main JETOUR Logo/Text */}
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="mb-8"
-          >
-            <Image
-              src="/logo-jetour-home-hero.png"
-              alt="JETOUR"
-              width={1172}
-              height={142}
-              priority
-            />
-          </motion.div>
+          {/* Main JETOUR Logo/Text - Optional */}
+          {logoImage && (
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="mb-8"
+            >
+              <Image
+                src={logoImage}
+                alt={logoAlt}
+                width={logoWidth}
+                height={logoHeight}
+                priority
+              />
+            </motion.div>
+          )}
 
-          {/* Subtitle */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="mb-12"
-          >
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-light text-white">
-              Apuesta por ti
-            </h2>
-          </motion.div>
+          {/* Subtitle - Optional */}
+          {subtitle && (
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+              className="mb-12"
+            >
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-light text-white">
+                {subtitle}
+              </h2>
+            </motion.div>
+          )}
         </div>
 
         {/* Scroll Indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.2 }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        >
+        {showScrollIndicator && (
           <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 1.2 }}
+            className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
           >
             <motion.div
-              animate={{ y: [0, 12, 0] }}
+              animate={{ y: [0, 10, 0] }}
               transition={{ duration: 2, repeat: Infinity }}
-              className="w-1 h-3 bg-white/70 rounded-full mt-2"
-            />
+              className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center"
+            >
+              <motion.div
+                animate={{ y: [0, 12, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="w-1 h-3 bg-white/70 rounded-full mt-2"
+              />
+            </motion.div>
           </motion.div>
-        </motion.div>
+        )}
       </div>
 
       {/* Architectural/Building Elements - Background */}
