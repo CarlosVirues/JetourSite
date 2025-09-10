@@ -14,33 +14,28 @@ export default function VehicleGallery({ vehicleData }) {
   const images = [
     {
       id: 1,
-      src: "/models/hero/t2-hero.jpg",
+      src: "/models/t2/1-t2.jpg",
       alt: "JETOUR T2 en puente",
     },
     {
       id: 2,
-      src: "/models/hero/t2-hero.jpg",
+      src: "/models/t2/2-t2.jpg",
       alt: "JETOUR T2 vista lateral",
     },
     {
       id: 3,
-      src: "/models/hero/t2-hero.jpg",
+      src: "/models/t2/3-t2.jpg",
       alt: "Interior JETOUR T2",
     },
     {
       id: 4,
-      src: "/models/hero/t2-hero.jpg",
+      src: "/models/t2/4-t2.jpg",
       alt: "Maletero JETOUR T2",
     },
     {
       id: 5,
-      src: "/models/hero/t2-hero.jpg",
+      src: "/models/t2/5-t2.jpg",
       alt: "Asientos JETOUR T2",
-    },
-    {
-      id: 6,
-      src: "/models/hero/t2-hero.jpg",
-      alt: "JETOUR T2 en bosque",
     },
   ];
 
@@ -64,7 +59,7 @@ export default function VehicleGallery({ vehicleData }) {
         </motion.div>
 
         {/* Scroll-triggered Images */}
-        <div className="space-y-32">
+        <div className="space-y-96">
           {images.map((image, index) => {
             const isLeft = index % 2 === 0;
             const imageRef = useRef(null);
@@ -75,20 +70,20 @@ export default function VehicleGallery({ vehicleData }) {
 
             const scale = useTransform(
               imageScrollProgress,
-              [0, 0.5, 1],
-              [0.8, 1.5, 0.8]
+              [0, 0.3, 0.7, 1],
+              [0.8, 1.5, 1.5, 0.8]
             );
             const width = useTransform(
               imageScrollProgress,
-              [0, 0.5, 1],
-              ["50%", "100%", "50%"]
+              [0, 0.3, 0.7, 1],
+              ["50%", "100%", "100%", "50%"]
             );
             const opacity = useTransform(
               imageScrollProgress,
-              [0, 0.2, 0.8, 1],
-              [0, 1, 1, 0]
+              [0, 0.1, 0.2, 0.8, 0.9, 1],
+              [0, 0.5, 1, 1, 0.5, 0]
             );
-            const y = useTransform(imageScrollProgress, [0, 1], [100, -100]);
+            const y = useTransform(imageScrollProgress, [0, 1], [50, -50]);
 
             return (
               <motion.div

@@ -6,6 +6,7 @@ import QuoteForm from "@/components/QuoteForm";
 import Hero from "@/components/Hero";
 import VehicleFeatures from "@/components/VehicleFeatures";
 import VehicleGallery from "@/components/VehicleGallery";
+import VehicleGalleryExtra from "@/components/VehicleGalleryExtra";
 import Footer from "@/components/Footer";
 import { getVehicleHeroConfig, getVehicleModel } from "@/lib/vehicle-models";
 
@@ -37,7 +38,11 @@ export default async function VehicleModelPage({ params }) {
       <VehicleFeatures vehicleData={vehicleData} />
 
       {/* Vehicle Gallery Section */}
-      <VehicleGallery vehicleData={vehicleData} />
+      {model === "t2-phev" ? (
+        <VehicleGallery vehicleData={vehicleData} />
+      ) : (
+        <VehicleGalleryExtra vehicleData={vehicleData} />
+      )}
 
       {/* Hero Showcase Section */}
       <HeroShowcase />

@@ -8,17 +8,17 @@ export default function VehicleFeatures({ vehicleData }) {
     {
       id: 1,
       title: "Potencia que te lleva a todos lados",
-      image: "/models/hero/t2-hero.jpg", // Imagen temporal, se puede personalizar por modelo
+      image: "/models/t2/t2-feature-1.jpg",
     },
     {
       id: 2,
       title: "Diseño y tecnología que inspiran",
-      image: "/models/hero/t2-hero.jpg", // Imagen temporal, se puede personalizar por modelo
+      image: "/models/t2/t2-feature-2.jpg",
     },
     {
       id: 3,
       title: "Espacio, diseño y elegancia en cada detalle",
-      image: "/models/hero/t2-hero.jpg", // Imagen temporal, se puede personalizar por modelo
+      image: "/models/t2/t2-feature-3.jpg",
     },
   ];
 
@@ -39,12 +39,12 @@ export default function VehicleFeatures({ vehicleData }) {
               {/* Feature Card */}
               <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 hover:border-blue-500 transition-all duration-500 group-hover:scale-105">
                 {/* Background Image */}
-                <div className="relative h-64 lg:h-80">
+                <div className="relative h-64 aspect-[762/344]">
                   <Image
                     src={feature.image}
                     alt={feature.title}
                     fill
-                    className="object-cover opacity-60 group-hover:opacity-80 transition-opacity duration-500"
+                    className="object-cover object-center opacity-60 group-hover:opacity-80 transition-opacity duration-500"
                   />
 
                   {/* Overlay */}
