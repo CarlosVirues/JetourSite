@@ -12,36 +12,42 @@ export default function VehicleShowcase() {
   const vehicles = [
     {
       id: 1,
+      name: "T2",
+      slug: "t2",
+      image: "/models/model-t2.jpg",
+    },
+    {
+      id: 2,
       name: "T1",
       slug: "t1",
       image: "/models/model-t1.jpg",
     },
     {
-      id: 2,
+      id: 3,
       name: "T2 PHEV",
       slug: "t2-phev",
       image: "/models/model-t2.jpg",
     },
     {
-      id: 3,
+      id: 4,
       name: "X50",
       slug: "x50",
       image: "/models/model-x50.jpg",
     },
     {
-      id: 4,
+      id: 5,
       name: "X70 Sport",
       slug: "x70-sport",
       image: "/models/model-x70.jpg",
     },
     {
-      id: 5,
+      id: 6,
       name: "X70 PLUS",
       slug: "x70-plus",
       image: "/models/model-x70.jpg",
     },
     {
-      id: 6,
+      id: 7,
       name: "DASHING",
       slug: "dashing",
       image: "/models/model-t1.jpg", // Imagen temporal hasta tener la específica

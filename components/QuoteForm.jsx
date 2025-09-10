@@ -24,8 +24,8 @@ export default function QuoteForm() {
   });
 
   const carModels = [
-    { id: "t1", name: "T1", image: "/mini-car.png" },
     { id: "t2", name: "T2", image: "/mini-car.png" },
+    { id: "t1", name: "T1", image: "/mini-car.png" },
     { id: "t2-phev", name: "T2 PHEV", image: "/mini-car.png" },
     { id: "x50", name: "X50", image: "/mini-car.png" },
     { id: "x70-sport", name: "X70 Sport", image: "/mini-car.png" },
