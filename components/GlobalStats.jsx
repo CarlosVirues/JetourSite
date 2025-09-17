@@ -100,7 +100,7 @@ export default function GlobalStats() {
                       muted
                       loop
                       playsInline
-                      className="w-full h-full object-cover scale-150"
+                      className="w-full h-full object-cover"
                     >
                       <source src={stat.backgroundVideo} type="video/mp4" />
                     </video>

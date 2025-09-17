@@ -6,8 +6,11 @@ import RoldanSection from "@/components/RoldanSection";
 import JetourLife from "@/components/JetourLife";
 import VideoGallery from "@/components/VideoGallery";
 import Footer from "@/components/Footer";
+import { getPageData } from "@/lib/page-data";
 
 export default function HomePage() {
+  const pageData = getPageData("home");
+
   return (
     <div className="min-h-screen bg-black text-white">
       <Header transparent={true} />
@@ -28,7 +31,7 @@ export default function HomePage() {
       <JetourLife />
 
       {/* Video Gallery Section */}
-      <VideoGallery />
+      <VideoGallery {...pageData.videoGallery} />
 
       <div
         className="bg-black py-16 lg:py-24 max-w-4xl mx-auto px-6 lg:px-12 text-center"

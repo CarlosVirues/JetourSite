@@ -5,10 +5,12 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { vehicleModels } from "../lib/vehicle-models";
 
 export default function Header({ transparent = false, border = false }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isModelsDropdownOpen, setIsModelsDropdownOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -18,6 +20,8 @@ export default function Header({ transparent = false, border = false }) {
       } else {
         setIsScrolled(false);
       }
+      // Cerrar dropdown al hacer scroll
+      setIsModelsDropdownOpen(false);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -28,6 +32,14 @@ export default function Header({ transparent = false, border = false }) {
 
   const navItems = [
     { href: "/", label: "Home" },
+    {
+      label: "Modelos",
+      isDropdown: true,
+      items: Object.entries(vehicleModels).map(([key, model]) => ({
+        href: `/vehiculos/${key}`,
+        label: model.name,
+      })),
+    },
     { href: "/postventa", label: "Postventa" },
     { href: "/concesionarios", label: "Concesionarios" },
     { href: "/noticias", label: "Noticias" },
@@ -41,12 +53,24 @@ export default function Header({ transparent = false, border = false }) {
     return pathname.startsWith(href);
   };
 
+  const isModelsActive = () => {
+    return pathname.startsWith("/vehiculos/");
+  };
+
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
+  };
+
+  const toggleModelsDropdown = () => {
+    setIsModelsDropdownOpen(!isModelsDropdownOpen);
+  };
+
+  const closeModelsDropdown = () => {
+    setIsModelsDropdownOpen(false);
   };
 
   return (
@@ -84,32 +108,126 @@ export default function Header({ transparent = false, border = false }) {
         <nav className="hidden md:flex space-x-8">
           {navItems.map((item, index) => (
             <motion.div
-              key={item.href}
+              key={item.href || item.label}
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="relative"
             >
-              <Link
-                href={item.href}
-                className={`transition-colors relative ${
-                  isActive(item.href)
-                    ? "text-white font-semibold"
-                    : "text-white hover:text-gray-300"
-                }`}
-              >
-                {item.label}
-                <AnimatePresence>
-                  {isActive(item.href) && (
-                    <motion.div
-                      initial={{ width: 0 }}
-                      animate={{ width: "100%" }}
-                      exit={{ width: 0 }}
+              {item.isDropdown ? (
+                <div className="relative">
+                  <button
+                    onClick={toggleModelsDropdown}
+                    className={`transition-colors relative flex items-center space-x-1 ${
+                      isModelsActive()
+                        ? "text-white font-semibold"
+                        : "text-white hover:text-gray-300"
+                    }`}
+                  >
+                    <span>{item.label}</span>
+                    <motion.svg
+                      animate={{ rotate: isModelsDropdownOpen ? 180 : 0 }}
                       transition={{ duration: 0.3 }}
-                      className="absolute -bottom-1 left-0 right-0 h-0.5 bg-white"
-                    />
-                  )}
-                </AnimatePresence>
-              </Link>
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </motion.svg>
+                    <AnimatePresence>
+                      {isModelsActive() && (
+                        <motion.div
+                          initial={{ width: 0 }}
+                          animate={{ width: "100%" }}
+                          exit={{ width: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="absolute -bottom-1 left-0 right-0 h-0.5 bg-white"
+                        />
+                      )}
+                    </AnimatePresence>
+                  </button>
+
+                  {/* Dropdown Menu */}
+                  <AnimatePresence>
+                    {isModelsDropdownOpen && (
+                      <>
+                        {/* Backdrop */}
+                        <motion.div
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="fixed inset-0 z-40"
+                          onClick={closeModelsDropdown}
+                        />
+
+                        {/* Dropdown Content */}
+                        <motion.div
+                          initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                          transition={{ duration: 0.2 }}
+                          className="absolute top-full left-0 mt-2 w-48 bg-black/95 backdrop-blur-sm border border-gray-700 rounded-lg shadow-xl z-50"
+                        >
+                          <div className="py-2">
+                            {item.items.map((model, modelIndex) => (
+                              <motion.div
+                                key={model.href}
+                                initial={{ opacity: 0, x: -10 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{
+                                  duration: 0.2,
+                                  delay: modelIndex * 0.05,
+                                }}
+                              >
+                                <Link
+                                  href={model.href}
+                                  onClick={closeModelsDropdown}
+                                  className={`block px-4 py-2 text-sm transition-colors ${
+                                    isActive(model.href)
+                                      ? "text-blue-400 bg-blue-400/10"
+                                      : "text-white hover:text-blue-400 hover:bg-white/5"
+                                  }`}
+                                >
+                                  {model.label}
+                                </Link>
+                              </motion.div>
+                            ))}
+                          </div>
+                        </motion.div>
+                      </>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ) : (
+                <Link
+                  href={item.href}
+                  className={`transition-colors relative ${
+                    isActive(item.href)
+                      ? "text-white font-semibold"
+                      : "text-white hover:text-gray-300"
+                  }`}
+                >
+                  {item.label}
+                  <AnimatePresence>
+                    {isActive(item.href) && (
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: "100%" }}
+                        exit={{ width: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="absolute -bottom-1 left-0 right-0 h-0.5 bg-white"
+                      />
+                    )}
+                  </AnimatePresence>
+                </Link>
+              )}
             </motion.div>
           ))}
         </nav>
@@ -205,36 +323,121 @@ export default function Header({ transparent = false, border = false }) {
                   <div className="space-y-6">
                     {navItems.map((item, index) => (
                       <motion.div
-                        key={item.href}
+                        key={item.href || item.label}
                         initial={{ opacity: 0, x: 50 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.5, delay: index * 0.1 }}
                       >
-                        <Link
-                          href={item.href}
-                          onClick={closeMobileMenu}
-                          className={`block text-lg font-medium transition-all duration-300 relative ${
-                            isActive(item.href)
-                              ? "text-blue-400"
-                              : "text-white hover:text-blue-400"
-                          }`}
-                        >
-                          <span className="relative">
-                            {item.label}
-                            {isActive(item.href) && (
-                              <motion.div
-                                layoutId="mobileActiveIndicator"
-                                className="absolute -bottom-1 left-0 right-0 h-0.5 bg-blue-400"
-                                initial={false}
-                                transition={{
-                                  type: "spring",
-                                  stiffness: 300,
-                                  damping: 30,
-                                }}
-                              />
-                            )}
-                          </span>
-                        </Link>
+                        {item.isDropdown ? (
+                          <div>
+                            <button
+                              onClick={toggleModelsDropdown}
+                              className={`block text-lg font-medium transition-all duration-300 relative w-full text-left ${
+                                isModelsActive()
+                                  ? "text-blue-400"
+                                  : "text-white hover:text-blue-400"
+                              }`}
+                            >
+                              <span className="relative flex items-center justify-between">
+                                {item.label}
+                                <motion.svg
+                                  animate={{
+                                    rotate: isModelsDropdownOpen ? 180 : 0,
+                                  }}
+                                  transition={{ duration: 0.3 }}
+                                  className="w-5 h-5"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M19 9l-7 7-7-7"
+                                  />
+                                </motion.svg>
+                                {isModelsActive() && (
+                                  <motion.div
+                                    layoutId="mobileActiveIndicator"
+                                    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-blue-400"
+                                    initial={false}
+                                    transition={{
+                                      type: "spring",
+                                      stiffness: 300,
+                                      damping: 30,
+                                    }}
+                                  />
+                                )}
+                              </span>
+                            </button>
+
+                            {/* Mobile Dropdown */}
+                            <AnimatePresence>
+                              {isModelsDropdownOpen && (
+                                <motion.div
+                                  initial={{ opacity: 0, height: 0 }}
+                                  animate={{ opacity: 1, height: "auto" }}
+                                  exit={{ opacity: 0, height: 0 }}
+                                  transition={{ duration: 0.3 }}
+                                  className="overflow-hidden"
+                                >
+                                  <div className="pl-4 pt-2 space-y-3">
+                                    {item.items.map((model, modelIndex) => (
+                                      <motion.div
+                                        key={model.href}
+                                        initial={{ opacity: 0, x: 20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{
+                                          duration: 0.3,
+                                          delay: modelIndex * 0.1,
+                                        }}
+                                      >
+                                        <Link
+                                          href={model.href}
+                                          onClick={closeMobileMenu}
+                                          className={`block text-base transition-all duration-300 ${
+                                            isActive(model.href)
+                                              ? "text-blue-400"
+                                              : "text-gray-300 hover:text-blue-400"
+                                          }`}
+                                        >
+                                          {model.label}
+                                        </Link>
+                                      </motion.div>
+                                    ))}
+                                  </div>
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
+                          </div>
+                        ) : (
+                          <Link
+                            href={item.href}
+                            onClick={closeMobileMenu}
+                            className={`block text-lg font-medium transition-all duration-300 relative ${
+                              isActive(item.href)
+                                ? "text-blue-400"
+                                : "text-white hover:text-blue-400"
+                            }`}
+                          >
+                            <span className="relative">
+                              {item.label}
+                              {isActive(item.href) && (
+                                <motion.div
+                                  layoutId="mobileActiveIndicator"
+                                  className="absolute -bottom-1 left-0 right-0 h-0.5 bg-blue-400"
+                                  initial={false}
+                                  transition={{
+                                    type: "spring",
+                                    stiffness: 300,
+                                    damping: 30,
+                                  }}
+                                />
+                              )}
+                            </span>
+                          </Link>
+                        )}
                       </motion.div>
                     ))}
                   </div>

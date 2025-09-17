@@ -1,14 +1,14 @@
-import Link from "next/link";
 import Header from "@/components/Header";
 import HeroShowcase from "@/components/HeroShowcase";
 import VideoGallery from "@/components/VideoGallery";
 import QuoteForm from "@/components/QuoteForm";
-import Hero from "@/components/Hero";
+import VehicleHero from "@/components/VehicleHero";
 import VehicleFeatures from "@/components/VehicleFeatures";
 import VehicleGallery from "@/components/VehicleGallery";
 import VehicleGalleryExtra from "@/components/VehicleGalleryExtra";
 import Footer from "@/components/Footer";
 import { getVehicleHeroConfig, getVehicleModel } from "@/lib/vehicle-models";
+import { getPageData, getVehicleModelPageData } from "@/lib/page-data";
 
 export async function generateMetadata({ params }) {
   const pageParams = await params;
@@ -26,32 +26,39 @@ export default async function VehicleModelPage({ params }) {
   const { model } = pageParams;
   const heroConfig = getVehicleHeroConfig(model);
   const vehicleData = getVehicleModel(model);
+  const pageData = getPageData("vehiculos"); // Datos específicos para páginas de vehículos
+  const modelPageData = getVehicleModelPageData(model); // Datos específicos del modelo
 
   return (
     <div className="min-h-screen bg-black text-white">
       <Header transparent={true} />
 
       {/* Hero Section - Full Screen */}
-      <Hero {...heroConfig} />
+      <VehicleHero
+        backgroundImage={modelPageData.hero.backgroundImage}
+        vehicleName={modelPageData.hero.vehicleName}
+        vehicleDescription={modelPageData.hero.vehicleDescription}
+        height={modelPageData.hero.height}
+      />
 
       {/* Vehicle Features Section */}
-      <VehicleFeatures vehicleData={vehicleData} />
+      <VehicleFeatures featuresData={modelPageData.features} />
 
       {/* Vehicle Gallery Section */}
-      {model === "t2-phev" ? (
+      {/* {model === "t2-phev" ? (
         <VehicleGallery vehicleData={vehicleData} />
       ) : (
         <VehicleGalleryExtra vehicleData={vehicleData} />
-      )}
+      )} */}
 
       {/* Hero Showcase Section */}
       <HeroShowcase />
 
       {/* Video Gallery Section */}
-      <VideoGallery />
+      <VideoGallery {...pageData.videoGallery} />
 
       {/* Quote Form Section */}
-      <QuoteForm />
+      <QuoteForm {...pageData.quoteForm} />
 
       <Footer />
     </div>

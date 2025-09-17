@@ -26,7 +26,7 @@ export default function VehicleShowcase() {
       id: 3,
       name: "T2 PHEV",
       slug: "t2-phev",
-      image: "/models/model-t2.jpg",
+      image: "/models/model-t2-phev.jpg",
     },
     {
       id: 4,
@@ -44,13 +44,13 @@ export default function VehicleShowcase() {
       id: 6,
       name: "X70 PLUS",
       slug: "x70-plus",
-      image: "/models/model-x70.jpg",
+      image: "/models/model-x70-plus.jpg",
     },
     {
       id: 7,
       name: "DASHING",
       slug: "dashing",
-      image: "/models/model-t1.jpg", // Imagen temporal hasta tener la específica
+      image: "/models/model-dashing.jpg", // Imagen temporal hasta tener la específica
     },
   ];
 
@@ -80,7 +80,7 @@ export default function VehicleShowcase() {
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
             Jetour no es solo un auto, es la decisión de apostar por ti.
           </h2>
-          <p className="text-lg md:text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
             Tecnología de vanguardia, diseño que rompe esquemas y espacio
             pensado para cada momento de tu vida.
           </p>

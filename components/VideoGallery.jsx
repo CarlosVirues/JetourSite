@@ -1,47 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, Play, ArrowRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Play, ArrowRight, X } from "lucide-react";
 import Image from "next/image";
 
-export default function VideoGallery() {
+export default function VideoGallery({
+  title = "JETOUR en Ecuador y el mundo",
+  videos = [],
+}) {
   const [currentSlide, setCurrentSlide] = useState(0);
-
-  const videos = [
-    {
-      id: 1,
-      title: "Jetour x Driving to Mars",
-      thumbnail: "/image-jetour-demo.jpg",
-      views: "Leer más",
-      type: "image",
-    },
-    {
-      id: 2,
-      title:
-        "Reseña del Jetour T2 Beyond 2.0T XWD 2025: ¿Más de lo que parece?",
-      thumbnail: "/video-jetour-demo.jpg",
-      videoUrl: "https://youtube.com/watch?v=example1",
-      views: "Ver video",
-      type: "video",
-    },
-    {
-      id: 3,
-      title: "Jetour x Driving to Mars",
-      thumbnail: "/image-jetour-demo.jpg",
-      views: "Leer más",
-      type: "image",
-    },
-    {
-      id: 4,
-      title:
-        "Reseña del Jetour T2 Beyond 2.0T XWD 2025: ¿Más de lo que parece?",
-      thumbnail: "/video-jetour-demo.jpg",
-      videoUrl: "https://youtube.com/watch?v=example2",
-      views: "Ver video",
-      type: "video",
-    },
-  ];
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedVideo, setSelectedVideo] = useState(null);
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % Math.max(1, videos.length - 1));
@@ -58,6 +28,48 @@ export default function VideoGallery() {
   const goToSlide = (index) => {
     setCurrentSlide(index);
   };
+
+  const openVideoModal = (video) => {
+    setSelectedVideo(video);
+    setIsModalOpen(true);
+  };
+
+  const closeVideoModal = () => {
+    setIsModalOpen(false);
+    setSelectedVideo(null);
+  };
+
+  // Función para extraer el ID del video de YouTube
+  const getYouTubeVideoId = (url) => {
+    const regExp =
+      /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return match && match[2].length === 11 ? match[2] : null;
+  };
+
+  // Cerrar modal con tecla Escape
+  useEffect(() => {
+    const handleEscape = (event) => {
+      if (event.key === "Escape" && isModalOpen) {
+        closeVideoModal();
+      }
+    };
+
+    if (isModalOpen) {
+      document.addEventListener("keydown", handleEscape);
+      document.body.style.overflow = "hidden"; // Prevenir scroll del body
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleEscape);
+      document.body.style.overflow = "unset";
+    };
+  }, [isModalOpen]);
+
+  // Validación: no renderizar si no hay videos
+  if (!videos || videos.length === 0) {
+    return null;
+  }
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -90,7 +102,7 @@ export default function VideoGallery() {
           className="text-center mb-12 md:mb-16"
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white">
-            JETOUR en Ecuador y el mundo
+            {title}
           </h2>
         </motion.div>
 
@@ -136,6 +148,11 @@ export default function VideoGallery() {
                   className="relative group cursor-pointer"
                   whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.3 }}
+                  onClick={() => {
+                    if (videos[currentSlide]?.type === "video") {
+                      openVideoModal(videos[currentSlide]);
+                    }
+                  }}
                 >
                   <div className="relative h-64 md:h-80 lg:h-96 rounded-2xl overflow-hidden bg-gray-800">
                     {/* Video Thumbnail */}
@@ -192,6 +209,13 @@ export default function VideoGallery() {
                   className="relative group cursor-pointer"
                   whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.3 }}
+                  onClick={() => {
+                    const nextVideo =
+                      videos[(currentSlide + 1) % videos.length];
+                    if (nextVideo?.type === "video") {
+                      openVideoModal(nextVideo);
+                    }
+                  }}
                 >
                   <div className="relative h-64 md:h-80 lg:h-96 rounded-2xl overflow-hidden bg-gray-800">
                     {/* Video Thumbnail */}
@@ -269,6 +293,67 @@ export default function VideoGallery() {
           </div>
         </div>
       </div>
+
+      {/* Video Modal */}
+      <AnimatePresence>
+        {isModalOpen && selectedVideo && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+              onClick={closeVideoModal}
+            >
+              {/* Modal Content */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8, y: 50 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.8, y: 50 }}
+                transition={{ duration: 0.3, type: "spring", damping: 25 }}
+                className="relative w-full max-w-4xl bg-black rounded-2xl overflow-hidden shadow-2xl"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Close Button */}
+                <motion.button
+                  onClick={closeVideoModal}
+                  className="absolute top-4 right-4 z-10 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-300"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <X className="w-6 h-6" />
+                </motion.button>
+
+                {/* Video Title */}
+                <div className="absolute top-4 left-4 z-10 bg-black/50 backdrop-blur-sm text-white px-4 py-2 rounded-lg">
+                  <h3 className="text-lg font-semibold">
+                    {selectedVideo.title}
+                  </h3>
+                </div>
+
+                {/* YouTube Video */}
+                <div
+                  className="relative w-full"
+                  style={{ paddingBottom: "56.25%" }}
+                >
+                  <iframe
+                    src={`https://www.youtube.com/embed/${getYouTubeVideoId(
+                      selectedVideo.videoUrl
+                    )}?autoplay=1&rel=0&modestbranding=1`}
+                    title={selectedVideo.title}
+                    className="absolute top-0 left-0 w-full h-full"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              </motion.div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

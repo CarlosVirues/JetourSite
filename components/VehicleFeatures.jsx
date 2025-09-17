@@ -3,24 +3,13 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-export default function VehicleFeatures({ vehicleData }) {
-  const features = [
-    {
-      id: 1,
-      title: "Potencia que te lleva a todos lados",
-      image: "/models/t2/t2-feature-1.jpg",
-    },
-    {
-      id: 2,
-      title: "Diseño y tecnología que inspiran",
-      image: "/models/t2/t2-feature-2.jpg",
-    },
-    {
-      id: 3,
-      title: "Espacio, diseño y elegancia en cada detalle",
-      image: "/models/t2/t2-feature-3.jpg",
-    },
-  ];
+export default function VehicleFeatures({ featuresData }) {
+  // Validación: no renderizar si no hay datos
+  if (!featuresData || !featuresData.items || featuresData.items.length === 0) {
+    return null;
+  }
+
+  const { title, items: features } = featuresData;
 
   return (
     <section className="relative bg-black text-white py-16 md:py-24 overflow-hidden">
@@ -42,20 +31,21 @@ export default function VehicleFeatures({ vehicleData }) {
                 <div className="relative h-64 aspect-[762/344]">
                   <Image
                     src={feature.image}
-                    alt={feature.title}
+                    alt={feature.description}
                     fill
                     className="object-cover object-center opacity-60 group-hover:opacity-80 transition-opacity duration-500"
                   />
-
-                  {/* Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                 </div>
               </div>
 
-              {/* Title - Outside and Centered */}
-              <h3 className="text-base lg:text-lg text-white mt-4 text-center group-hover:text-blue-400 transition-colors">
-                {feature.title}
-              </h3>
+              {/* Title and Description - Outside and Centered */}
+              <div className="mt-4 text-center">
+                {feature.description && (
+                  <p className="text-sm text-gray-300 mt-2 group-hover:text-gray-200 transition-colors">
+                    {feature.description}
+                  </p>
+                )}
+              </div>
             </motion.div>
           ))}
         </div>
