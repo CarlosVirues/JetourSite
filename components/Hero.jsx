@@ -48,7 +48,7 @@ export default function Hero({
                 alt={logoAlt}
                 width={logoWidth}
                 height={logoHeight}
-                className="shadow-2xl drop-shadow-2xl"
+                className=""
                 priority
               />
             </motion.div>
