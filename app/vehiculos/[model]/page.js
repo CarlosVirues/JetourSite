@@ -46,7 +46,7 @@ export default async function VehicleModelPage({ params }) {
       <VehicleGallery vehicleGalleryData={modelPageData.vehicleGallery} />
 
       {/* Hero Showcase Section */}
-      <HeroShowcase />
+      <HeroShowcase heroShowcaseData={modelPageData.heroShowcase} />
 
       {/* Video Gallery Section */}
       <VideoGallery {...modelPageData.videoGallery} />
