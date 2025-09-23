@@ -24,8 +24,6 @@ export async function generateMetadata({ params }) {
 export default async function VehicleModelPage({ params }) {
   const pageParams = await params;
   const { model } = pageParams;
-  const heroConfig = getVehicleHeroConfig(model);
-  const vehicleData = getVehicleModel(model);
   const pageData = getPageData("vehiculos"); // Datos específicos para páginas de vehículos
   const modelPageData = getVehicleModelPageData(model); // Datos específicos del modelo
 
@@ -45,17 +43,13 @@ export default async function VehicleModelPage({ params }) {
       <VehicleFeatures featuresData={modelPageData.features} />
 
       {/* Vehicle Gallery Section */}
-      {/* {model === "t2-phev" ? (
-        <VehicleGallery vehicleData={vehicleData} />
-      ) : (
-        <VehicleGalleryExtra vehicleData={vehicleData} />
-      )} */}
+      <VehicleGallery vehicleGalleryData={modelPageData.vehicleGallery} />
 
       {/* Hero Showcase Section */}
       <HeroShowcase />
 
       {/* Video Gallery Section */}
-      <VideoGallery {...pageData.videoGallery} />
+      <VideoGallery {...modelPageData.videoGallery} />
 
       {/* Quote Form Section */}
       <QuoteForm {...pageData.quoteForm} />

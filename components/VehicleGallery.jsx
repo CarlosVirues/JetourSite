@@ -4,40 +4,23 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import { useRef } from "react";
 
-export default function VehicleGallery({ vehicleData }) {
+export default function VehicleGallery({ vehicleGalleryData }) {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"],
   });
 
-  const images = [
-    {
-      id: 1,
-      src: "/models/t2/1-t2.jpg",
-      alt: "JETOUR T2 en puente",
-    },
-    {
-      id: 2,
-      src: "/models/t2/2-t2.jpg",
-      alt: "JETOUR T2 vista lateral",
-    },
-    {
-      id: 3,
-      src: "/models/t2/3-t2.jpg",
-      alt: "Interior JETOUR T2",
-    },
-    {
-      id: 4,
-      src: "/models/t2/4-t2.jpg",
-      alt: "Maletero JETOUR T2",
-    },
-    {
-      id: 5,
-      src: "/models/t2/5-t2.jpg",
-      alt: "Asientos JETOUR T2",
-    },
-  ];
+  // Validación: no renderizar si no hay datos
+  if (
+    !vehicleGalleryData ||
+    !vehicleGalleryData.images ||
+    vehicleGalleryData.images.length === 0
+  ) {
+    return null;
+  }
+
+  const { title, subtitle, images } = vehicleGalleryData;
 
   return (
     <section
@@ -53,9 +36,14 @@ export default function VehicleGallery({ vehicleData }) {
           viewport={{ once: true }}
           className="mb-24 max-w-2xl"
         >
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-white leading-tight">
-            Si verlo es emocionante, manejarlo es irresistible.
+          <h2 className="text-2xl md:text-3xl lg:text-4xl text-white leading-tight">
+            {title || "Si verlo es emocionante, manejarlo es irresistible."}
           </h2>
+          {subtitle && (
+            <p className="text-gray-300 text-2xl md:text-3xl lg:text-4xl font-bold mt-4">
+              {subtitle}
+            </p>
+          )}
         </motion.div>
 
         {/* Scroll-triggered Images */}

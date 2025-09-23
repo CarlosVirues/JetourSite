@@ -12,10 +12,10 @@ export default function VehicleFeatures({ featuresData }) {
   const { title, items: features } = featuresData;
 
   return (
-    <section className="relative bg-black text-white py-16 md:py-24 overflow-hidden">
+    <section className="relative bg-black text-white py-8 md:py-12 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         {/* Features Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-0 lg:gap-0">
           {features.map((feature, index) => (
             <motion.div
               key={feature.id}
@@ -26,7 +26,7 @@ export default function VehicleFeatures({ featuresData }) {
               className="relative group"
             >
               {/* Feature Card */}
-              <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 hover:border-blue-500 transition-all duration-500 group-hover:scale-105">
+              <div className="relative rounded-none overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 hover:border-blue-500 transition-all duration-500 group-hover:scale-105">
                 {/* Background Image */}
                 <div className="relative h-64 aspect-[762/344]">
                   <Image
