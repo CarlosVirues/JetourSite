@@ -6,6 +6,7 @@ import VehicleHero from "@/components/VehicleHero";
 import VehicleFeatures from "@/components/VehicleFeatures";
 import VehicleGallery from "@/components/VehicleGallery";
 import VehicleGalleryExtra from "@/components/VehicleGalleryExtra";
+import ThreeSixty from "@/components/360";
 import Footer from "@/components/Footer";
 import { getVehicleHeroConfig, getVehicleModel } from "@/lib/vehicle-models";
 import { getPageData, getVehicleModelPageData } from "@/lib/page-data";
@@ -44,6 +45,9 @@ export default async function VehicleModelPage({ params }) {
 
       {/* Vehicle Gallery Section */}
       <VehicleGallery vehicleGalleryData={modelPageData.vehicleGallery} />
+
+      {/* 360 View Section - Only for T1 model */}
+      {model === "t1" && <ThreeSixty />}
 
       {/* Hero Showcase Section */}
       <HeroShowcase heroShowcaseData={modelPageData.heroShowcase} />
