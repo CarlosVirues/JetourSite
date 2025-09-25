@@ -1,45 +1,67 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import Image from "next/image";
 
-export default function ThreeSixty() {
+export default function ThreeSixty({
+  model = "t1",
+  totalFrames = 28,
+  title = "Vista 360° del T1",
+  subtitle = "Arrastra para rotar el vehículo o usa los controles de navegación",
+  imagePath = "/models/t1/360",
+  showInstructions = true,
+}) {
   const [currentFrame, setCurrentFrame] = useState(1);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [startFrame, setStartFrame] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [loadedImages, setLoadedImages] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const containerRef = useRef(null);
-  const totalFrames = 28;
+  const imageCache = useRef(new Map());
 
   // Preload images
   useEffect(() => {
     const preloadImages = () => {
       let loadedCount = 0;
+      const startTime = Date.now();
+      const minLoadingTime = 2000; // Mínimo 2 segundos de carga
 
       for (let i = 1; i <= totalFrames; i++) {
         const img = new window.Image();
-        img.src = `/models/t1/360/${i}.png`;
+        img.src = `${imagePath}/${i}.png`;
         img.onload = () => {
+          // Guardar en cache
+          imageCache.current.set(i, img);
           loadedCount++;
           setLoadedImages(loadedCount);
 
           if (loadedCount === totalFrames) {
-            setIsLoading(false);
+            const elapsedTime = Date.now() - startTime;
+            const remainingTime = Math.max(0, minLoadingTime - elapsedTime);
+
+            // Esperar el tiempo restante para completar el mínimo de carga
+            setTimeout(() => {
+              setIsLoading(false);
+            }, remainingTime);
           }
         };
         img.onerror = () => {
           loadedCount++;
           if (loadedCount === totalFrames) {
-            setIsLoading(false);
+            const elapsedTime = Date.now() - startTime;
+            const remainingTime = Math.max(0, minLoadingTime - elapsedTime);
+
+            setTimeout(() => {
+              setIsLoading(false);
+            }, remainingTime);
           }
         };
       }
     };
 
     preloadImages();
-  }, []);
+  }, [imagePath, totalFrames]);
 
   const handleMouseDown = (e) => {
     setIsDragging(true);
@@ -59,7 +81,7 @@ export default function ThreeSixty() {
     if (newFrame < 1) newFrame = totalFrames + newFrame;
     if (newFrame > totalFrames) newFrame = newFrame - totalFrames;
 
-    setCurrentFrame(newFrame);
+    changeFrame(newFrame);
   };
 
   const handleMouseUp = () => {
@@ -84,19 +106,33 @@ export default function ThreeSixty() {
     if (newFrame < 1) newFrame = totalFrames + newFrame;
     if (newFrame > totalFrames) newFrame = newFrame - totalFrames;
 
-    setCurrentFrame(newFrame);
+    changeFrame(newFrame);
   };
 
   const handleTouchEnd = () => {
     setIsDragging(false);
   };
 
+  const changeFrame = (newFrame) => {
+    if (isTransitioning || newFrame === currentFrame) return;
+
+    setIsTransitioning(true);
+    setCurrentFrame(newFrame);
+
+    // Reset transition state after a short delay
+    setTimeout(() => {
+      setIsTransitioning(false);
+    }, 150);
+  };
+
   const nextFrame = () => {
-    setCurrentFrame(currentFrame === totalFrames ? 1 : currentFrame + 1);
+    const newFrame = currentFrame === totalFrames ? 1 : currentFrame + 1;
+    changeFrame(newFrame);
   };
 
   const prevFrame = () => {
-    setCurrentFrame(currentFrame === 1 ? totalFrames : currentFrame - 1);
+    const newFrame = currentFrame === 1 ? totalFrames : currentFrame - 1;
+    changeFrame(newFrame);
   };
 
   return (
@@ -105,11 +141,9 @@ export default function ThreeSixty() {
         {/* Header */}
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Vista 360° del T1
+            {title}
           </h2>
-          <p className="text-gray-300 text-lg">
-            Arrastra para rotar el vehículo o usa los controles de navegación
-          </p>
+          <p className="text-gray-300 text-lg">{subtitle}</p>
         </div>
 
         {/* 360 Viewer */}
@@ -125,12 +159,19 @@ export default function ThreeSixty() {
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
-            <Image
-              src={`/models/t1/360/${currentFrame}.png`}
-              alt={`Vista 360° del T1 - Frame ${currentFrame}`}
-              fill
-              className="object-contain transition-opacity duration-100"
-              priority
+            <img
+              src={`${imagePath}/${currentFrame}.png`}
+              alt={`Vista 360° del ${model.toUpperCase()} - Frame ${currentFrame}`}
+              className={`w-full h-full object-contain transition-opacity duration-150 ${
+                isTransitioning ? "opacity-70" : "opacity-100"
+              }`}
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+              }}
             />
 
             {/* Loading overlay - only show while loading */}
@@ -138,10 +179,20 @@ export default function ThreeSixty() {
               <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                 <div className="text-white text-center">
                   <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
-                  <p>Cargando vista 360°...</p>
-                  <p className="text-sm mt-2">
-                    {loadedImages} / {totalFrames} imágenes
+                  <p className="text-lg font-medium">
+                    Preparando vista 360°...
                   </p>
+                  <p className="text-sm mt-2 text-gray-300">
+                    {loadedImages} / {totalFrames} imágenes cargadas
+                  </p>
+                  <div className="mt-4 w-48 bg-gray-700 rounded-full h-2 mx-auto">
+                    <div
+                      className="bg-white h-2 rounded-full transition-all duration-300"
+                      style={{
+                        width: `${(loadedImages / totalFrames) * 100}%`,
+                      }}
+                    ></div>
+                  </div>
                 </div>
               </div>
             )}
@@ -252,42 +303,44 @@ export default function ThreeSixty() {
         </div>
 
         {/* Instructions */}
-        <div className="mt-8 text-center">
-          <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-400">
-            <div className="flex items-center">
-              <svg
-                className="w-4 h-4 mr-2"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M7 11l5-5m0 0l5 5m-5-5v12"
-                />
-              </svg>
-              Arrastra para rotar
-            </div>
-            <div className="flex items-center">
-              <svg
-                className="w-4 h-4 mr-2"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h1m4 0h1m-6-8h8a2 2 0 012 2v8a2 2 0 01-2 2H8a2 2 0 01-2-2V8a2 2 0 012-2z"
-                />
-              </svg>
-              Usa las flechas
+        {showInstructions && (
+          <div className="mt-8 text-center">
+            <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-400">
+              <div className="flex items-center">
+                <svg
+                  className="w-4 h-4 mr-2"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M7 11l5-5m0 0l5 5m-5-5v12"
+                  />
+                </svg>
+                Arrastra para rotar
+              </div>
+              <div className="flex items-center">
+                <svg
+                  className="w-4 h-4 mr-2"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h1m4 0h1m-6-8h8a2 2 0 012 2v8a2 2 0 01-2 2H8a2 2 0 01-2-2V8a2 2 0 012-2z"
+                  />
+                </svg>
+                Usa las flechas
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </section>
   );

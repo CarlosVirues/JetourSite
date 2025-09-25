@@ -46,8 +46,8 @@ export default async function VehicleModelPage({ params }) {
       {/* Vehicle Gallery Section */}
       <VehicleGallery vehicleGalleryData={modelPageData.vehicleGallery} />
 
-      {/* 360 View Section - Only for T1 model */}
-      {model === "t1" && <ThreeSixty />}
+      {/* 360 View Section - Only for models with 360 data */}
+      {modelPageData.threeSixty && <ThreeSixty {...modelPageData.threeSixty} />}
 
       {/* Hero Showcase Section */}
       <HeroShowcase heroShowcaseData={modelPageData.heroShowcase} />
