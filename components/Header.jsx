@@ -99,7 +99,7 @@ export default function Header({ transparent = false, border = false }) {
               alt="JETOUR"
               width={168}
               height={32}
-              className="w-auto h-10"
+              className="w-auto h-auto"
             />
           </Link>
         </motion.div>
