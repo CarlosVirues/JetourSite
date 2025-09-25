@@ -116,9 +116,7 @@ export default function ThreeSixty({
                   <p className="text-lg font-medium">
                     Preparando vista 360°...
                   </p>
-                  <p className="text-sm mt-2 text-gray-300">
-                    {loadedImages} / {totalFrames} imágenes cargadas
-                  </p>
+
                   <div className="mt-4 w-48 bg-gray-700 rounded-full h-2 mx-auto">
                     <div
                       className="bg-white h-2 rounded-full transition-all duration-300"
@@ -186,19 +184,10 @@ export default function ThreeSixty({
               </svg>
             </button>
           </div>
-
-          {/* Frame Counter - Desktop */}
-          <div className="hidden md:block absolute bottom-4 left-1/2 transform -translate-x-1/2">
-            <div className="bg-black bg-opacity-50 text-white px-4 py-2 rounded-full backdrop-blur-sm">
-              <span className="text-sm">
-                {currentFrame} / {totalFrames}
-              </span>
-            </div>
-          </div>
         </div>
 
         {/* Mobile Navigation Controls */}
-        <div className="md:hidden flex justify-center items-center gap-4 mt-6">
+        <div className="md:hidden flex justify-center items-center gap-6 mt-6">
           <button
             onClick={prevFrame}
             disabled={currentFrame === 1}
@@ -223,12 +212,6 @@ export default function ThreeSixty({
               />
             </svg>
           </button>
-
-          <div className="bg-black bg-opacity-50 text-white px-4 py-2 rounded-full backdrop-blur-sm">
-            <span className="text-sm">
-              {currentFrame} / {totalFrames}
-            </span>
-          </div>
 
           <button
             onClick={nextFrame}
