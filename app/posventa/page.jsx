@@ -27,7 +27,7 @@ export default function PostventaPage() {
         <div className="relative z-10 flex items-center justify-center h-full">
           <div className="text-center">
             <h1 className="text-5xl lg:text-7xl font-bold text-white mb-4">
-              Postventa
+              Posventa
             </h1>
             <p className="text-xl">Experiencia y respaldo para Tu Jetour</p>
           </div>

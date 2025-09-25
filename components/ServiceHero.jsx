@@ -63,10 +63,7 @@ export default function ServiceHero() {
                   Tecnología y diagnóstico de última generación
                 </h3>
                 <p className="text-sm md:text-base lg:text-lg leading-relaxed">
-                  El servicio postventa de JETOUR se diferencia por emplear
-                  tecnologías especializadas y herramientas de última
-                  generación, garantizando diagnósticos precisos realizados por
-                  personal especializado de fábrica.
+                  El servicio posventa de JETOUR trasciende lo convencional: integra tecnologías de vanguardia y herramientas de última generación que permiten diagnósticos precisos, ejecutados con la maestría de especialistas formados directamente en fábrica.
                 </p>
               </div>
             </div>
