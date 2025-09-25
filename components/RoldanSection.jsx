@@ -11,11 +11,11 @@ export default function RoldanSection() {
       icon: Shield,
       title: "COBERTURA A NIVEL NACIONAL",
       description:
-        "Enfocado en el estilo, la aerodinámica y los acabados premium.",
+        "17 concesionarios en todo el país y talleres autorizados. Repuestos y accesorios continuos.",
       borderColor: "border-blue-500",
       bgColor: "bg-blue-500/10",
     },
-    {
+    /*{
       id: 2,
       icon: Award,
       title: "LAS MEJORES MARCAS AUTOMOTRICES",
@@ -23,9 +23,9 @@ export default function RoldanSection() {
         "Sin necesidad de pagar extras por elementos clave como sunroof, cámaras 360, o asientos eléctricos.",
       borderColor: "border-blue-500",
       bgColor: "bg-blue-500/10",
-    },
+    },*/
     {
-      id: 3,
+      id: 2,
       icon: Users,
       title: "MÁS DE 50 AÑOS DE RESPALDO",
       description:
@@ -100,7 +100,7 @@ export default function RoldanSection() {
             viewport={{ once: true }}
             className="text-3xl md:text-4xl lg:text-5xl font-bold text-white"
           >
-            Una Promesa de Calidad
+            En Ecuador, Jetour tiene el respaldo de Grupo Roldán.
           </motion.h2>
         </motion.div>
 

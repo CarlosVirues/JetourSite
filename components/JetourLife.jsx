@@ -128,10 +128,8 @@ export default function JetourLife() {
             className="space-y-2 mb-6"
           >
             <p className="text-lg md:text-xl text-gray-300">
-              Más allá del asfalto, un estilo de vida que te acompaña.
-            </p>
-            <p className="text-base md:text-lg text-gray-400">
-              ¡Sigue nuestro Instagram y encuentra tu próxima aventura favorita!
+              Bienvenido a la comunidad oficial de Jetour en Ecuador.<br/>
+Apuesta por un estilo de vida diferente.
             </p>
             <p className="text-sm md:text-base font-bold">@jetour.life</p>
           </motion.div>
