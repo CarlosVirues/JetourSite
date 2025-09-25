@@ -16,6 +16,16 @@ export default function GlobalStats() {
     },
     {
       id: 2,
+      icon: Globe,
+      label: "Presente en más de",
+      mainNumber: "50 países",
+      subtitle: "",
+      description:
+        "Conquistan mercados con diseño de vanguardia e ingeniería robusta.",
+      backgroundVideo: "/video/auto-show-gags.mp4",
+    },
+    {
+      id: 3,
       icon: Settings,
       label: "Más de",
       mainNumber: "568,387 unidades vendidas",
@@ -23,16 +33,6 @@ export default function GlobalStats() {
       description:
         "a nivel mundial en 2024, con un impresionante crecimiento del 60.5% año tras año",
       backgroundVideo: "/video/jetour-super-factory.mp4",
-    },
-    {
-      id: 3,
-      icon: Globe,
-      label: "En más de",
-      mainNumber: "50 países",
-      subtitle: "",
-      description:
-        "conquista mercados globales con un diseño de vanguardia y una ingeniería robusta.",
-      backgroundVideo: "/video/auto-show-gags.mp4",
     },
   ];
 
@@ -67,11 +67,10 @@ export default function GlobalStats() {
           className="text-center mb-12 md:mb-16"
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-            RESPALDO MUNDIAL A TU ALCANCE
+            APUESTA POR EL RESPALDO Y LA CONFIANZA
           </h2>
           <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
-            Más que una marca, es innovación que brinda calidad y diseño de
-            vanguardia.
+            Jetour, una marca con presencia y garantía mundial.
           </p>
         </motion.div>
 
@@ -164,7 +163,7 @@ export default function GlobalStats() {
                             delay: index * 0.2 + 0.5,
                           }}
                           viewport={{ once: true }}
-                          className="text-gray-300 text-sm md:text-base font-medium mb-2"
+                          className="text-white text-sm md:text-base font-medium mb-2"
                         >
                           {stat.subtitle}
                         </motion.p>
@@ -179,7 +178,7 @@ export default function GlobalStats() {
                             delay: index * 0.2 + 0.6,
                           }}
                           viewport={{ once: true }}
-                          className="text-gray-400 text-xs md:text-sm leading-relaxed"
+                          className="text-white text-xs md:text-sm leading-relaxed"
                         >
                           {stat.description}
                         </motion.p>

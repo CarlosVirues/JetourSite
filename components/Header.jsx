@@ -40,7 +40,7 @@ export default function Header({ transparent = false, border = false }) {
         label: model.name,
       })),
     },
-    { href: "/postventa", label: "Postventa" },
+    { href: "/posventa", label: "Posventa" },
     { href: "/concesionarios", label: "Concesionarios" },
     { href: "/noticias", label: "Noticias" },
     { href: "/contacto", label: "Contacto" },
