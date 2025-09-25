@@ -11,12 +11,8 @@ export default function ThreeSixty({
   showInstructions = true,
 }) {
   const [currentFrame, setCurrentFrame] = useState(1);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [startFrame, setStartFrame] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [loadedImages, setLoadedImages] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
   const containerRef = useRef(null);
   const imageCache = useRef(new Map());
 
@@ -63,76 +59,21 @@ export default function ThreeSixty({
     preloadImages();
   }, [imagePath, totalFrames]);
 
-  const handleMouseDown = (e) => {
-    setIsDragging(true);
-    setStartX(e.clientX);
-    setStartFrame(currentFrame);
-  };
-
-  const handleMouseMove = (e) => {
-    if (!isDragging) return;
-
-    const deltaX = e.clientX - startX;
-    const sensitivity = 0.1;
-    const frameChange = Math.round(deltaX * sensitivity);
-    let newFrame = startFrame + frameChange;
-
-    // Wrap around
-    if (newFrame < 1) newFrame = totalFrames + newFrame;
-    if (newFrame > totalFrames) newFrame = newFrame - totalFrames;
-
-    changeFrame(newFrame);
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
-
-  const handleTouchStart = (e) => {
-    setIsDragging(true);
-    setStartX(e.touches[0].clientX);
-    setStartFrame(currentFrame);
-  };
-
-  const handleTouchMove = (e) => {
-    if (!isDragging) return;
-
-    const deltaX = e.touches[0].clientX - startX;
-    const sensitivity = 0.1;
-    const frameChange = Math.round(deltaX * sensitivity);
-    let newFrame = startFrame + frameChange;
-
-    // Wrap around
-    if (newFrame < 1) newFrame = totalFrames + newFrame;
-    if (newFrame > totalFrames) newFrame = newFrame - totalFrames;
-
-    changeFrame(newFrame);
-  };
-
-  const handleTouchEnd = () => {
-    setIsDragging(false);
-  };
-
-  const changeFrame = (newFrame) => {
-    if (isTransitioning || newFrame === currentFrame) return;
-
-    setIsTransitioning(true);
+  const handleSliderChange = (e) => {
+    const newFrame = parseInt(e.target.value);
     setCurrentFrame(newFrame);
-
-    // Reset transition state after a short delay
-    setTimeout(() => {
-      setIsTransitioning(false);
-    }, 150);
   };
 
   const nextFrame = () => {
-    const newFrame = currentFrame === totalFrames ? 1 : currentFrame + 1;
-    changeFrame(newFrame);
+    if (currentFrame < totalFrames) {
+      setCurrentFrame(currentFrame + 1);
+    }
   };
 
   const prevFrame = () => {
-    const newFrame = currentFrame === 1 ? totalFrames : currentFrame - 1;
-    changeFrame(newFrame);
+    if (currentFrame > 1) {
+      setCurrentFrame(currentFrame - 1);
+    }
   };
 
   return (
@@ -143,28 +84,21 @@ export default function ThreeSixty({
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
             {title}
           </h2>
-          <p className="text-gray-300 text-lg">{subtitle}</p>
+          <p className="text-gray-300 text-lg">
+            Usa el slider o los controles de navegación para rotar el vehículo
+          </p>
         </div>
 
         {/* 360 Viewer */}
         <div className="relative">
           <div
             ref={containerRef}
-            className="relative w-full h-96 md:h-[500px] lg:h-[600px] bg-black rounded-lg overflow-hidden cursor-grab active:cursor-grabbing select-none"
-            onMouseDown={handleMouseDown}
-            onMouseMove={handleMouseMove}
-            onMouseUp={handleMouseUp}
-            onMouseLeave={handleMouseUp}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
+            className="relative w-full h-96 md:h-[500px] lg:h-[600px] bg-black rounded-lg overflow-hidden select-none"
           >
             <img
               src={`${imagePath}/${currentFrame}.png`}
               alt={`Vista 360° del ${model.toUpperCase()} - Frame ${currentFrame}`}
-              className={`w-full h-full object-contain transition-opacity duration-150 ${
-                isTransitioning ? "opacity-70" : "opacity-100"
-              }`}
+              className="w-full h-full object-contain"
               style={{
                 position: "absolute",
                 top: 0,
@@ -202,7 +136,12 @@ export default function ThreeSixty({
           <div className="hidden md:block absolute top-1/2 left-4 transform -translate-y-1/2 z-10">
             <button
               onClick={prevFrame}
-              className="bg-black bg-opacity-60 hover:bg-opacity-80 text-white p-4 rounded-full transition-all duration-200 backdrop-blur-sm border border-white border-opacity-20 shadow-lg"
+              disabled={currentFrame === 1}
+              className={`p-4 rounded-full transition-all duration-200 backdrop-blur-sm border border-white border-opacity-20 shadow-lg ${
+                currentFrame === 1
+                  ? "bg-black bg-opacity-30 text-gray-500 cursor-not-allowed"
+                  : "bg-black bg-opacity-60 hover:bg-opacity-80 text-white"
+              }`}
               aria-label="Vista anterior"
             >
               <svg
@@ -224,7 +163,12 @@ export default function ThreeSixty({
           <div className="hidden md:block absolute top-1/2 right-4 transform -translate-y-1/2 z-10">
             <button
               onClick={nextFrame}
-              className="bg-black bg-opacity-60 hover:bg-opacity-80 text-white p-4 rounded-full transition-all duration-200 backdrop-blur-sm border border-white border-opacity-20 shadow-lg"
+              disabled={currentFrame === totalFrames}
+              className={`p-4 rounded-full transition-all duration-200 backdrop-blur-sm border border-white border-opacity-20 shadow-lg ${
+                currentFrame === totalFrames
+                  ? "bg-black bg-opacity-30 text-gray-500 cursor-not-allowed"
+                  : "bg-black bg-opacity-60 hover:bg-opacity-80 text-white"
+              }`}
               aria-label="Vista siguiente"
             >
               <svg
@@ -257,7 +201,12 @@ export default function ThreeSixty({
         <div className="md:hidden flex justify-center items-center gap-4 mt-6">
           <button
             onClick={prevFrame}
-            className="bg-black bg-opacity-60 hover:bg-opacity-80 text-white p-3 rounded-full transition-all duration-200 backdrop-blur-sm border border-white border-opacity-20 shadow-lg"
+            disabled={currentFrame === 1}
+            className={`p-3 rounded-full transition-all duration-200 backdrop-blur-sm border border-white border-opacity-20 shadow-lg ${
+              currentFrame === 1
+                ? "bg-black bg-opacity-30 text-gray-500 cursor-not-allowed"
+                : "bg-black bg-opacity-60 hover:bg-opacity-80 text-white"
+            }`}
             aria-label="Vista anterior"
           >
             <svg
@@ -283,7 +232,12 @@ export default function ThreeSixty({
 
           <button
             onClick={nextFrame}
-            className="bg-black bg-opacity-60 hover:bg-opacity-80 text-white p-3 rounded-full transition-all duration-200 backdrop-blur-sm border border-white border-opacity-20 shadow-lg"
+            disabled={currentFrame === totalFrames}
+            className={`p-3 rounded-full transition-all duration-200 backdrop-blur-sm border border-white border-opacity-20 shadow-lg ${
+              currentFrame === totalFrames
+                ? "bg-black bg-opacity-30 text-gray-500 cursor-not-allowed"
+                : "bg-black bg-opacity-60 hover:bg-opacity-80 text-white"
+            }`}
             aria-label="Vista siguiente"
           >
             <svg
@@ -300,6 +254,38 @@ export default function ThreeSixty({
               />
             </svg>
           </button>
+        </div>
+
+        {/* Slider Control */}
+        <div className="mt-8 px-4">
+          <div className="max-w-md mx-auto">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm text-gray-400">0°</span>
+              <span className="text-sm text-white font-medium">
+                {Math.round(((currentFrame - 1) / (totalFrames - 1)) * 360)}°
+              </span>
+              <span className="text-sm text-gray-400">360°</span>
+            </div>
+            <input
+              type="range"
+              min="1"
+              max={totalFrames}
+              value={currentFrame}
+              onChange={handleSliderChange}
+              className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer slider"
+              style={{
+                background: `linear-gradient(to right, #ffffff 0%, #ffffff ${
+                  ((currentFrame - 1) / (totalFrames - 1)) * 100
+                }%, #374151 ${
+                  ((currentFrame - 1) / (totalFrames - 1)) * 100
+                }%, #374151 100%)`,
+              }}
+            />
+            <div className="flex justify-between mt-1 text-xs text-gray-500">
+              <span>Inicio</span>
+              <span>Fin</span>
+            </div>
+          </div>
         </div>
 
         {/* Instructions */}
@@ -320,7 +306,7 @@ export default function ThreeSixty({
                     d="M7 11l5-5m0 0l5 5m-5-5v12"
                   />
                 </svg>
-                Arrastra para rotar
+                Usa el slider
               </div>
               <div className="flex items-center">
                 <svg
