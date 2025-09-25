@@ -29,7 +29,9 @@ export default function PostventaPage() {
             <h1 className="text-5xl lg:text-7xl font-bold text-white mb-4">
               Posventa
             </h1>
-            <p className="text-xl">Experiencia y respaldo para Tu Jetour</p>
+            <p className="text-xl">
+              El respaldo que esperas con la calidad que exiges
+            </p>
           </div>
         </div>
       </section>
