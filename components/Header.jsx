@@ -97,8 +97,8 @@ export default function Header({ transparent = false, border = false }) {
             <Image
               src="/jetour-logo.png"
               alt="JETOUR"
-              width={318}
-              height={60}
+              width={168}
+              height={32}
               className="w-auto h-10"
             />
           </Link>
