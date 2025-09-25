@@ -30,21 +30,31 @@ export default function Header({ transparent = false, border = false }) {
 
   const shouldBeTransparent = transparent && !isScrolled;
 
+const modelOrder = [
+  "dashing",
+  "t1",
+  "t2",
+  "t2-phev",
+  "x50",
+  "x70-sport",
+  "x70-plus",
+];
+
   const navItems = [
-    { href: "/", label: "Inicio" },
-    {
-      label: "Modelos",
-      isDropdown: true,
-      items: Object.entries(vehicleModels).map(([key, model]) => ({
-        href: `/vehiculos/${key}`,
-        label: model.name,
-      })),
-    },
-    { href: "/posventa", label: "Posventa" },
-    { href: "/concesionarios", label: "Concesionarios" },
-    { href: "/noticias", label: "Noticias" },
-    { href: "/contacto", label: "Contacto" },
-  ];
+  { href: "/", label: "Inicio" },
+  {
+    label: "Modelos",
+    isDropdown: true,
+    items: modelOrder.map((key) => ({
+      href: `/vehiculos/${key}`,
+      label: vehicleModels[key].name,
+    })),
+  },
+  { href: "/posventa", label: "Posventa" },
+  { href: "/concesionarios", label: "Concesionarios" },
+  { href: "/noticias", label: "Noticias" },
+  { href: "/contacto", label: "Contacto" },
+];
 
   const isActive = (href) => {
     if (href === "/") {
