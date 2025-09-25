@@ -31,7 +31,7 @@ export default function Header({ transparent = false, border = false }) {
   const shouldBeTransparent = transparent && !isScrolled;
 
   const navItems = [
-    { href: "/", label: "Home" },
+    { href: "/", label: "Inicio" },
     {
       label: "Modelos",
       isDropdown: true,

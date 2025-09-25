@@ -12,45 +12,45 @@ export default function VehicleShowcase() {
   const vehicles = [
     {
       id: 1,
-      name: "T2",
-      slug: "t2",
-      image: "/models/model-t2.jpg",
-    },
-    {
-      id: 2,
-      name: "T1",
-      slug: "t1",
-      image: "/models/model-t1.jpg",
-    },
-    {
-      id: 3,
-      name: "T2 PHEV",
-      slug: "t2-phev",
-      image: "/models/model-t2-phev.jpg",
-    },
-    {
-      id: 4,
       name: "X50",
       slug: "x50",
       image: "/models/model-x50.jpg",
     },
     {
-      id: 5,
+      id: 2,
       name: "X70 Sport",
       slug: "x70-sport",
       image: "/models/model-x70.jpg",
     },
-    {
-      id: 6,
+        {
+      id: 3,
       name: "X70 PLUS",
       slug: "x70-plus",
       image: "/models/model-x70-plus.jpg",
     },
     {
-      id: 7,
+      id: 4,
       name: "DASHING",
       slug: "dashing",
       image: "/models/model-dashing.jpg", // Imagen temporal hasta tener la específica
+    },
+    {
+      id: 5,
+      name: "T1",
+      slug: "t1",
+      image: "/models/model-t1.jpg",
+    },
+    {
+      id: 6,
+      name: "T2",
+      slug: "t2",
+      image: "/models/model-t2.jpg",
+    },
+    {
+      id: 7,
+      name: "T2 PHEV",
+      slug: "t2-phev",
+      image: "/models/model-t2-phev.jpg",
     },
   ];
 
@@ -78,7 +78,7 @@ export default function VehicleShowcase() {
           className="text-center mb-12 md:mb-16"
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-            Jetour no es solo un auto, es la decisión de apostar por ti.
+            Cuando apuestas por Jetour, apuestas por ti.
           </h2>
           <p className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
             Tecnología de vanguardia, diseño que rompe esquemas y espacio
