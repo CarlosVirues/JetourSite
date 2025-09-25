@@ -83,7 +83,7 @@ export default function Header({ transparent = false, border = false }) {
       }`}
     >
       <div
-        className={`max-w-7xl mx-auto flex justify-between items-center pb-4 ${
+        className={`max-w-7xl mx-auto flex justify-between items-center pb-0 ${
           border ? "border-b border-gray-50/50" : ""
         }`}
       >
