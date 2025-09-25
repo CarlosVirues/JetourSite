@@ -31,13 +31,13 @@ export default function Header({ transparent = false, border = false }) {
   const shouldBeTransparent = transparent && !isScrolled;
 
 const modelOrder = [
+  "x50",
+  "x70-sport",
+  "x70-plus",
   "dashing",
   "t1",
   "t2",
   "t2-phev",
-  "x50",
-  "x70-sport",
-  "x70-plus",
 ];
 
   const navItems = [
