@@ -5,10 +5,9 @@ import QuoteForm from "@/components/QuoteForm";
 import VehicleHero from "@/components/VehicleHero";
 import VehicleFeatures from "@/components/VehicleFeatures";
 import VehicleGallery from "@/components/VehicleGallery";
-import VehicleGalleryExtra from "@/components/VehicleGalleryExtra";
 import ThreeSixty from "@/components/360";
 import Footer from "@/components/Footer";
-import { getVehicleHeroConfig, getVehicleModel } from "@/lib/vehicle-models";
+import { getVehicleModel } from "@/lib/vehicle-models";
 import { getPageData, getVehicleModelPageData } from "@/lib/page-data";
 
 export async function generateMetadata({ params }) {

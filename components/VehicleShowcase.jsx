@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 
 export default function VehicleShowcase() {
@@ -22,7 +21,7 @@ export default function VehicleShowcase() {
       slug: "x70-sport",
       image: "/models/model-x70.jpg",
     },
-        {
+    {
       id: 3,
       name: "X70 PLUS",
       slug: "x70-plus",
@@ -94,20 +93,20 @@ export default function VehicleShowcase() {
           {/* Navigation Arrows */}
           <motion.button
             onClick={prevSlide}
-            className="absolute left-4 md:-left-20 top-1/2 transform -translate-y-1/2 z-30 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white p-3 md:p-4 rounded-full transition-all duration-300"
+            className="absolute left-2 md:-left-20 top-1/2 transform -translate-y-1/2 z-30 bg-black/50 hover:bg-black/70 backdrop-blur-sm text-white p-2 md:p-4 rounded-full transition-all duration-300"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
-            <ChevronLeft className="w-6 h-6 md:w-8 md:h-8" />
+            <ChevronLeft className="w-5 h-5 md:w-8 md:h-8" />
           </motion.button>
 
           <motion.button
             onClick={nextSlide}
-            className="absolute right-4 md:-right-20 top-1/2 transform -translate-y-1/2 z-30 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white p-3 md:p-4 rounded-full transition-all duration-300"
+            className="absolute right-2 md:-right-20 top-1/2 transform -translate-y-1/2 z-30 bg-black/50 hover:bg-black/70 backdrop-blur-sm text-white p-2 md:p-4 rounded-full transition-all duration-300"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
-            <ChevronRight className="w-6 h-6 md:w-8 md:h-8" />
+            <ChevronRight className="w-5 h-5 md:w-8 md:h-8" />
           </motion.button>
 
           {/* Slides Container */}
@@ -123,9 +122,9 @@ export default function VehicleShowcase() {
                   stiffness: 300,
                   damping: 30,
                 }}
-                className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6"
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
               >
-                {/* Show 4 cards with infinite loop */}
+                {/* Show cards with responsive count */}
                 {Array.from({ length: 4 }, (_, index) => {
                   const vehicleIndex = (currentSlide + index) % vehicles.length;
                   const vehicle = vehicles[vehicleIndex];
@@ -133,7 +132,9 @@ export default function VehicleShowcase() {
                   return (
                     <motion.div
                       key={`${vehicle.id}-${currentSlide}-${index}`}
-                      className={`relative rounded-xl overflow-hidden cursor-pointer transition-all duration-500 aspect-[400/600]`}
+                      className={`relative rounded-xl overflow-hidden cursor-pointer transition-all duration-500 aspect-[400/600] ${
+                        index === 0 ? "block" : "hidden md:block"
+                      }`}
                       onClick={() => goToSlide(vehicleIndex)}
                       whileHover={{ scale: 1.02 }}
                     >

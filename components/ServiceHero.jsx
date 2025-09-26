@@ -58,12 +58,15 @@ export default function ServiceHero() {
 
             {/* Text Column with Blue Background */}
             <div className="relative h-64 md:h-80 lg:h-96 flex items-center z-10">
-              <div className="p-2 md:p-4 lg:p-6 text-white border-l-12 border-blue-500 -ml-12">
+              <div className="p-2 md:p-4 lg:p-6 text-white border-l-12 border-blue-500 lg:-ml-12">
                 <h3 className="text-xl md:text-2xl lg:text-3xl font-bold mb-4 leading-tight">
                   Tecnología y diagnóstico de última generación
                 </h3>
                 <p className="text-sm md:text-base lg:text-lg leading-relaxed">
-                  El servicio posventa de JETOUR trasciende lo convencional: integra tecnologías de vanguardia y herramientas de última generación que permiten diagnósticos precisos, ejecutados con la maestría de especialistas formados directamente en fábrica.
+                  El servicio posventa de JETOUR trasciende lo convencional:
+                  integra tecnologías de vanguardia y herramientas de última
+                  generación que permiten diagnósticos precisos, ejecutados con
+                  la maestría de especialistas formados directamente en fábrica.
                 </p>
               </div>
             </div>

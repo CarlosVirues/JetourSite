@@ -15,14 +15,13 @@ export default function VehicleFeatures({ featuresData }) {
     <section className="relative bg-black text-white py-8 md:py-12 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         {/* Features Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-0 lg:gap-0">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-0">
           {features.map((feature, index) => (
             <motion.div
               key={feature.id}
               initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: index * 0.2 }}
-              viewport={{ once: true }}
               className="relative group"
             >
               {/* Feature Card */}

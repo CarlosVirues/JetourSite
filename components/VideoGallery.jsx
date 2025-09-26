@@ -14,15 +14,11 @@ export default function VideoGallery({
   const [selectedVideo, setSelectedVideo] = useState(null);
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % Math.max(1, videos.length - 1));
+    setCurrentSlide((prev) => (prev + 1) % videos.length);
   };
 
   const prevSlide = () => {
-    setCurrentSlide(
-      (prev) =>
-        (prev - 1 + Math.max(1, videos.length - 1)) %
-        Math.max(1, videos.length - 1)
-    );
+    setCurrentSlide((prev) => (prev - 1 + videos.length) % videos.length);
   };
 
   const goToSlide = (index) => {
@@ -91,7 +87,7 @@ export default function VideoGallery({
   };
 
   return (
-    <section className="relative bg-black text-white py-16">
+    <section className="relative bg-black text-white lg:py-16">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         {/* Title */}
         <motion.div
@@ -108,25 +104,25 @@ export default function VideoGallery({
 
         {/* Video Carousel */}
         <div className="relative">
-          {/* Navigation Arrows - Only show if more than 1 video */}
+          {/* Navigation Arrows - Show if more than 1 video */}
           {videos.length > 1 && (
             <>
               <motion.button
                 onClick={prevSlide}
-                className="absolute left-4 md:-left-20 top-1/2 transform -translate-y-1/2 z-30 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white p-3 md:p-4 rounded-full transition-all duration-300"
+                className="absolute left-2 md:-left-20 top-1/2 transform -translate-y-1/2 z-30 bg-black/50 hover:bg-black/70 backdrop-blur-sm text-white p-2 md:p-4 rounded-full transition-all duration-300"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
-                <ChevronLeft className="w-6 h-6 md:w-8 md:h-8" />
+                <ChevronLeft className="w-5 h-5 md:w-8 md:h-8" />
               </motion.button>
 
               <motion.button
                 onClick={nextSlide}
-                className="absolute right-4 md:-right-20 top-1/2 transform -translate-y-1/2 z-30 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white p-3 md:p-4 rounded-full transition-all duration-300"
+                className="absolute right-2 md:-right-20 top-1/2 transform -translate-y-1/2 z-30 bg-black/50 hover:bg-black/70 backdrop-blur-sm text-white p-2 md:p-4 rounded-full transition-all duration-300"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
-                <ChevronRight className="w-6 h-6 md:w-8 md:h-8" />
+                <ChevronRight className="w-5 h-5 md:w-8 md:h-8" />
               </motion.button>
             </>
           )}
@@ -147,7 +143,7 @@ export default function VideoGallery({
                 className={`grid gap-6 md:gap-8 ${
                   videos.length === 1
                     ? "grid-cols-1 max-w-4xl mx-auto"
-                    : "grid-cols-1 lg:grid-cols-2"
+                    : "grid-cols-1 md:grid-cols-2"
                 }`}
               >
                 {/* Main Video (Left) */}
@@ -229,11 +225,11 @@ export default function VideoGallery({
                   </motion.div>
                 </motion.div>
 
-                {/* Secondary Video (Right) - Only show if more than 1 video */}
-                {videos.length > 1 && (
+                {/* Secondary Video (Right) - Show if 2 videos or more, hidden on mobile */}
+                {videos.length >= 2 && (
                   <motion.div
                     variants={itemVariants}
-                    className="relative group cursor-pointer"
+                    className="relative group cursor-pointer hidden md:block"
                     whileHover={{ scale: 1.02 }}
                     transition={{ duration: 0.3 }}
                     onClick={() => {
@@ -324,10 +320,10 @@ export default function VideoGallery({
             </AnimatePresence>
           </div>
 
-          {/* Dots Indicator - Only show if more than 1 video */}
+          {/* Dots Indicator - Show if more than 1 video */}
           {videos.length > 1 && (
             <div className="flex justify-center mt-8 space-x-2">
-              {videos.slice(0, -1).map((_, index) => (
+              {videos.map((_, index) => (
                 <motion.button
                   key={index}
                   onClick={() => goToSlide(index)}

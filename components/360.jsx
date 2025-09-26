@@ -93,7 +93,7 @@ export default function ThreeSixty({
         <div className="relative">
           <div
             ref={containerRef}
-            className="relative w-full h-96 md:h-[500px] lg:h-[600px] bg-black rounded-lg overflow-hidden select-none"
+            className="relative w-full h-56 md:h-[500px] bg-black rounded-lg overflow-hidden select-none"
           >
             <img
               src={`${imagePath}/${currentFrame}.png`}
@@ -107,7 +107,6 @@ export default function ThreeSixty({
                 height: "100%",
               }}
             />
-
             {/* Loading overlay - only show while loading */}
             {isLoading && (
               <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
@@ -240,7 +239,7 @@ export default function ThreeSixty({
         </div>
 
         {/* Slider Control */}
-        <div className="mt-8 px-4">
+        <div className="px-4">
           <div className="max-w-md mx-auto">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm text-gray-400">0°</span>

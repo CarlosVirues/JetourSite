@@ -17,7 +17,7 @@ export default function AvisoProteccionDatosPage() {
       <section className="relative h-64 lg:h-80 bg-gradient-to-r from-black to-gray-900 overflow-hidden">
         <div className="relative z-10 flex items-center justify-center h-full">
           <div className="text-center">
-            <h1 className="text-4xl lg:text-6xl font-bold text-white mb-4">
+            <h1 className="text-3xl md:text-4xl lg:text-6xl font-bold text-white mb-4">
               Aviso de Política de Protección de Datos Personales
             </h1>
           </div>

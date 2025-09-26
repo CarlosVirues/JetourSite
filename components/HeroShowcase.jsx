@@ -98,7 +98,7 @@ export default function HeroShowcase({ heroShowcaseData }) {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="relative min-h-screen bg-black pt-32 pb-12"
+      className="relative bg-black lg:pt-8 pb-12"
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         {/* Headlines */}

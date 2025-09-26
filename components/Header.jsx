@@ -30,31 +30,31 @@ export default function Header({ transparent = false, border = false }) {
 
   const shouldBeTransparent = transparent && !isScrolled;
 
-const modelOrder = [
-  "x50",
-  "x70-sport",
-  "x70-plus",
-  "dashing",
-  "t1",
-  "t2",
-  "t2-phev",
-];
+  const modelOrder = [
+    "x50",
+    "x70-sport",
+    "x70-plus",
+    "dashing",
+    "t1",
+    "t2",
+    "t2-phev",
+  ];
 
   const navItems = [
-  { href: "/", label: "Inicio" },
-  {
-    label: "Modelos",
-    isDropdown: true,
-    items: modelOrder.map((key) => ({
-      href: `/vehiculos/${key}`,
-      label: vehicleModels[key].name,
-    })),
-  },
-  { href: "/posventa", label: "Posventa" },
-  { href: "/concesionarios", label: "Concesionarios" },
-  { href: "/noticias", label: "Noticias" },
-  { href: "/contacto", label: "Contacto" },
-];
+    { href: "/", label: "Inicio" },
+    {
+      label: "Modelos",
+      isDropdown: true,
+      items: modelOrder.map((key) => ({
+        href: `/vehiculos/${key}`,
+        label: vehicleModels[key].name,
+      })),
+    },
+    { href: "/posventa", label: "Posventa" },
+    { href: "/concesionarios", label: "Concesionarios" },
+    { href: "/noticias", label: "Noticias" },
+    { href: "/contacto", label: "Contacto" },
+  ];
 
   const isActive = (href) => {
     if (href === "/") {
@@ -93,7 +93,7 @@ const modelOrder = [
       }`}
     >
       <div
-        className={`max-w-7xl mx-auto flex justify-between items-center pb-0 ${
+        className={`max-w-7xl mx-auto flex justify-between items-center pb-2 ${
           border ? "border-b border-gray-50/50" : ""
         }`}
       >

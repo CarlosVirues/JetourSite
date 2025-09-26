@@ -62,7 +62,7 @@ export default function Hero({
               transition={{ duration: 0.8, delay: 0.5 }}
               className="mb-12 absolute bottom-8 left-1/2 transform -translate-x-1/2"
             >
-              <h2 className="text-2xl md:text-2xl lg:text-3xl font-light text-white">
+              <h2 className="text-base md:text-2xl lg:text-3xl font-light text-white">
                 {subtitle}
               </h2>
             </motion.div>

@@ -106,13 +106,13 @@ export default function Footer() {
             <h3 className="font-bold text-lg">Modelos</h3>
             <ul className="space-y-2 text-sm">
               {[
-                { href: "/vehiculos/t2", label: "T2" },
-                { href: "/vehiculos/t1", label: "T1" },
-                { href: "/vehiculos/t2-phev", label: "T2 PHEV" },
                 { href: "/vehiculos/x50", label: "X50" },
                 { href: "/vehiculos/x70-sport", label: "X70 Sport" },
                 { href: "/vehiculos/x70-plus", label: "X70 PLUS" },
                 { href: "/vehiculos/dashing", label: "DASHING" },
+                { href: "/vehiculos/t1", label: "T1" },
+                { href: "/vehiculos/t2", label: "T2" },
+                { href: "/vehiculos/t2-phev", label: "T2 PHEV" },
               ].map((link, index) => (
                 <motion.li
                   key={link.href}
@@ -222,7 +222,7 @@ export default function Footer() {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="border-t border-gray-800 mt-8 pt-8"
         >
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+          <div className="flex flex-col md:flex-row justify-between lg:items-center space-y-4 md:space-y-0">
             <p className="text-sm text-gray-300">
               Copyright 2025 © Jetour Ecuador
             </p>
@@ -230,7 +230,7 @@ export default function Footer() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.7 }}
-              className="flex space-x-6 text-sm"
+              className="flex flex-col md:flex-row space-x-6 text-sm"
             >
               {[
                 {

@@ -51,20 +51,20 @@ export default function FeaturedNews() {
           {/* Navigation Arrows */}
           <motion.button
             onClick={prevSlide}
-            className="absolute left-4 md:-left-20 top-1/2 transform -translate-y-1/2 z-30 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white p-3 md:p-4 rounded-full transition-all duration-300"
+            className="absolute left-2 md:-left-20 top-1/2 transform -translate-y-1/2 z-30 bg-black/50 hover:bg-black/70 backdrop-blur-sm text-white p-2 md:p-4 rounded-full transition-all duration-300"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
-            <ChevronLeft className="w-6 h-6 md:w-8 md:h-8" />
+            <ChevronLeft className="w-5 h-5 md:w-8 md:h-8" />
           </motion.button>
 
           <motion.button
             onClick={nextSlide}
-            className="absolute right-4 md:-right-20 top-1/2 transform -translate-y-1/2 z-30 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white p-3 md:p-4 rounded-full transition-all duration-300"
+            className="absolute right-2 md:-right-20 top-1/2 transform -translate-y-1/2 z-30 bg-black/50 hover:bg-black/70 backdrop-blur-sm text-white p-2 md:p-4 rounded-full transition-all duration-300"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
-            <ChevronRight className="w-6 h-6 md:w-8 md:h-8" />
+            <ChevronRight className="w-5 h-5 md:w-8 md:h-8" />
           </motion.button>
 
           {/* Articles Container */}
@@ -81,7 +81,9 @@ export default function FeaturedNews() {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: index * 0.1 }}
-                    className="relative group cursor-pointer"
+                    className={`relative group cursor-pointer ${
+                      index === 0 ? "block" : "hidden lg:block"
+                    }`}
                     whileHover={{ y: -8 }}
                   >
                     <Link href={`/noticias/${article.slug}`}>

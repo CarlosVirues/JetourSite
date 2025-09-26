@@ -22,7 +22,7 @@ export default function NoticiasPage() {
         {/* Hero Content */}
         <div className="relative z-10 flex items-center justify-center h-full">
           <div className="text-center">
-            <h1 className="text-5xl lg:text-7xl font-bold text-white mb-4">
+            <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold text-white mb-4">
               Noticias
             </h1>
           </div>
