@@ -29,7 +29,7 @@ export default function HomePage() {
       <RoldanSection {...pageData.roldanSection} />
 
       {/* Jetour Life Section */}
-      <JetourLife {...pageData.jetourLife} />
+      {/* <JetourLife {...pageData.jetourLife} /> */}
 
       {/* Video Gallery Section */}
       <VideoGallery {...pageData.videoGallery} />

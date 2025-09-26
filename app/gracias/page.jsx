@@ -16,23 +16,24 @@ export default function HomePage() {
       <Header transparent={true} />
 
       {/* Hero Section - Full Screen */}
-      <Hero />
+      <Hero {...pageData.hero} />
 
       {/* Vehicle Showcase Section */}
-      <VehicleShowcase />
+      <VehicleShowcase {...pageData.vehicleShowcase} />
 
       {/* Global Stats Section */}
-      <GlobalStats />
+      <GlobalStats {...pageData.globalStats} />
 
       {/* Roldan Section */}
-      <RoldanSection />
+      <RoldanSection {...pageData.roldanSection} />
 
       {/* Jetour Life Section */}
-      <JetourLife />
+      {/* <JetourLife {...pageData.jetourLife} /> */}
 
       {/* Video Gallery Section */}
       <VideoGallery {...pageData.videoGallery} />
 
+      {/* Quote Form Section */}
       <div
         className="bg-black py-16 lg:py-24 max-w-4xl mx-auto px-6 lg:px-12 text-center"
         id="contact-form"
