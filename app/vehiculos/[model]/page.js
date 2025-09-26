@@ -9,6 +9,7 @@ import ThreeSixty from "@/components/360";
 import Footer from "@/components/Footer";
 import { getVehicleModel } from "@/lib/vehicle-models";
 import { getPageData, getVehicleModelPageData } from "@/lib/page-data";
+import TechnicalSheetButton from "@/components/TechnicalSheetButton";
 
 export async function generateMetadata({ params }) {
   const pageParams = await params;
@@ -50,6 +51,9 @@ export default async function VehicleModelPage({ params }) {
 
       {/* Hero Showcase Section */}
       <HeroShowcase heroShowcaseData={modelPageData.heroShowcase} />
+
+      {/* Technical Sheet Section */}
+      <TechnicalSheetButton model={model} />
 
       {/* Video Gallery Section */}
       <VideoGallery {...modelPageData.videoGallery} />
