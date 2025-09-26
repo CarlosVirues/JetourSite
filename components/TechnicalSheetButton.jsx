@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function TechnicalSheetButton({ model = "t1" }) {
   return (
-    <div className="flex justify-center mt-8">
+    <div className="flex justify-center mt-8 mb-16">
       <Link
         href={`/models/${
           model === "x70-plus" ? "x70" : model

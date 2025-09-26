@@ -323,8 +323,8 @@ export default function ThreeSixty({
             </p>
           </div>
 
-          {/* Colors Grid */}
-          <div className="flex flex-row gap-4 max-w-2xl mx-auto">
+          {/* Simple Colors Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 max-w-4xl mx-auto px-8">
             {Array.from({ length: totalColors }, (_, index) => (
               <div key={index} className="text-center">
                 <div className="relative group cursor-pointer flex flex-col items-center">
