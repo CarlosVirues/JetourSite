@@ -32,7 +32,7 @@ export default function VehicleHero({
 
       {/* Main Content */}
       <div
-        className={`relative z-20 flex flex-col items-center h-full px-6 lg:px-12`}
+        className={`relative z-20 flex flex-col items-end justify-end h-full px-6 lg:px-12`}
       >
         {/* Vehicle Logo - Centered */}
         {logoImage && (
@@ -40,7 +40,7 @@ export default function VehicleHero({
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="my-auto mx-auto"
+            className=" mx-auto"
           >
             <Image
               src={logoImage}
