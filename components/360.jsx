@@ -9,6 +9,8 @@ export default function ThreeSixty({
   subtitle = "Arrastra para rotar el vehículo o usa los controles de navegación",
   imagePath = "/models/t1/360",
   showInstructions = true,
+  colorsPath = "/models/t1/colors",
+  totalColors = 6,
 }) {
   const [currentFrame, setCurrentFrame] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
@@ -25,7 +27,7 @@ export default function ThreeSixty({
 
       for (let i = 1; i <= totalFrames; i++) {
         const img = new window.Image();
-        img.src = `${imagePath}/${i}.png`;
+        img.src = `${model === "x70-plus" ? "x70/360" : imagePath}/${i}.png`;
         img.onload = () => {
           // Guardar en cache
           imageCache.current.set(i, img);
@@ -309,6 +311,40 @@ export default function ThreeSixty({
             </div>
           </div>
         )}
+
+        {/* Colors Section */}
+        <div className="mt-16">
+          <div className="text-center mb-8">
+            <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
+              Tu estilo, tu color
+            </h3>
+            <p className="text-gray-300 text-lg">
+              Explora la paleta disponible y encuentra el que conecta contigo.
+            </p>
+          </div>
+
+          {/* Colors Grid */}
+          <div className="flex flex-row gap-4 max-w-2xl mx-auto">
+            {Array.from({ length: totalColors }, (_, index) => (
+              <div key={index} className="text-center">
+                <div className="relative group cursor-pointer flex flex-col items-center">
+                  <img
+                    src={`${colorsPath}/${
+                      model === "x70-plus" ? "x70" : model
+                    }-color-${index + 1}.png`}
+                    alt={`${model.toUpperCase()} Color ${index + 1}`}
+                    className="w-full h-auto rounded-lg transition-transform duration-300 group-hover:scale-105 object-contain"
+                  />
+                  <div className="mt-2">
+                    <span className="text-white text-sm font-medium">
+                      Color {index + 1}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
