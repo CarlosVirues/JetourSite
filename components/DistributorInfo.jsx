@@ -111,7 +111,16 @@ export default function DistributorInfo({ distributor, onClose }) {
               >
                 {distributor.status}
               </span>
-              <span className="text-gray-500 ml-2">• {distributor.hours}</span>
+              {distributor.hours_weekdays && (
+                <div className="text-gray-500 text-sm ml-2">
+                  LUN - VIE: {distributor.hours_weekdays}
+                </div>
+              )}
+              {distributor.hours_saturday && (
+                <div className="text-gray-500 text-sm ml-2">
+                  SÁB: {distributor.hours_saturday}
+                </div>
+              )}
             </motion.div>
 
             <motion.div
