@@ -209,8 +209,12 @@ export default function Footer() {
               transition={{ duration: 0.6, delay: 0.5 }}
               className="space-y-2 text-sm"
             >
-              <p className="text-gray-300">info@jetourecuador.com</p>
-              <p className="text-gray-300">+593 997 001 986</p>
+              <Link href="mailto:info@jetourecuador.com">
+                <p className="text-gray-300">info@jetourecuador.com</p>
+              </Link>
+              <Link href="tel:+593997001986">
+                <p className="text-gray-300">+593 997 001 986</p>
+              </Link>
             </motion.div>
           </motion.div>
         </div>
