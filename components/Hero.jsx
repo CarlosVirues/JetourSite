@@ -19,7 +19,7 @@ export default function Hero({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
-      className={`relative ${height} w-full overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800`}
+      className={`relative ${height} w-full overflow-hidden bg-gradient-to-br from-slate-900 via-black to-slate-800`}
     >
       {/* Background Image/Video */}
       <div className="absolute inset-0">
