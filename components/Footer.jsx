@@ -77,7 +77,7 @@ export default function Footer() {
             <ul className="space-y-2 text-sm">
               {[
                 { href: "/", label: "Home" },
-                { href: "/postventa", label: "Postventa" },
+                { href: "/posventa", label: "Posventa" },
                 { href: "/concesionarios", label: "Concesionarios" },
                 // { href: "/noticias", label: "Noticias" },
                 { href: "/contacto", label: "Contacto" },
@@ -108,8 +108,8 @@ export default function Footer() {
               {[
                 { href: "/vehiculos/x50", label: "X50" },
                 { href: "/vehiculos/x70-sport", label: "X70 Sport" },
-                { href: "/vehiculos/x70-plus", label: "X70 PLUS" },
-                { href: "/vehiculos/dashing", label: "DASHING" },
+                { href: "/vehiculos/x70-plus", label: "X70 Plus" },
+                { href: "/vehiculos/dashing", label: "Dashing" },
                 { href: "/vehiculos/t1", label: "T1" },
                 { href: "/vehiculos/t2", label: "T2" },
                 { href: "/vehiculos/t2-phev", label: "T2 PHEV" },

@@ -32,7 +32,7 @@ export default function VehicleFeatures({ featuresData }) {
                     src={feature.image}
                     alt={feature.description}
                     fill
-                    className="object-cover object-center opacity-60 group-hover:opacity-80 transition-opacity duration-500"
+                    className="object-cover object-center opacity-80 group-hover:opacity-100 transition-opacity duration-500"
                   />
                 </div>
               </div>
