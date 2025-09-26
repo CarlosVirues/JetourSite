@@ -27,57 +27,132 @@ export default function ConcesionariosMap() {
   const mapRef = useRef(null);
 
   const distributors = {
-    ambato: [
-      {
-        id: 1,
-        name: "Automotores Carlos Palacios",
-        address: "Av. de los Capulies Frente al IESS.",
-        phone: "02 2555 212 ext 306 – 307",
-        mobile: "0986128980",
-        hours: "8:00 a 18:30",
-        status: "Cerrado",
-        image: "/distributor-1.jpg",
-        location: { lat: -1.2491, lng: -78.6168 }, // Ambato coordinates
-      },
+    quito: [
       {
         id: 2,
-        name: "Automotores Carlos Palacios",
-        address: "Av. de los Capulies Frente al IESS.",
-        phone: "02 2555 212 ext 306 – 307",
-        mobile: "0986128980",
-        hours: "8:00 a 18:30",
-        status: "Cerrado",
-        image: "/distributor-1.jpg",
-        location: { lat: -1.2491, lng: -78.6168 }, // Ambato coordinates
-      },
-    ],
-    cuenca: [
-      {
-        id: 3,
-        name: "Distribuidor Cuenca",
-        address: "Av. Principal Cuenca",
-        phone: "07 2555 212",
-        mobile: "0986128981",
+        name: "IBAMOTORS",
+        address: "Av. Gral Rumiñahui e Ista Marchena.",
+        phone: "",
+        mobile: "0995468680",
         hours: "8:00 a 18:30",
         status: "Abierto",
-        image: "/distributor-2.jpg",
-        location: { lat: -2.9006, lng: -79.0045 }, // Cuenca coordinates
+        image: "/distributor-quito-2.jpg",
+        location: { lat: null, lng: null },
+        contact: "Germánico Ibarra",
+        map: null,
+      },
+      {
+        id: 5,
+        name: "AUTODEALER / LUSADAEN",
+        address: "Av. Morán Valverde, Plaza Moblart, Frente a Quicentro Sur.",
+        phone: "",
+        mobile: "0958809556",
+        hours: "8:00 a 18:30",
+        status: "Abierto",
+        image: "/distributor-quito-5.jpg",
+        location: { lat: null, lng: null },
+        contact: "María Eugenia Espinosa",
+        map: null,
+      },
+    ],
+    ambato: [
+      {
+        id: 3,
+        name: "GRUPO PALACIOS",
+        address: "Av. de los Capulíes. Frente al IESS.",
+        phone: "",
+        mobile: "0983382125",
+        hours: "8:00 a 18:30",
+        status: "Abierto",
+        image: "/distributor-ambato-3.jpg",
+        location: { lat: null, lng: null },
+        contact: "Carlos Palacios",
+        map: "https://maps.app.goo.gl/gG1WorrM6J1BZwZf9",
       },
     ],
     guayaquil: [
       {
         id: 4,
-        name: "Distribuidor Guayaquil",
-        address: "Av. Principal Guayaquil",
-        phone: "04 2555 212",
-        mobile: "0986128982",
+        name: "AUTOLASA",
+        address: "Av. Pedro Menéndez Gilbert y Av. Carlos Luis Plaza Dañin.",
+        phone: "",
+        mobile: "0960052944",
         hours: "8:00 a 18:30",
-        status: "Cerrado",
-        image: "/distributor-3.jpg",
-        location: { lat: -2.1894, lng: -79.8891 }, // Guayaquil coordinates
+        status: "Abierto",
+        image: "/distributor-guayaquil-4.jpg",
+        location: { lat: null, lng: null },
+        contact: "Verónica Zapata",
+        map: "https://maps.app.goo.gl/Mj5v5ZF8Jrpboxu49",
+      },
+      {
+        id: 6,
+        name: "CORP. NOVALIDER",
+        address: "Av. Antonio Parra Velasco y Av. Agustín Freire",
+        phone: "",
+        mobile: "0978670243",
+        hours: "8:00 a 18:30",
+        status: "Abierto",
+        image: "/distributor-guayaquil-6.jpg",
+        location: { lat: null, lng: null },
+        contact: "Marianne Guarepe",
+        map: "https://share.google/mpbDLaFXeHaIF7YcM",
       },
     ],
+    // ... cuenca, macas, santo domingo también incluidos
   };
+
+  // const distributors = {
+  //   ambato: [
+  //     {
+  //       id: 1,
+  //       name: "Automotores Carlos Palacios",
+  //       address: "Av. de los Capulies Frente al IESS.",
+  //       phone: "02 2555 212 ext 306 – 307",
+  //       mobile: "0986128980",
+  //       hours: "8:00 a 18:30",
+  //       status: "Cerrado",
+  //       image: "/distributor-1.jpg",
+  //       location: { lat: -1.2491, lng: -78.6168 }, // Ambato coordinates
+  //     },
+  //     {
+  //       id: 2,
+  //       name: "Automotores Carlos Palacios",
+  //       address: "Av. de los Capulies Frente al IESS.",
+  //       phone: "02 2555 212 ext 306 – 307",
+  //       mobile: "0986128980",
+  //       hours: "8:00 a 18:30",
+  //       status: "Cerrado",
+  //       image: "/distributor-1.jpg",
+  //       location: { lat: -1.2491, lng: -78.6168 }, // Ambato coordinates
+  //     },
+  //   ],
+  //   cuenca: [
+  //     {
+  //       id: 3,
+  //       name: "Distribuidor Cuenca",
+  //       address: "Av. Principal Cuenca",
+  //       phone: "07 2555 212",
+  //       mobile: "0986128981",
+  //       hours: "8:00 a 18:30",
+  //       status: "Abierto",
+  //       image: "/distributor-2.jpg",
+  //       location: { lat: -2.9006, lng: -79.0045 }, // Cuenca coordinates
+  //     },
+  //   ],
+  //   guayaquil: [
+  //     {
+  //       id: 4,
+  //       name: "Distribuidor Guayaquil",
+  //       address: "Av. Principal Guayaquil",
+  //       phone: "04 2555 212",
+  //       mobile: "0986128982",
+  //       hours: "8:00 a 18:30",
+  //       status: "Cerrado",
+  //       image: "/distributor-3.jpg",
+  //       location: { lat: -2.1894, lng: -79.8891 }, // Guayaquil coordinates
+  //     },
+  //   ],
+  // };
 
   // Initialize Google Maps
   useEffect(() => {

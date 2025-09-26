@@ -69,7 +69,7 @@ export default function DistributorInfo({ distributor, onClose }) {
           </motion.button>
 
           {/* Distributor Image */}
-          <motion.div
+          {/* <motion.div
             variants={itemVariants}
             className="w-full h-32 bg-gray-200 rounded-lg mb-3 flex items-center justify-center overflow-hidden"
           >
@@ -81,7 +81,7 @@ export default function DistributorInfo({ distributor, onClose }) {
             >
               Imagen del Distribuidor
             </motion.div>
-          </motion.div>
+          </motion.div> */}
 
           {/* Distributor Info */}
           <motion.h3
@@ -127,35 +127,39 @@ export default function DistributorInfo({ distributor, onClose }) {
               {distributor.address}
             </motion.div>
 
-            <motion.div
-              variants={itemVariants}
-              className="text-gray-600 flex items-center"
-            >
+            {distributor.phone && (
               <motion.div
-                whileHover={{ scale: 1.2, rotate: 5 }}
-                transition={{ duration: 0.2 }}
+                variants={itemVariants}
+                className="text-gray-600 flex items-center"
               >
-                <Phone className="w-4 h-4 mr-2" />
+                <motion.div
+                  whileHover={{ scale: 1.2, rotate: 5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Phone className="w-4 h-4 mr-2" />
+                </motion.div>
+                {distributor.phone}
               </motion.div>
-              {distributor.phone}
-            </motion.div>
+            )}
 
-            <motion.div
-              variants={itemVariants}
-              className="text-gray-600 flex items-center"
-            >
+            {distributor.mobile && (
               <motion.div
-                whileHover={{ scale: 1.2, rotate: 5 }}
-                transition={{ duration: 0.2 }}
+                variants={itemVariants}
+                className="text-gray-600 flex items-center"
               >
-                <Phone className="w-4 h-4 mr-2" />
+                <motion.div
+                  whileHover={{ scale: 1.2, rotate: 5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Phone className="w-4 h-4 mr-2" />
+                </motion.div>
+                {distributor.mobile}
               </motion.div>
-              {distributor.mobile}
-            </motion.div>
+            )}
           </motion.div>
 
           {/* Action Icons */}
-          <motion.div variants={itemVariants} className="flex space-x-4 mt-4">
+          {/* <motion.div variants={itemVariants} className="flex space-x-4 mt-4">
             <motion.button
               variants={buttonVariants}
               whileHover="hover"
@@ -185,7 +189,7 @@ export default function DistributorInfo({ distributor, onClose }) {
               </motion.div>
               Dirección
             </motion.button>
-          </motion.div>
+          </motion.div> */}
         </div>
       </motion.div>
     </AnimatePresence>
