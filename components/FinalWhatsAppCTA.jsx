@@ -15,7 +15,7 @@ export default function FinalWhatsAppCTA() {
           className="space-y-8"
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white">
-            Agenda tu cita por whatsapp
+            Agenda tu cita por Whatsapp
           </h2>
 
           <motion.a
