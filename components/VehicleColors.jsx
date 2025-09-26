@@ -4,6 +4,7 @@ export default function VehicleColors({
   model = "t1",
   colorsPath = "/models/t1/colors",
   totalColors = 6,
+  colorNames = ["rojo", "plata", "negro", "blanco", "gris", "azul"],
 }) {
   return (
     <section className="py-16 bg-black">
@@ -20,19 +21,19 @@ export default function VehicleColors({
 
         {/* Simple Colors Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto px-8">
-          {Array.from({ length: totalColors }, (_, index) => (
+          {colorNames.map((colorName, index) => (
             <div key={index} className="text-center">
               <div className="relative group cursor-pointer flex flex-col items-center">
                 <img
                   src={`${colorsPath}/${
-                    model === "x70-plus" ? "x70" : model
-                  }-color-${index + 1}.png`}
-                  alt={`${model.toUpperCase()} Color ${index + 1}`}
+                    model === "x70-plus" ? "x70-plus" : model
+                  }-${colorName}.png`}
+                  alt={`${model.toUpperCase()} Color ${colorName}`}
                   className="w-full h-auto rounded-lg transition-transform duration-300 group-hover:scale-105 object-contain"
                 />
                 <div className="mt-2">
-                  <span className="text-white text-sm font-medium">
-                    Color {index + 1}
+                  <span className="text-white text-sm font-medium capitalize">
+                    {colorName}
                   </span>
                 </div>
               </div>

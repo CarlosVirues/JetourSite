@@ -56,6 +56,7 @@ export default async function VehicleModelPage({ params }) {
           model={modelPageData.threeSixty.model}
           colorsPath={modelPageData.threeSixty.colorsPath}
           totalColors={modelPageData.threeSixty.totalColors}
+          colorNames={modelPageData.threeSixty.colorNames}
         />
       )}
 
