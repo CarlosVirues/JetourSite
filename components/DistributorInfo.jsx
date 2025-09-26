@@ -94,23 +94,25 @@ export default function DistributorInfo({ distributor, onClose }) {
           <motion.div variants={itemVariants} className="space-y-2 text-sm">
             <motion.div
               variants={itemVariants}
-              className="flex items-center text-gray-600"
+              className="flex flex-col items-start text-gray-600"
             >
-              <motion.div
-                whileHover={{ scale: 1.2, rotate: 5 }}
-                transition={{ duration: 0.2 }}
-              >
-                <Clock className="w-4 h-4 mr-2" />
-              </motion.div>
-              <span
-                className={
-                  distributor.status === "Cerrado"
-                    ? "text-red-500"
-                    : "text-green-500"
-                }
-              >
-                {distributor.status}
-              </span>
+              <div className="flex items-center">
+                <motion.div
+                  whileHover={{ scale: 1.2, rotate: 5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Clock className="w-4 h-4 mr-2" />
+                </motion.div>
+                <span
+                  className={
+                    distributor.status === "Cerrado"
+                      ? "text-red-500"
+                      : "text-green-500"
+                  }
+                >
+                  {distributor.status}
+                </span>
+              </div>
               {distributor.hours_weekdays && (
                 <div className="text-gray-500 text-sm ml-2">
                   LUN - VIE: {distributor.hours_weekdays}

@@ -34,7 +34,8 @@ export default function ConcesionariosMap() {
         address: "Av. España & Sebastián de Benalcazar., Esquina.",
         phone: "",
         mobile: "098 577 8754",
-        hours: "8:00 a 18:30",
+        hours_weekdays: "08:30 - 18:30",
+        hours_saturday: "08:30 - 14:00",
         status: "Abierto",
         image: "/distributor-cuenca-1.jpg",
         location: {
@@ -51,7 +52,8 @@ export default function ConcesionariosMap() {
           'Av. 12 de Octubre & Cristobal Colón., Concesionario "Grupo Roldán"., A 100 metros del Terminal Terrestre de Cuenca.',
         phone: "",
         mobile: "098 480 6673",
-        hours: "8:00 a 18:30",
+        hours_weekdays: "08:30 - 18:30",
+        hours_saturday: "08:30 - 14:00",
         status: "Abierto",
         image: "/distributor-cuenca-2.jpg",
         location: {
@@ -70,7 +72,8 @@ export default function ConcesionariosMap() {
           'Av. Juan Tanca Marengo & Ing. José A. Gómez., Concesionario "Grupo Roldán"., Al frente del Colegio "Americano" de Guayaquil.',
         phone: "",
         mobile: "099 451 8699",
-        hours: "8:00 a 18:30",
+        hours_weekdays: "08:30 - 18:30",
+        hours_saturday: "08:30 - 14:00",
         status: "Abierto",
         image: "/distributor-guayaquil-3.jpg",
         location: {
@@ -87,7 +90,8 @@ export default function ConcesionariosMap() {
           'Km. 4 ½ Vía a Daule y Av. 17., Concesionario "Grupo Roldán"., Frente a "Mi Comisariato".',
         phone: "",
         mobile: "098 723 0797",
-        hours: "8:00 a 18:30",
+        hours_weekdays: "08:30 - 18:30",
+        hours_saturday: "08:30 - 14:00",
         status: "Abierto",
         image: "/distributor-guayaquil-5.jpg",
         location: {
@@ -103,7 +107,8 @@ export default function ConcesionariosMap() {
         address: "Av. de las Américas y Justino Cornejo.",
         phone: "",
         mobile: "098 572 7913",
-        hours: "8:00 a 18:30",
+        hours_weekdays: "08:30 - 18:30",
+        hours_saturday: "08:30 - 14:00",
         status: "Abierto",
         image: "/distributor-guayaquil-6.jpg",
         location: {
@@ -122,7 +127,8 @@ export default function ConcesionariosMap() {
           'Av. 25 de Junio 1/2 y Vía a Pasaje., A 200 metros de "Ciudad del Sol".',
         phone: "",
         mobile: "098 725 7461",
-        hours: "8:00 a 18:30",
+        hours_weekdays: "08:30 - 18:30",
+        hours_saturday: "08:30 - 14:00",
         status: "Abierto",
         image: "/distributor-machala-4.jpg",
         location: {
@@ -141,7 +147,8 @@ export default function ConcesionariosMap() {
           'Av. Oswaldo Guayasamín., Concesionario "Grupo Roldán"., Frente a "El Hornero".',
         phone: "",
         mobile: "098 086 0728",
-        hours: "8:00 a 18:30",
+        hours_weekdays: "08:30 - 18:30",
+        hours_saturday: "08:30 - 14:00",
         status: "Abierto",
         image: "/distributor-quito-7.jpg",
         location: {
@@ -157,7 +164,8 @@ export default function ConcesionariosMap() {
         address: "Av. Seis de Diciembre y Av. Diez de Agosto., Esquina.",
         phone: "",
         mobile: "093 948 5628",
-        hours: "8:00 a 18:30",
+        hours_weekdays: "08:30 - 18:30",
+        hours_saturday: "08:30 - 14:00",
         status: "Abierto",
         image: "/distributor-quito-8.jpg",
         location: {
@@ -174,7 +182,8 @@ export default function ConcesionariosMap() {
           'Av. Simón Bolívar y N69H., Concesionario "Grupo Roldán"., A una cuadra del CC "Portal Shopping", sentido Norte-Sur.',
         phone: "",
         mobile: "098 285 7679",
-        hours: "8:00 a 18:30",
+        hours_weekdays: "08:30 - 18:30",
+        hours_saturday: "08:30 - 14:00",
         status: "Abierto",
         image: "/distributor-quito-9.jpg",
         location: {
@@ -191,7 +200,8 @@ export default function ConcesionariosMap() {
           'Av. Shyris & Vía a Amaguaña., Concesionario "Grupo Roldán"., Diagonal a la escuela "Riobamba".',
         phone: "",
         mobile: "093 976 1755",
-        hours: "8:00 a 18:30",
+        hours_weekdays: "08:30 - 18:30",
+        hours_saturday: "08:30 - 14:00",
         status: "Abierto",
         image: "/distributor-quito-10.jpg",
         location: {
@@ -208,7 +218,8 @@ export default function ConcesionariosMap() {
           'Av. Pedro Vicente Maldonado y Calle F., Concesionario "Grupo Roldán".',
         phone: "",
         mobile: "098 304 9733",
-        hours: "8:00 a 18:30",
+        hours_weekdays: "08:30 - 18:30",
+        hours_saturday: "08:30 - 14:00",
         status: "Abierto",
         image: "/distributor-quito-11.jpg",
         location: {
@@ -227,7 +238,8 @@ export default function ConcesionariosMap() {
           'Sector Chorlavi, Carretera Panamericana, Concesionario "Grupo Roldán"., Diagonal a la gasolinera "Petro World".',
         phone: "",
         mobile: "098 889 9599",
-        hours: "8:00 a 18:30",
+        hours_weekdays: "08:30 - 18:30",
+        hours_saturday: "08:30 - 14:00",
         status: "Abierto",
         image: "/distributor-ibarra-12.jpg",
         location: {
@@ -246,7 +258,8 @@ export default function ConcesionariosMap() {
           'Av Isidro Ayora y Velazco Ibarra., Concesionario "Grupo Roldán"., Al frente del Concesionario "Salvador Bustamante Celi".',
         phone: "",
         mobile: "098-655-6875",
-        hours: "8:00 a 18:30",
+        hours_weekdays: "08:30 - 18:30",
+        hours_saturday: "08:30 - 14:00",
         status: "Abierto",
         image: "/distributor-loja-13.jpg",
         location: {
@@ -265,7 +278,8 @@ export default function ConcesionariosMap() {
           'Av. 4 de Noviembre y Calle 320., Concesionario "Grupo Roldán"., Esquina.',
         phone: "",
         mobile: "099 976 6622",
-        hours: "8:00 a 18:30",
+        hours_weekdays: "08:30 - 18:30",
+        hours_saturday: "08:30 - 14:00",
         status: "Abierto",
         image: "/distributor-manta-14.jpg",
         location: {
@@ -284,7 +298,8 @@ export default function ConcesionariosMap() {
           'Av Lizarzaburo y Bolivar Esquina, Concesionario "Grupo Roldán"., Frente a "Terpel".',
         phone: "",
         mobile: "0985305363",
-        hours: "8:00 a 18:30",
+        hours_weekdays: "08:30 - 18:30",
+        hours_saturday: "08:30 - 14:00",
         status: "Abierto",
         image: "/distributor-riobamba-15.jpg",
         location: {

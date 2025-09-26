@@ -7,8 +7,9 @@ import { Textarea } from "@/components/ui/textarea";
 import {
   User,
   Mail,
+  Phone,
   MapPin,
-  MoreHorizontal,
+  ChevronDown,
   MessageCircle,
   ArrowRight,
   CheckCircle,
@@ -152,6 +153,36 @@ export default function ContactForm() {
           )}
         </motion.div>
 
+        {/* Teléfono */}
+        <motion.div variants={itemVariants} className="relative">
+          <div className="flex items-center border-b border-blue-500 pb-2">
+            <motion.div
+              whileHover={{ scale: 1.1 }}
+              transition={{ duration: 0.2 }}
+            >
+              <Phone className="w-5 h-5 text-blue-500 mr-3" />
+            </motion.div>
+            <Input
+              type="tel"
+              name="telefono"
+              defaultValue={state.values?.telefono || ""}
+              placeholder="Teléfono"
+              className="bg-transparent border-none text-white placeholder:text-gray-300 focus:ring-0 focus:border-none p-0"
+              required
+            />
+          </div>
+          {state.errors?.telefono && (
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-red-400 text-sm mt-1 flex items-center gap-1"
+            >
+              <AlertCircle className="w-4 h-4" />
+              {state.errors.telefono[0]}
+            </motion.p>
+          )}
+        </motion.div>
+
         {/* Ciudad */}
         <motion.div variants={itemVariants} className="relative">
           <div className="flex items-center border-b border-blue-500 pb-2">
@@ -189,16 +220,27 @@ export default function ContactForm() {
               whileHover={{ scale: 1.1 }}
               transition={{ duration: 0.2 }}
             >
-              <MoreHorizontal className="w-5 h-5 text-blue-500 mr-3" />
+              <ChevronDown className="w-5 h-5 text-blue-500 mr-3" />
             </motion.div>
-            <Input
-              type="text"
+            <select
               name="asunto"
               defaultValue={state.values?.asunto || ""}
-              placeholder="Asunto"
-              className="bg-transparent border-none text-white placeholder:text-gray-300 focus:ring-0 focus:border-none p-0"
+              className="bg-transparent border-none text-white focus:ring-0 focus:border-none p-0 w-full appearance-none cursor-pointer text-sm"
               required
-            />
+            >
+              <option value="" disabled className="text-gray-500 bg-gray-800">
+                Selecciona un asunto
+              </option>
+              <option value="Modelos" className="text-white bg-gray-800">
+                Modelos
+              </option>
+              <option value="Talleres" className="text-white bg-gray-800">
+                Talleres
+              </option>
+              <option value="Concesionarios" className="text-white bg-gray-800">
+                Concesionarios
+              </option>
+            </select>
           </div>
           {state.errors?.asunto && (
             <motion.p

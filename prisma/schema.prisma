@@ -12,6 +12,7 @@ model Contact {
   id        String   @id @default(cuid())
   nombre    String
   email     String
+  telefono  String
   ciudad    String
   asunto    String
   mensaje   String

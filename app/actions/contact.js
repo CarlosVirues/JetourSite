@@ -8,8 +8,11 @@ import { prisma } from "@/lib/db";
 const contactSchema = z.object({
   nombre: z.string().min(2, "El nombre debe tener al menos 2 caracteres"),
   email: z.string().email("Ingresa un email válido"),
+  telefono: z.string().min(7, "El teléfono debe tener al menos 7 dígitos"),
   ciudad: z.string().min(2, "La ciudad debe tener al menos 2 caracteres"),
-  asunto: z.string().min(3, "El asunto debe tener al menos 3 caracteres"),
+  asunto: z.enum(["Modelos", "Talleres", "Concesionarios"], {
+    errorMap: () => ({ message: "Selecciona una opción válida" }),
+  }),
   mensaje: z.string().min(10, "El mensaje debe tener al menos 10 caracteres"),
 });
 
