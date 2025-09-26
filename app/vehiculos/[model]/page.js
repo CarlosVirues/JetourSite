@@ -39,6 +39,8 @@ export default async function VehicleModelPage({ params }) {
         vehicleName={modelPageData.hero.vehicleName}
         vehicleDescription={modelPageData.hero.vehicleDescription}
         height={modelPageData.hero.height}
+        logoImage={modelPageData.hero.logoImage}
+        logoAlt={modelPageData.hero.logoAlt}
       />
 
       {/* Vehicle Features Section */}
