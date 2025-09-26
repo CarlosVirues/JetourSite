@@ -22,7 +22,7 @@ export default function VehicleFeatures({ featuresData }) {
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: index * 0.2 }}
-              className="relative group"
+              className="relative group overflow-hidden"
             >
               {/* Feature Card */}
               <div className="relative rounded-none overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 hover:border-blue-500 transition-all duration-500 group-hover:scale-105">
