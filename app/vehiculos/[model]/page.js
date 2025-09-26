@@ -6,6 +6,7 @@ import VehicleHero from "@/components/VehicleHero";
 import VehicleFeatures from "@/components/VehicleFeatures";
 import VehicleGallery from "@/components/VehicleGallery";
 import ThreeSixty from "@/components/360";
+import VehicleColors from "@/components/VehicleColors";
 import Footer from "@/components/Footer";
 import { getVehicleModel } from "@/lib/vehicle-models";
 import { getPageData, getVehicleModelPageData } from "@/lib/page-data";
@@ -48,6 +49,15 @@ export default async function VehicleModelPage({ params }) {
 
       {/* 360 View Section - Only for models with 360 data */}
       {modelPageData.threeSixty && <ThreeSixty {...modelPageData.threeSixty} />}
+
+      {/* Vehicle Colors Section - Only for models with 360 data */}
+      {modelPageData.threeSixty && (
+        <VehicleColors
+          model={modelPageData.threeSixty.model}
+          colorsPath={modelPageData.threeSixty.colorsPath}
+          totalColors={modelPageData.threeSixty.totalColors}
+        />
+      )}
 
       {/* Hero Showcase Section */}
       <HeroShowcase heroShowcaseData={modelPageData.heroShowcase} />

@@ -76,23 +76,6 @@ export default function HeroShowcase({ heroShowcaseData }) {
     },
   };
 
-  const slideVariants = {
-    enter: (direction) => ({
-      x: direction > 0 ? 1000 : -1000,
-      opacity: 0,
-    }),
-    center: {
-      zIndex: 1,
-      x: 0,
-      opacity: 1,
-    },
-    exit: (direction) => ({
-      zIndex: 0,
-      x: direction < 0 ? 1000 : -1000,
-      opacity: 0,
-    }),
-  };
-
   return (
     <motion.section
       variants={containerVariants}
@@ -154,63 +137,45 @@ export default function HeroShowcase({ heroShowcaseData }) {
           className="relative max-w-6xl mx-auto px-4 md:px-0"
         >
           <div className="relative overflow-hidden rounded-xl md:rounded-2xl">
-            <AnimatePresence initial={false} custom={currentSlide}>
-              <motion.div
-                key={currentSlide}
-                custom={currentSlide}
-                variants={slideVariants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={{
-                  x: { type: "spring", stiffness: 300, damping: 30 },
-                  opacity: { duration: 0.2 },
-                }}
-                className="w-full"
-              >
-                <div className="w-full relative">
-                  {/* Three slides container */}
-                  <div className="flex gap-4 md:gap-6">
-                    {filteredSlides.length > 0 ? (
-                      filteredSlides
-                        .slice(currentSlide, currentSlide + (isMobile ? 1 : 3))
-                        .map((slide, index) => (
-                          <div key={slide.id} className="flex-1 flex flex-col">
-                            {/* Image container */}
-                            <div className="relative h-48 md:h-64 lg:h-80 mb-4">
-                              <Image
-                                src={slide.image}
-                                alt={slide.title}
-                                fill
-                                className="object-cover rounded-lg"
-                              />
-                            </div>
+            <div className="w-full relative">
+              {/* Three slides container */}
+              <div className="flex gap-4 md:gap-6">
+                {filteredSlides.length > 0 ? (
+                  filteredSlides
+                    .slice(currentSlide, currentSlide + (isMobile ? 1 : 3))
+                    .map((slide, index) => (
+                      <motion.div
+                        key={`${slide.id}-${currentSlide}`}
+                        className="flex-1 flex flex-col"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        {/* Image container */}
+                        <div className="relative h-48 md:h-64 lg:h-80 mb-4">
+                          <Image
+                            src={slide.image}
+                            alt={slide.title}
+                            fill
+                            className="object-cover rounded-lg"
+                          />
+                        </div>
 
-                            {/* Title below image */}
-                            <motion.h3
-                              initial={{ opacity: 0, y: 20 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              transition={{
-                                duration: 0.6,
-                                delay: 0.3 + index * 0.1,
-                              }}
-                              className="text-sm md:text-lg font-bold text-white text-center"
-                            >
-                              {slide.title}
-                            </motion.h3>
-                          </div>
-                        ))
-                    ) : (
-                      <div className="flex-1 flex items-center justify-center py-20">
-                        <p className="text-white text-lg">
-                          No hay contenido disponible para esta categoría
-                        </p>
-                      </div>
-                    )}
+                        {/* Title below image */}
+                        <h3 className="text-sm md:text-lg font-bold text-white text-center">
+                          {slide.title}
+                        </h3>
+                      </motion.div>
+                    ))
+                ) : (
+                  <div className="flex-1 flex items-center justify-center py-20">
+                    <p className="text-white text-lg">
+                      No hay contenido disponible para esta categoría
+                    </p>
                   </div>
-                </div>
-              </motion.div>
-            </AnimatePresence>
+                )}
+              </div>
+            </div>
 
             {/* Navigation Arrows - Solo mostrar si hay slides */}
             {filteredSlides.length > 0 && (
