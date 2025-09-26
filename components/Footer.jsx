@@ -79,7 +79,7 @@ export default function Footer() {
                 { href: "/", label: "Home" },
                 { href: "/postventa", label: "Postventa" },
                 { href: "/concesionarios", label: "Concesionarios" },
-                { href: "/noticias", label: "Noticias" },
+                // { href: "/noticias", label: "Noticias" },
                 { href: "/contacto", label: "Contacto" },
               ].map((link, index) => (
                 <motion.li

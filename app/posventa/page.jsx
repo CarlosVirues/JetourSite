@@ -3,7 +3,7 @@ import ServiceHero from "@/components/ServiceHero";
 import OriginalParts from "@/components/OriginalParts";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
 import ServiceCenters from "@/components/ServiceCenters";
-import ServiceTestimonials from "@/components/ServiceTestimonials";
+// import ServiceTestimonials from "@/components/ServiceTestimonials";
 import FinalWhatsAppCTA from "@/components/FinalWhatsAppCTA";
 import Footer from "@/components/Footer";
 import Image from "next/image";
@@ -49,7 +49,7 @@ export default function PostventaPage() {
       <ServiceCenters />
 
       {/* Testimonials Section */}
-      <ServiceTestimonials />
+      {/* <ServiceTestimonials /> */}
 
       {/* Final WhatsApp CTA */}
       <FinalWhatsAppCTA />

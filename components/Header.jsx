@@ -52,7 +52,7 @@ export default function Header({ transparent = false, border = false }) {
     },
     { href: "/posventa", label: "Posventa" },
     { href: "/concesionarios", label: "Concesionarios" },
-    { href: "/noticias", label: "Noticias" },
+    // { href: "/noticias", label: "Noticias" },
     { href: "/contacto", label: "Contacto" },
   ];
 
