@@ -14,7 +14,7 @@ export default function PostventaPage() {
       <Header transparent={true} border={true} />
 
       {/* Hero Section */}
-      <section className="relative h-96 lg:h-[500px] xl:h-[750px] bg-gradient-to-r from-black to-gray-900 overflow-hidden">
+      <section className="relative h-96 lg:h-[500px] bg-gradient-to-r from-black to-gray-900 overflow-hidden">
         {/* Background Image Placeholder - You can replace this with an actual car image */}
         <Image
           src="/bg-postventa.jpg"

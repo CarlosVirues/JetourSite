@@ -2,14 +2,18 @@ import Header from "@/components/Header";
 import ConcesionariosMap from "@/components/ConcesionariosMap";
 import Footer from "@/components/Footer";
 import Image from "next/image";
+import RoldanSection from "@/components/RoldanSection";
+import { getPageData } from "@/lib/page-data";
 
 export default function ConcesionariosPage() {
+  const pageData = getPageData("home");
+
   return (
     <div className="min-h-screen bg-black">
       <Header transparent={true} border={true} />
 
       {/* Hero Section */}
-      <section className="relative h-96 lg:h-[500px] xl:h-[750px] bg-gradient-to-r from-black to-gray-900 overflow-hidden">
+      <section className="relative h-96 lg:h-[500px] bg-gradient-to-r from-black to-gray-900 overflow-hidden">
         {/* Background Image Placeholder - You can replace this with an actual car image */}
         <Image
           src="/bg-concesionarios.jpg"
@@ -32,6 +36,9 @@ export default function ConcesionariosPage() {
       <section className="bg-black py-16 lg:py-24">
         <ConcesionariosMap />
       </section>
+
+      {/* Roldan Section */}
+      <RoldanSection {...pageData.roldanSection} />
 
       <Footer />
     </div>
