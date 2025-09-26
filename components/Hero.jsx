@@ -5,6 +5,7 @@ import Image from "next/image";
 
 export default function Hero({
   backgroundImage,
+  backgroundVideo,
   logoImage,
   logoAlt,
   logoWidth,
@@ -20,14 +21,35 @@ export default function Hero({
       transition={{ duration: 1 }}
       className={`relative ${height} w-full overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800`}
     >
-      {/* Background Image/Pattern */}
+      {/* Background Image/Video */}
       <div className="absolute inset-0">
-        <Image
-          src={backgroundImage}
-          alt="Hero Background"
-          fill
-          className="object-cover aspect-video"
-        />
+        {backgroundVideo ? (
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover"
+          >
+            <source src={backgroundVideo} type="video/mp4" />
+            {/* Fallback to image if video fails to load */}
+            {backgroundImage && (
+              <Image
+                src={backgroundImage}
+                alt="Hero Background"
+                fill
+                className="object-cover aspect-video"
+              />
+            )}
+          </video>
+        ) : backgroundImage ? (
+          <Image
+            src={backgroundImage}
+            alt="Hero Background"
+            fill
+            className="object-cover aspect-video"
+          />
+        ) : null}
       </div>
 
       {/* Main Content */}
