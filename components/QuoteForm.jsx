@@ -15,7 +15,7 @@ import {
 import Image from "next/image";
 import { submitQuoteForm } from "@/app/actions/quote";
 
-export default function QuoteForm() {
+export default function QuoteForm({ currentModel = null }) {
   const [state, action, isPending] = useActionState(submitQuoteForm, {
     errors: {},
     message: "",
@@ -286,7 +286,7 @@ export default function QuoteForm() {
             <input
               type="hidden"
               name="selectedModel"
-              value={state.values?.selectedModel || "t1"}
+              value={state.values?.selectedModel || currentModel || ""}
             />
 
             {/* Model Selection */}
@@ -337,7 +337,8 @@ export default function QuoteForm() {
                           .classList.add("border-blue-500", "bg-blue-500/10");
                       }}
                       className={`w-full aspect-square rounded-lg border-2 transition-all duration-300 ${
-                        (state.values?.selectedModel || "t1") === model.id
+                        (state.values?.selectedModel || currentModel) ===
+                        model.id
                           ? "border-blue-500 bg-blue-500/10"
                           : "border-gray-600 hover:border-gray-500"
                       }`}

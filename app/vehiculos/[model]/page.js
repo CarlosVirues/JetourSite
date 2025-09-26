@@ -70,7 +70,7 @@ export default async function VehicleModelPage({ params }) {
       <VideoGallery {...modelPageData.videoGallery} />
 
       {/* Quote Form Section */}
-      <QuoteForm {...pageData.quoteForm} />
+      <QuoteForm {...pageData.quoteForm} currentModel={model} />
 
       <Footer />
     </div>
