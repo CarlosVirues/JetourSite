@@ -31,10 +31,6 @@ export default function ServiceCenters() {
       name: "Ambato",
     },
     {
-      id: "ciudad",
-      name: "Ciudad",
-    },
-    {
       id: "macas",
       name: "Macas",
     },
@@ -45,17 +41,6 @@ export default function ServiceCenters() {
   ];
 
   const serviceCenters = [
-    {
-      id: 1,
-      name: "DEALER",
-      address: "DIRECCIÓN",
-      nearBy: "",
-      city: "ciudad",
-      schedule: {
-        weekdays: "LUN - VIE 8:00 a 18:30",
-        weekends: "SÁB 9:00 - 14:00",
-      },
-    },
     {
       id: 2,
       name: "IBAMOTORS",
