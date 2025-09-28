@@ -8,6 +8,7 @@ import VehicleGallery from "@/components/VehicleGallery";
 import ThreeSixty from "@/components/360";
 import VehicleColors from "@/components/VehicleColors";
 import Footer from "@/components/Footer";
+import FloatingQuoteButton from "@/components/FloatingQuoteButton";
 import { getVehicleModel } from "@/lib/vehicle-models";
 import { getPageData, getVehicleModelPageData } from "@/lib/page-data";
 import TechnicalSheetButton from "@/components/TechnicalSheetButton";
@@ -72,7 +73,12 @@ export default async function VehicleModelPage({ params }) {
       <VideoGallery {...modelPageData.videoGallery} />
 
       {/* Quote Form Section */}
-      <QuoteForm {...pageData.quoteForm} currentModel={model} />
+      <div id="quote-form">
+        <QuoteForm {...pageData.quoteForm} currentModel={model} />
+      </div>
+
+      {/* Floating Quote Button */}
+      <FloatingQuoteButton />
 
       <Footer />
     </div>

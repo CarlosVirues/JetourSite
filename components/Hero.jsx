@@ -54,7 +54,7 @@ export default function Hero({
 
       {/* Main Content */}
       <div
-        className={`relative z-20 flex flex-col items-center justify-center ${height} px-6 lg:px-12`}
+        className={`relative z-20 flex flex-col items-end justify-end ${height} px-6 lg:px-12`}
       >
         <div className="text-center max-w-4xl mx-auto">
           {/* Main JETOUR Logo/Text - Optional */}
@@ -63,7 +63,7 @@ export default function Hero({
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="mb-12"
+              className="mb-36"
             >
               <Image
                 src={logoImage}

@@ -1,9 +1,8 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import VehicleShowcase from "@/components/VehicleShowcase";
+import VehicleShowcaseNew from "@/components/VehicleShowcaseNew";
 import GlobalStats from "@/components/GlobalStats";
 import RoldanSection from "@/components/RoldanSection";
-import JetourLife from "@/components/JetourLife";
 import VideoGallery from "@/components/VideoGallery";
 import QuoteForm from "@/components/QuoteForm";
 import Footer from "@/components/Footer";
@@ -20,16 +19,13 @@ export default function HomePage() {
       <Hero {...pageData.hero} />
 
       {/* Vehicle Showcase Section */}
-      <VehicleShowcase {...pageData.vehicleShowcase} />
+      <VehicleShowcaseNew />
 
       {/* Global Stats Section */}
       <GlobalStats {...pageData.globalStats} />
 
       {/* Roldan Section */}
       <RoldanSection {...pageData.roldanSection} />
-
-      {/* Jetour Life Section */}
-      {/* <JetourLife {...pageData.jetourLife} /> */}
 
       {/* Video Gallery Section */}
       <VideoGallery {...pageData.videoGallery} />
