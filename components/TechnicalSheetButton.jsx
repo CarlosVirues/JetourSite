@@ -13,7 +13,6 @@ export default function TechnicalSheetButton({ model = "t1" }) {
         }/ficha-tecnica.pdf`}
         target="_blank"
         rel="noopener noreferrer"
-        download={`ficha-tecnica-${model === "x70-plus" ? "x70" : model}.pdf`}
       >
         <motion.button
           className="px-4 md:px-6 py-2 md:py-3 border-2 rounded-full font-semibold transition-all duration-300 text-sm md:text-base  border-blue-500 text-blue-500 bg-blue-500/10 flex items-center gap-4"
