@@ -39,8 +39,13 @@ export default function VehicleFeatures({ featuresData }) {
 
               {/* Title and Description - Outside and Centered */}
               <div className="mt-4 text-center">
+                {feature.title && (
+                  <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-blue-400 transition-colors">
+                    {feature.title}
+                  </h3>
+                )}
                 {feature.description && (
-                  <p className="text-sm text-gray-300 mt-2 group-hover:text-gray-200 transition-colors">
+                  <p className="text-sm text-gray-300 group-hover:text-gray-200 transition-colors">
                     {feature.description}
                   </p>
                 )}

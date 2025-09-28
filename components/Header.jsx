@@ -24,9 +24,24 @@ export default function Header({ transparent = false, border = false }) {
       setIsModelsDropdownOpen(false);
     };
 
+    const handleClickOutside = (event) => {
+      // Cerrar dropdown si se hace click fuera del menú de modelos
+      if (
+        isModelsDropdownOpen &&
+        !event.target.closest("[data-models-dropdown]")
+      ) {
+        setIsModelsDropdownOpen(false);
+      }
+    };
+
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isModelsDropdownOpen]);
 
   const shouldBeTransparent = transparent && !isScrolled;
 
@@ -60,7 +75,7 @@ export default function Header({ transparent = false, border = false }) {
     if (href === "/") {
       return pathname === "/";
     }
-    return pathname.startsWith(href);
+    return pathname === href;
   };
 
   const isModelsActive = () => {
@@ -123,7 +138,7 @@ export default function Header({ transparent = false, border = false }) {
               className="relative"
             >
               {item.isDropdown ? (
-                <div className="relative">
+                <div className="relative" data-models-dropdown>
                   <button
                     onClick={toggleModelsDropdown}
                     className={`transition-colors relative flex items-center space-x-1 ${
@@ -337,7 +352,7 @@ export default function Header({ transparent = false, border = false }) {
                         transition={{ duration: 0.5, delay: index * 0.1 }}
                       >
                         {item.isDropdown ? (
-                          <div>
+                          <div data-models-dropdown>
                             <button
                               onClick={toggleModelsDropdown}
                               className={`block text-lg font-medium transition-all duration-300 relative w-full text-left ${
