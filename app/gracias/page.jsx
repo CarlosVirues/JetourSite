@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import VehicleShowcase from "@/components/VehicleShowcase";
+import VehicleShowcaseNew from "@/components/VehicleShowcaseNew";
 import GlobalStats from "@/components/GlobalStats";
 import RoldanSection from "@/components/RoldanSection";
 import JetourLife from "@/components/JetourLife";
