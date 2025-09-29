@@ -46,24 +46,45 @@ export async function submitQuoteForm(prevState, formData) {
     };
   }
 
-  // Send data to Zapier webhook (separate from database operation)
+  // Construir payload para CRM
+  const crmPayload = {
+    full_name: validatedData.data.nombre,
+    email: validatedData.data.mail,
+    phone_number: validatedData.data.celular,
+    ci: validatedData.data.cedula,
+    ciudad: validatedData.data.ciudad,
+    modelo_jetour: validatedData.data.selectedModel,
+    webhook: "3gsucehc5964ebuy3ttxlblx", // el webhook del CRM
+  };
+
+  // Enviar a CRM y Zapier en paralelo
   try {
-    await fetch("https://hooks.zapier.com/hooks/catch/3497280/uhtax59/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        ...validatedData.data,
-        formType: "quote",
-        timestamp: new Date().toISOString(),
+    const [crmResponse, zapierResponse] = await Promise.all([
+      fetch("https://crm.jacecuador.com/slt_crm/webhook", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(crmPayload),
       }),
-    });
+      fetch("https://hooks.zapier.com/hooks/catch/3497280/uhtax59/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...validatedData.data,
+          formType: "quote",
+          timestamp: new Date().toISOString(),
+        }),
+      }),
+    ]);
+
+    if (!crmResponse.ok) {
+      console.error("Error enviando datos al CRM:", await crmResponse.text());
+    }
+    if (!zapierResponse.ok) {
+      console.error("Error enviando datos a Zapier:", await zapierResponse.text());
+    }
   } catch (webhookError) {
-    // Log webhook error but don't fail the entire process
-    console.error("Error sending data to webhook:", webhookError);
+    console.error("Error en envío a CRM/Zapier:", webhookError);
   }
 
-  // Redirect to thank you page on success (outside try/catch)
   redirect("/gracias#quote-form");
 }
