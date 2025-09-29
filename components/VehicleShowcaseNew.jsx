@@ -28,7 +28,7 @@ export default function VehicleShowcaseNew() {
     },
     {
       id: 2,
-      name: "X70 SPORT",
+      name: "X70 Sport",
       type: "Premium SUV",
       logo: "/models/x70-sport/x70-sport-logo.png",
       mainImage:
@@ -44,7 +44,7 @@ export default function VehicleShowcaseNew() {
     },
     {
       id: 3,
-      name: "X70 PLUS",
+      name: "X70 Plus",
       type: "Premium SUV",
       logo: "/models/x70/x70-plus-logo.png",
       mainImage:
@@ -60,7 +60,7 @@ export default function VehicleShowcaseNew() {
     },
     {
       id: 4,
-      name: "DASHING",
+      name: "Dashing",
       type: "Electric SUV",
       logo: "/models/dashing/dashing-logo.png",
       mainImage:

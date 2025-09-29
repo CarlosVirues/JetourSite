@@ -26,8 +26,8 @@ export default function QuoteForm({ currentModel = null }) {
   const carModels = [
     { id: "x50", name: "X50", image: "/mini/mini-x50.png" },
     { id: "x70-sport", name: "X70 Sport", image: "/mini/mini-x70-sport.png" },
-    { id: "x70-plus", name: "X70 PLUS", image: "/mini/mini-x70-plus.png" },
-    { id: "dashing", name: "DASHING", image: "/mini/mini-dashing.png" },
+    { id: "x70-plus", name: "X70 Plus", image: "/mini/mini-x70-plus.png" },
+    { id: "dashing", name: "Dashing", image: "/mini/mini-dashing.png" },
     { id: "t1", name: "T1", image: "/mini/mini-t1.png" },
     { id: "t2", name: "T2", image: "/mini/mini-t2.png" },
     { id: "t2-phev", name: "T2 PHEV", image: "/mini/mini-t2-phev.png" },
@@ -350,8 +350,8 @@ export default function QuoteForm({ currentModel = null }) {
                           <Image
                             src={model.image}
                             alt={model.name}
-                            width={50}
-                            height={50}
+                            width={75}
+                            height={75}
                           />
 
                           <p className="text-xs text-white font-medium">
