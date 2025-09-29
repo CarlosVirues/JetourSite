@@ -10,7 +10,7 @@ export default function TechnicalSheetButton({ model = "t1" }) {
       <Link
         href={`/models/${
           model === "x70-plus" ? "x70" : model
-        }/ficha-tecnica.pdf`}
+        }/ficha-tecnica-${model}.pdf`}
         target="_blank"
         rel="noopener noreferrer"
       >
