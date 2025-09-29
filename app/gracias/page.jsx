@@ -19,19 +19,19 @@ export default function HomePage() {
       <Hero {...pageData.hero} />
 
       {/* Vehicle Showcase Section */}
-      <VehicleShowcase {...pageData.vehicleShowcase} />
+      <VehicleShowcaseNew />
 
       {/* Global Stats Section */}
-      <GlobalStats {...pageData.globalStats} />
-
+      {/* <GlobalStats {...pageData.globalStats} /> */}
+  
       {/* Roldan Section */}
-      <RoldanSection {...pageData.roldanSection} />
-
+      {/* <RoldanSection {...pageData.roldanSection} /> */}
+      
       {/* Jetour Life Section */}
       {/* <JetourLife {...pageData.jetourLife} /> */}
 
       {/* Video Gallery Section */}
-      <VideoGallery {...pageData.videoGallery} />
+      {/*<VideoGallery {...pageData.videoGallery} /> */}
 
       {/* Quote Form Section */}
       <div
