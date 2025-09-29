@@ -15,35 +15,21 @@ export default function HeroShowcase({ heroShowcaseData }) {
     return null;
   }
 
-  const { title, subtitle, categories, slides } = heroShowcaseData;
+  const { title, subtitle, slides } = heroShowcaseData;
 
-  // Usar la primera categoría disponible como categoría inicial
-  const [activeCategory, setActiveCategory] = useState(
-    categories[0]?.id || "interior"
-  );
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
 
-  // Filtrar slides por categoría activa
-  const filteredSlides = slides.filter(
-    (slide) => slide.category === activeCategory
-  );
-
   const nextSlide = () => {
     const slideIncrement = isMobile ? 1 : 3;
-    const maxStartIndex = Math.max(0, filteredSlides.length - slideIncrement);
-    setCurrentSlide((prev) => Math.min(prev + slideIncrement, maxStartIndex));
+    setCurrentSlide((prev) => (prev + slideIncrement) % slides.length);
   };
 
   const prevSlide = () => {
     const slideIncrement = isMobile ? 1 : 3;
-    setCurrentSlide((prev) => Math.max(prev - slideIncrement, 0));
-  };
-
-  // Resetear currentSlide cuando cambie la categoría
-  const handleCategoryChange = (categoryId) => {
-    setActiveCategory(categoryId);
-    setCurrentSlide(0);
+    setCurrentSlide(
+      (prev) => (prev - slideIncrement + slides.length) % slides.length
+    );
   };
 
   // Detect mobile screen size
@@ -104,33 +90,6 @@ export default function HeroShowcase({ heroShowcaseData }) {
           </motion.p>
         </motion.div>
 
-        {/* Category Navigation */}
-        <motion.div
-          variants={itemVariants}
-          className="flex justify-center mb-8 md:mb-12"
-        >
-          <div className="flex flex-wrap justify-center gap-2 md:gap-4 px-4 md:px-0">
-            {categories.map((category, index) => (
-              <motion.button
-                key={category.id}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
-                onClick={() => handleCategoryChange(category.id)}
-                className={`px-4 md:px-6 py-2 md:py-3 border-2 rounded-full font-semibold transition-all duration-300 text-sm md:text-base ${
-                  activeCategory === category.id
-                    ? "border-blue-500 text-blue-500 bg-blue-500/10"
-                    : "border-white text-white hover:border-blue-500 hover:text-blue-500"
-                }`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {category.label}
-              </motion.button>
-            ))}
-          </div>
-        </motion.div>
-
         {/* Carousel */}
         <motion.div
           variants={itemVariants}
@@ -138,14 +97,16 @@ export default function HeroShowcase({ heroShowcaseData }) {
         >
           <div className="relative overflow-hidden rounded-xl md:rounded-2xl">
             <div className="w-full relative">
-              {/* Three slides container */}
+              {/* Slides container */}
               <div className="flex gap-4 md:gap-6">
-                {filteredSlides.length > 0 ? (
-                  filteredSlides
-                    .slice(currentSlide, currentSlide + (isMobile ? 1 : 3))
-                    .map((slide, index) => (
+                {slides.length > 0 ? (
+                  Array.from({ length: isMobile ? 1 : 3 }).map((_, index) => {
+                    const slideIndex = (currentSlide + index) % slides.length;
+                    const slide = slides[slideIndex];
+
+                    return (
                       <motion.div
-                        key={`${slide.id}-${currentSlide}`}
+                        key={`${slide.id}-${currentSlide}-${index}`}
                         className="flex-1 flex flex-col"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -166,11 +127,12 @@ export default function HeroShowcase({ heroShowcaseData }) {
                           {slide.title}
                         </h3>
                       </motion.div>
-                    ))
+                    );
+                  })
                 ) : (
                   <div className="flex-1 flex items-center justify-center py-20">
                     <p className="text-white text-lg">
-                      No hay contenido disponible para esta categoría
+                      No hay contenido disponible
                     </p>
                   </div>
                 )}
@@ -178,7 +140,7 @@ export default function HeroShowcase({ heroShowcaseData }) {
             </div>
 
             {/* Navigation Arrows - Solo mostrar si hay slides */}
-            {filteredSlides.length > 0 && (
+            {slides.length > 0 && (
               <>
                 <motion.button
                   onClick={prevSlide}
@@ -202,16 +164,14 @@ export default function HeroShowcase({ heroShowcaseData }) {
           </div>
 
           {/* Slide Indicators - Solo mostrar si hay slides */}
-          {filteredSlides.length > 0 && (
+          {slides.length > 0 && (
             <div className="flex justify-center mt-4 md:mt-6 space-x-2">
-              {Array.from({
-                length: Math.ceil(filteredSlides.length / (isMobile ? 1 : 3)),
-              }).map((_, index) => (
+              {slides.map((_, index) => (
                 <motion.button
                   key={index}
-                  onClick={() => setCurrentSlide(index * (isMobile ? 1 : 3))}
+                  onClick={() => setCurrentSlide(index)}
                   className={`w-2 h-2 md:w-3 md:h-3 rounded-full transition-all duration-300 ${
-                    currentSlide === index * (isMobile ? 1 : 3)
+                    currentSlide === index
                       ? "bg-blue-500 scale-125"
                       : "bg-gray-500 hover:bg-gray-400"
                   }`}
