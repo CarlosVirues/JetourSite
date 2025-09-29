@@ -33,7 +33,7 @@ export default function QuoteForm({ currentModel = null }) {
     { id: "t2-phev", name: "T2 PHEV", image: "/mini/mini-t2-phev.png" },
   ];
 
-  // Lista de ciudades desde tu Excel
+  // Lista de ciudades desde tu Excel (tal cual se deben enviar)
   const ciudades = [
     "ambato",
     "cuenca",
@@ -55,37 +55,22 @@ export default function QuoteForm({ currentModel = null }) {
 
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 },
-    },
+    visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
   };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: "easeOut" },
-    },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
   };
 
   const formFieldVariants = {
     hidden: { opacity: 0, x: -20 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: { duration: 0.5 },
-    },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.5 } },
   };
 
   const modelVariants = {
     hidden: { opacity: 0, scale: 0.8 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: { duration: 0.4 },
-    },
+    visible: { opacity: 1, scale: 1, transition: { duration: 0.4 } },
     hover: { scale: 1.05, transition: { duration: 0.2 } },
   };
 
@@ -139,20 +124,96 @@ export default function QuoteForm({ currentModel = null }) {
             {/* Form Fields */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Nombre y apellido */}
-              {/* ... Los otros inputs siguen igual ... */}
+              <motion.div variants={formFieldVariants} className="relative">
+                <div className="flex items-center border-b border-blue-500 pb-2">
+                  <User className="w-5 h-5 text-blue-500 mr-3" />
+                  <input
+                    type="text"
+                    name="nombre"
+                    defaultValue={state.values?.nombre || ""}
+                    placeholder="Nombre y apellido"
+                    className="flex-1 bg-transparent text-white placeholder-gray-400 focus:outline-none"
+                    required
+                  />
+                </div>
+                {state.errors?.nombre && (
+                  <motion.p className="text-red-400 text-sm mt-1 flex items-center gap-1">
+                    <AlertCircle className="w-4 h-4" />
+                    {state.errors.nombre[0]}
+                  </motion.p>
+                )}
+              </motion.div>
 
-              {/* Ciudad - AHORA SELECT */}
+              {/* Celular */}
+              <motion.div variants={formFieldVariants} className="relative">
+                <div className="flex items-center border-b border-blue-500 pb-2">
+                  <Phone className="w-5 h-5 text-blue-500 mr-3" />
+                  <input
+                    type="tel"
+                    name="celular"
+                    defaultValue={state.values?.celular || ""}
+                    placeholder="Celular"
+                    className="flex-1 bg-transparent text-white placeholder-gray-400 focus:outline-none"
+                    required
+                  />
+                </div>
+                {state.errors?.celular && (
+                  <motion.p className="text-red-400 text-sm mt-1 flex items-center gap-1">
+                    <AlertCircle className="w-4 h-4" />
+                    {state.errors.celular[0]}
+                  </motion.p>
+                )}
+              </motion.div>
+
+              {/* Mail */}
+              <motion.div variants={formFieldVariants} className="relative">
+                <div className="flex items-center border-b border-blue-500 pb-2">
+                  <Mail className="w-5 h-5 text-blue-500 mr-3" />
+                  <input
+                    type="email"
+                    name="mail"
+                    defaultValue={state.values?.mail || ""}
+                    placeholder="Mail"
+                    className="flex-1 bg-transparent text-white placeholder-gray-400 focus:outline-none"
+                    required
+                  />
+                </div>
+                {state.errors?.mail && (
+                  <motion.p className="text-red-400 text-sm mt-1 flex items-center gap-1">
+                    <AlertCircle className="w-4 h-4" />
+                    {state.errors.mail[0]}
+                  </motion.p>
+                )}
+              </motion.div>
+
+              {/* Cédula */}
+              <motion.div variants={formFieldVariants} className="relative">
+                <div className="flex items-center border-b border-blue-500 pb-2">
+                  <CreditCard className="w-5 h-5 text-blue-500 mr-3" />
+                  <input
+                    type="text"
+                    name="cedula"
+                    defaultValue={state.values?.cedula || ""}
+                    placeholder="Cédula"
+                    className="flex-1 bg-transparent text-white placeholder-gray-400 focus:outline-none"
+                    required
+                  />
+                </div>
+                {state.errors?.cedula && (
+                  <motion.p className="text-red-400 text-sm mt-1 flex items-center gap-1">
+                    <AlertCircle className="w-4 h-4" />
+                    {state.errors.cedula[0]}
+                  </motion.p>
+                )}
+              </motion.div>
+
+              {/* Ciudad */}
               <motion.div
                 variants={formFieldVariants}
                 className="relative md:col-span-2"
               >
                 <div className="flex items-center border-b border-blue-500 pb-2">
-                  <motion.div
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <MapPin className="w-5 h-5 text-blue-500 mr-3" />
-                  </motion.div>
+                  <MapPin className="w-5 h-5 text-blue-500 mr-3" />
 
                   <select
                     name="ciudad"
@@ -164,11 +225,7 @@ export default function QuoteForm({ currentModel = null }) {
                       Selecciona tu ciudad
                     </option>
                     {ciudades.map((city) => (
-                      <option
-                        key={city}
-                        value={city} // valor que se envía
-                        className="bg-black text-white"
-                      >
+                      <option key={city} value={city} className="bg-black text-white">
                         {city
                           .replace(/_/g, " ")
                           .split(" ")
@@ -183,11 +240,7 @@ export default function QuoteForm({ currentModel = null }) {
                   </select>
                 </div>
                 {state.errors?.ciudad && (
-                  <motion.p
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="text-red-400 text-sm mt-1 flex items-center gap-1"
-                  >
+                  <motion.p className="text-red-400 text-sm mt-1 flex items-center gap-1">
                     <AlertCircle className="w-4 h-4" />
                     {state.errors.ciudad[0]}
                   </motion.p>
@@ -203,10 +256,111 @@ export default function QuoteForm({ currentModel = null }) {
             />
 
             {/* Model Selection */}
-            {/* ... tu bloque de selección de modelos queda igual ... */}
+            <motion.div variants={itemVariants} className="mt-8">
+              <motion.h3
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="text-xl font-semibold text-white mb-4"
+              >
+                Selecciona tu modelo preferido
+              </motion.h3>
+
+              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
+                {carModels.map((model, index) => (
+                  <motion.div
+                    key={model.id}
+                    variants={modelVariants}
+                    whileHover="hover"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                    className="relative"
+                  >
+                    <motion.button
+                      type="button"
+                      onClick={(e) => {
+                        const hiddenInput = e.target
+                          .closest("form")
+                          .querySelector('input[name="selectedModel"]');
+                        hiddenInput.value = model.id;
+                        const allButtons = e.target
+                          .closest(".grid")
+                          .querySelectorAll("button");
+                        allButtons.forEach((btn) => {
+                          btn.classList.remove(
+                            "border-blue-500",
+                            "bg-blue-500/10"
+                          );
+                          btn.classList.add("border-gray-600");
+                        });
+                        e.target
+                          .closest("button")
+                          .classList.remove("border-gray-600");
+                        e.target
+                          .closest("button")
+                          .classList.add("border-blue-500", "bg-blue-500/10");
+                      }}
+                      className={`w-full aspect-square rounded-lg border-2 transition-all duration-300 ${
+                        (state.values?.selectedModel || currentModel) === model.id
+                          ? "border-blue-500 bg-blue-500/10"
+                          : "border-gray-600 hover:border-gray-500"
+                      }`}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <div className="w-full h-full bg-gray-800 rounded-lg flex items-center justify-center">
+                        <div className="text-center">
+                          <Image
+                            src={model.image}
+                            alt={model.name}
+                            width={75}
+                            height={75}
+                          />
+                          <p className="text-xs text-white font-medium">
+                            {model.name}
+                          </p>
+                        </div>
+                      </div>
+                    </motion.button>
+                  </motion.div>
+                ))}
+              </div>
+              {state.errors?.selectedModel && (
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="text-red-400 text-sm mt-2 flex items-center gap-1"
+                >
+                  <AlertCircle className="w-4 h-4" />
+                  {state.errors.selectedModel[0]}
+                </motion.p>
+              )}
+            </motion.div>
 
             {/* Submit Button */}
-            {/* ... tu botón queda igual ... */}
+            <motion.div variants={itemVariants} className="mt-8 text-center">
+              <motion.button
+                type="submit"
+                disabled={isPending}
+                className="bg-transparent border-2 border-blue-500 text-white px-8 py-2 rounded-full font-semibold text-lg flex items-center justify-center gap-3 mx-auto hover:bg-blue-500 hover:text-white transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow: "0 10px 25px rgba(255, 255, 255, 0.2)",
+                }}
+                whileTap={{ scale: 0.95 }}
+              >
+                {isPending ? "Enviando..." : "Cotizar ahora"}
+                {!isPending && (
+                  <motion.div
+                    animate={{ x: [0, 5, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  >
+                    <ArrowRight className="w-5 h-5" />
+                  </motion.div>
+                )}
+              </motion.button>
+            </motion.div>
           </form>
         </motion.div>
       </div>
