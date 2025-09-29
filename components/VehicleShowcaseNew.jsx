@@ -108,7 +108,7 @@ export default function VehicleShowcaseNew() {
     },
     {
       id: 7,
-      name: "T2 PHEV",
+      name: "T2 Phev",
       type: "Hybrid SUV",
       logo: "/models/t2-phev/t2-phev-logo.png",
       mainImage:
