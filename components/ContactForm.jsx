@@ -174,6 +174,7 @@ export default function ContactForm() {
               className="flex-1 bg-black text-white focus:outline-none text-sm"
               required
             >
+              <option value="">Selecciona tu ciudad</option>
               {ciudades.map((city) => (
                 <option key={city} value={city} className="bg-black text-white">
                   {city
@@ -214,6 +215,7 @@ export default function ContactForm() {
               className="flex-1 bg-black text-white focus:outline-none text-sm"
               required
             >
+              <option value="">Selecciona un asunto</option>
               <option value="Modelos">Modelos</option>
               <option value="Talleres">Talleres</option>
               <option value="Concesionarios">Concesionarios</option>
