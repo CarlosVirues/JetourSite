@@ -215,7 +215,7 @@ export default function VehicleShowcaseNew() {
                 src={currentVehicle.mainImage}
                 alt={currentVehicle.name}
                 fill
-                className="object-contain"
+                className="object-contain -mt-10"
                 priority
               />
             </motion.div>
