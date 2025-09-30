@@ -231,6 +231,9 @@ export default function QuoteForm({ currentModel = null }) {
                     className="flex-1 bg-black text-white focus:outline-none"
                     required
                   >
+                    <option value="">
+                      Selecciona el concesionario mas cercano
+                    </option>
                     {ciudades.map((city) => (
                       <option
                         key={city}

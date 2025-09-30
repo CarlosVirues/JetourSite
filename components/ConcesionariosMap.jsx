@@ -675,9 +675,9 @@ export default function ConcesionariosMap() {
                             whileHover={{ x: 5 }}
                             whileTap={{ scale: 0.98 }}
                           >
-                            <div className="text-gray-400 text-sm font-medium mb-2">
+                            {/* <div className="text-gray-400 text-sm font-medium mb-2">
                               DISTRIBUIDOR
-                            </div>
+                            </div> */}
                             <h3 className="text-white font-semibold mb-2">
                               {distributor.name}
                             </h3>
