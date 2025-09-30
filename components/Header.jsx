@@ -291,27 +291,17 @@ export default function Header({ transparent = false, border = false }) {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <>
-            {/* Backdrop */}
+            {/* Mobile Menu */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="fixed inset-0 bg-black backdrop-blur-sm z-40 md:hidden"
-              onClick={closeMobileMenu}
-            />
-
-            {/* Mobile Menu */}
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed top-0 right-0 h-full w-80 bg-black backdrop-blur-md z-50 md:hidden"
+              className="fixed inset-0 bg-black z-50 md:hidden h-full"
             >
               <div className="flex flex-col h-full bg-black">
                 {/* Header */}
-                <div className="flex justify-between items-center p-6 border-b border-gray-700 bg-black">
+                <div className="flex justify-between items-center p-6 bg-black">
                   <Image
                     src="/jetour-logo.png"
                     alt="JETOUR"
@@ -342,8 +332,8 @@ export default function Header({ transparent = false, border = false }) {
                 </div>
 
                 {/* Navigation Links */}
-                <nav className="flex-1 px-6 py-8 bg-black">
-                  <div className="space-y-6">
+                <nav className="flex-1 flex items-center justify-center px-6 bg-black">
+                  <div className="space-y-8 text-center py-8">
                     {navItems.map((item, index) => (
                       <motion.div
                         key={item.href || item.label}
@@ -355,13 +345,13 @@ export default function Header({ transparent = false, border = false }) {
                           <div data-models-dropdown>
                             <button
                               onClick={toggleModelsDropdown}
-                              className={`block text-lg font-medium transition-all duration-300 relative w-full text-left ${
+                              className={`block text-2xl font-medium transition-all duration-300 relative w-full text-center ${
                                 isModelsActive()
                                   ? "text-blue-400"
                                   : "text-white hover:text-blue-400"
                               }`}
                             >
-                              <span className="relative flex items-center justify-between">
+                              <span className="relative flex items-center justify-center space-x-2">
                                 {item.label}
                                 <motion.svg
                                   animate={{
@@ -405,7 +395,7 @@ export default function Header({ transparent = false, border = false }) {
                                   transition={{ duration: 0.3 }}
                                   className="overflow-hidden"
                                 >
-                                  <div className="pl-4 pt-2 space-y-3">
+                                  <div className="pt-4 space-y-4 text-center">
                                     {item.items.map((model, modelIndex) => (
                                       <motion.div
                                         key={model.href}
@@ -419,7 +409,7 @@ export default function Header({ transparent = false, border = false }) {
                                         <Link
                                           href={model.href}
                                           onClick={closeMobileMenu}
-                                          className={`block text-base transition-all duration-300 ${
+                                          className={`block text-lg transition-all duration-300 ${
                                             isActive(model.href)
                                               ? "text-blue-400"
                                               : "text-gray-300 hover:text-blue-400"
@@ -438,7 +428,7 @@ export default function Header({ transparent = false, border = false }) {
                           <Link
                             href={item.href}
                             onClick={closeMobileMenu}
-                            className={`block text-lg font-medium transition-all duration-300 relative ${
+                            className={`block text-2xl font-medium transition-all duration-300 relative ${
                               isActive(item.href)
                                 ? "text-blue-400"
                                 : "text-white hover:text-blue-400"

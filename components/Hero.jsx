@@ -28,6 +28,7 @@ export default function Hero({
             autoPlay
             muted
             loop
+            preload="auto"
             playsInline
             className="w-full h-full object-cover"
           >
