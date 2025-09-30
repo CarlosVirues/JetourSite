@@ -187,7 +187,7 @@ export default function ThreeSixty({
         </div>
 
         {/* Mobile Navigation Controls */}
-        <div className="md:hidden flex justify-center items-center gap-6 mt-6">
+        <div className="md:hidden flex justify-center items-center gap-6 -mt-6">
           <button
             onClick={prevFrame}
             disabled={currentFrame === 1}
@@ -240,7 +240,7 @@ export default function ThreeSixty({
         </div>
 
         {/* Slider Control */}
-        <div className="px-4">
+        <div className="px-4 lg:-mt-24">
           <div className="max-w-md mx-auto">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm text-gray-400">0°</span>

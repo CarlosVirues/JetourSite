@@ -297,7 +297,7 @@ export default function Header({ transparent = false, border = false }) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="fixed inset-0 bg-black/80 backdrop-blur-sm z-40 md:hidden"
+              className="fixed inset-0 bg-black backdrop-blur-sm z-40 md:hidden"
               onClick={closeMobileMenu}
             />
 
@@ -307,11 +307,11 @@ export default function Header({ transparent = false, border = false }) {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed top-0 right-0 h-full w-80 bg-black/95 backdrop-blur-md z-50 md:hidden"
+              className="fixed top-0 right-0 h-full w-80 bg-black backdrop-blur-md z-50 md:hidden"
             >
-              <div className="flex flex-col h-full">
+              <div className="flex flex-col h-full bg-black">
                 {/* Header */}
-                <div className="flex justify-between items-center p-6 border-b border-gray-700">
+                <div className="flex justify-between items-center p-6 border-b border-gray-700 bg-black">
                   <Image
                     src="/jetour-logo.png"
                     alt="JETOUR"
@@ -342,7 +342,7 @@ export default function Header({ transparent = false, border = false }) {
                 </div>
 
                 {/* Navigation Links */}
-                <nav className="flex-1 px-6 py-8">
+                <nav className="flex-1 px-6 py-8 bg-black">
                   <div className="space-y-6">
                     {navItems.map((item, index) => (
                       <motion.div

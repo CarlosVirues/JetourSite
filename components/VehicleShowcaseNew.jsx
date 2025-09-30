@@ -223,7 +223,7 @@ export default function VehicleShowcaseNew() {
         </div>
 
         {/* Model Carousel */}
-        <div className="mt-0 md:mt-0 relative">
+        <div className="-mt-20 md:-mt-20 relative">
           {/* Navigation Arrows */}
           <motion.button
             onClick={prevModel}
