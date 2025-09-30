@@ -36,7 +36,7 @@ export default function VehicleShowcaseNew() {
       thumbnail:
         "https://storage.googleapis.com/xiyimgengine/jetour/360/x70-sport/23.png",
       dimensions: {
-        length: "4724",
+        length: "4743",
         width: "1900",
         height: "1720",
       },
@@ -102,7 +102,7 @@ export default function VehicleShowcaseNew() {
       dimensions: {
         length: "4785",
         width: "2006",
-        height: "1870",
+        height: "1880",
       },
       slug: "t2",
     },
@@ -118,7 +118,7 @@ export default function VehicleShowcaseNew() {
       dimensions: {
         length: "4785",
         width: "2006",
-        height: "1875",
+        height: "1880",
       },
       slug: "t2-phev",
     },
