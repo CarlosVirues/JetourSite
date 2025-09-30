@@ -60,7 +60,11 @@ export default function QuoteForm({ currentModel = null }) {
 
   const itemVariants = {
     hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
   };
 
   const formFieldVariants = {
@@ -120,7 +124,12 @@ export default function QuoteForm({ currentModel = null }) {
           variants={itemVariants}
           className="bg-black rounded-2xl p-8 lg:p-12"
         >
-          <form action={action} noValidate className="space-y-6" id="quote-form">
+          <form
+            action={action}
+            noValidate
+            className="space-y-6"
+            id="quote-form"
+          >
             {/* Form Fields */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Nombre y apellido */}
@@ -216,16 +225,18 @@ export default function QuoteForm({ currentModel = null }) {
                   <MapPin className="w-5 h-5 text-blue-500 mr-3" />
 
                   <select
+                    key={state.values?.ciudad || ""}
                     name="ciudad"
                     defaultValue={state.values?.ciudad || ""}
                     className="flex-1 bg-black text-white focus:outline-none"
                     required
                   >
-                    <option value="" disabled>
-                      Selecciona tu ciudad
-                    </option>
                     {ciudades.map((city) => (
-                      <option key={city} value={city} className="bg-black text-white">
+                      <option
+                        key={city}
+                        value={city}
+                        className="bg-black text-white"
+                      >
                         {city
                           .replace(/_/g, " ")
                           .split(" ")
@@ -302,7 +313,8 @@ export default function QuoteForm({ currentModel = null }) {
                           .classList.add("border-blue-500", "bg-blue-500/10");
                       }}
                       className={`w-full aspect-square rounded-lg border-2 transition-all duration-300 ${
-                        (state.values?.selectedModel || currentModel) === model.id
+                        (state.values?.selectedModel || currentModel) ===
+                        model.id
                           ? "border-blue-500 bg-blue-500/10"
                           : "border-gray-600 hover:border-gray-500"
                       }`}

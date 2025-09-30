@@ -9,6 +9,7 @@ import {
   Mail,
   Phone,
   MapPin,
+  MailOpen,
   ChevronDown,
   MessageCircle,
   ArrowRight,
@@ -71,98 +72,185 @@ export default function ContactForm() {
 
       <form action={action} noValidate className="space-y-6">
         {/* Nombre */}
-        <div className="flex items-center border-b border-blue-500 pb-2">
-          <User className="w-5 h-5 text-blue-500 mr-3" />
-          <Input
-            type="text"
-            name="nombre"
-            defaultValue={state.values?.nombre || ""}
-            placeholder="Nombre y apellido"
-            className="bg-transparent border-none text-white placeholder:text-gray-300 focus:ring-0 focus:border-none p-0"
-            required
-          />
+        <div>
+          <div
+            className={`flex items-center border-b pb-2 ${
+              state.errors?.nombre ? "border-red-500" : "border-blue-500"
+            }`}
+          >
+            <User
+              className={`w-5 h-5 mr-3 ${
+                state.errors?.nombre ? "text-red-500" : "text-blue-500"
+              }`}
+            />
+            <Input
+              type="text"
+              name="nombre"
+              defaultValue={state.values?.nombre || ""}
+              placeholder="Nombre y apellido"
+              className="bg-transparent border-none text-white placeholder:text-gray-300 focus:ring-0 focus:border-none p-0"
+              required
+            />
+          </div>
+          {state.errors?.nombre && (
+            <p className="text-red-400 text-sm mt-1 ml-8">
+              {state.errors.nombre[0]}
+            </p>
+          )}
         </div>
 
         {/* Email */}
-        <div className="flex items-center border-b border-blue-500 pb-2">
-          <Mail className="w-5 h-5 text-blue-500 mr-3" />
-          <Input
-            type="email"
-            name="email"
-            defaultValue={state.values?.email || ""}
-            placeholder="Correo electrónico"
-            className="bg-transparent border-none text-white placeholder:text-gray-300 focus:ring-0 focus:border-none p-0"
-            required
-          />
+        <div>
+          <div
+            className={`flex items-center border-b pb-2 ${
+              state.errors?.email ? "border-red-500" : "border-blue-500"
+            }`}
+          >
+            <Mail
+              className={`w-5 h-5 mr-3 ${
+                state.errors?.email ? "text-red-500" : "text-blue-500"
+              }`}
+            />
+            <Input
+              type="email"
+              name="email"
+              defaultValue={state.values?.email || ""}
+              placeholder="Correo electrónico"
+              className="bg-transparent border-none text-white placeholder:text-gray-300 focus:ring-0 focus:border-none p-0"
+              required
+            />
+          </div>
+          {state.errors?.email && (
+            <p className="text-red-400 text-sm mt-1 ml-8">
+              {state.errors.email[0]}
+            </p>
+          )}
         </div>
 
         {/* Teléfono */}
-        <div className="flex items-center border-b border-blue-500 pb-2">
-          <Phone className="w-5 h-5 text-blue-500 mr-3" />
-          <Input
-            type="tel"
-            name="telefono"
-            defaultValue={state.values?.telefono || ""}
-            placeholder="Teléfono"
-            className="bg-transparent border-none text-white placeholder:text-gray-300 focus:ring-0 focus:border-none p-0"
-            required
-          />
+        <div>
+          <div
+            className={`flex items-center border-b pb-2 ${
+              state.errors?.telefono ? "border-red-500" : "border-blue-500"
+            }`}
+          >
+            <Phone
+              className={`w-5 h-5 mr-3 ${
+                state.errors?.telefono ? "text-red-500" : "text-blue-500"
+              }`}
+            />
+            <Input
+              type="tel"
+              name="telefono"
+              defaultValue={state.values?.telefono || ""}
+              placeholder="Teléfono"
+              className="bg-transparent border-none text-white placeholder:text-gray-300 focus:ring-0 focus:border-none p-0"
+              required
+            />
+          </div>
+          {state.errors?.telefono && (
+            <p className="text-red-400 text-sm mt-1 ml-8">
+              {state.errors.telefono[0]}
+            </p>
+          )}
         </div>
 
         {/* Ciudad con SELECT */}
-        <div className="flex items-center border-b border-blue-500 pb-2">
-          <MapPin className="w-5 h-5 text-blue-500 mr-3" />
-          <select
-            name="ciudad"
-            defaultValue={state.values?.ciudad || ""}
-            className="flex-1 bg-black text-white focus:outline-none text-sm"
-            required
+        <div>
+          <div
+            className={`flex items-center border-b pb-2 ${
+              state.errors?.ciudad ? "border-red-500" : "border-blue-500"
+            }`}
           >
-            <option value="" disabled>
-              Selecciona tu ciudad
-            </option>
-            {ciudades.map((city) => (
-              <option key={city} value={city} className="bg-black text-white">
-                {city
-                  .replace(/_/g, " ")
-                  .split(" ")
-                  .map(
-                    (w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()
-                  )
-                  .join(" ")}
-              </option>
-            ))}
-          </select>
+            <MapPin
+              className={`w-5 h-5 mr-3 ${
+                state.errors?.ciudad ? "text-red-500" : "text-blue-500"
+              }`}
+            />
+            <select
+              key={state.values?.ciudad || ""}
+              name="ciudad"
+              defaultValue={state.values?.ciudad || ""}
+              className="flex-1 bg-black text-white focus:outline-none text-sm"
+              required
+            >
+              {ciudades.map((city) => (
+                <option key={city} value={city} className="bg-black text-white">
+                  {city
+                    .replace(/_/g, " ")
+                    .split(" ")
+                    .map(
+                      (w) =>
+                        w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()
+                    )
+                    .join(" ")}
+                </option>
+              ))}
+            </select>
+          </div>
+          {state.errors?.ciudad && (
+            <p className="text-red-400 text-sm mt-1 ml-8">
+              {state.errors.ciudad[0]}
+            </p>
+          )}
         </div>
 
         {/* Asunto */}
-        <div className="flex items-center border-b border-blue-500 pb-2">
-          <ChevronDown className="w-5 h-5 text-blue-500 mr-3" />
-          <select
-            name="asunto"
-            defaultValue={state.values?.asunto || ""}
-            className="bg-transparent border-none text-white focus:ring-0 focus:border-none p-0 w-full appearance-none cursor-pointer text-sm"
-            required
+        <div>
+          <div
+            className={`flex items-center border-b pb-2 ${
+              state.errors?.asunto ? "border-red-500" : "border-blue-500"
+            }`}
           >
-            <option value="" disabled>
-              Selecciona un asunto
-            </option>
-            <option value="Modelos">Modelos</option>
-            <option value="Talleres">Talleres</option>
-            <option value="Concesionarios">Concesionarios</option>
-          </select>
+            <MailOpen
+              className={`w-5 h-5 mr-3 ${
+                state.errors?.asunto ? "text-red-500" : "text-blue-500"
+              }`}
+            />
+            <select
+              key={state.values?.asunto || ""}
+              name="asunto"
+              defaultValue={state.values?.asunto || ""}
+              className="flex-1 bg-black text-white focus:outline-none text-sm"
+              required
+            >
+              <option value="Modelos">Modelos</option>
+              <option value="Talleres">Talleres</option>
+              <option value="Concesionarios">Concesionarios</option>
+            </select>
+          </div>
+          {state.errors?.asunto && (
+            <p className="text-red-400 text-sm mt-1 ml-8">
+              {state.errors.asunto[0]}
+            </p>
+          )}
         </div>
 
         {/* Mensaje */}
-        <div className="flex items-start border-b border-blue-500 pb-2">
-          <MessageCircle className="w-5 h-5 text-blue-500 mr-3 mt-2" />
-          <Textarea
-            name="mensaje"
-            defaultValue={state.values?.mensaje || ""}
-            placeholder="Mensaje"
-            className="bg-transparent border-none text-white placeholder:text-gray-300 focus:ring-0 focus:border-none p-0 resize-none min-h-[80px]"
-            required
-          />
+        <div>
+          <div
+            className={`flex items-start border-b pb-2 ${
+              state.errors?.mensaje ? "border-red-500" : "border-blue-500"
+            }`}
+          >
+            <MessageCircle
+              className={`w-5 h-5 mr-3 mt-2 ${
+                state.errors?.mensaje ? "text-red-500" : "text-blue-500"
+              }`}
+            />
+            <Textarea
+              name="mensaje"
+              defaultValue={state.values?.mensaje || ""}
+              placeholder="Mensaje"
+              className="bg-transparent border-none text-white placeholder:text-gray-300 focus:ring-0 focus:border-none p-0 resize-none min-h-[80px]"
+              required
+            />
+          </div>
+          {state.errors?.mensaje && (
+            <p className="text-red-400 text-sm mt-1 ml-8">
+              {state.errors.mensaje[0]}
+            </p>
+          )}
         </div>
 
         {/* Botón */}

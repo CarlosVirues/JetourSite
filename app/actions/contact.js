@@ -4,19 +4,51 @@ import { z } from "zod";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
 
+const ciudadesValidas = [
+  "ambato",
+  "cuenca",
+  "guayaquil",
+  "guayaquil_samborondon",
+  "ibarra",
+  "latacunga",
+  "loja",
+  "macas",
+  "machala",
+  "manta",
+  "quito_norte",
+  "quito_sur",
+  "quito_cumbaya_tumbaco",
+  "quito_sangolqui",
+  "riobamba",
+  "santo_domingo",
+];
+
 const contactSchema = z.object({
   nombre: z.string().min(2, "El nombre debe tener al menos 2 caracteres"),
   email: z.string().email("Ingresa un email válido"),
   telefono: z.string().min(7, "El teléfono debe tener al menos 7 dígitos"),
-  ciudad: z.string().min(2, "Selecciona tu ciudad"),
+  ciudad: z.enum(ciudadesValidas, {
+    required_error: "Selecciona tu ciudad",
+    invalid_type_error: "Selecciona tu ciudad",
+  }),
   asunto: z.enum(["Modelos", "Talleres", "Concesionarios"], {
-    errorMap: () => ({ message: "Selecciona un asunto válido" }),
+    required_error: "Selecciona un asunto válido",
+    invalid_type_error: "Selecciona un asunto válido",
   }),
   mensaje: z.string().min(10, "El mensaje debe tener al menos 10 caracteres"),
 });
 
 export async function submitContactForm(prevState, formData) {
   const data = Object.fromEntries(formData.entries());
+
+  // Asegurar que todos los campos requeridos estén presentes
+  if (!data.hasOwnProperty("ciudad")) data.ciudad = "";
+  if (!data.hasOwnProperty("asunto")) data.asunto = "";
+
+  // Limpiar campos vacíos de selects
+  if (data.ciudad === "") delete data.ciudad;
+  if (data.asunto === "") delete data.asunto;
+
   const validatedData = contactSchema.safeParse(data);
 
   if (!validatedData.success) {
