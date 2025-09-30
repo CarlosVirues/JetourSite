@@ -11,7 +11,6 @@ import {
   X,
 } from "lucide-react";
 import { Loader } from "@googlemaps/js-api-loader";
-import DistributorInfo from "./DistributorInfo";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function ConcesionariosMap() {
@@ -24,6 +23,7 @@ export default function ConcesionariosMap() {
   const [selectedDistributor, setSelectedDistributor] = useState(null);
   const [map, setMap] = useState(null);
   const [markers, setMarkers] = useState([]);
+  const [infoWindows, setInfoWindows] = useState([]);
   const mapRef = useRef(null);
 
   const distributors = {
@@ -77,7 +77,7 @@ export default function ConcesionariosMap() {
         status: "Abierto",
         image: "/distributor-guayaquil-3.jpg",
         location: {
-          lat: -2139561298172950.0,
+          lat: -2.13956129817295,
           lng: -79.928049639801,
         },
         contact: "",
@@ -471,11 +471,14 @@ export default function ConcesionariosMap() {
   useEffect(() => {
     if (!map) return;
 
-    // Clear existing markers
+    // Clear existing markers and info windows
     markers.forEach((marker) => marker.setMap(null));
+    infoWindows.forEach((infoWindow) => infoWindow.close());
 
     // Add new markers for all distributors
     const newMarkers = [];
+    const newInfoWindows = [];
+
     Object.values(distributors)
       .flat()
       .forEach((distributor) => {
@@ -496,24 +499,92 @@ export default function ConcesionariosMap() {
           },
         });
 
-        // Add click listener to marker
+        // Create InfoWindow content
+        const infoWindowContent = `
+          <div style="
+            color: black; 
+            padding: 16px; 
+            border-radius: 8px; 
+            min-width: 280px;
+            font-family: system-ui, -apple-system, sans-serif;
+          ">
+            <h3 style="
+              margin: 0 0 12px 0; 
+              font-size: 16px; 
+              font-weight: 600;
+              color: #3b82f6;
+            ">${distributor.name}</h3>
+            
+            <div style="margin-bottom: 8px; display: flex; align-items: flex-start; font-size: 14px;">
+              <span style="color: #9ca3af; margin-right: 8px;">📍</span>
+              <span style="color: #000;">${distributor.address}</span>
+            </div>
+            
+            <div style="margin-bottom: 8px; display: flex; align-items: center; font-size: 14px;">
+              <span style="color: #9ca3af; margin-right: 8px;">📞</span>
+              <span style="color: #000;">${distributor.mobile}</span>
+            </div>
+            
+            <div style="margin-bottom: 8px; display: flex; align-items: center; font-size: 14px;">
+              <span style="color: #9ca3af; margin-right: 8px;">🕒</span>
+              <span style="color: ${
+                distributor.status === "Abierto" ? "#10b981" : "#ef4444"
+              };">
+                ${distributor.status}
+              </span>
+            </div>
+            
+            ${
+              distributor.hours_weekdays
+                ? `
+              <div style="margin-bottom: 4px; font-size: 13px; color: #9ca3af;">
+                LUN - VIE: ${distributor.hours_weekdays}
+              </div>
+            `
+                : ""
+            }
+            
+            ${
+              distributor.hours_saturday
+                ? `
+              <div style="font-size: 13px; color: #9ca3af;">
+                SÁB: ${distributor.hours_saturday}
+              </div>
+            `
+                : ""
+            }
+          </div>
+        `;
+
+        const infoWindow = new google.maps.InfoWindow({
+          content: infoWindowContent,
+        });
+
+        // Add click listener to marker to show InfoWindow
         marker.addListener("click", () => {
+          // Close all other info windows
+          newInfoWindows.forEach((iw) => iw.close());
+
+          // Open this info window
+          infoWindow.open(map, marker);
+
+          // Set selected distributor for sidebar highlight
           setSelectedDistributor(distributor);
+
+          // Center map on marker
+          map.setCenter(distributor.location);
+          map.setZoom(15);
         });
 
         newMarkers.push(marker);
+        newInfoWindows.push(infoWindow);
       });
 
     setMarkers(newMarkers);
+    setInfoWindows(newInfoWindows);
   }, [map]);
 
-  // Center map on selected distributor
-  useEffect(() => {
-    if (map && selectedDistributor) {
-      map.setCenter(selectedDistributor.location);
-      map.setZoom(15);
-    }
-  }, [selectedDistributor, map]);
+  // Map centering is now handled directly in click handlers
 
   const toggleCity = (city) => {
     setExpandedCities((prev) => ({
@@ -524,6 +595,31 @@ export default function ConcesionariosMap() {
 
   const handleDistributorClick = (distributor) => {
     setSelectedDistributor(distributor);
+
+    // Find and open the corresponding InfoWindow
+    if (map && infoWindows.length > 0) {
+      // Close all info windows first
+      infoWindows.forEach((iw) => iw.close());
+
+      // Find the marker and info window for this distributor
+      const allDistributors = Object.values(distributors).flat();
+      const distributorIndex = allDistributors.findIndex(
+        (d) => d.id === distributor.id
+      );
+
+      if (
+        distributorIndex !== -1 &&
+        infoWindows[distributorIndex] &&
+        markers[distributorIndex]
+      ) {
+        // Open the info window
+        infoWindows[distributorIndex].open(map, markers[distributorIndex]);
+
+        // Center map on the marker
+        map.setCenter(distributor.location);
+        map.setZoom(15);
+      }
+    }
   };
 
   const filteredDistributors = Object.entries(distributors).reduce(
@@ -756,10 +852,7 @@ export default function ConcesionariosMap() {
             className="w-full h-full rounded-lg"
             style={{ minHeight: "400px" }}
           />
-          <DistributorInfo
-            distributor={selectedDistributor}
-            onClose={() => setSelectedDistributor(null)}
-          />
+          {/* Info is now shown directly on map markers via InfoWindows */}
         </motion.div>
       </div>
     </motion.div>
