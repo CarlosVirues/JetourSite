@@ -19,10 +19,13 @@ export default function LiveroomPage() {
       <Hero {...pageData.liveroom.hero} />
 
       {/* Quote Form Section */}
-      <QuoteForm {...pageData.quoteForm} currentModel={null} />
+      {pageData.quoteForm && <QuoteForm {...pageData.quoteForm} currentModel={null} />}
 
       {/* Global Stats Section */}
-      <GlobalStats {...pageData.globalStats} />
+      {pageData.globalStats && <GlobalStats {...pageData.globalStats} />}
+
+
+      
 
       <Footer />
     </div>
