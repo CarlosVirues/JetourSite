@@ -8,7 +8,7 @@ import QuoteForm from "@/components/QuoteForm";
 import Footer from "@/components/Footer";
 import { getPageData } from "@/lib/page-data";
 
-export default function HomePage() {
+export default function LiveroomPage() {
   const pageData = getPageData("liveroom");
 
   return (
