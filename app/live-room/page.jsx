@@ -13,7 +13,7 @@ import { getPageData, getVehicleModelPageData } from "@/lib/page-data";
 export default function LiveroomPage() {
   const pageData = getPageData("liveroom");
 
-  const model = "dashing";
+  const model = "t2-phev";
   const modelPageData = getVehicleModelPageData(model); // Datos específicos del modelo
 
   return (
