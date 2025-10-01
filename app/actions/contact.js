@@ -8,8 +8,11 @@ const contactSchema = z.object({
   nombre: z.string().min(2, "El nombre debe tener al menos 2 caracteres"),
   email: z.string().email("Ingresa un email válido"),
   telefono: z.string().min(7, "El teléfono debe tener al menos 7 dígitos"),
+  cedula: z
+    .string()
+    .length(10, "La cédula debe tener exactamente 10 dígitos")
+    .regex(/^\d{10}$/, "La cédula debe contener solo números"),
   ciudad: z.string().min(2, "La ciudad debe ser alguna de la lista"),
-  asunto: z.string().min(2, "El asunto debe ser alguno de la lista"),
   mensaje: z.string().min(10, "El mensaje debe tener al menos 10 caracteres"),
 });
 
@@ -66,8 +69,8 @@ export async function submitContactForm(prevState, formData) {
         full_name: cleanData.nombre,
         email: cleanData.email,
         phone_number: cleanData.telefono,
+        cedula: cleanData.cedula,
         ciudad: cleanData.ciudad,
-        asunto: cleanData.asunto,
         mensaje: cleanData.mensaje,
         webhook: "ca8f540qm19akr16s80rd083",
       }),

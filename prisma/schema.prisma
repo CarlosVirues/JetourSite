@@ -13,8 +13,9 @@ model Contact {
   nombre    String
   email     String
   telefono  String
+  cedula    String?
   ciudad    String
-  asunto    String
+  asunto    String?
   mensaje   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

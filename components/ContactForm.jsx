@@ -8,8 +8,8 @@ import {
   User,
   Mail,
   Phone,
+  CreditCard,
   MapPin,
-  MailOpen,
   ChevronDown,
   MessageCircle,
   ArrowRight,
@@ -155,10 +155,38 @@ export default function ContactForm() {
           )}
         </div>
 
-        {/* Ciudad con SELECT */}
+        {/* Cédula */}
         <div>
           <div
             className={`flex items-center border-b pb-2 ${
+              state.errors?.cedula ? "border-red-500" : "border-blue-500"
+            }`}
+          >
+            <CreditCard
+              className={`w-5 h-5 mr-3 ${
+                state.errors?.cedula ? "text-red-500" : "text-blue-500"
+              }`}
+            />
+            <Input
+              type="text"
+              name="cedula"
+              defaultValue={state.values?.cedula || ""}
+              placeholder="Cédula de identidad (10 dígitos)"
+              className="bg-transparent border-none text-white placeholder:text-gray-300 focus:ring-0 focus:border-none p-0"
+              required
+            />
+          </div>
+          {state.errors?.cedula && (
+            <p className="text-red-400 text-sm mt-1 ml-8">
+              {state.errors.cedula[0]}
+            </p>
+          )}
+        </div>
+
+        {/* Ciudad con SELECT */}
+        <div>
+          <div
+            className={`flex items-center border-b py-2 ${
               state.errors?.ciudad ? "border-red-500" : "border-blue-500"
             }`}
           >
@@ -192,38 +220,6 @@ export default function ContactForm() {
           {state.errors?.ciudad && (
             <p className="text-red-400 text-sm mt-1 ml-8">
               {state.errors.ciudad[0]}
-            </p>
-          )}
-        </div>
-
-        {/* Asunto */}
-        <div>
-          <div
-            className={`flex items-center border-b pb-2 ${
-              state.errors?.asunto ? "border-red-500" : "border-blue-500"
-            }`}
-          >
-            <MailOpen
-              className={`w-5 h-5 mr-3 ${
-                state.errors?.asunto ? "text-red-500" : "text-blue-500"
-              }`}
-            />
-            <select
-              key={state.values?.asunto || ""}
-              name="asunto"
-              defaultValue={state.values?.asunto || ""}
-              className="flex-1 bg-black text-white focus:outline-none text-sm"
-              required
-            >
-              <option value="">Selecciona un asunto</option>
-              <option value="Modelos">Modelos</option>
-              <option value="Talleres">Talleres</option>
-              <option value="Concesionarios">Concesionarios</option>
-            </select>
-          </div>
-          {state.errors?.asunto && (
-            <p className="text-red-400 text-sm mt-1 ml-8">
-              {state.errors.asunto[0]}
             </p>
           )}
         </div>
