@@ -8,6 +8,8 @@ import QuoteForm from "@/components/QuoteForm";
 import Footer from "@/components/Footer";
 import Image from "next/image";
 import VehicleHero from "@/components/VehicleHero";
+import { motion } from "framer-motion";
+import { MessageCircle, ArrowRight } from "lucide-react";
 import { getPageData, getVehicleModelPageData } from "@/lib/page-data";
 
 export default function LiveroomPage() {
