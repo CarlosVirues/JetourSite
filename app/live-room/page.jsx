@@ -65,7 +65,7 @@ export default function LiveroomPage() {
         
 
         {/* Hero Content */}
-        <div className="relative z-10 flex items-center justify-center h-full">
+        <div className="relative z-10 flex items-center justify-center h-full mt-4">
           <div className="text-center">
             <div className="text-center">
                       <motion.a
@@ -76,8 +76,7 @@ export default function LiveroomPage() {
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
                                   >
-                                    <MessageCircle className="w-6 h-6" />
-                                    <span className="text-lg">Conoce ma´s</span>
+                                    <span className="text-lg">Conoce más</span>
                                     <ArrowRight className="w-5 h-5" />
                                   </motion.a>
                     </div>
