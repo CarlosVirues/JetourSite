@@ -13,7 +13,7 @@ import { getPageData, getVehicleModelPageData } from "@/lib/page-data";
 export default function LiveroomPage() {
   const pageData = getPageData("liveroom");
 
-  const model = "t2-phev";
+  const model = "dashing";
   const modelPageData = getVehicleModelPageData(model); // Datos específicos del modelo
 
   return (
@@ -34,10 +34,8 @@ export default function LiveroomPage() {
         <div className="relative z-10 flex items-center justify-center h-full">
           <div className="text-center">
             <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold text-white mb-4">
-              Live Room
             </h1>
             <p className="md:text-xl">
-              Descubre el Suv que esta redescubriendo el futuro
             </p>
           </div>
         </div>
@@ -56,6 +54,32 @@ export default function LiveroomPage() {
         logoImage={modelPageData.hero.logoImage}
         logoAlt={modelPageData.hero.logoAlt}
       />
+
+     {/* Hero Section */}
+      <section className="relative h-auto lg:h-auto bg-gradient-to-r from-black to-gray-900 overflow-hidden">
+        {/* Background Image Placeholder - You can replace this with an actual car image */}
+        
+
+        {/* Hero Content */}
+        <div className="relative z-10 flex items-center justify-center h-full">
+          <div className="text-center">
+            <div className="text-center">
+                      <motion.a
+                                    href="/vehiculo/dashing"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="bg-transparent border-2 border-blue-500 text-white px-8 py-2 rounded-full font-semibold text-lg flex items-center justify-center gap-3 hover:bg-blue-500 hover:text-white transition-all duration-300 w-fit"
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                  >
+                                    <MessageCircle className="w-6 h-6" />
+                                    <span className="text-lg">Conoce ma´s</span>
+                                    <ArrowRight className="w-5 h-5" />
+                                  </motion.a>
+                    </div>
+          </div>
+        </div>
+      </section>
 
       {/* Global Stats Section */}
       {pageData.globalStats && <GlobalStats {...pageData.globalStats} />}
