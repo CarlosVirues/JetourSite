@@ -15,8 +15,28 @@ export default function LiveroomPage() {
     <div className="min-h-screen bg-black text-white">
       <Header transparent={true} />
 
-      {/* Hero Section - Full Screen */}
-      <Hero {...pageData.hero} />
+      {/* Hero Section */}
+            <section className="relative h-96 lg:h-[500px] bg-gradient-to-r from-black to-gray-900 overflow-hidden">
+              {/* Background Image Placeholder - You can replace this with an actual car image */}
+              <Image
+                src="/bg-liveroom.jpg"
+                alt="Live Room"
+                fill
+                className="object-cover"
+              />
+      
+              {/* Hero Content */}
+              <div className="relative z-10 flex items-center justify-center h-full">
+                <div className="text-center">
+                  <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold text-white mb-4">
+                    Live Room
+                  </h1>
+                  <p className="md:text-xl">
+                    Descubre el Suv que esta redescubriendo el futuro
+                  </p>
+                </div>
+              </div>
+            </section>
 
       {/* Quote Form Section */}
       {pageData.quoteForm && <QuoteForm {...pageData.quoteForm} currentModel={null} />}
