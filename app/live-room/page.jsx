@@ -16,7 +16,7 @@ export default function LiveroomPage() {
       <Header transparent={true} />
 
       {/* Hero Section - Full Screen */}
-      <Hero {...pageData.liveroom.hero} />
+      <Hero {...pageData.hero} />
 
       {/* Quote Form Section */}
       {pageData.quoteForm && <QuoteForm {...pageData.quoteForm} currentModel={null} />}
