@@ -17,6 +17,10 @@ export default function RootLayout({ children }) {
   const isProduction = process.env.NODE_ENV === "production";
   return (
     <html lang="es" className="scroll-smooth">
+      <meta
+          name="google-site-verification"
+          content="VEy9xJOy75Ui3-w29BTFPp7jKeXcvtkgxEa3IzSfgp0"
+        />
       {isProduction && (
         <Script
           id="tag-manager-head"
