@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 import { getAllModels } from "@/lib/vehicle-models";
 
 export default function sitemap() {
-  const baseUrl = "https://jetour.com.ec";
+  const baseUrl = "https://www.jetourecuador.com";
   const currentDate = new Date().toISOString();
 
   // Páginas principales

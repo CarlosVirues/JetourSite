@@ -7,6 +7,6 @@ export default function robots() {
       allow: "/",
       disallow: ["/admin/", "/api/", "/_next/", "/private/"],
     },
-    sitemap: "https://jetour.com.ec/sitemap.xml",
+    sitemap: "https://www.jetourecuador.com/sitemap.xml",
   };
 }
