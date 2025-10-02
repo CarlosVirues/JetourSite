@@ -14,11 +14,6 @@ import { motion } from "framer-motion";
 import { MessageCircle, ArrowRight } from "lucide-react";
 import { getPageData, getVehicleModelPageData } from "@/lib/page-data";
 
-export const metadata = {
-  title: "Jetour - Live Room",
-  description:
-    "Descubre el SUV que está redefiniendo el futuro.",
-};
 
 export default function LiveroomPage() {
   const pageData = getPageData("liveroom");
