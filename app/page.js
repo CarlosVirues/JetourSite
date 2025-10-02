@@ -31,7 +31,7 @@ export default function HomePage() {
       <VideoGallery {...pageData.videoGallery} />
 
       {/* Quote Form Section */}
-      <QuoteForm {...pageData.quoteForm} currentModel={null} />
+      <QuoteForm {...pageData.quoteForm} currentModel={null} source="home" />
 
       <Footer />
     </div>

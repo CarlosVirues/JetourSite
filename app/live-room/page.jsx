@@ -37,17 +37,19 @@ export default function LiveroomPage() {
         {/* Hero Content */}
         <div className="relative z-10 flex items-center justify-center h-full">
           <div className="text-center">
-            <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold text-white mb-4">
-            </h1>
-            <p className="md:text-xl">
-            </p>
+            <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold text-white mb-4"></h1>
+            <p className="md:text-xl"></p>
           </div>
         </div>
       </section>
 
       {/* Quote Form Section */}
       {pageData.quoteForm && (
-        <QuoteForm {...pageData.quoteForm} currentModel={model} />
+        <QuoteForm
+          {...pageData.quoteForm}
+          currentModel={model}
+          source="live-room"
+        />
       )}
 
       <VehicleHero
@@ -59,27 +61,26 @@ export default function LiveroomPage() {
         logoAlt={modelPageData.hero.logoAlt}
       />
 
-     {/* Hero Section */}
+      {/* Hero Section */}
       <section className="relative h-auto lg:h-auto bg-gradient-to-r from-black to-gray-900 overflow-hidden">
         {/* Background Image Placeholder - You can replace this with an actual car image */}
-        
 
         {/* Hero Content */}
         <div className="relative z-10 flex items-center justify-center h-full mt-4">
           <div className="text-center">
             <div className="text-center">
-                      <motion.a
-                                    href="/vehiculo/dashing"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="bg-transparent border-2 border-blue-500 text-white px-8 py-2 rounded-full font-semibold text-lg flex items-center justify-center gap-3 hover:bg-blue-500 hover:text-white transition-all duration-300 w-fit"
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                  >
-                                    <span className="text-lg">Conoce más</span>
-                                    <ArrowRight className="w-5 h-5" />
-                                  </motion.a>
-                    </div>
+              <motion.a
+                href="/vehiculo/dashing"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-transparent border-2 border-blue-500 text-white px-8 py-2 rounded-full font-semibold text-lg flex items-center justify-center gap-3 hover:bg-blue-500 hover:text-white transition-all duration-300 w-fit"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <span className="text-lg">Conoce más</span>
+                <ArrowRight className="w-5 h-5" />
+              </motion.a>
+            </div>
           </div>
         </div>
       </section>

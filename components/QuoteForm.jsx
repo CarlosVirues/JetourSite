@@ -15,7 +15,7 @@ import {
 import Image from "next/image";
 import { submitQuoteForm } from "@/app/actions/quote";
 
-export default function QuoteForm({ currentModel = null }) {
+export default function QuoteForm({ currentModel = null, source = null }) {
   const [state, action, isPending] = useActionState(submitQuoteForm, {
     errors: {},
     message: "",
@@ -352,6 +352,8 @@ export default function QuoteForm({ currentModel = null }) {
                 </motion.p>
               )}
             </motion.div>
+
+            <input type="hidden" name="source" value={source || ""} />
 
             {/* Submit Button */}
             <motion.div variants={itemVariants} className="mt-8 text-center">

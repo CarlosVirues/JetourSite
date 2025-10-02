@@ -74,7 +74,11 @@ export default async function VehicleModelPage({ params }) {
 
       {/* Quote Form Section */}
       <div id="quote-form">
-        <QuoteForm {...pageData.quoteForm} currentModel={model} />
+        <QuoteForm
+          {...pageData.quoteForm}
+          currentModel={model}
+          source={model}
+        />
       </div>
 
       {/* Floating Quote Button */}

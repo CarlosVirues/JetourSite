@@ -30,6 +30,7 @@ model Quote {
   mail          String
   cedula        String
   ciudad        String
+  source        String?
   selectedModel String
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
