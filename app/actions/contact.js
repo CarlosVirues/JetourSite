@@ -32,8 +32,8 @@ export async function submitContactForm(prevState, formData) {
 
   const cleanData = validatedData.data;
 
+  // Guardar en la BD
   try {
-    // Guardar en la base de datos
     await prisma.contact.create({ data: cleanData });
   } catch (error) {
     console.error("Error guardando en BD:", error);
@@ -47,7 +47,7 @@ export async function submitContactForm(prevState, formData) {
 
   // Enviar a Zapier
   try {
-    await fetch("https://hooks.zapier.com/hooks/catch/3497280/uhtw0kh/", {
+    const zapierRes = await fetch("https://hooks.zapier.com/hooks/catch/3497280/uhtw0kh/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -56,13 +56,19 @@ export async function submitContactForm(prevState, formData) {
         timestamp: new Date().toISOString(),
       }),
     });
+
+    if (!zapierRes.ok) {
+      console.error("Zapier respondió con error:", zapierRes.status, await zapierRes.text());
+    } else {
+      console.log("Zapier recibió los datos correctamente");
+    }
   } catch (err) {
     console.error("Error enviando a Zapier:", err);
   }
 
   // Enviar al CRM
   try {
-    await fetch("https://crm.jacecuador.com/slt_crm/webhook", {
+    const crmRes = await fetch("https://crm.jacecuador.com/slt_crm/webhook", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -75,9 +81,16 @@ export async function submitContactForm(prevState, formData) {
         webhook: "ca8f540qm19akr16s80rd083",
       }),
     });
+
+    if (!crmRes.ok) {
+      console.error("CRM respondió con error:", crmRes.status, await crmRes.text());
+    } else {
+      console.log("CRM recibió los datos correctamente");
+    }
   } catch (err) {
     console.error("Error enviando a CRM:", err);
   }
 
+  // Recién aquí redirigimos
   redirect("/contacto/gracias#contact-form");
 }
