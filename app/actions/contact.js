@@ -69,7 +69,7 @@ export async function submitContactForm(prevState, formData) {
         full_name: cleanData.nombre,
         email: cleanData.email,
         phone_number: cleanData.telefono,
-        cedula: cleanData.cedula,
+        ci: cleanData.cedula,
         ciudad: cleanData.ciudad,
         mensaje: cleanData.mensaje,
         webhook: "ca8f540qm19akr16s80rd083",
