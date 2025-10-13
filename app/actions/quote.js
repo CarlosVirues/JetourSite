@@ -1,7 +1,6 @@
 "use server";
 
 import { z } from "zod";
-import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
 
 const quoteSchema = z.object({
@@ -16,7 +15,6 @@ const quoteSchema = z.object({
 
 export async function submitQuoteForm(prevState, formData) {
   const data = Object.fromEntries(formData.entries());
-
   const validatedData = quoteSchema.safeParse(data);
 
   if (!validatedData.success) {
@@ -28,10 +26,9 @@ export async function submitQuoteForm(prevState, formData) {
     };
   }
 
+  // 1) Guarda en BD
   try {
-    await prisma.quote.create({
-      data: validatedData.data,
-    });
+    await prisma.quote.create({ data: validatedData.data });
   } catch (error) {
     console.error("Error guardando en BD:", error);
     return {
@@ -42,7 +39,7 @@ export async function submitQuoteForm(prevState, formData) {
     };
   }
 
-  // Payload CRM
+  // 2) Envía a CRM y Zapier (paralelo, no bloquea la UX si fallan)
   const crmPayload = {
     full_name: validatedData.data.nombre,
     email: validatedData.data.mail,
@@ -55,12 +52,13 @@ export async function submitQuoteForm(prevState, formData) {
   };
 
   try {
-    // Enviar a CRM y Zapier en paralelo
     const [crmResponse, zapierResponse] = await Promise.all([
       fetch("https://crm.jacecuador.com/slt_crm/webhook", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(crmPayload),
+        // @ts-ignore
+        cache: "no-store",
       }),
       fetch("https://hooks.zapier.com/hooks/catch/3497280/uhtax59/", {
         method: "POST",
@@ -68,26 +66,29 @@ export async function submitQuoteForm(prevState, formData) {
         body: JSON.stringify({
           ...validatedData.data,
           formType: "quote",
-          testMode: true, // 👈 para identificar la prueba en Zapier
+          testMode: true,
           timestamp: new Date().toISOString(),
         }),
+        // @ts-ignore
+        cache: "no-store",
       }),
     ]);
 
     if (!crmResponse.ok) {
       console.error("CRM error:", crmResponse.status, await crmResponse.text());
-    } else {
-      console.log("✅ CRM recibió los datos");
     }
-
     if (!zapierResponse.ok) {
       console.error("Zapier error:", zapierResponse.status, await zapierResponse.text());
-    } else {
-      console.log("✅ Zapier recibió los datos");
     }
   } catch (err) {
     console.error("Error en envío a CRM/Zapier:", err);
   }
 
-  window.location.href = ("/gracias#quote-form");
+  // 3) Devuelve éxito; el cliente se encarga de redirigir
+  return {
+    errors: {},
+    message: "OK",
+    success: true,
+    values: validatedData.data,
+  };
 }
