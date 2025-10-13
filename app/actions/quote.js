@@ -89,5 +89,5 @@ export async function submitQuoteForm(prevState, formData) {
     console.error("Error en envío a CRM/Zapier:", err);
   }
 
-  redirect("/gracias#quote-form");
+  window.location.href = ("/gracias#quote-form");
 }
