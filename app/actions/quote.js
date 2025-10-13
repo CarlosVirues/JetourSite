@@ -1,8 +1,10 @@
 "use server";
 
 import { z } from "zod";
+import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
 
+// Zod schema for quote form validation
 const quoteSchema = z.object({
   nombre: z.string().min(2, "El nombre debe tener al menos 2 caracteres"),
   celular: z.string().min(10, "El celular debe tener al menos 10 dígitos"),
@@ -14,32 +16,38 @@ const quoteSchema = z.object({
 });
 
 export async function submitQuoteForm(prevState, formData) {
+  // Convert FormData to object using Object.fromEntries
   const data = Object.fromEntries(formData.entries());
+
+  // Validate with Zod
   const validatedData = quoteSchema.safeParse(data);
 
   if (!validatedData.success) {
+    // Return flattened errors for each field and preserve form values
     return {
       errors: validatedData.error.flatten().fieldErrors,
       message: "Existen errores en el formulario",
       success: false,
-      values: data,
+      values: data, // Return the submitted values to preserve them
     };
   }
 
-  // 1) Guarda en BD
   try {
-    await prisma.quote.create({ data: validatedData.data });
+    // Save to database
+    await prisma.quote.create({
+      data: validatedData.data,
+    });
   } catch (error) {
-    console.error("Error guardando en BD:", error);
+    console.error("Error submitting quote form:", error);
     return {
       errors: {},
       message: "Error interno del servidor. Intenta nuevamente.",
       success: false,
-      values: data,
+      values: data, // Return the submitted values to preserve them
     };
   }
 
-  // 2) Envía a CRM y Zapier (paralelo, no bloquea la UX si fallan)
+  // Construir payload para CRM
   const crmPayload = {
     full_name: validatedData.data.nombre,
     email: validatedData.data.mail,
@@ -47,18 +55,17 @@ export async function submitQuoteForm(prevState, formData) {
     ci: validatedData.data.cedula,
     ciudad: validatedData.data.ciudad,
     modelo_jetour: validatedData.data.selectedModel,
-    source: validatedData.data.source,
-    webhook: "3gsucehc5964ebuy3ttxlblx",
+    source: validatedData.data.s,
+    webhook: "3gsucehc5964ebuy3ttxlblx", // el webhook del CRM
   };
 
+  // Enviar a CRM y Zapier en paralelo
   try {
     const [crmResponse, zapierResponse] = await Promise.all([
       fetch("https://crm.jacecuador.com/slt_crm/webhook", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(crmPayload),
-        // @ts-ignore
-        cache: "no-store",
       }),
       fetch("https://hooks.zapier.com/hooks/catch/3497280/uhtax59/", {
         method: "POST",
@@ -66,29 +73,23 @@ export async function submitQuoteForm(prevState, formData) {
         body: JSON.stringify({
           ...validatedData.data,
           formType: "quote",
-          testMode: true,
           timestamp: new Date().toISOString(),
         }),
-        // @ts-ignore
-        cache: "no-store",
       }),
     ]);
 
     if (!crmResponse.ok) {
-      console.error("CRM error:", crmResponse.status, await crmResponse.text());
+      console.error("Error enviando datos al CRM:", await crmResponse.text());
     }
     if (!zapierResponse.ok) {
-      console.error("Zapier error:", zapierResponse.status, await zapierResponse.text());
+      console.error(
+        "Error enviando datos a Zapier:",
+        await zapierResponse.text()
+      );
     }
-  } catch (err) {
-    console.error("Error en envío a CRM/Zapier:", err);
+  } catch (webhookError) {
+    console.error("Error en envío a CRM/Zapier:", webhookError);
   }
 
-  // 3) Devuelve éxito; el cliente se encarga de redirigir
-  return {
-    errors: {},
-    message: "OK",
-    success: true,
-    values: validatedData.data,
-  };
+  redirect("/gracias#quote-form");
 }
