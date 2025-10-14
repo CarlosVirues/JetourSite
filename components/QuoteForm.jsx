@@ -11,7 +11,6 @@ import Image from "next/image";
 import { submitQuoteForm } from "@/app/actions/quote";
 
 export default function QuoteForm({ currentModel = null, source = "" }) {
-  // Conserva el patrón de tus “primeros” archivos (useActionState)
   const [state, action, isPending] = useActionState(submitQuoteForm, {
     errors: {},
     message: "",
@@ -19,10 +18,14 @@ export default function QuoteForm({ currentModel = null, source = "" }) {
     values: {},
   });
 
-  // Redirección real (para que GTM capte pageview)
+  const [selectedModel, setSelectedModel] = useState(
+    state.values?.selectedModel || currentModel || ""
+  );
+
+  // 🔁 Redirección real → GTM detecta pageview
   useEffect(() => {
     if (state?.success) {
-      window.location.href = "/gracias#quote-form"; // o "/gracias"
+      window.location.href = "/gracias#quote-form";
     }
   }, [state?.success]);
 
@@ -41,12 +44,7 @@ export default function QuoteForm({ currentModel = null, source = "" }) {
     "machala","manta","quito_norte","quito_sur","quito_cumbaya_tumbaco","quito_sangolqui","riobamba","santo_domingo",
   ];
 
-  // Estado de selección de modelo (para cards)
-  const [localModel, setLocalModel] = useState(
-    state.values?.selectedModel || currentModel || ""
-  );
-
-  // Animations (idénticas o muy similares a tus originales)
+  // Animaciones
   const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } } };
   const itemVariants = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } } };
   const formFieldVariants = { hidden: { opacity: 0, x: -20 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } };
@@ -61,7 +59,7 @@ export default function QuoteForm({ currentModel = null, source = "" }) {
       className="bg-black py-20"
     >
       <div className="max-w-4xl mx-auto px-6 lg:px-12">
-        {/* Headline */}
+        {/* Título */}
         <motion.div variants={itemVariants} className="text-center mb-12">
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
@@ -73,7 +71,7 @@ export default function QuoteForm({ currentModel = null, source = "" }) {
           </motion.h2>
         </motion.div>
 
-        {/* Mensaje superior */}
+        {/* Mensaje feedback */}
         {state.message && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
@@ -89,101 +87,55 @@ export default function QuoteForm({ currentModel = null, source = "" }) {
           </motion.div>
         )}
 
-        {/* FORM */}
+        {/* Formulario */}
         <motion.div variants={itemVariants} className="bg-black rounded-2xl p-8 lg:p-12">
           <form action={action} noValidate className="space-y-6" id="quote-form">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Nombre */}
-              <motion.div variants={formFieldVariants} className="relative">
+              <motion.div variants={formFieldVariants}>
                 <div className="flex items-center border-b border-blue-500 pb-2">
                   <User className="w-5 h-5 text-blue-500 mr-3" />
-                  <input
-                    type="text"
-                    name="nombre"
-                    defaultValue={state.values?.nombre || ""}
-                    placeholder="Nombre y apellido"
-                    className="flex-1 bg-transparent text-white placeholder-gray-400 focus:outline-none"
-                    required
-                  />
+                  <input type="text" name="nombre" defaultValue={state.values?.nombre || ""} placeholder="Nombre y apellido"
+                    className="flex-1 bg-transparent text-white placeholder-gray-400 focus:outline-none" required />
                 </div>
-                {state.errors?.nombre && (
-                  <motion.p className="text-red-400 text-sm mt-1 flex items-center gap-1">
-                    <AlertCircle className="w-4 h-4" />{state.errors.nombre[0]}
-                  </motion.p>
-                )}
+                {state.errors?.nombre && <p className="text-red-400 text-sm mt-1">{state.errors.nombre[0]}</p>}
               </motion.div>
 
               {/* Celular */}
-              <motion.div variants={formFieldVariants} className="relative">
+              <motion.div variants={formFieldVariants}>
                 <div className="flex items-center border-b border-blue-500 pb-2">
                   <Phone className="w-5 h-5 text-blue-500 mr-3" />
-                  <input
-                    type="tel"
-                    name="celular"
-                    defaultValue={state.values?.celular || ""}
-                    placeholder="Celular"
-                    className="flex-1 bg-transparent text-white placeholder-gray-400 focus:outline-none"
-                    required
-                  />
+                  <input type="tel" name="celular" defaultValue={state.values?.celular || ""} placeholder="Celular"
+                    className="flex-1 bg-transparent text-white placeholder-gray-400 focus:outline-none" required />
                 </div>
-                {state.errors?.celular && (
-                  <motion.p className="text-red-400 text-sm mt-1 flex items-center gap-1">
-                    <AlertCircle className="w-4 h-4" />{state.errors.celular[0]}
-                  </motion.p>
-                )}
+                {state.errors?.celular && <p className="text-red-400 text-sm mt-1">{state.errors.celular[0]}</p>}
               </motion.div>
 
               {/* Mail */}
-              <motion.div variants={formFieldVariants} className="relative">
+              <motion.div variants={formFieldVariants}>
                 <div className="flex items-center border-b border-blue-500 pb-2">
                   <Mail className="w-5 h-5 text-blue-500 mr-3" />
-                  <input
-                    type="email"
-                    name="mail"
-                    defaultValue={state.values?.mail || ""}
-                    placeholder="Email"
-                    className="flex-1 bg-transparent text-white placeholder-gray-400 focus:outline-none"
-                    required
-                  />
+                  <input type="email" name="mail" defaultValue={state.values?.mail || ""} placeholder="Email"
+                    className="flex-1 bg-transparent text-white placeholder-gray-400 focus:outline-none" required />
                 </div>
-                {state.errors?.mail && (
-                  <motion.p className="text-red-400 text-sm mt-1 flex items-center gap-1">
-                    <AlertCircle className="w-4 h-4" />{state.errors.mail[0]}
-                  </motion.p>
-                )}
+                {state.errors?.mail && <p className="text-red-400 text-sm mt-1">{state.errors.mail[0]}</p>}
               </motion.div>
 
               {/* Cédula */}
-              <motion.div variants={formFieldVariants} className="relative">
+              <motion.div variants={formFieldVariants}>
                 <div className="flex items-center border-b border-blue-500 pb-2">
                   <CreditCard className="w-5 h-5 text-blue-500 mr-3" />
-                  <input
-                    type="text"
-                    name="cedula"
-                    defaultValue={state.values?.cedula || ""}
-                    placeholder="Cédula"
-                    className="flex-1 bg-transparent text-white placeholder-gray-400 focus:outline-none"
-                    required
-                  />
+                  <input type="text" name="cedula" defaultValue={state.values?.cedula || ""} placeholder="Cédula"
+                    className="flex-1 bg-transparent text-white placeholder-gray-400 focus:outline-none" required />
                 </div>
-                {state.errors?.cedula && (
-                  <motion.p className="text-red-400 text-sm mt-1 flex items-center gap-1">
-                    <AlertCircle className="w-4 h-4" />{state.errors.cedula[0]}
-                  </motion.p>
-                )}
+                {state.errors?.cedula && <p className="text-red-400 text-sm mt-1">{state.errors.cedula[0]}</p>}
               </motion.div>
 
               {/* Ciudad */}
-              <motion.div variants={formFieldVariants} className="relative md:col-span-2">
+              <motion.div variants={formFieldVariants} className="md:col-span-2">
                 <div className="flex items-center border-b border-blue-500 pb-2">
                   <MapPin className="w-5 h-5 text-blue-500 mr-3" />
-                  <select
-                    key={state.values?.ciudad || ""}
-                    name="ciudad"
-                    defaultValue={state.values?.ciudad || ""}
-                    className="flex-1 bg-black text-white focus:outline-none"
-                    required
-                  >
+                  <select name="ciudad" defaultValue={state.values?.ciudad || ""} className="flex-1 bg-black text-white focus:outline-none" required>
                     <option value="">Selecciona el concesionario más cercano</option>
                     {ciudades.map((city) => (
                       <option key={city} value={city} className="bg-black text-white">
@@ -192,33 +144,25 @@ export default function QuoteForm({ currentModel = null, source = "" }) {
                     ))}
                   </select>
                 </div>
-                {state.errors?.ciudad && (
-                  <motion.p className="text-red-400 text-sm mt-1 flex items-center gap-1">
-                    <AlertCircle className="w-4 h-4" />{state.errors.ciudad[0]}
-                  </motion.p>
-                )}
+                {state.errors?.ciudad && <p className="text-red-400 text-sm mt-1">{state.errors.ciudad[0]}</p>}
               </motion.div>
             </div>
 
-            {/* Modelos (cards) */}
+            {/* Selección de modelo */}
             <motion.div variants={itemVariants} className="mt-6">
               <p className="text-white mb-3">Selecciona tu modelo</p>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {carModels.map((m) => {
-                  const active = localModel === m.id;
+                  const active = selectedModel === m.id;
                   return (
                     <motion.button
                       key={m.id}
                       type="button"
                       variants={modelVariants}
-                      initial="hidden"
-                      whileInView="visible"
                       whileHover="hover"
-                      onClick={() => setLocalModel(m.id)}
+                      onClick={() => setSelectedModel(m.id)}
                       className={`rounded-xl p-3 border transition ${
-                        active
-                          ? "border-blue-500 bg-blue-500/10"
-                          : "border-white/10 hover:border-blue-500/60"
+                        active ? "border-blue-500 bg-blue-500/10" : "border-white/10 hover:border-blue-500/60"
                       }`}
                     >
                       <div className="w-full aspect-video relative mb-2">
@@ -234,14 +178,8 @@ export default function QuoteForm({ currentModel = null, source = "" }) {
               )}
             </motion.div>
 
-            {/* Enviar el modelo elegido como hidden (server acepta vehiculo o selectedModel) */}
-            {currentModel ? (
-              <input type="hidden" name="selectedModel" value={state.values?.selectedModel || currentModel} />
-            ) : (
-              <input type="hidden" name="vehiculo" value={localModel} />
-            )}
-
-            {/* Fuente */}
+            {/* Hidden Inputs */}
+            <input type="hidden" name="vehiculo" value={selectedModel} />
             <input type="hidden" name="source" value={state.values?.source || source || ""} />
 
             {/* Submit */}
@@ -250,7 +188,7 @@ export default function QuoteForm({ currentModel = null, source = "" }) {
                 type="submit"
                 disabled={isPending}
                 className="bg-transparent border-2 border-blue-500 text-white px-8 py-2 rounded-full font-semibold text-lg flex items-center justify-center gap-3 mx-auto hover:bg-blue-500 hover:text-white transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                whileHover={{ scale: 1.05, boxShadow: "0 10px 25px rgba(255, 255, 255, 0.2)" }}
+                whileHover={{ scale: 1.05, boxShadow: "0 10px 25px rgba(255,255,255,0.2)" }}
                 whileTap={{ scale: 0.95 }}
               >
                 {isPending ? "Enviando..." : "Cotizar ahora"}

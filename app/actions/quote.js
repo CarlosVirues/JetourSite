@@ -3,6 +3,7 @@
 import { z } from "zod";
 import { prisma } from "@/lib/db";
 
+// Validación Zod
 const quoteSchema = z
   .object({
     nombre: z.string().min(2, "El nombre debe tener al menos 2 caracteres"),
@@ -10,9 +11,8 @@ const quoteSchema = z
     mail: z.string().email("Ingresa un email válido"),
     cedula: z.string().min(6, "La cédula debe tener al menos 6 caracteres"),
     ciudad: z.string().min(2, "La ciudad debe ser alguna de la lista"),
-    // Permitimos cualquiera de los dos (vehiculo o selectedModel)
-    selectedModel: z.string().min(1).optional(),
-    vehiculo: z.string().min(1).optional(),
+    selectedModel: z.string().optional(),
+    vehiculo: z.string().optional(),
     source: z.string().min(1, "Debes seleccionar una fuente"),
   })
   .refine((d) => !!(d.selectedModel || d.vehiculo), {
@@ -33,10 +33,9 @@ export async function submitQuoteForm(prevState, formData) {
     };
   }
 
-  // Normalizamos: si viene 'vehiculo', lo usamos como 'selectedModel'
   const modelo = validated.data.selectedModel ?? validated.data.vehiculo;
 
-  // 1) Guardar en BD
+  // Guardar en BD
   try {
     await prisma.quote.create({
       data: {
@@ -45,7 +44,7 @@ export async function submitQuoteForm(prevState, formData) {
       },
     });
   } catch (error) {
-    console.error("Error guardando en BD:", error);
+    console.error("❌ Error guardando en BD:", error);
     return {
       errors: {},
       message: "Error interno del servidor. Intenta nuevamente.",
@@ -54,7 +53,7 @@ export async function submitQuoteForm(prevState, formData) {
     };
   }
 
-  // 2) Payload CRM
+  // Payload para CRM
   const crmPayload = {
     full_name: validated.data.nombre,
     email: validated.data.mail,
@@ -66,46 +65,30 @@ export async function submitQuoteForm(prevState, formData) {
     webhook: "3gsucehc5964ebuy3ttxlblx",
   };
 
-  // 3) Enviar a CRM y Zapier en paralelo (sin romper UX si fallan)
+  // Envíos paralelos a CRM + Zapier
   try {
-    const [crmResponse, zapierResponse] = await Promise.all([
+    await Promise.all([
       fetch("https://crm.jacecuador.com/slt_crm/webhook", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(crmPayload),
-        // @ts-ignore
-        cache: "no-store",
       }),
       fetch("https://hooks.zapier.com/hooks/catch/3497280/uhtax59/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...validated.data,
-          selectedModel: modelo, // también normalizado
+          selectedModel: modelo,
           formType: "quote",
           timestamp: new Date().toISOString(),
         }),
-        // @ts-ignore
-        cache: "no-store",
       }),
     ]);
-
-    if (!crmResponse.ok) {
-      console.error("CRM error:", crmResponse.status, await crmResponse.text());
-    } else {
-      console.log("✅ CRM recibió los datos");
-    }
-
-    if (!zapierResponse.ok) {
-      console.error("Zapier error:", zapierResponse.status, await zapierResponse.text());
-    } else {
-      console.log("✅ Zapier recibió los datos");
-    }
   } catch (err) {
-    console.error("Error en envío a CRM/Zapier:", err);
+    console.error("⚠️ Error en envío a CRM/Zapier:", err);
   }
 
-  // 4) Sin redirect aquí: el cliente hará window.location.href
+  // No redirect: el cliente redirige
   return {
     errors: {},
     message: "OK",
