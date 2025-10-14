@@ -15,7 +15,7 @@ import {
   AlertCircle,
 } from "lucide-react";
 import Image from "next/image";
-import { submitQuoteForm } from "@/app/actions/quote";
+import { submitQuoteForm } from "@/app/actions";
 
 export default function QuoteForm({ currentModel = null, source = null }) {
   const [state, formAction] = useFormState(submitQuoteForm, {
@@ -132,7 +132,7 @@ export default function QuoteForm({ currentModel = null, source = null }) {
           className="bg-black rounded-2xl p-8 lg:p-12"
         >
           <form
-            action={action}
+            action={formAction}
             noValidate
             className="space-y-6"
             id="quote-form"
