@@ -10,7 +10,7 @@ const quoteSchema = z
     mail: z.string().email("Ingresa un email válido"),
     cedula: z.string().min(6, "La cédula debe tener al menos 6 caracteres"),
     ciudad: z.string().min(2, "La ciudad debe ser alguna de la lista"),
-    // Permitimos cualquiera de los dos:
+    // Permitimos cualquiera de los dos (vehiculo o selectedModel)
     selectedModel: z.string().min(1).optional(),
     vehiculo: z.string().min(1).optional(),
     source: z.string().min(1, "Debes seleccionar una fuente"),
@@ -33,7 +33,7 @@ export async function submitQuoteForm(prevState, formData) {
     };
   }
 
-  // Normalizamos el modelo a "selectedModel"
+  // Normalizamos: si viene 'vehiculo', lo usamos como 'selectedModel'
   const modelo = validated.data.selectedModel ?? validated.data.vehiculo;
 
   // 1) Guardar en BD
@@ -41,7 +41,7 @@ export async function submitQuoteForm(prevState, formData) {
     await prisma.quote.create({
       data: {
         ...validated.data,
-        selectedModel: modelo, // nos aseguramos de guardar bajo esta clave
+        selectedModel: modelo,
       },
     });
   } catch (error) {
@@ -62,11 +62,11 @@ export async function submitQuoteForm(prevState, formData) {
     ci: validated.data.cedula,
     ciudad: validated.data.ciudad,
     modelo_jetour: modelo,
-    source: validated.data.source, // ⚠️ corregido (antes tenías .s)
+    source: validated.data.source,
     webhook: "3gsucehc5964ebuy3ttxlblx",
   };
 
-  // 3) Enviar a CRM y Zapier en paralelo (no bloquea UX si alguno falla)
+  // 3) Enviar a CRM y Zapier en paralelo (sin romper UX si fallan)
   try {
     const [crmResponse, zapierResponse] = await Promise.all([
       fetch("https://crm.jacecuador.com/slt_crm/webhook", {
@@ -81,7 +81,7 @@ export async function submitQuoteForm(prevState, formData) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...validated.data,
-          selectedModel: modelo, // también normalizado para Zapier
+          selectedModel: modelo, // también normalizado
           formType: "quote",
           timestamp: new Date().toISOString(),
         }),
@@ -105,7 +105,7 @@ export async function submitQuoteForm(prevState, formData) {
     console.error("Error en envío a CRM/Zapier:", err);
   }
 
-  // 4) Sin redirect en server: el cliente hace window.location
+  // 4) Sin redirect aquí: el cliente hará window.location.href
   return {
     errors: {},
     message: "OK",
