@@ -91,5 +91,8 @@ export async function submitQuoteForm(prevState, formData) {
     console.error("Error en envío a CRM/Zapier:", webhookError);
   }
 
-  redirect("/gracias#quote-form");
+  return {
+  success: true,
+  redirectTo: "/gracias#quote-form",
+};
 }

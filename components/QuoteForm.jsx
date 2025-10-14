@@ -16,12 +16,16 @@ import Image from "next/image";
 import { submitQuoteForm } from "@/app/actions/quote";
 
 export default function QuoteForm({ currentModel = null, source = null }) {
-  const [state, action, isPending] = useActionState(submitQuoteForm, {
+  const [state, formAction] = useFormState(submitQuoteForm, {
     errors: {},
     message: "",
     success: false,
     values: {},
   });
+
+    if (state?.redirectTo) {
+    window.location.href = state.redirectTo;
+  }
 
   const carModels = [
     { id: "x50", name: "X50", image: "/mini/mini-x50.png" },
@@ -77,6 +81,7 @@ export default function QuoteForm({ currentModel = null, source = null }) {
     visible: { opacity: 1, scale: 1, transition: { duration: 0.4 } },
     hover: { scale: 1.05, transition: { duration: 0.2 } },
   };
+
 
   return (
     <motion.section
