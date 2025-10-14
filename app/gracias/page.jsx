@@ -36,7 +36,7 @@ export default function HomePage() {
       {/* Quote Form Section */}
       <div
         className="bg-black py-16 lg:py-24 max-w-4xl mx-auto px-6 lg:px-12 text-center"
-        id="contact-form"
+        id="quote-form"
       >
         <h1 className="text-2xl font-bold text-white mb-6">
           ¡Gracias por tu solicitud de cotización!
