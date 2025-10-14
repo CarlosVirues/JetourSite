@@ -90,9 +90,9 @@ export async function submitQuoteForm(prevState, formData) {
   } catch (webhookError) {
     console.error("Error en envío a CRM/Zapier:", webhookError);
   }
-
-  return {
-  success: true,
-  redirectTo: "/gracias#quote-form",
-};
+await fetch("https://www.googletagmanager.com/collect", {
+  method: "POST",
+  body: JSON.stringify({ event: "QuoteForm" }),
+});
+  redirect("/gracias#quote-form");
 }

@@ -1,8 +1,6 @@
 "use client";
 
 import { useActionState } from "react";
-import { useFormState } from "react-dom";
-
 import { motion } from "framer-motion";
 import {
   User,
@@ -15,19 +13,15 @@ import {
   AlertCircle,
 } from "lucide-react";
 import Image from "next/image";
-import { submitQuoteForm } from "@/app/actions";
+import { submitQuoteForm } from "@/app/actions/quote";
 
 export default function QuoteForm({ currentModel = null, source = null }) {
-  const [state, formAction] = useFormState(submitQuoteForm, {
+  const [state, action, isPending] = useActionState(submitQuoteForm, {
     errors: {},
     message: "",
     success: false,
     values: {},
   });
-
-    if (state?.redirectTo) {
-    window.location.href = state.redirectTo;
-  }
 
   const carModels = [
     { id: "x50", name: "X50", image: "/mini/mini-x50.png" },
@@ -84,7 +78,6 @@ export default function QuoteForm({ currentModel = null, source = null }) {
     hover: { scale: 1.05, transition: { duration: 0.2 } },
   };
 
-
   return (
     <motion.section
       variants={containerVariants}
@@ -132,7 +125,7 @@ export default function QuoteForm({ currentModel = null, source = null }) {
           className="bg-black rounded-2xl p-8 lg:p-12"
         >
           <form
-            action={formAction}
+            action={action}
             noValidate
             className="space-y-6"
             id="quote-form"
