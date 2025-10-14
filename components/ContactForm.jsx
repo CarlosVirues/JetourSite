@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { useFormState } from "react-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -20,12 +21,16 @@ import { motion } from "framer-motion";
 import { submitContactForm } from "@/app/actions/contact";
 
 export default function ContactForm() {
-  const [state, action, isPending] = useActionState(submitContactForm, {
+  const [state, action, isPending] = useFormState(submitContactForm, {
     errors: {},
     message: "",
     success: false,
     values: {},
   });
+
+  if (state?.redirectTo) {
+    window.location.href = state.redirectTo;
+  }
 
   const ciudades = [
     "ambato",

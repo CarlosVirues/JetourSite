@@ -91,6 +91,8 @@ export async function submitContactForm(prevState, formData) {
     console.error("Error enviando a CRM:", err);
   }
 
-  // Recién aquí redirigimos
-  redirect("/contacto/gracias#contact-form");
+  return {
+  success: true,
+  redirectTo: "/contacto/gracias#contact-form",
+};
 }
