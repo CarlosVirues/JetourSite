@@ -17,7 +17,7 @@ import Image from "next/image";
 import { submitQuoteForm } from "@/app/actions/quote";
 
 export default function QuoteForm({ currentModel = null, source = null }) {
-  const [state, action] = useFormState(submitQuoteForm, {
+  const [state, action, isPending] = useFormState(submitQuoteForm, {
     errors: {},
     message: "",
     success: false,
