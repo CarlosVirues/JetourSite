@@ -3,33 +3,46 @@
 import { z } from "zod";
 import { prisma } from "@/lib/db";
 
-const quoteSchema = z.object({
-  nombre: z.string().min(2, "El nombre debe tener al menos 2 caracteres"),
-  celular: z.string().min(10, "El celular debe tener al menos 10 dígitos"),
-  mail: z.string().email("Ingresa un email válido"),
-  cedula: z.string().min(6, "La cédula debe tener al menos 6 caracteres"),
-  ciudad: z.string().min(2, "La ciudad debe ser alguna de la lista"),
-  selectedModel: z.string().min(1, "Debes seleccionar un modelo"),
-  source: z.string().min(1, "Debes seleccionar una fuente"),
-});
+const quoteSchema = z
+  .object({
+    nombre: z.string().min(2, "El nombre debe tener al menos 2 caracteres"),
+    celular: z.string().min(10, "El celular debe tener al menos 10 dígitos"),
+    mail: z.string().email("Ingresa un email válido"),
+    cedula: z.string().min(6, "La cédula debe tener al menos 6 caracteres"),
+    ciudad: z.string().min(2, "La ciudad debe ser alguna de la lista"),
+    // Permitimos cualquiera de los dos:
+    selectedModel: z.string().min(1).optional(),
+    vehiculo: z.string().min(1).optional(),
+    source: z.string().min(1, "Debes seleccionar una fuente"),
+  })
+  .refine((d) => !!(d.selectedModel || d.vehiculo), {
+    message: "Debes seleccionar un vehículo",
+    path: ["selectedModel"],
+  });
 
 export async function submitQuoteForm(prevState, formData) {
   const data = Object.fromEntries(formData.entries());
+  const validated = quoteSchema.safeParse(data);
 
-  const validatedData = quoteSchema.safeParse(data);
-  if (!validatedData.success) {
+  if (!validated.success) {
     return {
-      errors: validatedData.error.flatten().fieldErrors,
+      errors: validated.error.flatten().fieldErrors,
       message: "Existen errores en el formulario",
       success: false,
       values: data,
     };
   }
 
-  // 1) Guarda en BD
+  // Normalizamos el modelo a "selectedModel"
+  const modelo = validated.data.selectedModel ?? validated.data.vehiculo;
+
+  // 1) Guardar en BD
   try {
     await prisma.quote.create({
-      data: validatedData.data,
+      data: {
+        ...validated.data,
+        selectedModel: modelo, // nos aseguramos de guardar bajo esta clave
+      },
     });
   } catch (error) {
     console.error("Error guardando en BD:", error);
@@ -41,19 +54,19 @@ export async function submitQuoteForm(prevState, formData) {
     };
   }
 
-  // 2) Payload CRM (⚠️ corregido: source)
+  // 2) Payload CRM
   const crmPayload = {
-    full_name: validatedData.data.nombre,
-    email: validatedData.data.mail,
-    phone_number: validatedData.data.celular,
-    ci: validatedData.data.cedula,
-    ciudad: validatedData.data.ciudad,
-    modelo_jetour: validatedData.data.selectedModel,
-    source: validatedData.data.source, // <- antes estaba .s
+    full_name: validated.data.nombre,
+    email: validated.data.mail,
+    phone_number: validated.data.celular,
+    ci: validated.data.cedula,
+    ciudad: validated.data.ciudad,
+    modelo_jetour: modelo,
+    source: validated.data.source, // ⚠️ corregido (antes tenías .s)
     webhook: "3gsucehc5964ebuy3ttxlblx",
   };
 
-  // 3) Envíos externos (no bloqueamos UX si fallan)
+  // 3) Enviar a CRM y Zapier en paralelo (no bloquea UX si alguno falla)
   try {
     const [crmResponse, zapierResponse] = await Promise.all([
       fetch("https://crm.jacecuador.com/slt_crm/webhook", {
@@ -67,7 +80,8 @@ export async function submitQuoteForm(prevState, formData) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          ...validatedData.data,
+          ...validated.data,
+          selectedModel: modelo, // también normalizado para Zapier
           formType: "quote",
           timestamp: new Date().toISOString(),
         }),
@@ -78,19 +92,24 @@ export async function submitQuoteForm(prevState, formData) {
 
     if (!crmResponse.ok) {
       console.error("CRM error:", crmResponse.status, await crmResponse.text());
+    } else {
+      console.log("✅ CRM recibió los datos");
     }
+
     if (!zapierResponse.ok) {
       console.error("Zapier error:", zapierResponse.status, await zapierResponse.text());
+    } else {
+      console.log("✅ Zapier recibió los datos");
     }
-  } catch (webhookError) {
-    console.error("Error en envío a CRM/Zapier:", webhookError);
+  } catch (err) {
+    console.error("Error en envío a CRM/Zapier:", err);
   }
 
-  // 4) Nada de redirect aquí: devolvemos éxito y el CLIENTE navega
+  // 4) Sin redirect en server: el cliente hace window.location
   return {
     errors: {},
     message: "OK",
     success: true,
-    values: validatedData.data,
+    values: { ...validated.data, selectedModel: modelo },
   };
 }
