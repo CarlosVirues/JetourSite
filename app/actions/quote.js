@@ -92,7 +92,10 @@ export async function submitQuoteForm(prevState, formData) {
   }
 await fetch("https://www.googletagmanager.com/collect", {
   method: "POST",
-  body: JSON.stringify({ event: "QuoteForm" }),
+  body: JSON.stringify({ event: "quote_submitted" }),
 });
-  redirect("/gracias#quote-form");
+  return {
+  success: true,
+  redirectTo: "/gracias#quote-form",
+};
 }

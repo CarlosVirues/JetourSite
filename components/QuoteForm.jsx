@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { useFormState } from "react-dom";
 import { motion } from "framer-motion";
 import {
   User,
@@ -16,12 +17,16 @@ import Image from "next/image";
 import { submitQuoteForm } from "@/app/actions/quote";
 
 export default function QuoteForm({ currentModel = null, source = null }) {
-  const [state, action, isPending] = useActionState(submitQuoteForm, {
+  const [state, action] = useFormState(submitQuoteForm, {
     errors: {},
     message: "",
     success: false,
     values: {},
   });
+
+  if (state?.redirectTo) {
+    window.location.href = state.redirectTo;
+  }
 
   const carModels = [
     { id: "x50", name: "X50", image: "/mini/mini-x50.png" },
