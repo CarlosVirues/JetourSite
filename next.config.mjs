@@ -12,6 +12,12 @@ const nextConfig = {
         port: "",
         pathname: "/xiyimgengine/**",
       },
+      {
+        protocol: "https",
+        hostname: "cdn.sanity.io",
+        port: "",
+        pathname: "/images/**",
+      },
     ],
   },
 };

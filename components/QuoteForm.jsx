@@ -1,7 +1,6 @@
 "use client";
 
 import { useActionState } from "react";
-import { useFormState } from "react-dom";
 import { motion } from "framer-motion";
 import {
   User,
@@ -17,7 +16,7 @@ import Image from "next/image";
 import { submitQuoteForm } from "@/app/actions/quote";
 
 export default function QuoteForm({ currentModel = null, source = null }) {
-  const [state, action, isPending] = useFormState(submitQuoteForm, {
+  const [state, action, isPending] = useActionState(submitQuoteForm, {
     errors: {},
     message: "",
     success: false,
@@ -331,12 +330,15 @@ export default function QuoteForm({ currentModel = null, source = null }) {
                     >
                       <div className="w-full h-full bg-gray-800 rounded-lg flex items-center justify-center">
                         <div className="text-center">
-                          <Image
-                            src={model.image}
-                            alt={model.name}
-                            width={75}
-                            height={75}
-                          />
+                          <div className="relative w-12 h-12 mx-auto mb-px">
+                            <Image
+                              src={model.image}
+                              alt={model.name}
+                              fill
+                              className="object-contain"
+                              sizes="(max-width: 768px) 64px, 96px"
+                            />
+                          </div>
                           <p className="text-xs text-white font-medium">
                             {model.name}
                           </p>

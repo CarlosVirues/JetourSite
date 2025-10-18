@@ -1,9 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import Link from "next/link";
 import Image from "next/image";
 
 export default function VehicleShowcaseNew() {
@@ -153,6 +152,7 @@ export default function VehicleShowcaseNew() {
                     alt={`${currentVehicle.name} Logo`}
                     fill
                     className="object-contain invert"
+                    sizes="(max-width: 768px) 128px, 192px"
                   />
                 </div>
               </div>
@@ -217,6 +217,7 @@ export default function VehicleShowcaseNew() {
                 fill
                 className="object-contain -mt-10"
                 priority
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 80vw, 1024px"
               />
             </motion.div>
           </div>
@@ -244,7 +245,7 @@ export default function VehicleShowcaseNew() {
           </motion.button>
 
           {/* Models Grid */}
-          <div className="flex justify-center space-x-4 md:space-x-8 px-8 md:px-16 overflow-x-auto">
+          <div className="flex justify-center space-x-4 md:space-x-8 px-8 md:px-16 overflow-x-auto pt-4">
             {models.map((model, index) => (
               <motion.div
                 key={model.id}
@@ -264,9 +265,10 @@ export default function VehicleShowcaseNew() {
                     fill
                     className={`object-cover rounded-lg transition-all duration-300 ${
                       index === currentModel
-                        ? "ring-2 ring-teal-500"
+                        ? "ring-2 ring-gray-800"
                         : "grayscale"
                     }`}
+                    sizes="(max-width: 768px) 64px, 96px"
                   />
                 </div>
                 <div className="text-center">
