@@ -6,7 +6,7 @@ import Image from "next/image";
 export default function Hero({
   backgroundImage,
   backgroundVideo,
-  logoImage,
+  logoUrl,
   logoAlt,
   logoWidth,
   logoHeight,
@@ -59,7 +59,7 @@ export default function Hero({
       >
         <div className="text-center max-w-4xl mx-auto">
           {/* Main JETOUR Logo/Text - Optional */}
-          {logoImage && (
+          {logoUrl && logoWidth && logoHeight && (
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
@@ -67,8 +67,8 @@ export default function Hero({
               className="mb-36"
             >
               <Image
-                src={logoImage}
-                alt={logoAlt}
+                src={logoUrl}
+                alt={logoAlt || "Logo"}
                 width={logoWidth}
                 height={logoHeight}
                 className=""

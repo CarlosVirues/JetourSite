@@ -7,8 +7,13 @@ import VideoGallery from "@/components/VideoGallery";
 import QuoteForm from "@/components/QuoteForm";
 import Footer from "@/components/Footer";
 import { getPageData } from "@/lib/page-data";
+import { getHomePageData } from "@/lib/sanity";
 
-export default function HomePage() {
+export default async function HomePage() {
+  // Obtener datos del hero desde Sanity
+  const sanityData = await getHomePageData();
+
+  // Obtener datos estáticos para las otras secciones (temporal)
   const pageData = getPageData("home");
 
   return (
@@ -16,7 +21,7 @@ export default function HomePage() {
       <Header transparent={true} />
 
       {/* Hero Section - Full Screen */}
-      <Hero {...pageData.hero} />
+      <Hero {...sanityData?.hero} />
 
       {/* Vehicle Showcase Section */}
       <VehicleShowcaseNew />
