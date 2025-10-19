@@ -22,7 +22,10 @@ export default defineConfig({
     types: schema.types,
     // Filtrar templates para singletons
     templates: (templates) =>
-      templates.filter(({ schemaType }) => !["homePage"].includes(schemaType)),
+      templates.filter(
+        ({ schemaType }) =>
+          !["homePage", "concesionariosPage"].includes(schemaType)
+      ),
   },
   plugins: [
     structureTool({ structure }),
@@ -33,7 +36,7 @@ export default defineConfig({
   // Configurar acciones para singletons
   document: {
     actions: (input, context) => {
-      const singletonTypes = ["homePage"];
+      const singletonTypes = ["homePage", "concesionariosPage"];
       const singletonActions = new Set([
         "publish",
         "discardChanges",

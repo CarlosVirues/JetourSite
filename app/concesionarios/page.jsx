@@ -4,8 +4,14 @@ import Footer from "@/components/Footer";
 import Image from "next/image";
 import RoldanSection from "@/components/RoldanSection";
 import { getPageData } from "@/lib/page-data";
+import { getConcesionariosPageData, getHomePageData } from "@/lib/sanity";
 
-export default function ConcesionariosPage() {
+export default async function ConcesionariosPage() {
+  // Obtener datos de Sanity para concesionarios y Roldan section
+  const concesionariosData = await getConcesionariosPageData();
+  const homeData = await getHomePageData();
+
+  // Datos estáticos como fallback
   const pageData = getPageData("home");
 
   return (
@@ -34,11 +40,14 @@ export default function ConcesionariosPage() {
 
       {/* Main Content Area */}
       <section className="bg-black py-16 lg:py-24">
-        <ConcesionariosMap />
+        <ConcesionariosMap
+          title={concesionariosData?.title}
+          cities={concesionariosData?.cities || []}
+        />
       </section>
 
       {/* Roldan Section */}
-      <RoldanSection {...pageData.roldanSection} />
+      <RoldanSection {...(homeData?.roldanSection || pageData.roldanSection)} />
 
       <Footer />
     </div>

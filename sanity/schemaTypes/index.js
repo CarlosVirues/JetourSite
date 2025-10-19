@@ -1,5 +1,6 @@
 import homePage from "./homePage";
+import concesionariosPage from "./concesionariosPage";
 
 export const schema = {
-  types: [homePage],
+  types: [homePage, concesionariosPage],
 };
