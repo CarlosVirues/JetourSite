@@ -184,6 +184,8 @@ export default function VideoGallery({
                         alt={videos[currentSlide]?.title || "Video"}
                         fill
                         className="object-cover"
+                        priority
+                        sizes="(max-width: 768px) 75vw, 50vw"
                       />
                     )}
 
@@ -273,6 +275,8 @@ export default function VideoGallery({
                           }
                           fill
                           className="object-cover"
+                          priority
+                          sizes="(max-width: 768px) 75vw, 50vw"
                         />
                       )}
 

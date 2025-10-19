@@ -3,38 +3,33 @@
 import { motion } from "framer-motion";
 import { Star, Settings, Globe } from "lucide-react";
 
-export default function GlobalStats() {
-  const stats = [
-    {
-      id: 1,
-      icon: Star,
-      label: "Más de",
-      mainNumber: "12 Millones",
-      subtitle: "de Unidades Vendidas Globalmente",
-      description: "",
-      backgroundVideo: "/video/video-jetour-2023.mp4",
-    },
-    {
-      id: 2,
-      icon: Globe,
-      label: "Presente en más de",
-      mainNumber: "50 países",
-      subtitle: "",
-      description:
-        "Conquistan mercados con diseño de vanguardia e ingeniería robusta.",
-      backgroundVideo: "/video/auto-show-gags.mp4",
-    },
-    {
-      id: 3,
-      icon: Settings,
-      label: "Más de",
-      mainNumber: "568,387 ",
-      subtitle: "",
-      description:
-        "unidades vendidas a nivel mundial en 2024, con un impresionante crecimiento del 60.5% año tras año",
-      backgroundVideo: "/video/jetour-super-factory.mp4",
-    },
-  ];
+export default function GlobalStats({
+  stats = [
+    // {
+    //   number: "12M+",
+    //   label: "Vehículos vendidos",
+    //   description: "En más de 80 países",
+    //   backgroundImage: "/global-stats-1.jpg",
+    //   backgroundVideo: "/video/video-jetour-2023.mp4",
+    // },
+    // {
+    //   number: "500+",
+    //   label: "Centros de servicio",
+    //   description: "Red mundial de soporte",
+    //   backgroundImage: "/global-stats-2.jpg",
+    //   backgroundVideo: "/video/auto-show-gags.mp4",
+    // },
+    // {
+    //   number: "25+",
+    //   label: "Años de experiencia",
+    //   description: "Innovación constante",
+    //   backgroundImage: "/global-stats-3.jpg",
+    //   backgroundVideo: "/video/jetour-super-factory.mp4",
+    // },
+  ],
+}) {
+  // Iconos por defecto para cada estadística
+  const defaultIcons = [Star, Globe, Settings];
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -83,26 +78,44 @@ export default function GlobalStats() {
           className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12"
         >
           {stats.map((stat, index) => {
-            const IconComponent = stat.icon;
+            const IconComponent = defaultIcons[index] || Star;
 
             return (
               <motion.div
-                key={stat.id}
+                key={index}
                 variants={itemVariants}
                 className="relative group"
               >
                 <div className="relative h-80 md:h-96 rounded-2xl overflow-hidden bg-gradient-to-br from-gray-800/50 to-gray-900/80 backdrop-blur-sm border border-gray-700/50">
-                  {/* Background Video */}
+                  {/* Background Video or Image */}
                   <div className="absolute inset-0">
-                    <video
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      className="w-full h-full object-cover"
-                    >
-                      <source src={stat.backgroundVideo} type="video/mp4" />
-                    </video>
+                    {stat.backgroundVideo ? (
+                      <video
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        className="w-full h-full object-cover"
+                      >
+                        <source src={stat.backgroundVideo} type="video/mp4" />
+                        {/* Fallback to image if video fails */}
+                        {stat.backgroundImage && (
+                          <div
+                            className="w-full h-full bg-cover bg-center"
+                            style={{
+                              backgroundImage: `url('${stat.backgroundImage}')`,
+                            }}
+                          />
+                        )}
+                      </video>
+                    ) : stat.backgroundImage ? (
+                      <div
+                        className="w-full h-full bg-cover bg-center"
+                        style={{
+                          backgroundImage: `url('${stat.backgroundImage}')`,
+                        }}
+                      />
+                    ) : null}
                     {/* Dark overlay for text readability */}
                     <div className="absolute inset-0 bg-black/60" />
                   </div>
@@ -135,10 +148,10 @@ export default function GlobalStats() {
                           whileInView={{ opacity: 1 }}
                           transition={{
                             duration: 0.6,
-                            delay: index * 0.2 + 0.3,
+                            delay: index * 0.2 + 0.4,
                           }}
                           viewport={{ once: true }}
-                          className="text-gray-300 text-sm md:text-base mb-2"
+                          className="text-white text-sm md:text-base font-medium mb-2"
                         >
                           {stat.label}
                         </motion.p>
@@ -147,14 +160,14 @@ export default function GlobalStats() {
                       <motion.h3
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: index * 0.2 + 0.4 }}
+                        transition={{ duration: 0.6, delay: index * 0.2 + 0.3 }}
                         viewport={{ once: true }}
                         className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3 leading-tight"
                       >
-                        {stat.mainNumber}
+                        {stat.number}
                       </motion.h3>
 
-                      {stat.subtitle && (
+                      {stat.description && (
                         <motion.p
                           initial={{ opacity: 0 }}
                           whileInView={{ opacity: 1 }}
@@ -163,22 +176,7 @@ export default function GlobalStats() {
                             delay: index * 0.2 + 0.5,
                           }}
                           viewport={{ once: true }}
-                          className="text-white text-sm md:text-base font-medium mb-2"
-                        >
-                          {stat.subtitle}
-                        </motion.p>
-                      )}
-
-                      {stat.description && (
-                        <motion.p
-                          initial={{ opacity: 0 }}
-                          whileInView={{ opacity: 1 }}
-                          transition={{
-                            duration: 0.6,
-                            delay: index * 0.2 + 0.6,
-                          }}
-                          viewport={{ once: true }}
-                          className="text-white text-xs md:text-sm leading-relaxed"
+                          className="text-gray-300 text-xs md:text-sm leading-relaxed"
                         >
                           {stat.description}
                         </motion.p>

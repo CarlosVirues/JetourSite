@@ -2,39 +2,13 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { Shield, Award, Users } from "lucide-react";
 
-export default function RoldanSection() {
-  const features = [
-    {
-      id: 1,
-      icon: Shield,
-      title: "COBERTURA A NIVEL NACIONAL",
-      description:
-        "17 concesionarios en todo el país y talleres autorizados. Repuestos y accesorios continuos.",
-      borderColor: "border-blue-500",
-      bgColor: "bg-blue-500/10",
-    },
-    /*{
-      id: 2,
-      icon: Award,
-      title: "LAS MEJORES MARCAS AUTOMOTRICES",
-      description:
-        "Sin necesidad de pagar extras por elementos clave como sunroof, cámaras 360, o asientos eléctricos.",
-      borderColor: "border-blue-500",
-      bgColor: "bg-blue-500/10",
-    },*/
-    {
-      id: 2,
-      icon: Users,
-      title: "MÁS DE 50 AÑOS DE RESPALDO",
-      description:
-        "Con múltiples sistemas que superan los estándares regionales.",
-      borderColor: "border-blue-500",
-      bgColor: "bg-blue-500/10",
-    },
-  ];
-
+export default function RoldanSection({
+  title,
+  backgroundImage,
+  logo,
+  features,
+}) {
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -61,7 +35,7 @@ export default function RoldanSection() {
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: "url('/roldan-section-bg.jpg')",
+            backgroundImage: `url('${backgroundImage}')`,
           }}
         />
         {/* Dark overlay */}
@@ -85,8 +59,8 @@ export default function RoldanSection() {
             className="mb-6"
           >
             <Image
-              src="/logo-roldan-home.png"
-              alt="Grupo Roldan"
+              src={logo}
+              alt={title}
               width={300}
               height={100}
               className="w-auto h-16 md:h-20"
@@ -100,7 +74,7 @@ export default function RoldanSection() {
             viewport={{ once: true }}
             className="text-3xl md:text-4xl lg:text-5xl font-bold text-white"
           >
-            En Ecuador, Jetour tiene el respaldo de Grupo Roldán.
+            {title}
           </motion.h2>
         </motion.div>
 
@@ -115,17 +89,19 @@ export default function RoldanSection() {
           {features.map((feature, index) => {
             return (
               <motion.div
-                key={feature.id}
+                key={index}
                 variants={itemVariants}
                 className="relative p-6"
                 whileHover={{ x: 10 }}
                 transition={{ duration: 0.3 }}
               >
                 <div className="text-left pl-4">
-                  <h3 className="text-lg md:text-2xl font-bold text-white mb-3 tracking-wide leading-tight border-l-4 border-blue-400 pl-2">
-                    {feature.title}
-                  </h3>
-                  <p className="text-xs md:text-sm text-gray-200 leading-relaxed">
+                  <div className="flex items-center mb-3">
+                    <h3 className="text-lg md:text-xl font-bold text-white tracking-wide leading-tight border-l-4 border-blue-400 pl-2">
+                      {feature.title}
+                    </h3>
+                  </div>
+                  <p className="text-sm md:text-base text-gray-200 leading-relaxed ">
                     {feature.description}
                   </p>
                 </div>

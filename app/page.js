@@ -27,13 +27,13 @@ export default async function HomePage() {
       <VehicleShowcaseNew />
 
       {/* Global Stats Section */}
-      <GlobalStats {...pageData.globalStats} />
+      <GlobalStats {...sanityData?.globalStats} />
 
       {/* Roldan Section */}
-      <RoldanSection {...pageData.roldanSection} />
+      <RoldanSection {...sanityData?.roldanSection} />
 
       {/* Video Gallery Section */}
-      <VideoGallery {...pageData.videoGallery} />
+      <VideoGallery {...sanityData?.videoGallery} />
 
       {/* Quote Form Section */}
       <QuoteForm {...pageData.quoteForm} currentModel={null} source="home" />
