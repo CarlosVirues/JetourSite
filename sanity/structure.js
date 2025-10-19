@@ -17,11 +17,34 @@ export const structure = (S) =>
             .schemaType("concesionariosPage")
             .documentId("concesionariosPage")
         ),
+      // Singleton para Página de Posventa
+      S.listItem()
+        .title("Página de Posventa")
+        .id("posventaPage")
+        .child(
+          S.document().schemaType("posventaPage").documentId("posventaPage")
+        ),
+      // Separador
+      S.divider(),
+      // Modelos de Vehículos
+      S.listItem()
+        .title("Modelos de Vehículos")
+        .id("vehicleModels")
+        .child(
+          S.documentTypeList("vehicleModel")
+            .title("Modelos de Vehículos")
+            .filter('_type == "vehicleModel"')
+        ),
       // Separador
       S.divider(),
       // Resto de tipos de documento
       ...S.documentTypeListItems().filter(
         (listItem) =>
-          !["homePage", "concesionariosPage"].includes(listItem.getId())
+          ![
+            "homePage",
+            "concesionariosPage",
+            "posventaPage",
+            "vehicleModel",
+          ].includes(listItem.getId())
       ),
     ]);

@@ -24,7 +24,9 @@ export default defineConfig({
     templates: (templates) =>
       templates.filter(
         ({ schemaType }) =>
-          !["homePage", "concesionariosPage"].includes(schemaType)
+          !["homePage", "concesionariosPage", "posventaPage"].includes(
+            schemaType
+          )
       ),
   },
   plugins: [
@@ -36,7 +38,7 @@ export default defineConfig({
   // Configurar acciones para singletons
   document: {
     actions: (input, context) => {
-      const singletonTypes = ["homePage", "concesionariosPage"];
+      const singletonTypes = ["homePage", "concesionariosPage", "posventaPage"];
       const singletonActions = new Set([
         "publish",
         "discardChanges",
