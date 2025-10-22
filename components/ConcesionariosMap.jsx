@@ -13,7 +13,7 @@ import {
 import { Loader } from "@googlemaps/js-api-loader";
 import { motion, AnimatePresence } from "framer-motion";
 
-// Función para obtener datos por defecto si no hay datos de Sanity
+// Función para obtener datos por defecto si no hay datos de Sanity (FALLBACK - NO SE USA ACTUALMENTE)
 function getDefaultDistributors() {
   return {
     cuenca: [
@@ -306,24 +306,28 @@ export default function ConcesionariosMap({
   title = "Nuestro equipo de especialistas está en 26 puntos de servicio en todo el país.",
   cities = [],
 }) {
-  // Transformar datos de Sanity al formato esperado por el componente usando useMemo
-  const distributors = useMemo(() => {
-    return cities.length > 0
-      ? cities.reduce((acc, city) => {
-          acc[city.cityName.toLowerCase()] = city.distributors;
-          return acc;
-        }, {})
-      : getDefaultDistributors();
+  // Solo usar datos de Sanity - crear array plano de todos los distribuidores con ID único
+  const allDistributors = useMemo(() => {
+    if (cities.length === 0) return [];
+
+    return cities.flatMap((city, cityIndex) =>
+      city.distributors.map((distributor, distributorIndex) => ({
+        ...distributor,
+        cityName: city.cityName,
+        cityId: city.cityName.toLowerCase(),
+        uniqueId: `${city.cityName.toLowerCase()}-${distributorIndex}`, // ID único basado en ciudad y posición
+      }))
+    );
   }, [cities]);
 
   // Configurar ciudades expandidas dinámicamente usando useMemo
   const initialExpandedCities = useMemo(() => {
-    return cities.length > 0
-      ? cities.reduce((acc, city, index) => {
-          acc[city.cityName.toLowerCase()] = index === 0; // Solo la primera ciudad expandida
-          return acc;
-        }, {})
-      : { ambato: true, cuenca: false, guayaquil: false };
+    if (cities.length === 0) return {};
+
+    return cities.reduce((acc, city, index) => {
+      acc[city.cityName.toLowerCase()] = index === 0; // Solo la primera ciudad expandida
+      return acc;
+    }, {});
   }, [cities]);
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -492,40 +496,38 @@ export default function ConcesionariosMap({
 
   // Add markers when map is ready or distributors change
   useEffect(() => {
-    if (!map) return;
+    if (!map || allDistributors.length === 0) return;
 
     // Clear existing markers and info windows
     markers.forEach((marker) => marker.setMap(null));
     infoWindows.forEach((infoWindow) => infoWindow.close());
     markerMap.clear();
 
-    // Add new markers for all distributors
+    // Add new markers for all distributors from Sanity
     const newMarkers = [];
     const newInfoWindows = [];
     const newMarkerMap = new Map();
 
-    Object.values(distributors)
-      .flat()
-      .forEach((distributor) => {
-        const marker = new google.maps.Marker({
-          position: distributor.location,
-          map: map,
-          title: distributor.name,
-          icon: {
-            url:
-              "data:image/svg+xml;charset=UTF-8," +
-              encodeURIComponent(`
+    allDistributors.forEach((distributor) => {
+      const marker = new google.maps.Marker({
+        position: distributor.location,
+        map: map,
+        title: distributor.name,
+        icon: {
+          url:
+            "data:image/svg+xml;charset=UTF-8," +
+            encodeURIComponent(`
               <svg width="24" height="32" viewBox="0 0 24 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 0C5.373 0 0 5.373 0 12c0 10.5 12 20 12 20s12-9.5 12-20c0-6.627-5.373-12-12-12z" fill="#3B82F6"/>
                 <circle cx="12" cy="12" r="6" fill="white"/>
               </svg>
             `),
-            scaledSize: new google.maps.Size(24, 32),
-          },
-        });
+          scaledSize: new google.maps.Size(24, 32),
+        },
+      });
 
-        // Create InfoWindow content
-        const infoWindowContent = `
+      // Create InfoWindow content
+      const infoWindowContent = `
           <div style="
             color: black; 
             padding: 16px; 
@@ -581,41 +583,41 @@ export default function ConcesionariosMap({
           </div>
         `;
 
-        const infoWindow = new google.maps.InfoWindow({
-          content: infoWindowContent,
-        });
-
-        // Add click listener to marker to show InfoWindow
-        marker.addListener("click", () => {
-          // Close all other info windows using the map
-          newMarkerMap.forEach(({ infoWindow: iw }) => iw.close());
-
-          // Open this info window
-          infoWindow.open(map, marker);
-
-          // Set selected distributor for sidebar highlight
-          setSelectedDistributor(distributor);
-
-          // Center map on marker
-          map.setCenter(distributor.location);
-          map.setZoom(15);
-        });
-
-        newMarkers.push(marker);
-        newInfoWindows.push(infoWindow);
-
-        // Store in map for direct access by distributor ID
-        newMarkerMap.set(distributor.id, {
-          marker,
-          infoWindow,
-          distributor,
-        });
+      const infoWindow = new google.maps.InfoWindow({
+        content: infoWindowContent,
       });
+
+      // Add click listener to marker to show InfoWindow
+      marker.addListener("click", () => {
+        // Close all other info windows using the map
+        newMarkerMap.forEach(({ infoWindow: iw }) => iw.close());
+
+        // Open this info window
+        infoWindow.open(map, marker);
+
+        // Set selected distributor for sidebar highlight
+        setSelectedDistributor(distributor);
+
+        // Center map on marker
+        map.setCenter(distributor.location);
+        map.setZoom(15);
+      });
+
+      newMarkers.push(marker);
+      newInfoWindows.push(infoWindow);
+
+      // Store in map for direct access by distributor uniqueId
+      newMarkerMap.set(distributor.uniqueId, {
+        marker,
+        infoWindow,
+        distributor,
+      });
+    });
 
     setMarkers(newMarkers);
     setInfoWindows(newInfoWindows);
     setMarkerMap(newMarkerMap);
-  }, [map, distributors]); // Depend on both map and distributors
+  }, [map, allDistributors]); // Depend on map and allDistributors from Sanity
 
   // Map centering is now handled directly in click handlers
 
@@ -626,16 +628,19 @@ export default function ConcesionariosMap({
     }));
   };
 
-  const handleDistributorClick = (distributor) => {
+  const handleDistributorClick = (distributor, cityIndex, distributorIndex) => {
     setSelectedDistributor(distributor);
 
+    // Create the same uniqueId that was used when creating the marker
+    const uniqueId = `${distributor.cityName?.toLowerCase() || cities[cityIndex]?.cityName?.toLowerCase()}-${distributorIndex}`;
+
     // Find and open the corresponding InfoWindow using the markerMap
-    if (map && markerMap.has(distributor.id)) {
+    if (map && markerMap.has(uniqueId)) {
       // Close all info windows first
       markerMap.forEach(({ infoWindow }) => infoWindow.close());
 
       // Get the specific marker and info window for this distributor
-      const { marker, infoWindow } = markerMap.get(distributor.id);
+      const { marker, infoWindow } = markerMap.get(uniqueId);
 
       // Open the info window
       infoWindow.open(map, marker);
@@ -646,20 +651,21 @@ export default function ConcesionariosMap({
     }
   };
 
-  const filteredDistributors = Object.entries(distributors).reduce(
-    (acc, [city, cityDistributors]) => {
-      const filtered = cityDistributors.filter(
-        (distributor) =>
-          distributor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          distributor.address.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      if (filtered.length > 0) {
-        acc[city] = filtered;
-      }
-      return acc;
-    },
-    {}
-  );
+  // Filtrar distribuidores basado en el término de búsqueda
+  const filteredCities = useMemo(() => {
+    if (!cities.length) return [];
+
+    return cities
+      .map((city) => ({
+        ...city,
+        distributors: city.distributors.filter(
+          (distributor) =>
+            distributor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            distributor.address.toLowerCase().includes(searchTerm.toLowerCase())
+        ),
+      }))
+      .filter((city) => city.distributors.length > 0);
+  }, [cities, searchTerm]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -744,10 +750,26 @@ export default function ConcesionariosMap({
             transition={{ duration: 0.6, delay: 0.4 }}
             className="space-y-4"
           >
-            {Object.entries(filteredDistributors).map(
-              ([city, cityDistributors], cityIndex) => (
+            {cities.length === 0 ? (
+              <div className="text-center py-8">
+                <p className="text-gray-400">
+                  No hay datos de concesionarios disponibles.
+                </p>
+                <p className="text-gray-500 text-sm mt-2">
+                  Configure los datos desde Sanity Studio.
+                </p>
+              </div>
+            ) : filteredCities.length === 0 ? (
+              <div className="text-center py-8">
+                <p className="text-gray-400">
+                  No se encontraron concesionarios que coincidan con tu
+                  búsqueda.
+                </p>
+              </div>
+            ) : (
+              filteredCities.map((city, cityIndex) => (
                 <motion.div
-                  key={city}
+                  key={city.cityName}
                   initial={{ opacity: 0, x: -30 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6, delay: 0.5 + cityIndex * 0.1 }}
@@ -755,14 +777,18 @@ export default function ConcesionariosMap({
                 >
                   {/* City Header */}
                   <motion.button
-                    onClick={() => toggleCity(city)}
+                    onClick={() => toggleCity(city.cityName.toLowerCase())}
                     className="w-full px-4 py-3 bg-gray-800 text-white font-semibold flex justify-between items-center hover:bg-gray-700 transition-colors"
                     whileHover={{ backgroundColor: "#374151" }}
                     whileTap={{ scale: 0.98 }}
                   >
-                    <span className="capitalize">{city}</span>
+                    <span className="capitalize">{city.cityName}</span>
                     <motion.div
-                      animate={{ rotate: expandedCities[city] ? 180 : 0 }}
+                      animate={{
+                        rotate: expandedCities[city.cityName.toLowerCase()]
+                          ? 180
+                          : 0,
+                      }}
                       transition={{ duration: 0.3 }}
                     >
                       <ChevronDown className="w-5 h-5" />
@@ -771,7 +797,7 @@ export default function ConcesionariosMap({
 
                   {/* Distributors in City */}
                   <AnimatePresence>
-                    {expandedCities[city] && (
+                    {expandedCities[city.cityName.toLowerCase()] && (
                       <motion.div
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
@@ -779,85 +805,101 @@ export default function ConcesionariosMap({
                         transition={{ duration: 0.3 }}
                         className="bg-gray-900 overflow-hidden"
                       >
-                        {cityDistributors.map((distributor, index) => (
-                          <motion.div
-                            key={distributor.id}
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.4, delay: index * 0.1 }}
-                            className={`border-b border-gray-700 last:border-b-0 p-4 hover:bg-gray-800 cursor-pointer transition-colors ${
-                              selectedDistributor?.id === distributor.id
-                                ? "bg-blue-900/20 border-l-4 border-l-blue-500"
-                                : ""
-                            }`}
-                            onClick={() => handleDistributorClick(distributor)}
-                            whileHover={{ x: 5 }}
-                            whileTap={{ scale: 0.98 }}
-                          >
-                            {/* <div className="text-gray-400 text-sm font-medium mb-2">
+                        {city.distributors.map(
+                          (distributor, distributorIndex) => {
+                            const uniqueId = `${city.cityName.toLowerCase()}-${distributorIndex}`;
+                            return (
+                              <motion.div
+                                key={uniqueId}
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{
+                                  duration: 0.4,
+                                  delay: distributorIndex * 0.1,
+                                }}
+                                className={`border-b border-gray-700 last:border-b-0 p-4 hover:bg-gray-800 cursor-pointer transition-colors ${
+                                  selectedDistributor?.uniqueId === uniqueId
+                                    ? "bg-blue-900/20 border-l-4 border-l-blue-500"
+                                    : ""
+                                }`}
+                                onClick={() =>
+                                  handleDistributorClick(
+                                    distributor,
+                                    cityIndex,
+                                    distributorIndex
+                                  )
+                                }
+                                whileHover={{ x: 5 }}
+                                whileTap={{ scale: 0.98 }}
+                              >
+                                {/* <div className="text-gray-400 text-sm font-medium mb-2">
                               DISTRIBUIDOR
                             </div> */}
-                            <h3 className="text-white font-semibold mb-2">
-                              {distributor.name}
-                            </h3>
-                            <div className="text-gray-300 text-sm space-y-1">
-                              <div className="flex items-center">
-                                <motion.div
-                                  whileHover={{ scale: 1.1 }}
-                                  transition={{ duration: 0.2 }}
-                                >
-                                  <MapPin className="w-4 h-4 mr-2" />
-                                </motion.div>
-                                {distributor.address}
-                              </div>
-                              <div className="flex items-center">
-                                <motion.div
-                                  whileHover={{ scale: 1.1 }}
-                                  transition={{ duration: 0.2 }}
-                                >
-                                  <Phone className="w-4 h-4 mr-2" />
-                                </motion.div>
-                                {distributor.phone} / {distributor.mobile}
-                              </div>
-                              <div className="flex items-center">
-                                <motion.div
-                                  whileHover={{ scale: 1.1 }}
-                                  transition={{ duration: 0.2 }}
-                                >
-                                  <Clock className="w-4 h-4 mr-2" />
-                                </motion.div>
-                                <span
-                                  className={
-                                    distributor.status === "Cerrado"
-                                      ? "text-red-400"
-                                      : "text-green-400"
-                                  }
-                                >
-                                  {distributor.status}
-                                </span>
-                              </div>
-                              {distributor.hours_weekdays && (
-                                <div className="flex items-center text-gray-400 text-sm">
-                                  <Clock className="w-4 h-4 mr-2" />
-                                  <span>
-                                    LUN - VIE: {distributor.hours_weekdays}
-                                  </span>
+                                <h3 className="text-white font-semibold mb-2">
+                                  {distributor.name}
+                                </h3>
+                                <div className="text-gray-300 text-sm space-y-1">
+                                  <div className="flex items-center">
+                                    <motion.div
+                                      whileHover={{ scale: 1.1 }}
+                                      transition={{ duration: 0.2 }}
+                                    >
+                                      <MapPin className="w-4 h-4 mr-2" />
+                                    </motion.div>
+                                    {distributor.address}
+                                  </div>
+                                  <div className="flex items-center">
+                                    <motion.div
+                                      whileHover={{ scale: 1.1 }}
+                                      transition={{ duration: 0.2 }}
+                                    >
+                                      <Phone className="w-4 h-4 mr-2" />
+                                    </motion.div>
+                                    {distributor.phone} / {distributor.mobile}
+                                  </div>
+                                  <div className="flex items-center">
+                                    <motion.div
+                                      whileHover={{ scale: 1.1 }}
+                                      transition={{ duration: 0.2 }}
+                                    >
+                                      <Clock className="w-4 h-4 mr-2" />
+                                    </motion.div>
+                                    <span
+                                      className={
+                                        distributor.status === "Cerrado"
+                                          ? "text-red-400"
+                                          : "text-green-400"
+                                      }
+                                    >
+                                      {distributor.status}
+                                    </span>
+                                  </div>
+                                  {distributor.hours_weekdays && (
+                                    <div className="flex items-center text-gray-400 text-sm">
+                                      <Clock className="w-4 h-4 mr-2" />
+                                      <span>
+                                        LUN - VIE: {distributor.hours_weekdays}
+                                      </span>
+                                    </div>
+                                  )}
+                                  {distributor.hours_saturday && (
+                                    <div className="flex items-center text-gray-400 text-sm">
+                                      <Clock className="w-4 h-4 mr-2" />
+                                      <span>
+                                        SÁB: {distributor.hours_saturday}
+                                      </span>
+                                    </div>
+                                  )}
                                 </div>
-                              )}
-                              {distributor.hours_saturday && (
-                                <div className="flex items-center text-gray-400 text-sm">
-                                  <Clock className="w-4 h-4 mr-2" />
-                                  <span>SÁB: {distributor.hours_saturday}</span>
-                                </div>
-                              )}
-                            </div>
-                          </motion.div>
-                        ))}
+                              </motion.div>
+                            );
+                          }
+                        )}
                       </motion.div>
                     )}
                   </AnimatePresence>
                 </motion.div>
-              )
+              ))
             )}
           </motion.div>
         </motion.div>
