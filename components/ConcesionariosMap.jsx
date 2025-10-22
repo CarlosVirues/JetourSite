@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import {
   Search,
   ChevronDown,
@@ -13,27 +13,318 @@ import {
 import { Loader } from "@googlemaps/js-api-loader";
 import { motion, AnimatePresence } from "framer-motion";
 
+// Función para obtener datos por defecto si no hay datos de Sanity
+function getDefaultDistributors() {
+  return {
+    cuenca: [
+      {
+        id: 1,
+        name: "Jetour Terminal Terrestre",
+        address: "Av. España & Sebastián de Benalcazar., Esquina.",
+        phone: "",
+        mobile: "098 577 8754",
+        hours_weekdays: "08:30 - 18:30",
+        hours_saturday: "08:30 - 14:00",
+        status: "Abierto",
+        image: "/distributor-cuenca-1.jpg",
+        location: {
+          lat: -2.893555,
+          lng: -78.994299,
+        },
+        contact: "",
+        map: null,
+      },
+      {
+        id: 2,
+        name: "Jetour 12 de Octubre",
+        address:
+          'Av. 12 de Octubre & Cristobal Colón., Concesionario "Grupo Roldán"., A 100 metros del Terminal Terrestre de Cuenca.',
+        phone: "",
+        mobile: "098 480 6673",
+        hours_weekdays: "08:30 - 18:30",
+        hours_saturday: "08:30 - 14:00",
+        status: "Abierto",
+        image: "/distributor-cuenca-2.jpg",
+        location: {
+          lat: -2.91364,
+          lng: -79.021688,
+        },
+        contact: "",
+        map: null,
+      },
+    ],
+    guayaquil: [
+      {
+        id: 3,
+        name: "Jetour Juan Tanca Marengo",
+        address:
+          'Av. Juan Tanca Marengo & Ing. José A. Gómez., Concesionario "Grupo Roldán"., Al frente del Colegio "Americano" de Guayaquil.',
+        phone: "",
+        mobile: "099 451 8699",
+        hours_weekdays: "08:30 - 18:30",
+        hours_saturday: "08:30 - 14:00",
+        status: "Abierto",
+        image: "/distributor-guayaquil-3.jpg",
+        location: {
+          lat: -2.1393611,
+          lng: -79.9280278,
+        },
+        contact: "",
+        map: null,
+      },
+      {
+        id: 11,
+        name: "Jetour El Pan",
+        address:
+          'Av. Miguel Yunez S/N, 5 Km 14, Samborondón, Concesionario "Grupo Roldán".',
+        phone: "",
+        mobile: "095 921 7323",
+        hours_weekdays: "08:30 - 18:30",
+        hours_saturday: "08:30 - 14:00",
+        status: "Abierto",
+        image: "/distributor-guayaquil-11.jpg",
+        location: {
+          lat: -2.0406915,
+          lng: -79.8517941,
+        },
+        contact: "",
+        map: null,
+      },
+      {
+        id: 5,
+        name: "Jetour Vía a Daule",
+        address:
+          'Km. 4 ½ Vía a Daule y Av. 17., Concesionario "Grupo Roldán"., Frente a "Mi Comisariato".',
+        phone: "",
+        mobile: "098 723 0797",
+        hours_weekdays: "08:30 - 18:30",
+        hours_saturday: "08:30 - 14:00",
+        status: "Abierto",
+        image: "/distributor-guayaquil-5.jpg",
+        location: {
+          lat: -2.1598609,
+          lng: -79.9303457,
+        },
+        contact: "",
+        map: null,
+      },
+      {
+        id: 6,
+        name: "Jetour Américas",
+        address: "Av. de las Américas y Justino Cornejo.",
+        phone: "",
+        mobile: "098 572 7913",
+        hours_weekdays: "08:30 - 18:30",
+        hours_saturday: "08:30 - 14:00",
+        status: "Abierto",
+        image: "/distributor-guayaquil-6.jpg",
+        location: {
+          lat: -2.1620684,
+          lng: -79.8910852,
+        },
+        contact: "",
+        map: null,
+      },
+    ],
+    machala: [
+      {
+        id: 4,
+        name: "Jetour Machala",
+        address:
+          'Av. 25 de Junio 1/2 y Vía a Pasaje., A 200 metros de "Ciudad del Sol".',
+        phone: "",
+        mobile: "098 725 7461",
+        hours_weekdays: "08:30 - 18:30",
+        hours_saturday: "08:30 - 14:00",
+        status: "Abierto",
+        image: "/distributor-machala-4.jpg",
+        location: {
+          lat: -3.2777041,
+          lng: -79.9346419,
+        },
+        contact: "",
+        map: null,
+      },
+    ],
+    quito: [
+      {
+        id: 7,
+        name: "Jetour Tumbaco",
+        address:
+          'Av. Oswaldo Guayasamín., Concesionario "Grupo Roldán"., Frente a "El Hornero".',
+        phone: "",
+        mobile: "098 086 0728",
+        hours_weekdays: "08:30 - 18:30",
+        hours_saturday: "08:30 - 14:00",
+        status: "Abierto",
+        image: "/distributor-quito-7.jpg",
+        location: {
+          lat: -0.2143709,
+          lng: -78.3915218,
+        },
+        contact: "",
+        map: null,
+      },
+      {
+        id: 8,
+        name: "Jetour 6 de Diciembre",
+        address: "Av. 6 de Diciembre y Av. 10 de Agosto., Esquina.",
+        phone: "",
+        mobile: "093 948 5628",
+        hours_weekdays: "08:30 - 18:30",
+        hours_saturday: "08:30 - 14:00",
+        status: "Abierto",
+        image: "/distributor-quito-8.jpg",
+        location: {
+          lat: -0.1209912,
+          lng: -78.4801387,
+        },
+        contact: "",
+        map: null,
+      },
+      {
+        id: 9,
+        name: "Jetour Carapungo",
+        address:
+          'Av. Simón Bolívar y N69H., Concesionario "Grupo Roldán"., A una cuadra del CC "Portal Shopping", sentido Norte-Sur.',
+        phone: "",
+        mobile: "098 285 7679",
+        hours_weekdays: "08:30 - 18:30",
+        hours_saturday: "08:30 - 14:00",
+        status: "Abierto",
+        image: "/distributor-quito-9.jpg",
+        location: {
+          lat: -0.1116535,
+          lng: -78.4581169,
+        },
+        contact: "",
+        map: null,
+      },
+      {
+        id: 10,
+        name: "Jetour Sangolquí",
+        address:
+          'Av. Shyris & Vía a Amaguaña., Concesionario "Grupo Roldán"., Diagonal a la escuela "Riobamba".',
+        phone: "",
+        mobile: "093 976 1755",
+        hours_weekdays: "08:30 - 18:30",
+        hours_saturday: "08:30 - 14:00",
+        status: "Abierto",
+        image: "/distributor-quito-10.jpg",
+        location: {
+          lat: -0.3458435,
+          lng: -78.4572162,
+        },
+        contact: "",
+        map: null,
+      },
+    ],
+    ibarra: [
+      {
+        id: 12,
+        name: "Jetour Ibarra",
+        address:
+          'Sector Chorlavi, Carretera Panamericana, Concesionario "Grupo Roldán"., Diagonal a la gasolinera "Petro World".',
+        phone: "",
+        mobile: "098 889 9599",
+        hours_weekdays: "08:30 - 18:30",
+        hours_saturday: "08:30 - 14:00",
+        status: "Abierto",
+        image: "/distributor-ibarra-12.jpg",
+        location: {
+          lat: 0.3373862,
+          lng: -78.160687,
+        },
+        contact: "",
+        map: null,
+      },
+    ],
+    loja: [
+      {
+        id: 13,
+        name: "Jetour Loja",
+        address:
+          'Av Isidro Ayora y Velazco Ibarra., Concesionario "Grupo Roldán"., Al frente del Concesionario "Salvador Bustamante Celi".',
+        phone: "",
+        mobile: "098-655-6875",
+        hours_weekdays: "08:30 - 18:30",
+        hours_saturday: "08:30 - 14:00",
+        status: "Abierto",
+        image: "/distributor-loja-13.jpg",
+        location: {
+          lat: -3.9762776,
+          lng: -79.2027584,
+        },
+        contact: "",
+        map: null,
+      },
+    ],
+    manta: [
+      {
+        id: 14,
+        name: "Jetour Manta",
+        address:
+          'Av. 4 de Noviembre y Calle 320., Concesionario "Grupo Roldán"., Esquina.',
+        phone: "",
+        mobile: "099 976 6622",
+        hours_weekdays: "08:30 - 18:30",
+        hours_saturday: "08:30 - 14:00",
+        status: "Abierto",
+        image: "/distributor-manta-14.jpg",
+        location: {
+          lat: -0.973852,
+          lng: -80.700257,
+        },
+        contact: "",
+        map: null,
+      },
+    ],
+    riobamba: [
+      {
+        id: 15,
+        name: "Jetour Riobamba",
+        address:
+          'Av Lizarzaburo y Bolivar Esquina, Concesionario "Grupo Roldán"., Frente a "Terpel".',
+        phone: "",
+        mobile: "0985305363",
+        hours_weekdays: "08:30 - 18:30",
+        hours_saturday: "08:30 - 14:00",
+        status: "Abierto",
+        image: "/distributor-riobamba-15.jpg",
+        location: {
+          lat: -1.6419167,
+          lng: -78.6768056,
+        },
+        contact: "",
+        map: null,
+      },
+    ],
+  };
+}
+
 export default function ConcesionariosMap({
   title = "Nuestro equipo de especialistas está en 26 puntos de servicio en todo el país.",
   cities = [],
 }) {
-  // Transformar datos de Sanity al formato esperado por el componente
-  const distributors =
-    cities.length > 0
+  // Transformar datos de Sanity al formato esperado por el componente usando useMemo
+  const distributors = useMemo(() => {
+    return cities.length > 0
       ? cities.reduce((acc, city) => {
           acc[city.cityName.toLowerCase()] = city.distributors;
           return acc;
         }, {})
       : getDefaultDistributors();
+  }, [cities]);
 
-  // Configurar ciudades expandidas dinámicamente
-  const initialExpandedCities =
-    cities.length > 0
+  // Configurar ciudades expandidas dinámicamente usando useMemo
+  const initialExpandedCities = useMemo(() => {
+    return cities.length > 0
       ? cities.reduce((acc, city, index) => {
           acc[city.cityName.toLowerCase()] = index === 0; // Solo la primera ciudad expandida
           return acc;
         }, {})
       : { ambato: true, cuenca: false, guayaquil: false };
+  }, [cities]);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [expandedCities, setExpandedCities] = useState(initialExpandedCities);
@@ -41,296 +332,8 @@ export default function ConcesionariosMap({
   const [map, setMap] = useState(null);
   const [markers, setMarkers] = useState([]);
   const [infoWindows, setInfoWindows] = useState([]);
+  const [markerMap, setMarkerMap] = useState(new Map()); // Map distributor.id -> {marker, infoWindow}
   const mapRef = useRef(null);
-
-  // Función para obtener datos por defecto si no hay datos de Sanity
-  function getDefaultDistributors() {
-    return {
-      cuenca: [
-        {
-          id: 1,
-          name: "Jetour Terminal Terrestre",
-          address: "Av. España & Sebastián de Benalcazar., Esquina.",
-          phone: "",
-          mobile: "098 577 8754",
-          hours_weekdays: "08:30 - 18:30",
-          hours_saturday: "08:30 - 14:00",
-          status: "Abierto",
-          image: "/distributor-cuenca-1.jpg",
-          location: {
-            lat: -2.893555,
-            lng: -78.994299,
-          },
-          contact: "",
-          map: null,
-        },
-        {
-          id: 2,
-          name: "Jetour 12 de Octubre",
-          address:
-            'Av. 12 de Octubre & Cristobal Colón., Concesionario "Grupo Roldán"., A 100 metros del Terminal Terrestre de Cuenca.',
-          phone: "",
-          mobile: "098 480 6673",
-          hours_weekdays: "08:30 - 18:30",
-          hours_saturday: "08:30 - 14:00",
-          status: "Abierto",
-          image: "/distributor-cuenca-2.jpg",
-          location: {
-            lat: -2.91364,
-            lng: -79.021688,
-          },
-          contact: "",
-          map: null,
-        },
-      ],
-      guayaquil: [
-        {
-          id: 3,
-          name: "Jetour Juan Tanca Marengo",
-          address:
-            'Av. Juan Tanca Marengo & Ing. José A. Gómez., Concesionario "Grupo Roldán"., Al frente del Colegio "Americano" de Guayaquil.',
-          phone: "",
-          mobile: "099 451 8699",
-          hours_weekdays: "08:30 - 18:30",
-          hours_saturday: "08:30 - 14:00",
-          status: "Abierto",
-          image: "/distributor-guayaquil-3.jpg",
-          location: {
-            lat: -2.1393611,
-            lng: -79.9280278,
-          },
-          contact: "",
-          map: null,
-        },
-        {
-          id: 11,
-          name: "Jetour El Pan",
-          address:
-            'Av. Miguel Yunez S/N, 5 Km 14, Samborondón, Concesionario "Grupo Roldán".',
-          phone: "",
-          mobile: "095 921 7323",
-          hours_weekdays: "08:30 - 18:30",
-          hours_saturday: "08:30 - 14:00",
-          status: "Abierto",
-          image: "/distributor-guayaquil-11.jpg",
-          location: {
-            lat: -2.0406915,
-            lng: -79.8517941,
-          },
-          contact: "",
-          map: null,
-        },
-        {
-          id: 5,
-          name: "Jetour Vía a Daule",
-          address:
-            'Km. 4 ½ Vía a Daule y Av. 17., Concesionario "Grupo Roldán"., Frente a "Mi Comisariato".',
-          phone: "",
-          mobile: "098 723 0797",
-          hours_weekdays: "08:30 - 18:30",
-          hours_saturday: "08:30 - 14:00",
-          status: "Abierto",
-          image: "/distributor-guayaquil-5.jpg",
-          location: {
-            lat: -2.1598609,
-            lng: -79.9303457,
-          },
-          contact: "",
-          map: null,
-        },
-        {
-          id: 6,
-          name: "Jetour Américas",
-          address: "Av. de las Américas y Justino Cornejo.",
-          phone: "",
-          mobile: "098 572 7913",
-          hours_weekdays: "08:30 - 18:30",
-          hours_saturday: "08:30 - 14:00",
-          status: "Abierto",
-          image: "/distributor-guayaquil-6.jpg",
-          location: {
-            lat: -2.1620684,
-            lng: -79.8910852,
-          },
-          contact: "",
-          map: null,
-        },
-      ],
-      machala: [
-        {
-          id: 4,
-          name: "Jetour Machala",
-          address:
-            'Av. 25 de Junio 1/2 y Vía a Pasaje., A 200 metros de "Ciudad del Sol".',
-          phone: "",
-          mobile: "098 725 7461",
-          hours_weekdays: "08:30 - 18:30",
-          hours_saturday: "08:30 - 14:00",
-          status: "Abierto",
-          image: "/distributor-machala-4.jpg",
-          location: {
-            lat: -3.2777041,
-            lng: -79.9346419,
-          },
-          contact: "",
-          map: null,
-        },
-      ],
-      quito: [
-        {
-          id: 7,
-          name: "Jetour Tumbaco",
-          address:
-            'Av. Oswaldo Guayasamín., Concesionario "Grupo Roldán"., Frente a "El Hornero".',
-          phone: "",
-          mobile: "098 086 0728",
-          hours_weekdays: "08:30 - 18:30",
-          hours_saturday: "08:30 - 14:00",
-          status: "Abierto",
-          image: "/distributor-quito-7.jpg",
-          location: {
-            lat: -0.2143709,
-            lng: -78.3915218,
-          },
-          contact: "",
-          map: null,
-        },
-        {
-          id: 8,
-          name: "Jetour 6 de Diciembre",
-          address: "Av. 6 de Diciembre y Av. 10 de Agosto., Esquina.",
-          phone: "",
-          mobile: "093 948 5628",
-          hours_weekdays: "08:30 - 18:30",
-          hours_saturday: "08:30 - 14:00",
-          status: "Abierto",
-          image: "/distributor-quito-8.jpg",
-          location: {
-            lat: -0.1209912,
-            lng: -78.4801387,
-          },
-          contact: "",
-          map: null,
-        },
-        {
-          id: 9,
-          name: "Jetour Carapungo",
-          address:
-            'Av. Simón Bolívar y N69H., Concesionario "Grupo Roldán"., A una cuadra del CC "Portal Shopping", sentido Norte-Sur.',
-          phone: "",
-          mobile: "098 285 7679",
-          hours_weekdays: "08:30 - 18:30",
-          hours_saturday: "08:30 - 14:00",
-          status: "Abierto",
-          image: "/distributor-quito-9.jpg",
-          location: {
-            lat: -0.1116535,
-            lng: -78.4581169,
-          },
-          contact: "",
-          map: null,
-        },
-        {
-          id: 10,
-          name: "Jetour Sangolquí",
-          address:
-            'Av. Shyris & Vía a Amaguaña., Concesionario "Grupo Roldán"., Diagonal a la escuela "Riobamba".',
-          phone: "",
-          mobile: "093 976 1755",
-          hours_weekdays: "08:30 - 18:30",
-          hours_saturday: "08:30 - 14:00",
-          status: "Abierto",
-          image: "/distributor-quito-10.jpg",
-          location: {
-            lat: -0.3458435,
-            lng: -78.4572162,
-          },
-          contact: "",
-          map: null,
-        },
-      ],
-      ibarra: [
-        {
-          id: 12,
-          name: "Jetour Ibarra",
-          address:
-            'Sector Chorlavi, Carretera Panamericana, Concesionario "Grupo Roldán"., Diagonal a la gasolinera "Petro World".',
-          phone: "",
-          mobile: "098 889 9599",
-          hours_weekdays: "08:30 - 18:30",
-          hours_saturday: "08:30 - 14:00",
-          status: "Abierto",
-          image: "/distributor-ibarra-12.jpg",
-          location: {
-            lat: 0.3373862,
-            lng: -78.160687,
-          },
-          contact: "",
-          map: null,
-        },
-      ],
-      loja: [
-        {
-          id: 13,
-          name: "Jetour Loja",
-          address:
-            'Av Isidro Ayora y Velazco Ibarra., Concesionario "Grupo Roldán"., Al frente del Concesionario "Salvador Bustamante Celi".',
-          phone: "",
-          mobile: "098-655-6875",
-          hours_weekdays: "08:30 - 18:30",
-          hours_saturday: "08:30 - 14:00",
-          status: "Abierto",
-          image: "/distributor-loja-13.jpg",
-          location: {
-            lat: -3.9762776,
-            lng: -79.2027584,
-          },
-          contact: "",
-          map: null,
-        },
-      ],
-      manta: [
-        {
-          id: 14,
-          name: "Jetour Manta",
-          address:
-            'Av. 4 de Noviembre y Calle 320., Concesionario "Grupo Roldán"., Esquina.',
-          phone: "",
-          mobile: "099 976 6622",
-          hours_weekdays: "08:30 - 18:30",
-          hours_saturday: "08:30 - 14:00",
-          status: "Abierto",
-          image: "/distributor-manta-14.jpg",
-          location: {
-            lat: -0.973852,
-            lng: -80.700257,
-          },
-          contact: "",
-          map: null,
-        },
-      ],
-      riobamba: [
-        {
-          id: 15,
-          name: "Jetour Riobamba",
-          address:
-            'Av Lizarzaburo y Bolivar Esquina, Concesionario "Grupo Roldán"., Frente a "Terpel".',
-          phone: "",
-          mobile: "0985305363",
-          hours_weekdays: "08:30 - 18:30",
-          hours_saturday: "08:30 - 14:00",
-          status: "Abierto",
-          image: "/distributor-riobamba-15.jpg",
-          location: {
-            lat: -1.6419167,
-            lng: -78.6768056,
-          },
-          contact: "",
-          map: null,
-        },
-      ],
-    };
-  }
 
   // const distributors = {
   //   ambato: [
@@ -487,17 +490,19 @@ export default function ConcesionariosMap({
     }
   }, []);
 
-  // Add markers when map is ready
+  // Add markers when map is ready or distributors change
   useEffect(() => {
     if (!map) return;
 
     // Clear existing markers and info windows
     markers.forEach((marker) => marker.setMap(null));
     infoWindows.forEach((infoWindow) => infoWindow.close());
+    markerMap.clear();
 
     // Add new markers for all distributors
     const newMarkers = [];
     const newInfoWindows = [];
+    const newMarkerMap = new Map();
 
     Object.values(distributors)
       .flat()
@@ -582,8 +587,8 @@ export default function ConcesionariosMap({
 
         // Add click listener to marker to show InfoWindow
         marker.addListener("click", () => {
-          // Close all other info windows
-          newInfoWindows.forEach((iw) => iw.close());
+          // Close all other info windows using the map
+          newMarkerMap.forEach(({ infoWindow: iw }) => iw.close());
 
           // Open this info window
           infoWindow.open(map, marker);
@@ -598,11 +603,19 @@ export default function ConcesionariosMap({
 
         newMarkers.push(marker);
         newInfoWindows.push(infoWindow);
+
+        // Store in map for direct access by distributor ID
+        newMarkerMap.set(distributor.id, {
+          marker,
+          infoWindow,
+          distributor,
+        });
       });
 
     setMarkers(newMarkers);
     setInfoWindows(newInfoWindows);
-  }, [map]);
+    setMarkerMap(newMarkerMap);
+  }, [map, distributors]); // Depend on both map and distributors
 
   // Map centering is now handled directly in click handlers
 
@@ -616,29 +629,20 @@ export default function ConcesionariosMap({
   const handleDistributorClick = (distributor) => {
     setSelectedDistributor(distributor);
 
-    // Find and open the corresponding InfoWindow
-    if (map && infoWindows.length > 0) {
+    // Find and open the corresponding InfoWindow using the markerMap
+    if (map && markerMap.has(distributor.id)) {
       // Close all info windows first
-      infoWindows.forEach((iw) => iw.close());
+      markerMap.forEach(({ infoWindow }) => infoWindow.close());
 
-      // Find the marker and info window for this distributor
-      const allDistributors = Object.values(distributors).flat();
-      const distributorIndex = allDistributors.findIndex(
-        (d) => d.id === distributor.id
-      );
+      // Get the specific marker and info window for this distributor
+      const { marker, infoWindow } = markerMap.get(distributor.id);
 
-      if (
-        distributorIndex !== -1 &&
-        infoWindows[distributorIndex] &&
-        markers[distributorIndex]
-      ) {
-        // Open the info window
-        infoWindows[distributorIndex].open(map, markers[distributorIndex]);
+      // Open the info window
+      infoWindow.open(map, marker);
 
-        // Center map on the marker
-        map.setCenter(distributor.location);
-        map.setZoom(15);
-      }
+      // Center map on the marker
+      map.setCenter(distributor.location);
+      map.setZoom(15);
     }
   };
 
