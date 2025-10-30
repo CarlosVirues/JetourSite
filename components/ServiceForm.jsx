@@ -1,27 +1,38 @@
 "use client";
 
-import { useActionState } from "react";
 import { useFormState } from "react-dom";
+import { useActionState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import {
   User,
   Mail,
-  Phone,
   CreditCard,
   MapPin,
-  ChevronDown,
-  MessageCircle,
-  ArrowRight,
+  Car,
+  Wrench,
+  Hash,
   CheckCircle,
   AlertCircle,
+  ArrowRight,
 } from "lucide-react";
 import { motion } from "framer-motion";
-import { submitContactForm } from "@/app/actions/contact";
 
-export default function ContactForm() {
-  const [state, action, isPending] = useActionState(submitContactForm, {
+// Default stub action to keep the component functional until the server action is wired
+async function defaultServiceAction(prevState, formData) {
+  return {
+    errors: {},
+    message: "",
+    success: false,
+    values: Object.fromEntries(formData.entries()),
+  };
+}
+
+export default function ServiceForm({
+  action = defaultServiceAction,
+  success = false,
+}) {
+  const [state, formAction, isPending] = useActionState(action, {
     errors: {},
     message: "",
     success: false,
@@ -51,13 +62,51 @@ export default function ContactForm() {
     "santo_domingo",
   ];
 
+  const modelos = [
+    "x50",
+    "x70",
+    "x70-plus",
+    "x70-sport",
+    "t1",
+    "t2",
+    "t2-phev",
+    "dashing",
+  ];
+
+  const tiposServicio = [
+    "mantenimiento preventivo",
+    "mantenimiento correctivo",
+    "colisiones",
+    "reclamo del servicio",
+    "otros",
+  ];
+
+  if (success) {
+    return (
+      <div>
+        <motion.div className="border border-blue-500 p-8 rounded-lg text-center">
+          <CheckCircle className="w-20 h-20 text-green-500 mx-auto mb-6" />
+          <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            ¡Gracias por tu envío!
+          </h3>
+          <p className="text-base md:text-lg text-gray-300 mb-8">
+            Hemos recibido tu solicitud de servicio. Nos pondremos en contacto
+            contigo a la brevedad para confirmar los detalles de tu servicio.
+          </p>
+          <p className="text-sm text-gray-400">
+            Puedes cerrar esta ventana o navegar a otra sección.
+          </p>
+        </motion.div>
+      </div>
+    );
+  }
+
   return (
     <motion.div className="border border-blue-500 p-8 rounded-lg">
       <motion.h3 className="text-2xl font-bold text-white mb-6">
-        ¡Ponte en <span className="font-bold">contacto!</span>
+        Servicio de <span className="font-bold">posventa</span>
       </motion.h3>
 
-      {/* Mensaje de éxito/error */}
       {state.message && (
         <div
           className={`p-4 mb-4 rounded-lg flex items-center gap-3 ${
@@ -75,7 +124,7 @@ export default function ContactForm() {
         </div>
       )}
 
-      <form action={action} noValidate className="space-y-6">
+      <form action={formAction} noValidate className="space-y-6">
         {/* Nombre */}
         <div>
           <div
@@ -132,63 +181,35 @@ export default function ContactForm() {
           )}
         </div>
 
-        {/* Teléfono */}
+        {/* Cédula / RUC */}
         <div>
           <div
             className={`flex items-center border-b pb-2 ${
-              state.errors?.telefono ? "border-red-500" : "border-blue-500"
-            }`}
-          >
-            <Phone
-              className={`w-5 h-5 mr-3 ${
-                state.errors?.telefono ? "text-red-500" : "text-blue-500"
-              }`}
-            />
-            <Input
-              type="tel"
-              name="telefono"
-              defaultValue={state.values?.telefono || ""}
-              placeholder="Teléfono"
-              className="bg-transparent border-none text-white placeholder:text-gray-300 focus:ring-0 focus:border-none p-0"
-              required
-            />
-          </div>
-          {state.errors?.telefono && (
-            <p className="text-red-400 text-sm mt-1 ml-8">
-              {state.errors.telefono[0]}
-            </p>
-          )}
-        </div>
-
-        {/* Cédula */}
-        <div>
-          <div
-            className={`flex items-center border-b pb-2 ${
-              state.errors?.cedula ? "border-red-500" : "border-blue-500"
+              state.errors?.cedulaRuc ? "border-red-500" : "border-blue-500"
             }`}
           >
             <CreditCard
               className={`w-5 h-5 mr-3 ${
-                state.errors?.cedula ? "text-red-500" : "text-blue-500"
+                state.errors?.cedulaRuc ? "text-red-500" : "text-blue-500"
               }`}
             />
             <Input
               type="text"
-              name="cedula"
-              defaultValue={state.values?.cedula || ""}
-              placeholder="Cédula de identidad (10 dígitos)"
+              name="cedulaRuc"
+              defaultValue={state.values?.cedulaRuc || ""}
+              placeholder="Cédula o RUC"
               className="bg-transparent border-none text-white placeholder:text-gray-300 focus:ring-0 focus:border-none p-0"
               required
             />
           </div>
-          {state.errors?.cedula && (
+          {state.errors?.cedulaRuc && (
             <p className="text-red-400 text-sm mt-1 ml-8">
-              {state.errors.cedula[0]}
+              {state.errors.cedulaRuc[0]}
             </p>
           )}
         </div>
 
-        {/* Ciudad con SELECT */}
+        {/* Ciudad */}
         <div>
           <div
             className={`flex items-center border-b py-2 ${
@@ -229,29 +250,116 @@ export default function ContactForm() {
           )}
         </div>
 
-        {/* Mensaje */}
+        {/* Modelo */}
         <div>
           <div
-            className={`flex items-start border-b pb-2 ${
-              state.errors?.mensaje ? "border-red-500" : "border-blue-500"
+            className={`flex items-center border-b py-2 ${
+              state.errors?.modelo ? "border-red-500" : "border-blue-500"
             }`}
           >
-            <MessageCircle
-              className={`w-5 h-5 mr-3 mt-2 ${
-                state.errors?.mensaje ? "text-red-500" : "text-blue-500"
+            <Car
+              className={`w-5 h-5 mr-3 ${
+                state.errors?.modelo ? "text-red-500" : "text-blue-500"
               }`}
             />
-            <Textarea
-              name="mensaje"
-              defaultValue={state.values?.mensaje || ""}
-              placeholder="Mensaje"
-              className="bg-transparent border-none text-white placeholder:text-gray-300 focus:ring-0 focus:border-none p-0 resize-none min-h-[80px]"
+            <select
+              key={state.values?.modelo || ""}
+              name="modelo"
+              defaultValue={state.values?.modelo || ""}
+              className="flex-1 bg-black text-white focus:outline-none text-sm"
+              required
+            >
+              <option value="">Selecciona tu modelo</option>
+              {modelos.map((m) => (
+                <option key={m} value={m} className="bg-black text-white">
+                  {m
+                    .replace(/_/g, " ")
+                    .split(" ")
+                    .map(
+                      (w) =>
+                        w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()
+                    )
+                    .join(" ")}
+                </option>
+              ))}
+            </select>
+          </div>
+          {state.errors?.modelo && (
+            <p className="text-red-400 text-sm mt-1 ml-8">
+              {state.errors.modelo[0]}
+            </p>
+          )}
+        </div>
+
+        {/* Placa */}
+        <div>
+          <div
+            className={`flex items-center border-b pb-2 ${
+              state.errors?.placa ? "border-red-500" : "border-blue-500"
+            }`}
+          >
+            <Hash
+              className={`w-5 h-5 mr-3 ${
+                state.errors?.placa ? "text-red-500" : "text-blue-500"
+              }`}
+            />
+            <Input
+              type="text"
+              name="placa"
+              defaultValue={state.values?.placa || ""}
+              placeholder="Placa"
+              className="bg-transparent border-none text-white placeholder:text-gray-300 focus:ring-0 focus:border-none p-0"
               required
             />
           </div>
-          {state.errors?.mensaje && (
+          {state.errors?.placa && (
             <p className="text-red-400 text-sm mt-1 ml-8">
-              {state.errors.mensaje[0]}
+              {state.errors.placa[0]}
+            </p>
+          )}
+        </div>
+
+        {/* Tipo de servicio de taller */}
+        <div>
+          <div
+            className={`flex items-center border-b py-2 ${
+              state.errors?.tipoServicioTaller
+                ? "border-red-500"
+                : "border-blue-500"
+            }`}
+          >
+            <Wrench
+              className={`w-5 h-5 mr-3 ${
+                state.errors?.tipoServicioTaller
+                  ? "text-red-500"
+                  : "text-blue-500"
+              }`}
+            />
+            <select
+              key={state.values?.tipoServicioTaller || ""}
+              name="tipoServicioTaller"
+              defaultValue={state.values?.tipoServicioTaller || ""}
+              className="flex-1 bg-black text-white focus:outline-none text-sm"
+              required
+            >
+              <option value="">Selecciona el tipo de servicio</option>
+              {tiposServicio.map((t) => (
+                <option key={t} value={t} className="bg-black text-white">
+                  {t
+                    .replace(/_/g, " ")
+                    .split(" ")
+                    .map(
+                      (w) =>
+                        w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()
+                    )
+                    .join(" ")}
+                </option>
+              ))}
+            </select>
+          </div>
+          {state.errors?.tipoServicioTaller && (
+            <p className="text-red-400 text-sm mt-1 ml-8">
+              {state.errors.tipoServicioTaller[0]}
             </p>
           )}
         </div>
