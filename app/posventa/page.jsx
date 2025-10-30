@@ -54,6 +54,22 @@ export default function PostventaPage() {
 
       {/* Service Form */}
       <div className="px-4 md:px-8 lg:px-16 py-16">
+        <section className="relative bg-black text-white py-16 md:py-24">
+              <div className="max-w-7xl mx-auto px-6 lg:px-12">
+                {/* Title */}
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                  viewport={{ once: true }}
+                  className="text-center mb-12 md:mb-16"
+                >
+                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white">
+                    Nuestros talleres y centros de servicio
+                  </h2>
+                </motion.div>
+                </div>
+            </section>
         <div className="max-w-3xl mx-auto">
           <ServiceForm action={submitServiceForm} />
         </div>

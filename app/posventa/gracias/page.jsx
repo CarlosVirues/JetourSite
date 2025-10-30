@@ -55,7 +55,12 @@ export default function PostventaPage() {
       {/* Service Form */}
       <div className="px-4 md:px-8 lg:px-16 py-16">
         <div className="max-w-3xl mx-auto">
-          <ServiceForm action={submitServiceForm} succcess={true} />
+          <h1 className="text-2xl font-bold text-white mb-6">
+                Gracias por escribirnos.
+              </h1>
+              <p className="text-white mb-6">
+                Nos pondremos en contacto contigo pronto.
+              </p>
         </div>
       </div>
 

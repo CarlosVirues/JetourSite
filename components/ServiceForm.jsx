@@ -103,6 +103,7 @@ export default function ServiceForm({
   }
 
   return (
+    
     <motion.div className="border border-blue-500 p-8 rounded-lg">
       <motion.h3 className="text-2xl font-bold text-white mb-6">
         Servicio de <span className="font-bold">posventa</span>
