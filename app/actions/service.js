@@ -3,16 +3,14 @@
 import { z } from "zod";
 import { prisma } from "@/lib/db";
 
-// Tipos válidos de servicio
 const tiposServicioEnum = [
   "mantenimiento preventivo",
   "mantenimiento correctivo",
   "colisiones",
   "reclamo del servicio",
   "otros",
-] as const;
+];
 
-// Esquema de validación con Zod
 const serviceSchema = z.object({
   nombre: z.string().min(2, "El nombre debe tener al menos 2 caracteres"),
   email: z.string().email("Ingresa un email válido"),
@@ -22,35 +20,16 @@ const serviceSchema = z.object({
     .regex(/^\d{10,13}$/, "Ingrese una cédula/RUC de 10 a 13 dígitos"),
   ciudad: z.string().min(2, "La ciudad debe ser alguna de la lista"),
   modelo: z.string().min(2, "El modelo debe ser alguno de la lista"),
-  placa: z
-    .string()
-    .regex(/^[A-Z0-9-]{5,10}$/i, "Ingrese una placa válida"),
+  placa: z.string().regex(/^[A-Z0-9-]{5,10}$/i, "Ingrese una placa válida"),
   tipoServicioTaller: z.enum(tiposServicioEnum, {
     errorMap: () => ({ message: "Seleccione un tipo de servicio válido" }),
   }),
 });
 
-// Tipo derivado automáticamente del esquema
-export type ServiceFormData = z.infer<typeof serviceSchema>;
-
-// Tipo del estado que retorna el formulario
-export type ServiceFormState = {
-  errors?: Record<string, string[]>;
-  message?: string;
-  success: boolean;
-  redirectTo?: string;
-  values?: Record<string, any>;
-};
-
-// Acción del servidor
-export async function submitServiceForm(
-  prevState: ServiceFormState,
-  formData: FormData
-): Promise<ServiceFormState> {
+export async function submitServiceForm(prevState, formData) {
   const data = Object.fromEntries(formData.entries());
-  const validated = serviceSchema.safeParse(data);
 
-  // Validación
+  const validated = serviceSchema.safeParse(data);
   if (!validated.success) {
     return {
       errors: validated.error.flatten().fieldErrors,
@@ -62,16 +41,16 @@ export async function submitServiceForm(
 
   const clean = validated.data;
 
-  // Guardar en la BD
+  // Guardar en la base de datos
   try {
     await prisma.serviceSubmission.create({
       data: {
         nombre: clean.nombre,
-        email: clean.email,
+        ciudad: clean.ciudad,
         telefono: clean.telefono,
         cedulaRuc: clean.cedulaRuc,
-        ciudad: clean.ciudad,
         modelo: clean.modelo,
+        email: clean.email,
         placa: clean.placa,
         tipoServicioTaller: clean.tipoServicioTaller,
       },
@@ -88,25 +67,18 @@ export async function submitServiceForm(
 
   // Enviar a Zapier
   try {
-    const zapierRes = await fetch(
-      "https://hooks.zapier.com/hooks/catch/3497280/uigvjjf/",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...clean,
-          formType: "service",
-          timestamp: new Date().toISOString(),
-        }),
-      }
-    );
+    const zapierRes = await fetch("https://hooks.zapier.com/hooks/catch/3497280/uigvjjf/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ...clean,
+        formType: "service",
+        timestamp: new Date().toISOString(),
+      }),
+    });
 
     if (!zapierRes.ok) {
-      console.error(
-        "Zapier respondió con error:",
-        zapierRes.status,
-        await zapierRes.text()
-      );
+      console.error("Zapier respondió con error:", zapierRes.status, await zapierRes.text());
     } else {
       console.log("Zapier recibió los datos correctamente");
     }
@@ -133,11 +105,7 @@ export async function submitServiceForm(
     });
 
     if (!crmRes.ok) {
-      console.error(
-        "CRM respondió con error:",
-        crmRes.status,
-        await crmRes.text()
-      );
+      console.error("CRM respondió con error:", crmRes.status, await crmRes.text());
     } else {
       console.log("CRM recibió los datos correctamente");
     }
