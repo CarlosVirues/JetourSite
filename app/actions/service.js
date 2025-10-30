@@ -115,6 +115,6 @@ export async function submitServiceForm(prevState, formData) {
 
   return {
     success: true,
-    redirectTo: "/gracias#service-form",
+    redirectTo: "/posventa/gracias#service-form",
   };
 }
