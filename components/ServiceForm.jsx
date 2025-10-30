@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import {
   User,
   Mail,
+  Phone,
   CreditCard,
   MapPin,
   Car,
@@ -177,6 +178,34 @@ export default function ServiceForm({
           {state.errors?.email && (
             <p className="text-red-400 text-sm mt-1 ml-8">
               {state.errors.email[0]}
+            </p>
+          )}
+        </div>
+
+         {/* Teléfono */}
+        <div>
+          <div
+            className={`flex items-center border-b pb-2 ${
+              state.errors?.telefono ? "border-red-500" : "border-blue-500"
+            }`}
+          >
+            <Phone
+              className={`w-5 h-5 mr-3 ${
+                state.errors?.telefono ? "text-red-500" : "text-blue-500"
+              }`}
+            />
+            <Input
+              type="tel"
+              name="telefono"
+              defaultValue={state.values?.telefono || ""}
+              placeholder="Teléfono"
+              className="bg-transparent border-none text-white placeholder:text-gray-300 focus:ring-0 focus:border-none p-0"
+              required
+            />
+          </div>
+          {state.errors?.telefono && (
+            <p className="text-red-400 text-sm mt-1 ml-8">
+              {state.errors.telefono[0]}
             </p>
           )}
         </div>
