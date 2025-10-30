@@ -165,7 +165,7 @@ export default function ServiceCenters() {
   };
 
   return (
-    <section className="relative bg-black text-white py-16 md:py-24">
+    <section className="relative bg-black text-white pt-8 pb-0 md:pt-12 md:pb-0">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         {/* Title */}
         <motion.div

@@ -51,14 +51,12 @@ export default function PostventaPage() {
 
       {/* Service Form */}
       <div className="px-4 md:px-8 lg:px-16 py-12">
-        <section className="relative bg-black text-white py-12 md:py-12">
               <div className="max-w-7xl mx-auto px-6 lg:px-12">
                 {/* Title */}
                   <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center">
                    Agenda tu cita
                   </h2>
                 </div>
-            </section>
         <div className="max-w-3xl mx-auto">
           <ServiceForm action={submitServiceForm} />
         </div>
