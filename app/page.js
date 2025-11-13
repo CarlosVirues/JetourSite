@@ -6,6 +6,7 @@ import RoldanSection from "@/components/RoldanSection";
 import VideoGallery from "@/components/VideoGallery";
 import QuoteForm from "@/components/QuoteForm";
 import Footer from "@/components/Footer";
+import Image from "next/image";
 import { getPageData } from "@/lib/page-data";
 import { getHomePageData } from "@/lib/sanity";
 
