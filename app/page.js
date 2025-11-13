@@ -21,7 +21,25 @@ export default async function HomePage() {
       <Header transparent={true} />
 
       {/* Hero Section - Full Screen */}
-      <Hero {...sanityData?.hero} />
+      {/*<Hero {...sanityData?.hero} />*/}
+
+      <section className="relative h-96 lg:h-[500px] bg-gradient-to-r from-black to-gray-900 overflow-hidden">
+              {/* Background Image Placeholder - You can replace this with an actual car image */}
+              <Image
+                src="/bg-iva.jpg"
+                alt="Congelamos el IVA al 9%"
+                fill
+                className="object-cover"
+              />
+      
+              {/* Hero Content */}
+              <div className="relative z-10 flex items-center justify-center h-full">
+                <div className="text-center">
+                  <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold text-white mb-4"></h1>
+                  <p className="md:text-xl"></p>
+                </div>
+              </div>
+            </section>
 
       {/* Vehicle Showcase Section */}
       <VehicleShowcaseNew />
