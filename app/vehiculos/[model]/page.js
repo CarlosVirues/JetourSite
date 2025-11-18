@@ -47,6 +47,15 @@ export default async function VehicleModelPage({ params }) {
       {/* Vehicle Features Section */}
       <VehicleFeatures featuresData={modelPageData.features} />
 
+      {/* Quote Form arriba */}
+      <div id="quote-form-up">
+        <QuoteForm
+          {...pageData.quoteForm}
+          currentModel={model}
+          source={`${model}-up`}
+        />
+      </div>
+
       {/* Vehicle Gallery Section */}
       <VehicleGallery vehicleGalleryData={modelPageData.vehicleGallery} />
 
@@ -72,12 +81,12 @@ export default async function VehicleModelPage({ params }) {
       {/* Video Gallery Section */}
       <VideoGallery {...modelPageData.videoGallery} />
 
-      {/* Quote Form Section */}
-      <div id="quote-form">
+      {/* Quote Form abajo */}
+      <div id="quote-form-down">
         <QuoteForm
           {...pageData.quoteForm}
           currentModel={model}
-          source={model}
+          source={`${model}-down`}
         />
       </div>
 
