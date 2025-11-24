@@ -37,17 +37,10 @@ export default function PostventaPage() {
         </div>
       </section>
 
+
+
       {/* Service Hero Section */}
       <ServiceHero />
-
-      {/* Original Parts Section */}
-      <OriginalParts />
-
-      {/* Service Centers Section */}
-      <ServiceCenters />
-
-      {/* Testimonials Section */}
-      {/* <ServiceTestimonials /> */}
 
       {/* Service Form */}
       <div className="px-4 md:px-8 lg:px-16 py-12">
@@ -61,6 +54,15 @@ export default function PostventaPage() {
           <ServiceForm action={submitServiceForm} />
         </div>
       </div>
+
+      {/* Original Parts Section */}
+      <OriginalParts />
+
+      {/* Service Centers Section */}
+      {/* <ServiceCenters /> */}
+
+      {/* Testimonials Section */}
+      {/* <ServiceTestimonials /> */}
 
       {/* WhatsApp CTA Section */}
       <WhatsAppCTA />
