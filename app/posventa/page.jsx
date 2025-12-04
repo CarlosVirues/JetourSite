@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import ServiceHero from "@/components/ServiceHero";
 import OriginalParts from "@/components/OriginalParts";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
-import ServiceCenters from "@/components/ServiceCenters";
+// import ServiceCenters from "@/components/ServiceCenters";
 // import ServiceTestimonials from "@/components/ServiceTestimonials";
 import ServiceForm from "@/components/ServiceForm";
 import { submitServiceForm } from "@/app/actions/service";
@@ -15,7 +15,7 @@ export default function PostventaPage() {
       <Header transparent={true} border={true} />
 
       {/* Hero Section */}
-      <section className="relative h-96 lg:h-[500px] bg-gradient-to-r from-black to-gray-900 overflow-hidden">
+      <section className="relative h-96 lg:h-[500px] bg-linear-to-r from-black to-gray-900 overflow-hidden">
         {/* Background Image Placeholder - You can replace this with an actual car image */}
         <Image
           src="/bg-postventa.jpg"
