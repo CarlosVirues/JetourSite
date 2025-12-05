@@ -375,15 +375,8 @@ export default function ServiceForm({
               <option value="">Selecciona el tipo de servicio</option>
               {tiposServicio.map((t) => (
                 <option key={t} value={t} className="bg-black text-white">
-                  {t
-                    .replace(/_/g, " ")
-                    .split(" ")
-                    .map(
-                      (w) =>
-                        w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()
-                    )
-                    .join(" ")}
-                </option>
+    {t}
+  </option>
               ))}
             </select>
           </div>
