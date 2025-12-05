@@ -75,11 +75,11 @@ export default function ServiceForm({
   ];
 
   const tiposServicio = [
-    "mantenimiento preventivo",
-    "mantenimiento correctivo",
-    "colisiones",
-    "reclamo del servicio",
-    "otros",
+    "Mantenimiento Preventivo",
+    "Mantenimiento Correctivo",
+    "Garantía",
+    "Pintura y Latonería",
+    "Otros",
   ];
 
   if (success) {
