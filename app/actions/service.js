@@ -4,11 +4,11 @@ import { z } from "zod";
 import { prisma } from "@/lib/db";
 
 const tiposServicioEnum = [
-  "mantenimiento preventivo",
-  "mantenimiento correctivo",
-  "colisiones",
-  "reclamo del servicio",
-  "otros",
+  "Mantenimiento Preventivo",
+  "Mantenimiento Correctivo",
+  "Garantía",
+  "Pintura y Latonería",
+  "Otros",
 ];
 
 const serviceSchema = z.object({
