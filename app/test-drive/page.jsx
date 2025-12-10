@@ -29,7 +29,7 @@ export default function TestDrivePage() {
       <section className="relative h-96 lg:h-[600px] bg-gradient-to-r from-black to-gray-900 overflow-hidden">
         {/* Background Image Placeholder - You can replace this with an actual car image */}
         <Image
-          src="/bg-diners.jpg"
+          src="/bg-test-drive.jpg"
           alt="Diners"
           fill
           className="object-cover"
