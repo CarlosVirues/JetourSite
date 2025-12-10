@@ -15,10 +15,10 @@ import { MessageCircle, ArrowRight } from "lucide-react";
 import { getPageData, getVehicleModelPageData } from "@/lib/page-data";
 
 
-export default function DinersPage() {
-  const pageData = getPageData("diners");
+export default function TestDrivePage() {
+  const pageData = getPageData("test-drive");
 
-  const model = "t2";
+  const model = "t1";
   const modelPageData = getVehicleModelPageData(model); // Datos específicos del modelo
 
   return (
@@ -49,7 +49,7 @@ export default function DinersPage() {
         <QuoteForm
           {...pageData.quoteForm}
           currentModel={model}
-          source="diners"
+          source="test-drive"
         />
       )}
 
