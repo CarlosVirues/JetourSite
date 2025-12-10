@@ -26,7 +26,7 @@ export default function LiveroomPage() {
       <Header transparent={true} />
 
       {/* Hero Section */}
-      <section className="relative h-96 lg:h-[500px] bg-gradient-to-r from-black to-gray-900 overflow-hidden">
+      <section className="relative h-96 lg:h-[600px] bg-gradient-to-r from-black to-gray-900 overflow-hidden">
         {/* Background Image Placeholder - You can replace this with an actual car image */}
         <Image
           src="/bg-diners.jpg"
@@ -49,7 +49,7 @@ export default function LiveroomPage() {
         <QuoteForm
           {...pageData.quoteForm}
           currentModel={model}
-          source="live-room"
+          source="diners"
         />
       )}
 
