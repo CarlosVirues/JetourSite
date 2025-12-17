@@ -67,9 +67,6 @@ export default function TestDrivePage() {
         </div>
       </section>
 
-      {/* Global Stats Section */}
-      {pageData.globalStats && <GlobalStats {...pageData.globalStats} />}
-
       <Footer />
     </div>
   );
