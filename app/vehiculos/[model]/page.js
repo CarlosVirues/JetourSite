@@ -30,40 +30,66 @@ export default async function VehicleModelPage({ params }) {
   const pageData = getPageData("vehiculos"); // Datos específicos para páginas de vehículos
   const modelPageData = getVehicleModelPageData(model); // Datos específicos del modelo
 
+  // Verificar qué módulos están disponibles para este modelo
+  // Esto permite ocultar automáticamente secciones que no tienen datos
+  const hasModules = {
+    hero: modelPageData.hero && Object.keys(modelPageData.hero).length > 0,
+    features: modelPageData.features && Object.keys(modelPageData.features).length > 0,
+    vehicleGallery: modelPageData.vehicleGallery && Object.keys(modelPageData.vehicleGallery).length > 0,
+    threeSixty: modelPageData.threeSixty && Object.keys(modelPageData.threeSixty).length > 0,
+    heroShowcase: modelPageData.heroShowcase && Object.keys(modelPageData.heroShowcase).length > 0,
+    videoGallery: modelPageData.videoGallery && Object.keys(modelPageData.videoGallery).length > 0,
+    quoteForm: pageData.quoteForm && Object.keys(pageData.quoteForm).length > 0,
+    technicalSheet: modelPageData.technicalSheet !== false // Algunos modelos pueden tener technicalSheet: false
+  };
+
+  // DEBUG: Mostrar qué módulos están disponibles para este modelo (comentar en producción)
+  if (process.env.NODE_ENV === 'development') {
+    console.log(`Módulos disponibles para ${model}:`, hasModules);
+  }
+
   return (
     <div className="min-h-screen bg-black text-white">
       <Header transparent={true} />
 
       {/* Hero Section - Full Screen */}
-      <VehicleHero
-        backgroundImage={modelPageData.hero.backgroundImage}
-        vehicleName={modelPageData.hero.vehicleName}
-        vehicleDescription={modelPageData.hero.vehicleDescription}
-        height={modelPageData.hero.height}
-        logoImage={modelPageData.hero.logoImage}
-        logoAlt={modelPageData.hero.logoAlt}
-      />
+      {hasModules.hero && (
+        <VehicleHero
+          backgroundImage={modelPageData.hero.backgroundImage}
+          vehicleName={modelPageData.hero.vehicleName}
+          vehicleDescription={modelPageData.hero.vehicleDescription}
+          height={modelPageData.hero.height}
+          logoImage={modelPageData.hero.logoImage}
+          logoAlt={modelPageData.hero.logoAlt}
+        />
+      )}
 
       {/* Vehicle Features Section */}
-      <VehicleFeatures featuresData={modelPageData.features} />
+      {hasModules.features && (
+        <VehicleFeatures featuresData={modelPageData.features} />
+      )}
 
       {/* Quote Form arriba */}
-      <div id="quote-form-up">
-        <QuoteForm
-          {...pageData.quoteForm}
-          currentModel={model}
-          source={`${model}-up`}
-        />
-      </div>
+      {hasModules.quoteForm && (
+        <div id="quote-form-up">
+          <QuoteForm
+            {...pageData.quoteForm}
+            currentModel={model}
+            source={`${model}-up`}
+          />
+        </div>
+      )}
 
       {/* Vehicle Gallery Section */}
-      <VehicleGallery vehicleGalleryData={modelPageData.vehicleGallery} />
+      {hasModules.vehicleGallery && (
+        <VehicleGallery vehicleGalleryData={modelPageData.vehicleGallery} />
+      )}
 
       {/* 360 View Section - Only for models with 360 data */}
-      {modelPageData.threeSixty && <ThreeSixty {...modelPageData.threeSixty} />}
+      {hasModules.threeSixty && <ThreeSixty {...modelPageData.threeSixty} />}
 
       {/* Vehicle Colors Section - Only for models with 360 data */}
-      {modelPageData.threeSixty && (
+      {hasModules.threeSixty && (
         <VehicleColors
           model={modelPageData.threeSixty.model}
           colorsPath={modelPageData.threeSixty.colorsPath}
@@ -73,22 +99,30 @@ export default async function VehicleModelPage({ params }) {
       )}
 
       {/* Hero Showcase Section */}
-      <HeroShowcase heroShowcaseData={modelPageData.heroShowcase} />
+      {hasModules.heroShowcase && (
+        <HeroShowcase heroShowcaseData={modelPageData.heroShowcase} />
+      )}
 
       {/* Technical Sheet Section */}
-      <TechnicalSheetButton model={model} />
+      {hasModules.technicalSheet && (
+        <TechnicalSheetButton model={model} />
+      )}
 
       {/* Video Gallery Section */}
-      <VideoGallery {...modelPageData.videoGallery} />
+      {hasModules.videoGallery && (
+        <VideoGallery {...modelPageData.videoGallery} />
+      )}
 
       {/* Quote Form abajo */}
-      <div id="quote-form-down">
-        <QuoteForm
-          {...pageData.quoteForm}
-          currentModel={model}
-          source={`${model}-down`}
-        />
-      </div>
+      {hasModules.quoteForm && (
+        <div id="quote-form-down">
+          <QuoteForm
+            {...pageData.quoteForm}
+            currentModel={model}
+            source={`${model}-down`}
+          />
+        </div>
+      )}
 
       {/* Floating Quote Button */}
       <FloatingQuoteButton />
