@@ -41,7 +41,7 @@ export default async function VehicleModelPage({ params }) {
     heroShowcase: modelPageData.heroShowcase && Object.keys(modelPageData.heroShowcase).length > 0,
     videoGallery: modelPageData.videoGallery && Object.keys(modelPageData.videoGallery).length > 0,
     quoteForm: pageData.quoteForm && Object.keys(pageData.quoteForm).length > 0,
-    technicalSheet: modelPageData.technicalSheet !== false // Algunos modelos pueden tener technicalSheet: false
+    technicalSheet: modelPageData.technicalSheet === true // Módulo de ficha técnica independiente
   };
 
   // DEBUG: Mostrar qué módulos están disponibles para este modelo (comentar en producción)
