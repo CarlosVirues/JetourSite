@@ -37,6 +37,7 @@ export default async function VehicleModelPage({ params }) {
     features: modelPageData.features && Object.keys(modelPageData.features).length > 0,
     vehicleGallery: modelPageData.vehicleGallery && Object.keys(modelPageData.vehicleGallery).length > 0,
     threeSixty: modelPageData.threeSixty && Object.keys(modelPageData.threeSixty).length > 0,
+    vehicleColors: modelPageData.vehicleColors && Object.keys(modelPageData.vehicleColors).length > 0, // Módulo de colores independiente
     heroShowcase: modelPageData.heroShowcase && Object.keys(modelPageData.heroShowcase).length > 0,
     videoGallery: modelPageData.videoGallery && Object.keys(modelPageData.videoGallery).length > 0,
     quoteForm: pageData.quoteForm && Object.keys(pageData.quoteForm).length > 0,
@@ -88,13 +89,13 @@ export default async function VehicleModelPage({ params }) {
       {/* 360 View Section - Only for models with 360 data */}
       {hasModules.threeSixty && <ThreeSixty {...modelPageData.threeSixty} />}
 
-      {/* Vehicle Colors Section - Only for models with 360 data */}
-      {hasModules.threeSixty && (
+      {/* Vehicle Colors Section - Now independent from 360 view */}
+      {hasModules.vehicleColors && (
         <VehicleColors
-          model={modelPageData.threeSixty.model}
-          colorsPath={modelPageData.threeSixty.colorsPath}
-          totalColors={modelPageData.threeSixty.totalColors}
-          colorNames={modelPageData.threeSixty.colorNames}
+          model={modelPageData.vehicleColors.model}
+          colorsPath={modelPageData.vehicleColors.colorsPath}
+          totalColors={modelPageData.vehicleColors.totalColors}
+          colorNames={modelPageData.vehicleColors.colorNames}
         />
       )}
 
