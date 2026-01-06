@@ -22,7 +22,11 @@ export default async function HomePage() {
       <Header transparent={true} />
 
       {/* Hero Section - Full Screen */}
-      {<Hero {...sanityData?.hero} />}
+      {<Hero 
+        {...sanityData?.hero} 
+        additionalImage="/2026-life-is-a-ride.png"
+        additionalImageAlt="2026 Life is a Ride"
+      />}
 
       {/* Vehicle Showcase Section */}
       <VehicleShowcaseNew />

@@ -13,6 +13,8 @@ export default function Hero({
   subtitle,
   showScrollIndicator,
   height,
+  additionalImage,
+  additionalImageAlt,
 }) {
   return (
     <motion.section
@@ -64,7 +66,7 @@ export default function Hero({
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="mb-36"
+              className={additionalImage ? "mb-8" : "mb-36"}
             >
               <Image
                 src={logoUrl}
@@ -77,8 +79,24 @@ export default function Hero({
             </motion.div>
           )}
 
-          {/* Subtitle - Optional */}
-          {subtitle && (
+          {/* Additional Image - Replaces subtitle when provided */}
+          {additionalImage ? (
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+              className="mb-36"
+            >
+              <Image
+                src={additionalImage}
+                alt={additionalImageAlt || "2026 Life is a Ride"}
+                width={logoWidth ? logoWidth * 0.8 : 300}
+                height={logoHeight ? logoHeight * 0.4 : 100}
+                className="mx-auto"
+                priority
+              />
+            </motion.div>
+          ) : subtitle ? (
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -89,7 +107,7 @@ export default function Hero({
                 {subtitle}
               </h2>
             </motion.div>
-          )}
+          ) : null}
         </div>
 
         {/* Scroll Indicator */}
