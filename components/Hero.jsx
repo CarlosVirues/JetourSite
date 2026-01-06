@@ -16,12 +16,17 @@ export default function Hero({
   additionalImage,
   additionalImageAlt,
 }) {
+  // Ajustar altura para móvil si tiene imagen adicional
+  const adjustedHeight = additionalImage 
+    ? height?.replace('h-96', 'h-[600px]').replace('h-[500px]', 'h-[600px]') 
+    : height;
+
   return (
     <motion.section
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
-      className={`relative ${height} w-full overflow-hidden bg-gradient-to-br from-slate-900 via-black to-slate-800`}
+      className={`relative ${adjustedHeight || 'h-[600px] lg:h-[800px]'} w-full overflow-hidden bg-gradient-to-br from-slate-900 via-black to-slate-800`}
     >
       {/* Background Image/Video */}
       <div className="absolute inset-0">
@@ -57,25 +62,27 @@ export default function Hero({
 
       {/* Main Content */}
       <div
-        className={`relative z-20 flex flex-col items-end justify-end ${height} px-6 lg:px-12`}
+        className={`relative z-20 flex flex-col items-center justify-center ${adjustedHeight || 'h-[600px] lg:h-[800px]'} px-6 lg:px-12`}
       >
-        <div className="text-center max-w-4xl mx-auto">
+        <div className="text-center max-w-4xl mx-auto w-full">
           {/* Main JETOUR Logo/Text - Optional */}
           {logoUrl && logoWidth && logoHeight && (
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className={additionalImage ? "mb-8" : "mb-36"}
+              className={additionalImage ? "mb-4 md:mb-8" : "mb-20 md:mb-36"}
             >
-              <Image
-                src={logoUrl}
-                alt={logoAlt || "Logo"}
-                width={logoWidth}
-                height={logoHeight}
-                className=""
-                priority
-              />
+              <div className="w-[200px] md:w-auto mx-auto">
+                <Image
+                  src={logoUrl}
+                  alt={logoAlt || "Logo"}
+                  width={logoWidth}
+                  height={logoHeight}
+                  className="w-full h-auto"
+                  priority
+                />
+              </div>
             </motion.div>
           )}
 
@@ -85,16 +92,18 @@ export default function Hero({
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
-              className="mb-36"
+              className="mb-20 md:mb-36"
             >
-              <Image
-                src={additionalImage}
-                alt={additionalImageAlt || "2026 Life is a Ride"}
-                width={logoWidth ? logoWidth * 0.8 : 300}
-                height={logoHeight ? logoHeight * 0.4 : 100}
-                className="mx-auto"
-                priority
-              />
+              <div className="w-[160px] md:w-[240px] lg:w-[300px] mx-auto">
+                <Image
+                  src={additionalImage}
+                  alt={additionalImageAlt || "2026 Life is a Ride"}
+                  width={300}
+                  height={100}
+                  className="w-full h-auto"
+                  priority
+                />
+              </div>
             </motion.div>
           ) : subtitle ? (
             <motion.div
