@@ -73,7 +73,7 @@ export default function Hero({
               transition={{ duration: 0.8, delay: 0.2 }}
               className={additionalImage ? "mb-4 md:mb-8" : "mb-20 md:mb-36"}
             >
-              <div className="w-[200px] md:w-auto mx-auto">
+              <div className="w-[200px] md:w-[280px] lg:w-[350px] xl:w-[400px] mx-auto">
                 <Image
                   src={logoUrl}
                   alt={logoAlt || "Logo"}
@@ -94,11 +94,11 @@ export default function Hero({
               transition={{ duration: 0.8, delay: 0.5 }}
               className="mb-20 md:mb-36"
             >
-              <div className="w-[160px] md:w-[240px] lg:w-[300px] mx-auto">
+              <div className="w-[160px] md:w-[224px] lg:w-[280px] xl:w-[320px] mx-auto">
                 <Image
                   src={additionalImage}
                   alt={additionalImageAlt || "2026 Life is a Ride"}
-                  width={300}
+                  width={320}
                   height={100}
                   className="w-full h-auto"
                   priority
