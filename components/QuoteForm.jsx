@@ -29,10 +29,13 @@ export default function QuoteForm({ currentModel = null, source = null }) {
 
   const carModels = [
     { id: "x50", name: "X50", image: "/mini/mini-x50.png" },
+    { id: "x50-at", name: "X50 AT", image: "/mini/mini-x50-at.png" },
+    { id: "x50-at-sport", name: "X50 AT Sport", image: "/mini/mini-x50-at-sport.png" },
     { id: "x70-sport", name: "X70 Sport", image: "/mini/mini-x70-sport.png" },
     { id: "x70-plus", name: "X70 Plus", image: "/mini/mini-x70-plus.png" },
     { id: "dashing", name: "Dashing", image: "/mini/mini-dashing.png" },
     { id: "t1", name: "T1", image: "/mini/mini-t1.png" },
+    { id: "t1-phev", name: "T1 PHEV", image: "/mini/mini-t1-phev.png" },
     { id: "t2", name: "T2", image: "/mini/mini-t2.png" },
     { id: "t2-phev", name: "T2 PHEV", image: "/mini/mini-t2-phev.png" },
   ];
