@@ -62,9 +62,11 @@ export default function VehicleHero({
               transition={{ duration: 0.8, delay: 0.5 }}
               className="mb-12"
             >
+              {/*
               <p className="text-lg md:text-2xl lg:text-4xl text-white/80 max-w-3xl mx-auto leading-relaxed font-bold">
                 {vehicleDescription}
               </p>
+              */}
             </motion.div>
           )}
         </div>

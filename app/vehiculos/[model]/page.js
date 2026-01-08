@@ -66,9 +66,11 @@ export default async function VehicleModelPage({ params }) {
       )}
 
       {/* Vehicle Features Section */}
+      {/*
       {hasModules.features && (
         <VehicleFeatures featuresData={modelPageData.features} />
       )}
+      */}
 
       {/* Quote Form arriba */}
       {hasModules.quoteForm && (
