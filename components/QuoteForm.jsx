@@ -30,7 +30,7 @@ export default function QuoteForm({ currentModel = null, source = null }) {
   const carModels = [
     { id: "x50", name: "X50", image: "/mini/mini-x50.png" },
     { id: "x50-at", name: "X50 AT", image: "/mini/mini-x50-at.png" },
-    { id: "x50-at-sport", name: "X50 AT Sport", image: "/mini/mini-x50-at-sport.png" },
+    { id: "x70-at-sport", name: "X70 AT Sport", image: "/mini/mini-x70-at-sport.png" },
     { id: "x70-sport", name: "X70 Sport", image: "/mini/mini-x70-sport.png" },
     { id: "x70-plus", name: "X70 Plus", image: "/mini/mini-x70-plus.png" },
     { id: "dashing", name: "Dashing", image: "/mini/mini-dashing.png" },

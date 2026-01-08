@@ -62,7 +62,7 @@ export default function GlobalStats({
           className="text-center mb-12 md:mb-16"
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-            Apuesta por el respaldo y la confianza
+            Respaldo y confianza
           </h2>
           <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
             Jetour, una marca con presencia y garantía mundial.
