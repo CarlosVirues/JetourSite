@@ -16,7 +16,7 @@ export default function VehicleHero({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
-      className={`relative ${height} w-full overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800`}
+      className={`relative ${height || 'h-screen'} w-full overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800`}
     >
       {/* Background Image */}
       <div className="absolute inset-0">
@@ -32,7 +32,7 @@ export default function VehicleHero({
 
       {/* Main Content */}
       <div
-        className={`relative z-20 flex flex-col items-end justify-end h-full px-6 lg:px-12`}
+        className="relative z-20 flex flex-col items-center justify-center h-full px-6 lg:px-12"
       >
         {/* Vehicle Logo - Centered */}
         {logoImage && (
@@ -40,7 +40,7 @@ export default function VehicleHero({
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className=" mx-auto"
+            className="mx-auto"
           >
             <Image
               src={logoImage}
@@ -53,23 +53,19 @@ export default function VehicleHero({
           </motion.div>
         )}
 
-        <div className="text-center max-w-6xl mx-auto bottom-8">
-          {/* Vehicle Description */}
-          {vehicleDescription && (
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
-              className="mb-12"
-            >
-              {/*
-              <p className="text-lg md:text-2xl lg:text-4xl text-white/80 max-w-3xl mx-auto leading-relaxed font-bold">
-                {vehicleDescription}
-              </p>
-              */}
-            </motion.div>
-          )}
-        </div>
+        {/* Vehicle Description */}
+        {vehicleDescription && (
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="mt-6 text-center max-w-3xl mx-auto"
+          >
+            <p className="text-lg md:text-2xl lg:text-3xl text-white/90 leading-relaxed font-light">
+              {vehicleDescription}
+            </p>
+          </motion.div>
+        )}
       </div>
 
       {/* Vehicle-specific decorative elements */}
