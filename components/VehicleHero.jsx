@@ -53,19 +53,17 @@ export default function VehicleHero({
           </motion.div>
         )}
 
-        {/* Vehicle Description */}
+        {/* Vehicle Description - Hidden but available */}
         {vehicleDescription && (
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="mt-6 text-center max-w-3xl mx-auto"
+            className="mt-6 text-center max-w-3xl mx-auto hidden"
           >
-            {/*
             <p className="text-lg md:text-2xl lg:text-3xl text-white/90 leading-relaxed font-light">
               {vehicleDescription}
             </p>
-            */}
           </motion.div>
         )}
       </div>
