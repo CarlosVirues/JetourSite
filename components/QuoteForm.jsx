@@ -102,7 +102,7 @@ export default function QuoteForm({ currentModel = null, source = null }) {
             transition={{ duration: 0.8 }}
             className="text-3xl lg:text-5xl font-bold text-white mb-6"
           >
-            ¿Estás listo para apostar por ti?
+            ¿Listo para comenzar tu próximo viaje?
           </motion.h2>
         </motion.div>
 
