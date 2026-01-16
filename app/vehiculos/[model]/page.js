@@ -83,13 +83,9 @@ export default async function VehicleModelPage({ params }) {
         </div>
       )}
 
-      {/* Vehicle Gallery Section */}
-      {hasModules.vehicleGallery && (
-        <VehicleGallery vehicleGalleryData={modelPageData.vehicleGallery} />
-      )}
-
       {/* 360 View Section - Only for models with 360 data */}
       {hasModules.threeSixty && <ThreeSixty {...modelPageData.threeSixty} />}
+
 
       {/* Vehicle Colors Section - Now independent from 360 view */}
       {hasModules.vehicleColors && (
@@ -112,8 +108,15 @@ export default async function VehicleModelPage({ params }) {
       )}
 
       {/* Video Gallery Section */}
+      {/*
       {hasModules.videoGallery && (
         <VideoGallery {...modelPageData.videoGallery} />
+      )}
+      */}
+
+      {/* Vehicle Gallery Section */}
+      {hasModules.vehicleGallery && (
+        <VehicleGallery vehicleGalleryData={modelPageData.vehicleGallery} />
       )}
 
       {/* Quote Form abajo */}
