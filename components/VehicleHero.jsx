@@ -5,11 +5,13 @@ import Image from "next/image";
 
 export default function VehicleHero({
   backgroundImage,
+  backgroundVideo,
   vehicleName,
   vehicleDescription,
   height,
   logoImage,
   logoAlt,
+  highlights,
 }) {
   return (
     <motion.section
@@ -18,14 +20,35 @@ export default function VehicleHero({
       transition={{ duration: 1 }}
       className={`relative ${height || 'h-screen'} w-full overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800`}
     >
-      {/* Background Image */}
+      {/* Background Video/Image */}
       <div className="absolute inset-0">
-        <Image
-          src={backgroundImage}
-          alt={`${vehicleName} Background`}
-          fill
-          className="object-cover"
-        />
+        {backgroundVideo ? (
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+          >
+            <source src={backgroundVideo} type="video/mp4" />
+            {/* Fallback to image if video fails */}
+            {backgroundImage && (
+              <Image
+                src={backgroundImage}
+                alt={`${vehicleName} Background`}
+                fill
+                className="object-cover"
+              />
+            )}
+          </video>
+        ) : backgroundImage ? (
+          <Image
+            src={backgroundImage}
+            alt={`${vehicleName} Background`}
+            fill
+            className="object-cover"
+          />
+        ) : null}
         {/* Dark overlay for better text readability */}
         <div className="absolute inset-0 bg-black/40" />
       </div>
@@ -67,6 +90,37 @@ export default function VehicleHero({
           </motion.div>
         )}
       </div>
+
+      {/* Highlights Section - Bottom of screen */}
+      {highlights && highlights.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+          className="absolute bottom-0 left-0 right-0 z-30 pb-8 px-4"
+        >
+          <div className="max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+              {highlights.map((highlight, index) => (
+                <motion.div
+                  key={highlight.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.9 + index * 0.1 }}
+                  className="bg-black/60 backdrop-blur-md rounded-lg p-4 md:p-6 border border-white/10 hover:bg-black/70 transition-all"
+                >
+                  <h3 className="text-white font-bold text-lg md:text-xl mb-2">
+                    {highlight.title}
+                  </h3>
+                  <p className="text-white/80 text-sm md:text-base">
+                    {highlight.description}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+      )}
 
       {/* Vehicle-specific decorative elements */}
       <div className="absolute bottom-0 left-0 w-full h-1/3 opacity-20">
