@@ -49,8 +49,8 @@ export default function VehicleHero({
             className="object-cover"
           />
         ) : null}
-        {/* Dark overlay for better text readability */}
-        <div className="absolute inset-0 bg-black/40" />
+        {/* Lighter overlay to keep video visible */}
+        <div className="absolute inset-0 bg-black/20" />
       </div>
 
       {/* Main Content */}
@@ -97,24 +97,28 @@ export default function VehicleHero({
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
-          className="absolute bottom-0 left-0 right-0 z-30 pb-8 px-4"
+          className="absolute bottom-0 left-0 right-0 z-30 pb-12 px-4"
         >
-          <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
               {highlights.map((highlight, index) => (
                 <motion.div
                   key={highlight.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.9 + index * 0.1 }}
-                  className="bg-black/60 backdrop-blur-md rounded-lg p-4 md:p-6 border border-white/10 hover:bg-black/70 transition-all"
+                  className="text-center"
                 >
-                  <h3 className="text-white font-bold text-lg md:text-xl mb-2">
-                    {highlight.title}
-                  </h3>
-                  <p className="text-white/80 text-sm md:text-base">
-                    {highlight.description}
-                  </p>
+                  <div className="border-l-2 border-white/60 pl-4 py-2">
+                    <p className="text-white text-lg md:text-xl font-light leading-tight">
+                      {highlight.text || highlight.title}
+                    </p>
+                    {highlight.subtitle && (
+                      <p className="text-white/70 text-xs md:text-sm uppercase tracking-wider mt-1">
+                        {highlight.subtitle}
+                      </p>
+                    )}
+                  </div>
                 </motion.div>
               ))}
             </div>
