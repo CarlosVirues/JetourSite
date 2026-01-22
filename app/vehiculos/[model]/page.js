@@ -12,6 +12,7 @@ import FloatingQuoteButton from "@/components/FloatingQuoteButton";
 import { getVehicleModel } from "@/lib/vehicle-models";
 import { getPageData, getVehicleModelPageData } from "@/lib/page-data";
 import TechnicalSheetButton from "@/components/TechnicalSheetButton";
+import SpecificationsVideo from "@/components/SpecificationsVideo";
 
 export async function generateMetadata({ params }) {
   const pageParams = await params;
@@ -41,7 +42,8 @@ export default async function VehicleModelPage({ params }) {
     heroShowcase: modelPageData.heroShowcase && Object.keys(modelPageData.heroShowcase).length > 0,
     videoGallery: modelPageData.videoGallery && Object.keys(modelPageData.videoGallery).length > 0,
     quoteForm: pageData.quoteForm && Object.keys(pageData.quoteForm).length > 0,
-    technicalSheet: modelPageData.technicalSheet === true // Módulo de ficha técnica independiente
+    technicalSheet: modelPageData.technicalSheet === true, // Módulo de ficha técnica independiente
+    specificationsVideo: modelPageData.specificationsVideo && Object.keys(modelPageData.specificationsVideo).length > 0
   };
 
   // DEBUG: Mostrar qué módulos están disponibles para este modelo (comentar en producción)
@@ -92,6 +94,11 @@ export default async function VehicleModelPage({ params }) {
           logoImage={modelPageData.hero?.logoImage}
           logoAlt={modelPageData.hero?.logoAlt}
         />
+      )}
+
+      {/* Video de Especificaciones - Solo para modelos con video */}
+      {hasModules.specificationsVideo && (
+        <SpecificationsVideo {...modelPageData.specificationsVideo} />
       )}
 
 
