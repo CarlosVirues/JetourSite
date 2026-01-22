@@ -228,7 +228,7 @@ export default function Footer() {
         >
           <div className="flex flex-col md:flex-row justify-between lg:items-center space-y-4 md:space-y-0">
             <p className="text-sm text-gray-300">
-              Copyright 2025 © Jetour Ecuador
+              Copyright 2026 © Jetour Ecuador
             </p>
             <motion.div
               initial={{ opacity: 0, x: 20 }}
