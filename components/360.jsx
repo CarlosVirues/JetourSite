@@ -111,7 +111,7 @@ export default function ThreeSixty({
                 <img
                   src={logoImage}
                   alt={logoAlt}
-                  className="w-[50%] md:w-[45%] lg:w-[40%] h-auto opacity-20 -mt-20 md:-mt-32"
+                  className="w-[50%] md:w-[45%] lg:w-[40%] h-auto opacity-20 -mt-32 md:-mt-48"
                 />
               </div>
             )}
@@ -274,7 +274,7 @@ export default function ThreeSixty({
         </div>
 
         {/* Slider Control */}
-        <div className="px-4 lg:-mt-24 z-20 relative">
+        <div className="px-4 mt-8 md:mt-12 z-20 relative">
           <div className="max-w-md mx-auto">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm text-gray-400">0°</span>
