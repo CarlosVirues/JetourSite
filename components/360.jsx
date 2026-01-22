@@ -9,6 +9,8 @@ export default function ThreeSixty({
   subtitle = "Arrastra para rotar el vehículo o usa los controles de navegación",
   imagePath = "/models/t1/360",
   showInstructions = true,
+  logoImage = null,
+  logoAlt = "",
 }) {
   const [currentFrame, setCurrentFrame] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
@@ -88,12 +90,12 @@ export default function ThreeSixty({
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            {title}
+        <div className="text-center mb-8">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
+            {title.replace("Vista 360° del", "Descubre los detalles y estilo del")}
           </h2>
           <p className="text-gray-300 text-lg">
-            Usa el slider o los controles de navegación para rotar el vehículo
+            Usa el slider o los controles de navegación para rotar el vehículo.
           </p>
         </div>
 
@@ -101,12 +103,40 @@ export default function ThreeSixty({
         <div className="relative">
           <div
             ref={containerRef}
-            className="relative w-full h-56 md:h-[500px] bg-transparent rounded-lg overflow-hidden select-none"
+            className="relative w-full h-[400px] md:h-[600px] bg-transparent overflow-hidden select-none"
           >
+            {/* Logo de fondo con baja opacidad */}
+            {logoImage && (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <img
+                  src={logoImage}
+                  alt={logoAlt}
+                  className="w-[40%] md:w-[35%] lg:w-[30%] h-auto opacity-10"
+                />
+              </div>
+            )}
+            
+            {/* Icono 360° */}
+            <div className="absolute top-4 right-4 z-20">
+              <div className="bg-white/10 backdrop-blur-sm rounded-full p-3 border border-white/20">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 4C11.1634 4 4 11.1634 4 20C4 28.8366 11.1634 36 20 36" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M20 4C28.8366 4 36 11.1634 36 20C36 28.8366 28.8366 36 20 36" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" strokeDasharray="2 2"/>
+                  <text x="20" y="25" textAnchor="middle" fill="white" fontSize="12" fontWeight="bold">360°</text>
+                </svg>
+              </div>
+            </div>
+            
+            {/* Plataforma circular */}
+            <div className="absolute bottom-0 left-0 right-0 h-32 md:h-48">
+              <div className="relative w-[90%] md:w-[80%] mx-auto h-full">
+                <div className="absolute inset-0 bg-gradient-to-t from-gray-800/30 to-transparent rounded-full blur-3xl transform scale-x-150" />
+              </div>
+            </div>
             <img
               src={`${imagePath}/${currentFrame}.png`}
               alt={`Vista 360° del ${model.toUpperCase()} - Frame ${currentFrame}`}
-              className="absolute w-full h-full inset-0 object-contain md:-mt-20"
+              className="absolute w-full h-full inset-0 object-contain z-10 -mt-8 md:-mt-16"
             />
             {/* Loading overlay - only show while loading */}
             {isLoading && (

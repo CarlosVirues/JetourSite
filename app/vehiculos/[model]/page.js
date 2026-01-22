@@ -86,7 +86,13 @@ export default async function VehicleModelPage({ params }) {
       )}
 
       {/* 360 View Section - Only for models with 360 data */}
-      {hasModules.threeSixty && <ThreeSixty {...modelPageData.threeSixty} />}
+      {hasModules.threeSixty && (
+        <ThreeSixty 
+          {...modelPageData.threeSixty} 
+          logoImage={modelPageData.hero?.logoImage}
+          logoAlt={modelPageData.hero?.logoAlt}
+        />
+      )}
 
 
       {/* Vehicle Colors Section - Now independent from 360 view */}
