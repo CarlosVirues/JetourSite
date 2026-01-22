@@ -287,7 +287,7 @@ export default function QuoteForm({ currentModel = null, source = null }) {
                 Selecciona tu modelo preferido
               </motion.h3>
 
-              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 max-w-4xl mx-auto">
                 {carModels.map((model, index) => (
                   <motion.div
                     key={model.id}
@@ -296,7 +296,7 @@ export default function QuoteForm({ currentModel = null, source = null }) {
                     initial={{ opacity: 0, scale: 0.8 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.4, delay: index * 0.1 }}
-                    className="relative"
+                    className="relative max-w-[150px] mx-auto w-full"
                   >
                     <motion.button
                       type="button"
@@ -331,15 +331,15 @@ export default function QuoteForm({ currentModel = null, source = null }) {
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      <div className="w-full h-full bg-gray-800 rounded-lg flex items-center justify-center">
+                      <div className="w-full h-full bg-gray-800 rounded-lg flex items-center justify-center p-3 md:p-4">
                         <div className="text-center">
-                          <div className="relative w-12 h-12 mx-auto mb-px">
+                          <div className="relative w-20 h-16 md:w-24 md:h-20 mx-auto mb-2">
                             <Image
                               src={model.image}
                               alt={model.name}
                               fill
                               className="object-contain"
-                              sizes="(max-width: 768px) 64px, 96px"
+                              sizes="(max-width: 768px) 80px, 96px"
                             />
                           </div>
                           <p className="text-xs text-white font-medium">
