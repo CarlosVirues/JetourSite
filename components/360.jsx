@@ -139,7 +139,7 @@ export default function ThreeSixty({
               <img
                 src={`${imagePath}/${currentFrame}.png`}
                 alt={`Vista 360° del ${model.toUpperCase()} - Frame ${currentFrame}`}
-                className="absolute w-full h-full inset-0 object-contain z-10 mt-20 md:mt-16"
+                className="absolute w-full h-full inset-0 object-contain z-10 mt-28 md:mt-24"
               />
             )}
             {/* Loading overlay - only show while loading */}
