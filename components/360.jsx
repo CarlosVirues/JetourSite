@@ -27,7 +27,7 @@ export default function ThreeSixty({
 
       for (let i = 1; i <= totalFrames; i++) {
         const img = new window.Image();
-        img.src = `${model === "x70-plus" ? "x70/360" : imagePath}/${i}.png`;
+        img.src = `${model === "x70-plus" ? "https://storage.googleapis.com/xiyimgengine/jetour/360/x70-plus" : imagePath}/${i}.png`;
         img.onload = () => {
           // Guardar en cache
           imageCache.current.set(i, img);
@@ -107,11 +107,11 @@ export default function ThreeSixty({
           >
             {/* Logo de fondo con baja opacidad */}
             {logoImage && (
-              <div className="absolute inset-0 flex items-center justify-center">
+              <div className="absolute inset-0 flex items-center justify-center z-0">
                 <img
                   src={logoImage}
                   alt={logoAlt}
-                  className="w-[40%] md:w-[35%] lg:w-[30%] h-auto opacity-10"
+                  className="w-[50%] md:w-[45%] lg:w-[40%] h-auto opacity-20"
                 />
               </div>
             )}
@@ -133,11 +133,13 @@ export default function ThreeSixty({
                 <div className="absolute inset-0 bg-gradient-to-t from-gray-800/30 to-transparent rounded-full blur-3xl transform scale-x-150" />
               </div>
             </div>
-            <img
-              src={`${imagePath}/${currentFrame}.png`}
-              alt={`Vista 360° del ${model.toUpperCase()} - Frame ${currentFrame}`}
-              className="absolute w-full h-full inset-0 object-contain z-10 -mt-8 md:-mt-16"
-            />
+            {!isLoading && (
+              <img
+                src={`${imagePath}/${currentFrame}.png`}
+                alt={`Vista 360° del ${model.toUpperCase()} - Frame ${currentFrame}`}
+                className="absolute w-full h-full inset-0 object-contain z-10 -mt-8 md:-mt-16"
+              />
+            )}
             {/* Loading overlay - only show while loading */}
             {isLoading && (
               <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
