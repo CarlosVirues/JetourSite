@@ -27,6 +27,21 @@ export default function VehicleGallery({ vehicleGalleryData }) {
     }
   };
 
+  // Funciones de navegación
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = scrollContainerRef.current.clientWidth * 0.8;
+      scrollContainerRef.current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = scrollContainerRef.current.clientWidth * 0.8;
+      scrollContainerRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="w-full bg-black py-16 md:py-24">
       <div className="max-w-7xl mx-auto px-4 lg:px-8">
@@ -54,8 +69,29 @@ export default function VehicleGallery({ vehicleGalleryData }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: isInView ? 1 : 0 }}
         transition={{ duration: 0.6 }}
-        className="w-full overflow-hidden"
+        className="w-full overflow-hidden relative"
       >
+        {/* Botón de navegación izquierda */}
+        <button
+          onClick={scrollLeft}
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-black/60 hover:bg-black/80 text-white p-3 rounded-full backdrop-blur-sm transition-all duration-200 hidden md:flex items-center justify-center"
+          aria-label="Imagen anterior"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        
+        {/* Botón de navegación derecha */}
+        <button
+          onClick={scrollRight}
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-black/60 hover:bg-black/80 text-white p-3 rounded-full backdrop-blur-sm transition-all duration-200 hidden md:flex items-center justify-center"
+          aria-label="Imagen siguiente"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
         <div
           ref={scrollContainerRef}
           onWheel={handleWheel}
@@ -96,6 +132,29 @@ export default function VehicleGallery({ vehicleGalleryData }) {
         </div>
       </motion.div>
 
+      {/* Botones de navegación móvil */}
+      <div className="flex justify-center gap-4 mt-6 md:hidden">
+        <button
+          onClick={scrollLeft}
+          className="bg-white/10 hover:bg-white/20 text-white p-3 rounded-full backdrop-blur-sm transition-all duration-200"
+          aria-label="Imagen anterior"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        
+        <button
+          onClick={scrollRight}
+          className="bg-white/10 hover:bg-white/20 text-white p-3 rounded-full backdrop-blur-sm transition-all duration-200"
+          aria-label="Imagen siguiente"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+
       {/* Lightbox */}
       {selectedImage && (
         <motion.div
@@ -110,15 +169,15 @@ export default function VehicleGallery({ vehicleGalleryData }) {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="relative max-w-4xl max-h-full"
+            className="relative max-w-6xl max-h-[90vh] w-full"
             onClick={(e) => e.stopPropagation()}
           >
             <Image
               src={selectedImage.src}
               alt={selectedImage.alt}
-              width={800}
-              height={600}
-              className="object-contain rounded-lg"
+              width={1200}
+              height={800}
+              className="object-contain rounded-lg w-full h-full"
             />
             {/* Botón de cerrar */}
             <button
