@@ -83,8 +83,7 @@ export default function SpecificationsVideo({
             <img
               src={logoImage}
               alt={logoAlt || `${model} Logo`}
-              className="w-full max-w-[200px] md:max-w-[250px] lg:max-w-[300px] h-auto"
-              style={{ maxWidth: '40%' }}
+              className="w-[150px] md:w-[200px] lg:w-[250px] max-w-[300px] h-auto"
             />
           </motion.div>
         </div>
