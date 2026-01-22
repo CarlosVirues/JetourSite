@@ -106,12 +106,12 @@ export default function ThreeSixty({
             className="relative w-full h-[400px] md:h-[600px] bg-transparent overflow-hidden select-none"
           >
             {/* Logo de fondo con baja opacidad */}
-            {logoImage && (
+            {logoImage && !isLoading && (
               <div className="absolute inset-0 flex items-center justify-center z-0">
                 <img
                   src={logoImage}
                   alt={logoAlt}
-                  className="w-[50%] md:w-[45%] lg:w-[40%] h-auto opacity-20"
+                  className="w-[50%] md:w-[45%] lg:w-[40%] h-auto opacity-20 -mt-20 md:-mt-32"
                 />
               </div>
             )}
@@ -128,16 +128,18 @@ export default function ThreeSixty({
             </div>
             
             {/* Plataforma circular */}
-            <div className="absolute bottom-0 left-0 right-0 h-32 md:h-48">
-              <div className="relative w-[90%] md:w-[80%] mx-auto h-full">
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-800/30 to-transparent rounded-full blur-3xl transform scale-x-150" />
+            {!isLoading && (
+              <div className="absolute bottom-0 left-0 right-0 h-32 md:h-48">
+                <div className="relative w-[90%] md:w-[80%] mx-auto h-full">
+                  <div className="absolute inset-0 bg-gradient-to-t from-gray-800/30 to-transparent rounded-full blur-3xl transform scale-x-150" />
+                </div>
               </div>
-            </div>
+            )}
             {!isLoading && (
               <img
                 src={`${imagePath}/${currentFrame}.png`}
                 alt={`Vista 360° del ${model.toUpperCase()} - Frame ${currentFrame}`}
-                className="absolute w-full h-full inset-0 object-contain z-10 -mt-8 md:-mt-16"
+                className="absolute w-full h-full inset-0 object-contain z-10 mt-12 md:mt-8"
               />
             )}
             {/* Loading overlay - only show while loading */}
