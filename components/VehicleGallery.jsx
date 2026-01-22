@@ -1,13 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
-import { useRef } from "react";
 
 export default function VehicleGallery({ vehicleGalleryData }) {
   const [selectedImage, setSelectedImage] = useState(null);
+  const scrollContainerRef = useRef(null);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: false, amount: 0.1 });
 
@@ -19,72 +19,82 @@ export default function VehicleGallery({ vehicleGalleryData }) {
     setSelectedImage(null);
   };
 
+  // Función para scroll horizontal con rueda del mouse
+  const handleWheel = (e) => {
+    if (scrollContainerRef.current) {
+      e.preventDefault();
+      scrollContainerRef.current.scrollLeft += e.deltaY;
+    }
+  };
+
   return (
-    <div className="max-w-7xl mx-auto px-4 lg:px-8 py-24">
-      <motion.h2
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
+    <div className="w-full bg-black py-16 md:py-24">
+      <div className="max-w-7xl mx-auto px-4 lg:px-8">
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-3xl md:text-4xl lg:text-5xl font-semibold text-white mb-2"
+        >
+          {vehicleGalleryData.title}
+        </motion.h2>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="text-gray-300 text-lg md:text-xl mb-8"
+        >
+          {vehicleGalleryData.subtitle}
+        </motion.p>
+      </div>
+
+      {/* Galería horizontal con scroll */}
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isInView ? 1 : 0 }}
         transition={{ duration: 0.6 }}
-        className="text-2xl md:text-3xl lg:text-4xl font-semibold text-white leading-tight"
+        className="w-full overflow-hidden"
       >
-        {vehicleGalleryData.title}
-      </motion.h2>
-      <motion.p
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.1 }}
-        className="text-gray-300 text-lg"
-      >
-        {vehicleGalleryData.subtitle}
-      </motion.p>
-
-      <div ref={ref} className="grid grid-cols-1 md:grid-cols-5 gap-4 mt-8">
-        {vehicleGalleryData.images.map((image, index) => {
-          const rowIndex = Math.floor(index / 2);
-          const isEvenRow = rowIndex % 2 === 0;
-          const isFirstImage = index % 2 === 0;
-          const totalImages = vehicleGalleryData.images.length;
-          const isLastImage = index === totalImages - 1;
-          const isOddTotal = totalImages % 2 !== 0;
-
-          // Alternar el patrón: fila par (0,2,4...) empieza con imagen grande a la izquierda
-          // fila impar (1,3,5...) empieza con imagen grande a la derecha
-          let colSpan = "lg:col-span-2";
-
-          // Si es la última imagen y hay número impar, ocupa todo el ancho
-          if (isLastImage && isOddTotal) {
-            colSpan = "lg:col-start-2 lg:col-span-3";
-          } else if (isEvenRow && isFirstImage) {
-            colSpan = "lg:col-span-3"; // Primera imagen de fila par: ocupa 2 columnas
-          } else if (!isEvenRow && !isFirstImage) {
-            colSpan = "lg:col-span-3"; // Segunda imagen de fila impar: ocupa 2 columnas
-          }
-
-          return (
+        <div
+          ref={scrollContainerRef}
+          onWheel={handleWheel}
+          className="flex gap-4 px-4 lg:px-8 overflow-x-auto scrollbar-hide scroll-smooth"
+          style={{
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+            WebkitScrollbar: { display: 'none' }
+          }}
+        >
+          {vehicleGalleryData.images.map((image, index) => (
             <motion.div
               key={image.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
               transition={{
                 duration: 0.5,
                 delay: index * 0.1,
                 ease: "easeOut",
               }}
-              className={`relative aspect-video ${colSpan} cursor-pointer group`}
+              className="flex-shrink-0 cursor-pointer group"
               onClick={() => openLightbox(image)}
             >
-              <Image
-                src={image.src}
-                alt={image.alt}
-                fill
-                className="object-cover object-center rounded-lg transition-transform duration-300 group-hover:scale-105"
-                sizes="(max-width: 768px) 75vw, 50vw"
-                priority={index < 2}
-              />
+              <div className="relative w-[85vw] md:w-[45vw] lg:w-[40vw] xl:w-[35vw] aspect-[16/10] overflow-hidden rounded-lg">
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  fill
+                  className="object-cover object-center transition-transform duration-300 group-hover:scale-105"
+                  sizes="(max-width: 768px) 85vw, (max-width: 1024px) 45vw, 35vw"
+                  priority={index < 3}
+                />
+                {/* Overlay en hover */}
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+              </div>
             </motion.div>
-          );
-        })}
-      </div>
+          ))}
+        </div>
+      </motion.div>
 
       {/* Lightbox */}
       {selectedImage && (
