@@ -109,12 +109,12 @@ export default function VehicleHero({
                   transition={{ duration: 0.5, delay: 0.9 + index * 0.1 }}
                   className="flex items-center"
                 >
-                  <div className="border-l-2 border-white/60 pl-4 py-3 min-h-full flex flex-col justify-center">
-                    <p className="text-white text-base md:text-lg lg:text-xl font-light leading-snug text-left">
+                  <div className="border-l-2 border-white/60 pl-4 py-3 min-h-full flex flex-col justify-center w-full">
+                    <p className="text-white text-base md:text-lg lg:text-xl font-light leading-snug text-center">
                       {highlight.text || highlight.title}
                     </p>
                     {highlight.subtitle && (
-                      <p className="text-white/70 text-xs md:text-sm uppercase tracking-wider mt-1 text-left">
+                      <p className="text-white/70 text-xs md:text-sm uppercase tracking-wider mt-1 text-center">
                         {highlight.subtitle}
                       </p>
                     )}
