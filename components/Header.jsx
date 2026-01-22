@@ -51,8 +51,10 @@ export default function Header({ transparent = false, border = false }) {
     "x70-plus",
     "dashing",
     "t1",
+    "t1-phev",
     "t2",
     "t2-phev",
+    "g700",
   ];
 
   const navItems = [

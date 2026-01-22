@@ -38,6 +38,7 @@ export default function QuoteForm({ currentModel = null, source = null }) {
     { id: "t1-phev", name: "T1 PHEV", image: "/mini/mini-t1-phev.png" },
     { id: "t2", name: "T2", image: "/mini/mini-t2.png" },
     { id: "t2-phev", name: "T2 PHEV", image: "/mini/mini-t2-phev.png" },
+    { id: "g700", name: "G700", image: "/mini/mini-g700.png" },
   ];
 
   // Lista de ciudades desde tu Excel (tal cual se deben enviar)
