@@ -100,21 +100,21 @@ export default function VehicleHero({
           className="absolute bottom-0 left-0 right-0 z-30 pb-12 px-4"
         >
           <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 items-stretch">
               {highlights.map((highlight, index) => (
                 <motion.div
                   key={highlight.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.9 + index * 0.1 }}
-                  className="text-center"
+                  className="flex items-center"
                 >
-                  <div className="border-l-2 border-white/60 pl-4 py-2">
-                    <p className="text-white text-lg md:text-xl font-light leading-tight">
+                  <div className="border-l-2 border-white/60 pl-4 py-3 min-h-full flex flex-col justify-center">
+                    <p className="text-white text-base md:text-lg lg:text-xl font-light leading-snug text-left">
                       {highlight.text || highlight.title}
                     </p>
                     {highlight.subtitle && (
-                      <p className="text-white/70 text-xs md:text-sm uppercase tracking-wider mt-1">
+                      <p className="text-white/70 text-xs md:text-sm uppercase tracking-wider mt-1 text-left">
                         {highlight.subtitle}
                       </p>
                     )}
