@@ -287,7 +287,7 @@ export default function QuoteForm({ currentModel = null, source = null }) {
                 Selecciona tu modelo preferido
               </motion.h3>
 
-              <div className="grid grid-cols-5 sm:grid-cols-5 md:grid-cols-5 lg:grid-cols-7 xl:grid-cols-10 gap-2 md:gap-3 justify-center">
+              <div className="flex flex-wrap justify-center gap-2 md:gap-3">
                 {carModels.map((model, index) => (
                   <motion.div
                     key={model.id}
@@ -296,7 +296,7 @@ export default function QuoteForm({ currentModel = null, source = null }) {
                     initial={{ opacity: 0, scale: 0.8 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.4, delay: index * 0.1 }}
-                    className="relative w-[80px] mx-auto"
+                    className="relative w-[85px]"
                   >
                     <motion.button
                       type="button"
