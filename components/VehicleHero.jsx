@@ -68,9 +68,9 @@ export default function VehicleHero({
             <Image
               src={logoImage}
               alt={logoAlt || `${vehicleName} Logo`}
-              width={300}
-              height={300}
-              className="object-contain object-center"
+              width={400}
+              height={400}
+              className="object-contain object-center w-[250px] md:w-[350px] lg:w-[400px] h-auto"
               priority
             />
           </motion.div>
