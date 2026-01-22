@@ -107,17 +107,15 @@ export default function VehicleHero({
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.9 + index * 0.1 }}
-                  className="flex items-center"
+                  className="flex items-center relative"
                 >
                   <div className={`
                     min-h-full flex flex-col justify-center w-full py-3 px-4
-                    ${/* Mobile: bottom border for all except last */''} 
-                    ${index !== highlights.length - 1 ? 'border-b sm:border-b-0' : ''}
                     ${/* Tablet (2 cols): left border for 2nd and 4th items */''}
                     ${index === 1 || index === 3 ? 'sm:border-l sm:pl-4' : 'sm:pl-0'}
                     ${/* Desktop (4 cols): left border for all except first */''}
                     ${index !== 0 ? 'lg:border-l lg:pl-4' : 'lg:pl-0'}
-                    border-white/60
+                    sm:border-white/60
                   `}>
                     <p className="text-white text-base md:text-lg lg:text-xl font-light leading-snug text-center">
                       {highlight.text || highlight.title}
@@ -128,6 +126,10 @@ export default function VehicleHero({
                       </p>
                     )}
                   </div>
+                  {/* Mobile: short bottom line */}
+                  {index !== highlights.length - 1 && (
+                    <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-20 h-[2px] bg-white/60 sm:hidden" />
+                  )}
                 </motion.div>
               ))}
             </div>
