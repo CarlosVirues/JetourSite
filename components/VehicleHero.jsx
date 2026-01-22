@@ -100,7 +100,7 @@ export default function VehicleHero({
           className="absolute bottom-0 left-0 right-0 z-30 pb-12 px-4"
         >
           <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 items-stretch">
+            <div className="grid grid-cols-2 min-[480px]:grid-cols-1 min-[800px]:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 items-stretch">
               {highlights.map((highlight, index) => (
                 <motion.div
                   key={highlight.id}
@@ -111,11 +111,13 @@ export default function VehicleHero({
                 >
                   <div className={`
                     min-h-full flex flex-col justify-center w-full py-3 px-4
-                    ${/* Tablet (2 cols): left border for 2nd and 4th items */''}
-                    ${index === 1 || index === 3 ? 'sm:border-l sm:pl-4' : 'sm:pl-0'}
+                    ${/* Mobile small (2 cols): left border for 2nd and 4th items */''}
+                    ${index === 1 || index === 3 ? 'border-l pl-4 min-[480px]:border-l-0 min-[480px]:pl-0' : 'pl-0'}
+                    ${/* Tablet (800px - 2 cols): left border for 2nd and 4th items */''}
+                    ${index === 1 || index === 3 ? 'min-[800px]:border-l min-[800px]:pl-4' : 'min-[800px]:pl-0'}
                     ${/* Desktop (4 cols): left border for all except first */''}
                     ${index !== 0 ? 'lg:border-l lg:pl-4' : 'lg:pl-0'}
-                    sm:border-white/60
+                    border-white/60
                   `}>
                     <p className="text-white text-base md:text-lg lg:text-xl font-light leading-snug text-center">
                       {highlight.text || highlight.title}
@@ -126,9 +128,9 @@ export default function VehicleHero({
                       </p>
                     )}
                   </div>
-                  {/* Mobile: short bottom line */}
+                  {/* Mobile 480px-800px: short bottom line for single column */}
                   {index !== highlights.length - 1 && (
-                    <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-20 h-[2px] bg-white/60 sm:hidden" />
+                    <div className="hidden min-[480px]:block min-[800px]:hidden absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-20 h-[2px] bg-white/60" />
                   )}
                 </motion.div>
               ))}
