@@ -2,11 +2,14 @@
 
 import { motion } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 
 export default function SpecificationsVideo({ 
   videoUrl,
   title = "Especificaciones técnicas",
-  model = ""
+  model = "",
+  logoImage,
+  logoAlt
 }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const videoRef = useRef(null);
@@ -69,24 +72,22 @@ export default function SpecificationsVideo({
       {/* Overlay con gradiente sutil */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-black/30" />
 
-      {/* Título */}
-      <div className="absolute top-0 left-0 right-0 z-20 p-8 md:p-12">
-        <motion.div
-          initial={{ opacity: 0, y: -30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="max-w-7xl mx-auto"
-        >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white">
-            {title}
-          </h2>
-          {model && (
-            <p className="text-xl md:text-2xl text-white/80 mt-2">
-              {model.toUpperCase()}
-            </p>
-          )}
-        </motion.div>
-      </div>
+      {/* Logo del modelo */}
+      {logoImage && (
+        <div className="absolute top-8 left-8 md:top-12 md:left-12 z-20">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
+            <img
+              src={logoImage}
+              alt={logoAlt || `${model} Logo`}
+              className="h-16 md:h-20 lg:h-24 w-auto"
+            />
+          </motion.div>
+        </div>
+      )}
 
       {/* Control de reproducción */}
       <button

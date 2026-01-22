@@ -98,7 +98,11 @@ export default async function VehicleModelPage({ params }) {
 
       {/* Video de Especificaciones - Solo para modelos con video */}
       {hasModules.specificationsVideo && (
-        <SpecificationsVideo {...modelPageData.specificationsVideo} />
+        <SpecificationsVideo 
+          {...modelPageData.specificationsVideo} 
+          logoImage={modelPageData.hero?.logoImage}
+          logoAlt={modelPageData.hero?.logoAlt}
+        />
       )}
 
 
