@@ -41,6 +41,14 @@ export default function QuoteForm({ currentModel = null, source = null }) {
     { id: "g700", name: "G700", image: "/mini/mini-g700.png" },
   ];
 
+  // Determinar si es el formulario superior (tanto en aeropuerto como en páginas de modelo)
+  const isTopForm = source === "aeropuerto-top" || (source && source.endsWith("-up"));
+  
+  // Filtrar modelos según el contexto
+  const displayModels = isTopForm && currentModel 
+    ? carModels.filter(model => model.id === currentModel)
+    : carModels;
+
   // Lista de ciudades desde tu Excel (tal cual se deben enviar)
   const ciudades = [
     "ambato",
@@ -103,7 +111,9 @@ export default function QuoteForm({ currentModel = null, source = null }) {
             transition={{ duration: 0.8 }}
             className="text-3xl lg:text-5xl font-bold text-white mb-6"
           >
-            ¿Listo para comenzar tu próximo viaje?
+            {isTopForm 
+              ? `Cotiza tu ${carModels.find(m => m.id === currentModel)?.name || 'Jetour'} ahora`
+              : "¿Listo para comenzar tu próximo viaje?"}
           </motion.h2>
         </motion.div>
 
@@ -274,7 +284,9 @@ export default function QuoteForm({ currentModel = null, source = null }) {
             <input
               type="hidden"
               name="selectedModel"
-              value={state.values?.selectedModel || currentModel || ""}
+              value={isTopForm && currentModel 
+                ? currentModel 
+                : (state.values?.selectedModel || currentModel || "")}
             />
 
             {/* Model Selection */}
@@ -285,11 +297,13 @@ export default function QuoteForm({ currentModel = null, source = null }) {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="text-xl font-semibold text-white mb-4 text-center"
               >
-                Selecciona tu modelo preferido
+                {isTopForm 
+                  ? `Confirma tu modelo: ${carModels.find(m => m.id === currentModel)?.name || 'Jetour'}`
+                  : "Selecciona tu modelo preferido"}
               </motion.h3>
 
               <div className="flex flex-wrap justify-center gap-2 md:gap-3">
-                {carModels.map((model, index) => (
+                {displayModels.map((model, index) => (
                   <motion.div
                     key={model.id}
                     variants={modelVariants}
