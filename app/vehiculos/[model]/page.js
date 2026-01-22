@@ -57,11 +57,13 @@ export default async function VehicleModelPage({ params }) {
       {hasModules.hero && (
         <VehicleHero
           backgroundImage={modelPageData.hero.backgroundImage}
+          backgroundVideo={modelPageData.hero.backgroundVideo}
           vehicleName={modelPageData.hero.vehicleName}
           vehicleDescription={modelPageData.hero.vehicleDescription}
           height={modelPageData.hero.height}
           logoImage={modelPageData.hero.logoImage}
           logoAlt={modelPageData.hero.logoAlt}
+          highlights={modelPageData.hero.highlights}
         />
       )}
 
