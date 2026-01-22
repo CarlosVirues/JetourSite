@@ -296,7 +296,7 @@ export default function QuoteForm({ currentModel = null, source = null }) {
                     initial={{ opacity: 0, scale: 0.8 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.4, delay: index * 0.1 }}
-                    className="relative max-w-[120px] md:max-w-[140px] mx-auto w-full"
+                    className="relative w-[80px] mx-auto"
                   >
                     <motion.button
                       type="button"
@@ -331,9 +331,9 @@ export default function QuoteForm({ currentModel = null, source = null }) {
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      <div className="w-full h-full bg-gray-800 rounded-lg flex items-center justify-center p-2 md:p-3">
+                      <div className="w-full h-full bg-gray-800 rounded-lg flex items-center justify-center p-2">
                         <div className="text-center">
-                          <div className="relative w-16 h-12 md:w-20 md:h-16 mx-auto mb-1">
+                          <div className="relative w-12 h-10 mx-auto mb-1">
                             <Image
                               src={model.image}
                               alt={model.name}
