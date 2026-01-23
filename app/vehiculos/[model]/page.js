@@ -13,6 +13,7 @@ import { getVehicleModel } from "@/lib/vehicle-models";
 import { getPageData, getVehicleModelPageData } from "@/lib/page-data";
 import TechnicalSheetButton from "@/components/TechnicalSheetButton";
 import SpecificationsVideo from "@/components/SpecificationsVideo";
+import VehicleFeatureSlides from "@/components/VehicleFeatureSlides";
 
 export async function generateMetadata({ params }) {
   const pageParams = await params;
@@ -36,6 +37,7 @@ export default async function VehicleModelPage({ params }) {
   const hasModules = {
     hero: modelPageData.hero && Object.keys(modelPageData.hero).length > 0,
     features: modelPageData.features && Object.keys(modelPageData.features).length > 0,
+    featureSlides: modelPageData.featureSlides && Object.keys(modelPageData.featureSlides).length > 0,
     vehicleGallery: modelPageData.vehicleGallery && Object.keys(modelPageData.vehicleGallery).length > 0,
     threeSixty: modelPageData.threeSixty && Object.keys(modelPageData.threeSixty).length > 0,
     vehicleColors: modelPageData.vehicleColors && Object.keys(modelPageData.vehicleColors).length > 0, // Módulo de colores independiente
@@ -67,6 +69,11 @@ export default async function VehicleModelPage({ params }) {
           logoAlt={modelPageData.hero.logoAlt}
           highlights={modelPageData.hero.highlights}
         />
+      )}
+
+      {/* Feature Slides Section */}
+      {hasModules.featureSlides && (
+        <VehicleFeatureSlides featuresData={modelPageData.featureSlides} />
       )}
 
       {/* Vehicle Features Section */}

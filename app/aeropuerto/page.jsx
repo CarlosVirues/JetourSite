@@ -6,6 +6,7 @@ import ThreeSixty from "@/components/360";
 import VehicleColors from "@/components/VehicleColors";
 import SpecificationsVideo from "@/components/SpecificationsVideo";
 import VehicleGallery from "@/components/VehicleGallery";
+import VehicleFeatureSlides from "@/components/VehicleFeatureSlides";
 import TechnicalSheetButton from "@/components/TechnicalSheetButton";
 import QuoteForm from "@/components/QuoteForm";
 import Footer from "@/components/Footer";
@@ -25,6 +26,7 @@ export default function TestDrivePage() {
   // Verificar qué módulos están disponibles para este modelo
   const hasModules = {
     hero: modelPageData.hero && Object.keys(modelPageData.hero).length > 0,
+    featureSlides: modelPageData.featureSlides && Object.keys(modelPageData.featureSlides).length > 0,
     threeSixty: modelPageData.threeSixty && Object.keys(modelPageData.threeSixty).length > 0,
     vehicleColors: modelPageData.vehicleColors && Object.keys(modelPageData.vehicleColors).length > 0,
     specificationsVideo: modelPageData.specificationsVideo && Object.keys(modelPageData.specificationsVideo).length > 0,
@@ -54,6 +56,11 @@ export default function TestDrivePage() {
           logoAlt={modelPageData.hero.logoAlt}
           highlights={modelPageData.hero.highlights}
         />
+      )}
+
+      {/* Feature Slides */}
+      {hasModules.featureSlides && (
+        <VehicleFeatureSlides featuresData={modelPageData.featureSlides} />
       )}
 
       {/* 3. Vista 360 */}
