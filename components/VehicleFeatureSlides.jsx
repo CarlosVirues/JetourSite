@@ -76,7 +76,7 @@ export default function VehicleFeatureSlides({ featuresData }) {
           )}
 
           {/* Content */}
-          <div className="relative z-10 h-full flex flex-col p-8 lg:p-16">
+          <div className="relative z-10 h-full flex flex-col p-12 lg:p-20">
             {/* Top Content - Category Title at top left */}
             <motion.div
               initial={{ opacity: 0, y: -30 }}
@@ -85,7 +85,7 @@ export default function VehicleFeatureSlides({ featuresData }) {
               className="mb-auto"
             >
               {/* Category Title */}
-              <h2 className="text-3xl lg:text-5xl font-bold text-white mb-4">
+              <h2 className="text-2xl lg:text-3xl font-semibold text-white mb-4">
                 {currentCategory.title}
               </h2>
             </motion.div>
@@ -95,25 +95,32 @@ export default function VehicleFeatureSlides({ featuresData }) {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="max-w-2xl mb-24"
+              className="max-w-xl mb-32"
             >
               {/* Slide Title */}
               {currentSlide.title && (
-                <h3 className="text-2xl lg:text-4xl font-bold text-white mb-4">
+                <h3 className="text-xl lg:text-3xl font-bold text-white mb-6">
                   {currentSlide.title}
                 </h3>
               )}
 
-              {/* Slide Description */}
-              {currentSlide.description && (
-                <p className="text-lg lg:text-xl text-white/90 mb-6">
+              {/* Slide Description - Can be paragraph or serve as intro to bullets */}
+              {currentSlide.description && !currentSlide.bullets?.length && (
+                <p className="text-base lg:text-lg text-white/80 leading-relaxed">
+                  {currentSlide.description}
+                </p>
+              )}
+
+              {/* If there are bullets, description acts as intro text */}
+              {currentSlide.description && currentSlide.bullets?.length > 0 && (
+                <p className="text-base lg:text-lg text-white/80 mb-4">
                   {currentSlide.description}
                 </p>
               )}
 
               {/* Bullets */}
               {currentSlide.bullets && currentSlide.bullets.length > 0 && (
-                <ul className="space-y-2">
+                <ul className="space-y-3">
                   {currentSlide.bullets.map((bullet, index) => (
                     <motion.li
                       key={index}
@@ -122,8 +129,8 @@ export default function VehicleFeatureSlides({ featuresData }) {
                       transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
                       className="flex items-start gap-3"
                     >
-                      <span className="text-white text-xl leading-none mt-1">•</span>
-                      <span className="text-lg text-white/90">{bullet}</span>
+                      <span className="text-white/60 text-lg leading-none mt-0.5">•</span>
+                      <span className="text-base lg:text-lg text-white/80 leading-relaxed">{bullet}</span>
                     </motion.li>
                   ))}
                 </ul>
@@ -177,22 +184,22 @@ export default function VehicleFeatureSlides({ featuresData }) {
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
-                className="absolute bottom-8 right-8 lg:bottom-12 lg:right-16"
+                className="absolute bottom-12 right-12 lg:bottom-20 lg:right-20"
               >
                 <div 
                   className="relative group cursor-pointer"
                   onClick={handleNextSlide}
                 >
-                  <div className="relative w-56 h-36 lg:w-72 lg:h-48 rounded-lg overflow-hidden border-2 border-white/30 transition-all duration-300 group-hover:border-white/50 shadow-2xl">
+                  <div className="relative w-48 h-32 lg:w-64 lg:h-40 rounded-lg overflow-hidden border-2 border-white/20 transition-all duration-300 group-hover:border-white/40 shadow-2xl">
                     <Image
                       src={nextSlide.backgroundImage}
                       alt="Siguiente"
                       fill
                       className="object-cover"
                     />
-                    <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors" />
+                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors" />
                     <div className="absolute bottom-2 right-2">
-                      <Expand className="w-6 h-6 text-white opacity-80 group-hover:opacity-100 transition-opacity" />
+                      <Expand className="w-5 h-5 text-white opacity-70 group-hover:opacity-100 transition-opacity" />
                     </div>
                   </div>
                 </div>
