@@ -71,11 +71,6 @@ export default async function VehicleModelPage({ params }) {
         />
       )}
 
-      {/* Feature Slides Section */}
-      {hasModules.featureSlides && (
-        <VehicleFeatureSlides featuresData={modelPageData.featureSlides} />
-      )}
-
       {/* Vehicle Features Section */}
       {/*
       {hasModules.features && (
@@ -121,6 +116,11 @@ export default async function VehicleModelPage({ params }) {
           totalColors={modelPageData.vehicleColors.totalColors}
           colorNames={modelPageData.vehicleColors.colorNames}
         />
+      )}
+
+      {/* Feature Slides Section - After colors */}
+      {hasModules.featureSlides && (
+        <VehicleFeatureSlides featuresData={modelPageData.featureSlides} />
       )}
 
       {/* Hero Showcase Section */}

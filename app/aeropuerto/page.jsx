@@ -58,11 +58,6 @@ export default function TestDrivePage() {
         />
       )}
 
-      {/* Feature Slides */}
-      {hasModules.featureSlides && (
-        <VehicleFeatureSlides featuresData={modelPageData.featureSlides} />
-      )}
-
       {/* 3. Vista 360 */}
       {hasModules.threeSixty && (
         <ThreeSixty 
@@ -89,6 +84,11 @@ export default function TestDrivePage() {
           totalColors={modelPageData.vehicleColors.totalColors}
           colorNames={modelPageData.vehicleColors.colorNames}
         />
+      )}
+
+      {/* Feature Slides - Después de colores */}
+      {hasModules.featureSlides && (
+        <VehicleFeatureSlides featuresData={modelPageData.featureSlides} />
       )}
 
       {/* 6. Ficha técnica / Especificaciones */}
