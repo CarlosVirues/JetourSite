@@ -22,19 +22,12 @@ export default function VehicleColorsNew({ colorsData }) {
       initial={{ opacity: 0 }}
       animate={{ opacity: isInView ? 1 : 0 }}
       transition={{ duration: 1 }}
-      className="relative min-h-screen w-full overflow-hidden"
-      style={{
-        background: "radial-gradient(circle at center, #1a1a1a 0%, #000000 100%)"
-      }}
+      className="relative min-h-screen w-full overflow-hidden bg-gradient-to-b from-zinc-900 via-black to-black"
     >
-      {/* Dark overlay pattern */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute inset-0" 
-          style={{
-            backgroundImage: `radial-gradient(circle at 20% 80%, transparent 20%, rgba(0,0,0,0.3) 20.5%, rgba(0,0,0,0.3) 40%, transparent 40.5%)`,
-            backgroundSize: '30px 30px'
-          }}
-        />
+      {/* Gradient overlay for depth */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-radial from-transparent via-black/50 to-black" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-900/20 via-transparent to-transparent" />
       </div>
 
       {/* Content */}
@@ -89,7 +82,7 @@ export default function VehicleColorsNew({ colorsData }) {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.3, delay: 0.7 + index * 0.1 }}
                 onClick={() => setActiveColor(index)}
-                className={`relative w-20 h-20 rounded-full border-4 transition-all duration-300 ${
+                className={`relative w-14 h-14 lg:w-16 lg:h-16 rounded-full border-3 transition-all duration-300 ${
                   activeColor === index
                     ? "border-white scale-110 shadow-lg"
                     : "border-gray-600 hover:border-gray-400"

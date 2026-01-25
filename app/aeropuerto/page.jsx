@@ -78,22 +78,12 @@ export default function TestDrivePage() {
         />
       )}
 
-      {/* 5. Colores del vehículo - Versión antigua */}
-      {/*hasModules.vehicleColors && (
-        <VehicleColors
-          model={modelPageData.vehicleColors.model}
-          colorsPath={modelPageData.vehicleColors.colorsPath}
-          totalColors={modelPageData.vehicleColors.totalColors}
-          colorNames={modelPageData.vehicleColors.colorNames}
-        />
-      )*/}
-
-      {/* 5. Colores del vehículo - Nueva versión */}
+      {/* 5. Colores del vehículo - Nueva versión (antes de features) */}
       {hasModules.vehicleColorsNew && (
         <VehicleColorsNew colorsData={modelPageData.vehicleColorsNew} />
       )}
 
-      {/* Feature Slides - Módulos dinámicos después de colores */}
+      {/* Feature Slides - Módulos dinámicos */}
       {hasModules.featureSlides && modelPageData.featureSlides.map((featureModule, index) => (
         <VehicleFeatureSlides 
           key={`feature-${index}-${featureModule.title}`}

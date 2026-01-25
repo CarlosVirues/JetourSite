@@ -109,23 +109,12 @@ export default async function VehicleModelPage({ params }) {
         />
       )}
 
-
-      {/* Vehicle Colors Section - Old version */}
-      {/*hasModules.vehicleColors && (
-        <VehicleColors
-          model={modelPageData.vehicleColors.model}
-          colorsPath={modelPageData.vehicleColors.colorsPath}
-          totalColors={modelPageData.vehicleColors.totalColors}
-          colorNames={modelPageData.vehicleColors.colorNames}
-        />
-      )*/}
-
-      {/* Vehicle Colors Section - New version */}
+      {/* Vehicle Colors Section - New version (before features) */}
       {hasModules.vehicleColorsNew && (
         <VehicleColorsNew colorsData={modelPageData.vehicleColorsNew} />
       )}
 
-      {/* Feature Slides - Dynamic modules after colors */}
+      {/* Feature Slides - Dynamic modules */}
       {hasModules.featureSlides && modelPageData.featureSlides.map((featureModule, index) => (
         <VehicleFeatureSlides 
           key={`feature-${index}-${featureModule.title}`}
