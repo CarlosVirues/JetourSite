@@ -22,13 +22,10 @@ export default function VehicleColorsNew({ colorsData }) {
       initial={{ opacity: 0 }}
       animate={{ opacity: isInView ? 1 : 0 }}
       transition={{ duration: 1 }}
-      className="relative min-h-screen w-full overflow-hidden bg-gradient-to-b from-zinc-900 via-black to-black"
+      className="relative min-h-screen w-full overflow-hidden bg-black"
     >
-      {/* Gradient overlay for depth */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-radial from-transparent via-black/50 to-black" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-900/20 via-transparent to-transparent" />
-      </div>
+      {/* Background gradient similar to 360 module */}
+      <div className="absolute inset-0 bg-gradient-radial from-gray-900/20 via-transparent to-transparent" />
 
       {/* Content */}
       <div className="relative z-10 h-screen flex flex-col">
@@ -48,32 +45,38 @@ export default function VehicleColorsNew({ colorsData }) {
         </motion.div>
 
         {/* Main Content */}
-        <div className="flex-1 flex items-center justify-between px-8 lg:px-20 pb-20">
-          {/* Vehicle Image */}
+        <div className="flex-1 flex items-center justify-center px-8 lg:px-20 pb-20 relative">
+          {/* Vehicle Image Container */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: isInView ? 1 : 0, x: isInView ? 0 : -50 }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: isInView ? 1 : 0, scale: isInView ? 1 : 0.9 }}
             transition={{ duration: 1, delay: 0.4 }}
-            className="flex-1 relative h-full flex items-center justify-center"
+            className="relative w-full max-w-5xl h-[500px]"
           >
-            <div className="relative w-full max-w-4xl h-[500px]">
-              <Image
-                src={currentColor.image}
-                alt={`${colorsData.modelName} en color ${currentColor.name}`}
-                fill
-                className="object-contain"
-                priority
-                sizes="(max-width: 768px) 100vw, 80vw"
-              />
+            {/* Platform/Shadow similar to 360 module */}
+            <div className="absolute bottom-0 left-0 right-0 h-32 md:h-48 z-0">
+              <div className="relative w-[90%] md:w-[80%] mx-auto h-full">
+                <div className="absolute inset-0 bg-gradient-to-t from-gray-800/30 to-transparent rounded-full blur-3xl transform scale-x-150" />
+              </div>
             </div>
+
+            {/* Vehicle Image */}
+            <Image
+              src={currentColor.image}
+              alt={`${colorsData.modelName} en color ${currentColor.name}`}
+              fill
+              className="object-contain z-10"
+              priority
+              sizes="(max-width: 768px) 100vw, 80vw"
+            />
           </motion.div>
 
-          {/* Color Selectors */}
+          {/* Color Selectors - Positioned absolutely */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: isInView ? 1 : 0, x: isInView ? 0 : 50 }}
             transition={{ duration: 1, delay: 0.6 }}
-            className="flex flex-col gap-6 ml-10"
+            className="absolute right-20 lg:right-32 top-1/2 -translate-y-1/2 flex flex-col gap-4"
           >
             {colorsData.colors.map((color, index) => (
               <motion.button
