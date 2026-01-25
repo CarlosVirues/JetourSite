@@ -63,13 +63,12 @@ export default function VehicleFeatureSlides({ featuresData }) {
           )}
 
           {/* Content */}
-          <div className="relative z-10 h-full flex flex-col p-12 lg:p-20">
+          <div className="relative z-10 h-full flex flex-col justify-between p-12 lg:p-20">
             {/* Top Content - Category Title at top left */}
             <motion.div
               initial={{ opacity: 0, y: -30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="mb-auto"
             >
               {/* Category Title */}
               <h2 className="text-3xl lg:text-5xl font-bold text-white mb-4">
@@ -82,7 +81,7 @@ export default function VehicleFeatureSlides({ featuresData }) {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="max-w-xl mb-32"
+              className="max-w-2xl mb-20"
             >
               {/* Slide Title */}
               {currentSlide.title && (
@@ -105,19 +104,19 @@ export default function VehicleFeatureSlides({ featuresData }) {
                 </p>
               )}
 
-              {/* Bullets - Estilo mejorado cuando solo hay bullets */}
+              {/* Bullets - Tamaño ajustado para textos largos */}
               {currentSlide.bullets && currentSlide.bullets.length > 0 && (
-                <ul className="space-y-4">
+                <ul className="space-y-3">
                   {currentSlide.bullets.map((bullet, index) => (
                     <motion.li
                       key={index}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
-                      className="flex items-start gap-4"
+                      className="flex items-start gap-3"
                     >
-                      <span className="text-white/70 text-xl leading-none mt-0.5">•</span>
-                      <span className="text-lg lg:text-xl text-white/90 leading-relaxed">{bullet}</span>
+                      <span className="text-white/60 text-base leading-none mt-1">•</span>
+                      <span className="text-base lg:text-lg text-white/85 leading-relaxed">{bullet}</span>
                     </motion.li>
                   ))}
                 </ul>
