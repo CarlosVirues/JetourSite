@@ -85,7 +85,7 @@ export default function VehicleFeatureSlides({ featuresData }) {
               className="mb-auto"
             >
               {/* Category Title */}
-              <h2 className="text-2xl lg:text-3xl font-semibold text-white mb-4">
+              <h2 className="text-3xl lg:text-5xl font-bold text-white mb-4">
                 {currentCategory.title}
               </h2>
             </motion.div>
@@ -118,19 +118,19 @@ export default function VehicleFeatureSlides({ featuresData }) {
                 </p>
               )}
 
-              {/* Bullets */}
+              {/* Bullets - Estilo mejorado cuando solo hay bullets */}
               {currentSlide.bullets && currentSlide.bullets.length > 0 && (
-                <ul className="space-y-3">
+                <ul className="space-y-4">
                   {currentSlide.bullets.map((bullet, index) => (
                     <motion.li
                       key={index}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
-                      className="flex items-start gap-3"
+                      className="flex items-start gap-4"
                     >
-                      <span className="text-white/60 text-lg leading-none mt-0.5">•</span>
-                      <span className="text-base lg:text-lg text-white/80 leading-relaxed">{bullet}</span>
+                      <span className="text-white/70 text-xl leading-none mt-0.5">•</span>
+                      <span className="text-lg lg:text-xl text-white/90 leading-relaxed">{bullet}</span>
                     </motion.li>
                   ))}
                 </ul>
