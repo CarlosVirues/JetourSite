@@ -37,8 +37,7 @@ export default async function VehicleModelPage({ params }) {
   const hasModules = {
     hero: modelPageData.hero && Object.keys(modelPageData.hero).length > 0,
     features: modelPageData.features && Object.keys(modelPageData.features).length > 0,
-    featureSlidesPerformance: modelPageData.featureSlidesPerformance && Object.keys(modelPageData.featureSlidesPerformance).length > 0,
-    featureSlidesComfort: modelPageData.featureSlidesComfort && Object.keys(modelPageData.featureSlidesComfort).length > 0,
+    featureSlides: modelPageData.featureSlides && Array.isArray(modelPageData.featureSlides) && modelPageData.featureSlides.length > 0,
     vehicleGallery: modelPageData.vehicleGallery && Object.keys(modelPageData.vehicleGallery).length > 0,
     threeSixty: modelPageData.threeSixty && Object.keys(modelPageData.threeSixty).length > 0,
     vehicleColors: modelPageData.vehicleColors && Object.keys(modelPageData.vehicleColors).length > 0, // Módulo de colores independiente
@@ -119,15 +118,13 @@ export default async function VehicleModelPage({ params }) {
         />
       )}
 
-      {/* Feature Slides Performance - After colors */}
-      {hasModules.featureSlidesPerformance && (
-        <VehicleFeatureSlides featuresData={modelPageData.featureSlidesPerformance} />
-      )}
-
-      {/* Feature Slides Comfort - After performance */}
-      {hasModules.featureSlidesComfort && (
-        <VehicleFeatureSlides featuresData={modelPageData.featureSlidesComfort} />
-      )}
+      {/* Feature Slides - Dynamic modules after colors */}
+      {hasModules.featureSlides && modelPageData.featureSlides.map((featureModule, index) => (
+        <VehicleFeatureSlides 
+          key={`feature-${index}-${featureModule.title}`}
+          featuresData={featureModule} 
+        />
+      ))}
 
       {/* Hero Showcase Section */}
       {hasModules.heroShowcase && (
