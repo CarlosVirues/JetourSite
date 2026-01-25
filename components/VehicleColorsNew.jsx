@@ -30,7 +30,8 @@ export default function VehicleColorsNew({ colorsData }) {
           src="/bg-360.jpg"
           alt="Background"
           fill
-          className="object-cover"
+          className="object-cover object-bottom"
+          style={{ objectPosition: '50% 70%' }}
           priority
         />
       </div>
