@@ -22,10 +22,18 @@ export default function VehicleColorsNew({ colorsData }) {
       initial={{ opacity: 0 }}
       animate={{ opacity: isInView ? 1 : 0 }}
       transition={{ duration: 1 }}
-      className="relative min-h-screen w-full overflow-hidden bg-black"
+      className="relative min-h-screen w-full overflow-hidden"
     >
-      {/* Background gradient similar to 360 module */}
-      <div className="absolute inset-0 bg-gradient-radial from-gray-900/20 via-transparent to-transparent" />
+      {/* Background image from 360 module */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/bg-360.jpg"
+          alt="Background"
+          fill
+          className="object-cover"
+          priority
+        />
+      </div>
 
       {/* Content */}
       <div className="relative z-10 h-screen flex flex-col">
@@ -53,12 +61,6 @@ export default function VehicleColorsNew({ colorsData }) {
             transition={{ duration: 1, delay: 0.4 }}
             className="relative w-full max-w-5xl h-[500px]"
           >
-            {/* Platform/Shadow similar to 360 module */}
-            <div className="absolute bottom-0 left-0 right-0 h-32 md:h-48 z-0">
-              <div className="relative w-[90%] md:w-[80%] mx-auto h-full">
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-800/30 to-transparent rounded-full blur-3xl transform scale-x-150" />
-              </div>
-            </div>
 
             {/* Vehicle Image */}
             <Image
