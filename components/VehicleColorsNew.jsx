@@ -31,7 +31,7 @@ export default function VehicleColorsNew({ colorsData }) {
           alt="Background"
           fill
           className="object-cover object-bottom"
-          style={{ objectPosition: '50% 60%' }}
+          style={{ objectPosition: '50% 50%' }}
           priority
         />
       </div>
