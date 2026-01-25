@@ -6,42 +6,29 @@ import Image from "next/image";
 import { ChevronLeft, ChevronRight, ChevronDown, Expand } from "lucide-react";
 
 export default function VehicleFeatureSlides({ featuresData }) {
-  const [activeCategory, setActiveCategory] = useState(0);
   const [activeSlide, setActiveSlide] = useState(0);
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
 
-  if (!featuresData || !featuresData.categories || featuresData.categories.length === 0) {
+  if (!featuresData || !featuresData.slides || featuresData.slides.length === 0) {
     return null;
   }
 
-  const currentCategory = featuresData.categories[activeCategory];
-  const currentSlide = currentCategory.slides[activeSlide];
+  const currentSlide = featuresData.slides[activeSlide];
 
   const handleNextSlide = () => {
-    if (activeSlide < currentCategory.slides.length - 1) {
+    if (activeSlide < featuresData.slides.length - 1) {
       setActiveSlide(activeSlide + 1);
-    } else if (activeCategory < featuresData.categories.length - 1) {
-      // Si es el último slide de la categoría, pasar a la siguiente categoría
-      setActiveCategory(activeCategory + 1);
-      setActiveSlide(0);
     }
   };
 
   const handlePrevSlide = () => {
     if (activeSlide > 0) {
       setActiveSlide(activeSlide - 1);
-    } else if (activeCategory > 0) {
-      // Si es el primer slide de la categoría, volver a la categoría anterior
-      setActiveCategory(activeCategory - 1);
-      setActiveSlide(featuresData.categories[activeCategory - 1].slides.length - 1);
     }
   };
 
-  const nextSlide = currentCategory.slides[activeSlide + 1] || 
-    (activeCategory < featuresData.categories.length - 1 
-      ? featuresData.categories[activeCategory + 1].slides[0] 
-      : null);
+  const nextSlide = featuresData.slides[activeSlide + 1] || null;
 
   return (
     <motion.section
@@ -53,7 +40,7 @@ export default function VehicleFeatureSlides({ featuresData }) {
     >
       <AnimatePresence mode="wait">
         <motion.div
-          key={`${activeCategory}-${activeSlide}`}
+          key={activeSlide}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -86,7 +73,7 @@ export default function VehicleFeatureSlides({ featuresData }) {
             >
               {/* Category Title */}
               <h2 className="text-3xl lg:text-5xl font-bold text-white mb-4">
-                {currentCategory.title}
+                {featuresData.title}
               </h2>
             </motion.div>
 
@@ -145,9 +132,9 @@ export default function VehicleFeatureSlides({ featuresData }) {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               onClick={handlePrevSlide}
-              disabled={activeCategory === 0 && activeSlide === 0}
+              disabled={activeSlide === 0}
               className={`absolute left-8 top-1/2 -translate-y-1/2 w-16 h-16 rounded-full flex items-center justify-center transition-all duration-300 ${
-                activeCategory === 0 && activeSlide === 0
+                activeSlide === 0
                   ? "bg-white/5 text-gray-500 cursor-not-allowed"
                   : "bg-white/10 hover:bg-white/20 text-white backdrop-blur-sm"
               }`}
@@ -163,13 +150,9 @@ export default function VehicleFeatureSlides({ featuresData }) {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               onClick={handleNextSlide}
-              disabled={
-                activeCategory === featuresData.categories.length - 1 &&
-                activeSlide === currentCategory.slides.length - 1
-              }
+              disabled={activeSlide === featuresData.slides.length - 1}
               className={`absolute right-8 top-1/2 -translate-y-1/2 w-16 h-16 rounded-full flex items-center justify-center transition-all duration-300 ${
-                activeCategory === featuresData.categories.length - 1 &&
-                activeSlide === currentCategory.slides.length - 1
+                activeSlide === featuresData.slides.length - 1
                   ? "bg-white/5 text-gray-500 cursor-not-allowed"
                   : "bg-white/10 hover:bg-white/20 text-white backdrop-blur-sm"
               }`}
@@ -208,8 +191,7 @@ export default function VehicleFeatureSlides({ featuresData }) {
           </div>
 
           {/* Scroll Indicator - Bottom center */}
-          {(activeCategory < featuresData.categories.length - 1 || 
-           activeSlide < currentCategory.slides.length - 1) && (
+          {activeSlide < featuresData.slides.length - 1 && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}

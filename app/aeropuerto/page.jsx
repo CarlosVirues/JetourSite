@@ -26,7 +26,8 @@ export default function TestDrivePage() {
   // Verificar qué módulos están disponibles para este modelo
   const hasModules = {
     hero: modelPageData.hero && Object.keys(modelPageData.hero).length > 0,
-    featureSlides: modelPageData.featureSlides && Object.keys(modelPageData.featureSlides).length > 0,
+    featureSlidesPerformance: modelPageData.featureSlidesPerformance && Object.keys(modelPageData.featureSlidesPerformance).length > 0,
+    featureSlidesComfort: modelPageData.featureSlidesComfort && Object.keys(modelPageData.featureSlidesComfort).length > 0,
     threeSixty: modelPageData.threeSixty && Object.keys(modelPageData.threeSixty).length > 0,
     vehicleColors: modelPageData.vehicleColors && Object.keys(modelPageData.vehicleColors).length > 0,
     specificationsVideo: modelPageData.specificationsVideo && Object.keys(modelPageData.specificationsVideo).length > 0,
@@ -86,9 +87,14 @@ export default function TestDrivePage() {
         />
       )}
 
-      {/* Feature Slides - Después de colores */}
-      {hasModules.featureSlides && (
-        <VehicleFeatureSlides featuresData={modelPageData.featureSlides} />
+      {/* Feature Slides Performance - Después de colores */}
+      {hasModules.featureSlidesPerformance && (
+        <VehicleFeatureSlides featuresData={modelPageData.featureSlidesPerformance} />
+      )}
+
+      {/* Feature Slides Comfort - Después de performance */}
+      {hasModules.featureSlidesComfort && (
+        <VehicleFeatureSlides featuresData={modelPageData.featureSlidesComfort} />
       )}
 
       {/* 6. Ficha técnica / Especificaciones */}
