@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import VehicleHero from "@/components/VehicleHero";
 import ThreeSixty from "@/components/360";
 import VehicleColors from "@/components/VehicleColors";
+import VehicleColorsNew from "@/components/VehicleColorsNew";
 import SpecificationsVideo from "@/components/SpecificationsVideo";
 import VehicleGallery from "@/components/VehicleGallery";
 import VehicleFeatureSlides from "@/components/VehicleFeatureSlides";
@@ -29,6 +30,7 @@ export default function TestDrivePage() {
     featureSlides: modelPageData.featureSlides && Array.isArray(modelPageData.featureSlides) && modelPageData.featureSlides.length > 0,
     threeSixty: modelPageData.threeSixty && Object.keys(modelPageData.threeSixty).length > 0,
     vehicleColors: modelPageData.vehicleColors && Object.keys(modelPageData.vehicleColors).length > 0,
+    vehicleColorsNew: modelPageData.vehicleColorsNew && Object.keys(modelPageData.vehicleColorsNew).length > 0,
     specificationsVideo: modelPageData.specificationsVideo && Object.keys(modelPageData.specificationsVideo).length > 0,
     vehicleGallery: modelPageData.vehicleGallery && Object.keys(modelPageData.vehicleGallery).length > 0,
     technicalSheet: modelPageData.technicalSheet === true,
@@ -76,14 +78,19 @@ export default function TestDrivePage() {
         />
       )}
 
-      {/* 5. Colores del vehículo */}
-      {hasModules.vehicleColors && (
+      {/* 5. Colores del vehículo - Versión antigua */}
+      {/*hasModules.vehicleColors && (
         <VehicleColors
           model={modelPageData.vehicleColors.model}
           colorsPath={modelPageData.vehicleColors.colorsPath}
           totalColors={modelPageData.vehicleColors.totalColors}
           colorNames={modelPageData.vehicleColors.colorNames}
         />
+      )*/}
+
+      {/* 5. Colores del vehículo - Nueva versión */}
+      {hasModules.vehicleColorsNew && (
+        <VehicleColorsNew colorsData={modelPageData.vehicleColorsNew} />
       )}
 
       {/* Feature Slides - Módulos dinámicos después de colores */}

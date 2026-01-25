@@ -7,6 +7,7 @@ import VehicleFeatures from "@/components/VehicleFeatures";
 import VehicleGallery from "@/components/VehicleGallery";
 import ThreeSixty from "@/components/360";
 import VehicleColors from "@/components/VehicleColors";
+import VehicleColorsNew from "@/components/VehicleColorsNew";
 import Footer from "@/components/Footer";
 import FloatingQuoteButton from "@/components/FloatingQuoteButton";
 import { getVehicleModel } from "@/lib/vehicle-models";
@@ -41,6 +42,7 @@ export default async function VehicleModelPage({ params }) {
     vehicleGallery: modelPageData.vehicleGallery && Object.keys(modelPageData.vehicleGallery).length > 0,
     threeSixty: modelPageData.threeSixty && Object.keys(modelPageData.threeSixty).length > 0,
     vehicleColors: modelPageData.vehicleColors && Object.keys(modelPageData.vehicleColors).length > 0, // Módulo de colores independiente
+    vehicleColorsNew: modelPageData.vehicleColorsNew && Object.keys(modelPageData.vehicleColorsNew).length > 0, // Nuevo módulo de colores
     heroShowcase: modelPageData.heroShowcase && Object.keys(modelPageData.heroShowcase).length > 0,
     videoGallery: modelPageData.videoGallery && Object.keys(modelPageData.videoGallery).length > 0,
     quoteForm: pageData.quoteForm && Object.keys(pageData.quoteForm).length > 0,
@@ -108,14 +110,19 @@ export default async function VehicleModelPage({ params }) {
       )}
 
 
-      {/* Vehicle Colors Section - Now independent from 360 view */}
-      {hasModules.vehicleColors && (
+      {/* Vehicle Colors Section - Old version */}
+      {/*hasModules.vehicleColors && (
         <VehicleColors
           model={modelPageData.vehicleColors.model}
           colorsPath={modelPageData.vehicleColors.colorsPath}
           totalColors={modelPageData.vehicleColors.totalColors}
           colorNames={modelPageData.vehicleColors.colorNames}
         />
+      )*/}
+
+      {/* Vehicle Colors Section - New version */}
+      {hasModules.vehicleColorsNew && (
+        <VehicleColorsNew colorsData={modelPageData.vehicleColorsNew} />
       )}
 
       {/* Feature Slides - Dynamic modules after colors */}
