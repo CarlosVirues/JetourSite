@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
@@ -8,6 +8,7 @@ import Link from "next/link";
 
 export default function VehicleShowcaseNew() {
   const [currentModel, setCurrentModel] = useState(0);
+  const scrollContainerRef = useRef(null);
 
   const models = [
     {
@@ -15,10 +16,8 @@ export default function VehicleShowcaseNew() {
       name: "G700",
       type: "Luxury Off-Road SUV",
       logo: "/models/g700/g700-logo.png",
-      mainImage:
-        "https://storage.googleapis.com/xiyimgengine/jetour/360/g700/18.png",
-      thumbnail:
-        "https://storage.googleapis.com/xiyimgengine/jetour/360/g700/18.png",
+      mainImage: "/models/g700/360/20.png",
+      thumbnail: "/models/g700/360/20.png",
       dimensions: {
         length: "5222",
         width: "2005",
@@ -63,10 +62,8 @@ export default function VehicleShowcaseNew() {
       name: "T1 PHEV",
       type: "Hybrid Off-Road SUV",
       logo: "/models/t1/t1-phev-logo.png",
-      mainImage:
-        "https://storage.googleapis.com/xiyimgengine/jetour/360/t1-phev/22.png",
-      thumbnail:
-        "https://storage.googleapis.com/xiyimgengine/jetour/360/t1-phev/22.png",
+      mainImage: "/models/t1-phev/360/22.png",
+      thumbnail: "/models/t1-phev/360/22.png",
       dimensions: {
         length: "4705",
         width: "1967",
@@ -259,8 +256,8 @@ export default function VehicleShowcaseNew() {
           </div>
         </div>
 
-        {/* Model Carousel */}
-        <div className="-mt-20 md:-mt-20 relative">
+        {/* Model Carousel - Rotating Banner */}
+        <div className="-mt-20 md:-mt-20 relative overflow-hidden">
           {/* Navigation Arrows */}
           <button
             onClick={prevModel}
@@ -278,44 +275,44 @@ export default function VehicleShowcaseNew() {
             <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
           </button>
 
-          {/* Models Grid */}
-          <div className="flex justify-center space-x-2 md:space-x-4 px-4 md:px-8 overflow-x-auto pt-4 pb-4">
-            {models.map((model, index) => (
-              <motion.div
-                key={model.id}
-                onClick={() => goToModel(index)}
-                className={`relative cursor-pointer transition-all duration-300 flex-shrink-0 ${
-                  index === currentModel
-                    ? "scale-110 opacity-100"
-                    : "scale-100 opacity-60 hover:opacity-80"
-                }`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <div className="w-20 h-16 md:w-32 md:h-20 relative mb-2">
-                  <Image
-                    src={model.thumbnail}
-                    alt={model.name}
-                    fill
-                    className={`object-contain transition-all duration-300 ${
-                      index === currentModel
-                        ? ""
-                        : "grayscale"
-                    }`}
-                    sizes="(max-width: 768px) 80px, 128px"
-                  />
-                </div>
-                <div className="text-center">
-                  <span
-                    className={`text-xs md:text-sm font-medium transition-colors duration-300 ${
-                      index === currentModel ? "text-gray-900" : "text-gray-500"
-                    }`}
-                  >
-                    {model.name}
-                  </span>
-                </div>
-              </motion.div>
-            ))}
+          {/* Models Grid - Showing 6 in desktop, less in mobile */}
+          <div className="px-12 md:px-16 pt-4 pb-4">
+            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 md:gap-4">
+              {models.slice(0, 6).map((model, index) => (
+                <motion.div
+                  key={model.id}
+                  onClick={() => goToModel(index)}
+                  className={`relative cursor-pointer transition-all duration-300 ${
+                    index === currentModel
+                      ? "scale-110 opacity-100"
+                      : "scale-100 opacity-60 hover:opacity-80"
+                  }`}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <div className="w-full aspect-[4/3] relative mb-2">
+                    <Image
+                      src={model.thumbnail}
+                      alt={model.name}
+                      fill
+                      className={`object-contain transition-all duration-300 ${
+                        index === currentModel ? "" : "grayscale"
+                      }`}
+                      sizes="(max-width: 768px) 33vw, (max-width: 1024px) 25vw, 16vw"
+                    />
+                  </div>
+                  <div className="text-center">
+                    <span
+                      className={`text-xs md:text-sm font-medium transition-colors duration-300 ${
+                        index === currentModel ? "text-gray-900" : "text-gray-500"
+                      }`}
+                    >
+                      {model.name}
+                    </span>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
