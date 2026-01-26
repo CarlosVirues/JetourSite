@@ -36,7 +36,7 @@ export default function VehicleFeatureSlides({ featuresData }) {
       initial={{ opacity: 0 }}
       animate={{ opacity: isInView ? 1 : 0 }}
       transition={{ duration: 1 }}
-      className="relative min-h-screen w-full overflow-hidden bg-black"
+      className="relative w-full overflow-hidden bg-black"
     >
       <AnimatePresence mode="wait">
         <motion.div
@@ -63,7 +63,7 @@ export default function VehicleFeatureSlides({ featuresData }) {
           )}
 
           {/* Content */}
-          <div className="relative z-10 h-full flex flex-col justify-between p-12 lg:p-20">
+          <div className="relative z-10 h-full flex flex-col justify-between p-6 md:p-12 lg:p-20">
             {/* Top Content - Category Title at top left */}
             <motion.div
               initial={{ opacity: 0, y: -30 }}
