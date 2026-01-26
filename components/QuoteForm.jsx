@@ -246,7 +246,7 @@ export default function QuoteForm({ currentModel = null, source = null }) {
                     key={state.values?.ciudad || ""}
                     name="ciudad"
                     defaultValue={state.values?.ciudad || ""}
-                    className="flex-1 bg-black text-white focus:outline-none" style="width:100%;"
+                    className="flex-1 bg-black text-white focus:outline-none w-full"
                     required
                   >
                     <option value="">

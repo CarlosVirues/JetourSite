@@ -9,7 +9,6 @@ import ThreeSixty from "@/components/360";
 import VehicleColors from "@/components/VehicleColors";
 import VehicleColorsNew from "@/components/VehicleColorsNew";
 import Footer from "@/components/Footer";
-import FloatingQuoteButton from "@/components/FloatingQuoteButton";
 import { getVehicleModel } from "@/lib/vehicle-models";
 import { getPageData, getVehicleModelPageData } from "@/lib/page-data";
 import TechnicalSheetButton from "@/components/TechnicalSheetButton";
@@ -155,9 +154,6 @@ export default async function VehicleModelPage({ params }) {
           />
         </div>
       )}
-
-      {/* Floating Quote Button */}
-      <FloatingQuoteButton />
 
       <Footer />
       
