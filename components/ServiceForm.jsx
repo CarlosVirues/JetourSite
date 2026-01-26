@@ -65,13 +65,15 @@ export default function ServiceForm({
 
   const modelos = [
     "x50",
-    "x70",
     "x70-plus",
     "x70-sport",
+    "dashing",
     "t1",
+    "t1-phev",
     "t2",
     "t2-phev",
-    "dashing",
+    "g700",
+    
   ];
 
   const tiposServicio = [
