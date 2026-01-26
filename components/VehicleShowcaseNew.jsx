@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function VehicleShowcaseNew() {
   const [currentModel, setCurrentModel] = useState(0);
@@ -11,67 +12,67 @@ export default function VehicleShowcaseNew() {
   const models = [
     {
       id: 1,
-      name: "X50",
-      type: "Compact SUV",
-      logo: "/models/x50/x50-logo.png",
+      name: "G700",
+      type: "Luxury Off-Road SUV",
+      logo: "/models/g700/g700-logo.png",
       mainImage:
-        "https://storage.googleapis.com/xiyimgengine/jetour/360/x50/23.png",
+        "https://storage.googleapis.com/xiyimgengine/jetour/360/g700/18.png",
       thumbnail:
-        "https://storage.googleapis.com/xiyimgengine/jetour/360/x50/23.png",
+        "https://storage.googleapis.com/xiyimgengine/jetour/360/g700/18.png",
       dimensions: {
-        length: "4500",
-        width: "1850",
-        height: "1690",
+        length: "5222",
+        width: "2005",
+        height: "2030",
       },
-      slug: "x50",
+      slug: "g700",
     },
     {
       id: 2,
-      name: "X70 Sport",
-      type: "Premium SUV",
-      logo: "/models/x70-sport/x70-sport-logo.png",
+      name: "T2 PHEV",
+      type: "Hybrid SUV",
+      logo: "/models/t2-phev/t2-phev-logo.png",
       mainImage:
-        "https://storage.googleapis.com/xiyimgengine/jetour/360/x70-sport/23.png",
+        "https://storage.googleapis.com/xiyimgengine/jetour/360/t2-phev/21.png",
       thumbnail:
-        "https://storage.googleapis.com/xiyimgengine/jetour/360/x70-sport/23.png",
+        "https://storage.googleapis.com/xiyimgengine/jetour/360/t2-phev/21.png",
       dimensions: {
-        length: "4743",
-        width: "1900",
-        height: "1720",
+        length: "4785",
+        width: "2006",
+        height: "1880",
       },
-      slug: "x70-sport",
+      slug: "t2-phev",
     },
     {
       id: 3,
-      name: "X70 Plus",
-      type: "Premium SUV",
-      logo: "/models/x70/x70-plus-logo.png",
+      name: "T2",
+      type: "Compact SUV",
+      logo: "/models/t2/t2-logo.png",
       mainImage:
-        "https://storage.googleapis.com/xiyimgengine/jetour/360/x70-plus/21.png",
+        "https://storage.googleapis.com/xiyimgengine/jetour/360/t2/19.png",
       thumbnail:
-        "https://storage.googleapis.com/xiyimgengine/jetour/360/x70-plus/21.png",
+        "https://storage.googleapis.com/xiyimgengine/jetour/360/t2/19.png",
       dimensions: {
-        length: "4724",
-        width: "1900",
-        height: "1720",
+        length: "4785",
+        width: "2006",
+        height: "1880",
       },
-      slug: "x70-plus",
+      slug: "t2",
     },
     {
       id: 4,
-      name: "Dashing",
-      type: "Electric SUV",
-      logo: "/models/dashing/dashing-logo.png",
+      name: "T1 PHEV",
+      type: "Hybrid Off-Road SUV",
+      logo: "/models/t1/t1-phev-logo.png",
       mainImage:
-        "https://storage.googleapis.com/xiyimgengine/jetour/360/dashing/22.png",
+        "https://storage.googleapis.com/xiyimgengine/jetour/360/t1-phev/22.png",
       thumbnail:
-        "https://storage.googleapis.com/xiyimgengine/jetour/360/dashing/22.png",
+        "https://storage.googleapis.com/xiyimgengine/jetour/360/t1-phev/22.png",
       dimensions: {
-        length: "4590",
-        width: "1900",
-        height: "1685",
+        length: "4705",
+        width: "1967",
+        height: "1843",
       },
-      slug: "dashing",
+      slug: "t1-phev",
     },
     {
       id: 5,
@@ -91,35 +92,67 @@ export default function VehicleShowcaseNew() {
     },
     {
       id: 6,
-      name: "T2",
-      type: "Compact SUV",
-      logo: "/models/t2/t2-logo.png",
+      name: "Dashing",
+      type: "Electric SUV",
+      logo: "/models/dashing/dashing-logo.png",
       mainImage:
-        "https://storage.googleapis.com/xiyimgengine/jetour/360/t2/19.png",
+        "https://storage.googleapis.com/xiyimgengine/jetour/360/dashing/22.png",
       thumbnail:
-        "https://storage.googleapis.com/xiyimgengine/jetour/360/t2/19.png",
+        "https://storage.googleapis.com/xiyimgengine/jetour/360/dashing/22.png",
       dimensions: {
-        length: "4785",
-        width: "2006",
-        height: "1880",
+        length: "4590",
+        width: "1900",
+        height: "1685",
       },
-      slug: "t2",
+      slug: "dashing",
     },
     {
       id: 7,
-      name: "T2 PHEV",
-      type: "Hybrid SUV",
-      logo: "/models/t2-phev/t2-phev-logo.png",
+      name: "X70 Plus",
+      type: "Premium SUV",
+      logo: "/models/x70/x70-plus-logo.png",
       mainImage:
-        "https://storage.googleapis.com/xiyimgengine/jetour/360/t2-phev/21.png",
+        "https://storage.googleapis.com/xiyimgengine/jetour/360/x70-plus/21.png",
       thumbnail:
-        "https://storage.googleapis.com/xiyimgengine/jetour/360/t2-phev/21.png",
+        "https://storage.googleapis.com/xiyimgengine/jetour/360/x70-plus/21.png",
       dimensions: {
-        length: "4785",
-        width: "2006",
-        height: "1880",
+        length: "4724",
+        width: "1900",
+        height: "1720",
       },
-      slug: "t2-phev",
+      slug: "x70-plus",
+    },
+    {
+      id: 8,
+      name: "X70 Sport",
+      type: "Premium SUV",
+      logo: "/models/x70-sport/x70-sport-logo.png",
+      mainImage:
+        "https://storage.googleapis.com/xiyimgengine/jetour/360/x70-sport/23.png",
+      thumbnail:
+        "https://storage.googleapis.com/xiyimgengine/jetour/360/x70-sport/23.png",
+      dimensions: {
+        length: "4743",
+        width: "1900",
+        height: "1720",
+      },
+      slug: "x70-sport",
+    },
+    {
+      id: 9,
+      name: "X50",
+      type: "Compact SUV",
+      logo: "/models/x50/x50-logo.png",
+      mainImage:
+        "https://storage.googleapis.com/xiyimgengine/jetour/360/x50/23.png",
+      thumbnail:
+        "https://storage.googleapis.com/xiyimgengine/jetour/360/x50/23.png",
+      dimensions: {
+        length: "4500",
+        width: "1850",
+        height: "1690",
+      },
+      slug: "x50",
     },
   ];
 
@@ -204,22 +237,24 @@ export default function VehicleShowcaseNew() {
         {/* Main Vehicle Image */}
         <div className="mt-0 md:mt-0 relative">
           <div className="flex justify-center">
-            <motion.div
-              key={currentModel}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              className="relative w-full max-w-4xl h-64 md:h-96 lg:h-[500px]"
-            >
-              <Image
-                src={currentVehicle.mainImage}
-                alt={currentVehicle.name}
-                fill
-                className="object-contain -mt-10"
-                priority
-                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 80vw, 1024px"
-              />
-            </motion.div>
+            <Link href={`/vehiculos/${currentVehicle.slug}`} className="block">
+              <motion.div
+                key={currentModel}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                className="relative w-full max-w-4xl h-64 md:h-96 lg:h-[500px] cursor-pointer hover:scale-105 transition-transform duration-300"
+              >
+                <Image
+                  src={currentVehicle.mainImage}
+                  alt={currentVehicle.name}
+                  fill
+                  className="object-contain -mt-10"
+                  priority
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 80vw, 1024px"
+                />
+              </motion.div>
+            </Link>
           </div>
         </div>
 
