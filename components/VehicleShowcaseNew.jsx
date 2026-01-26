@@ -8,7 +8,9 @@ import Link from "next/link";
 
 export default function VehicleShowcaseNew() {
   const [currentModel, setCurrentModel] = useState(0);
+  const [scrollPosition, setScrollPosition] = useState(0);
   const scrollContainerRef = useRef(null);
+  const [isPaused, setIsPaused] = useState(false);
 
   const models = [
     {
@@ -165,6 +167,22 @@ export default function VehicleShowcaseNew() {
     setCurrentModel(index);
   };
 
+  // Auto-scroll infinito
+  useEffect(() => {
+    if (!isPaused) {
+      const interval = setInterval(() => {
+        setScrollPosition((prev) => {
+          const itemWidth = 140; // Ancho aproximado de cada item con gap
+          const maxScroll = models.length * itemWidth;
+          const newPosition = prev + 1;
+          return newPosition >= maxScroll ? 0 : newPosition;
+        });
+      }, 30); // Velocidad del scroll
+
+      return () => clearInterval(interval);
+    }
+  }, [isPaused, models.length]);
+
   const currentVehicle = models[currentModel];
 
   return (
@@ -256,11 +274,13 @@ export default function VehicleShowcaseNew() {
           </div>
         </div>
 
-        {/* Model Carousel - Rotating Banner */}
+        {/* Model Carousel - Rotating Banner with Auto-Scroll */}
         <div className="-mt-20 md:-mt-20 relative overflow-hidden">
           {/* Navigation Arrows */}
           <button
             onClick={prevModel}
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
             className="absolute left-0 top-1/2 transform -translate-y-1/2 z-40 bg-white hover:bg-gray-50 text-gray-800 p-3 md:p-4 rounded-full shadow-xl transition-all duration-300 hover:scale-110 active:scale-95"
             aria-label="Modelo anterior"
           >
@@ -269,49 +289,63 @@ export default function VehicleShowcaseNew() {
 
           <button
             onClick={nextModel}
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
             className="absolute right-0 top-1/2 transform -translate-y-1/2 z-40 bg-white hover:bg-gray-50 text-gray-800 p-3 md:p-4 rounded-full shadow-xl transition-all duration-300 hover:scale-110 active:scale-95"
             aria-label="Modelo siguiente"
           >
             <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
           </button>
 
-          {/* Models Grid - Showing 6 in desktop, less in mobile */}
-          <div className="px-12 md:px-16 pt-4 pb-4">
-            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 md:gap-4">
-              {models.slice(0, 6).map((model, index) => (
-                <motion.div
-                  key={model.id}
-                  onClick={() => goToModel(index)}
-                  className={`relative cursor-pointer transition-all duration-300 ${
-                    index === currentModel
-                      ? "scale-110 opacity-100"
-                      : "scale-100 opacity-60 hover:opacity-80"
-                  }`}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <div className="w-full aspect-[4/3] relative mb-2">
-                    <Image
-                      src={model.thumbnail}
-                      alt={model.name}
-                      fill
-                      className={`object-contain transition-all duration-300 ${
-                        index === currentModel ? "" : "grayscale"
-                      }`}
-                      sizes="(max-width: 768px) 33vw, (max-width: 1024px) 25vw, 16vw"
-                    />
+          {/* Models Scrolling Container */}
+          <div 
+            className="px-12 md:px-16 pt-4 pb-4"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+          >
+            <div 
+              className="flex gap-3 md:gap-4"
+              style={{
+                transform: `translateX(-${scrollPosition}px)`,
+                transition: 'transform 0.05s linear'
+              }}
+            >
+              {/* Duplicar modelos para loop infinito */}
+              {[...models, ...models, ...models].map((model, idx) => {
+                const originalIndex = idx % models.length;
+                return (
+                  <div
+                    key={`${model.id}-${idx}`}
+                    onClick={() => goToModel(originalIndex)}
+                    className={`relative cursor-pointer transition-all duration-300 flex-shrink-0 w-[80px] md:w-[120px] ${
+                      originalIndex === currentModel
+                        ? "scale-110 opacity-100"
+                        : "scale-100 opacity-60 hover:opacity-80"
+                    }`}
+                  >
+                    <div className="w-full aspect-[4/3] relative mb-2">
+                      <Image
+                        src={model.thumbnail}
+                        alt={model.name}
+                        fill
+                        className={`object-contain transition-all duration-300 ${
+                          originalIndex === currentModel ? "" : "grayscale"
+                        }`}
+                        sizes="(max-width: 768px) 80px, 120px"
+                      />
+                    </div>
+                    <div className="text-center">
+                      <span
+                        className={`text-xs md:text-sm font-medium transition-colors duration-300 ${
+                          originalIndex === currentModel ? "text-gray-900" : "text-gray-500"
+                        }`}
+                      >
+                        {model.name}
+                      </span>
+                    </div>
                   </div>
-                  <div className="text-center">
-                    <span
-                      className={`text-xs md:text-sm font-medium transition-colors duration-300 ${
-                        index === currentModel ? "text-gray-900" : "text-gray-500"
-                      }`}
-                    >
-                      {model.name}
-                    </span>
-                  </div>
-                </motion.div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
