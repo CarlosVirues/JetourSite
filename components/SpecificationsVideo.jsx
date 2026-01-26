@@ -82,12 +82,12 @@ export default function SpecificationsVideo({
               initial={{ opacity: 0, y: -30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="mb-8 md:mb-12"
+              className="mb-4 md:mb-6"
             >
               <img
                 src={logoImage}
                 alt={logoAlt || `${model} Logo`}
-                className="w-[180px] md:w-[250px] lg:w-[300px] max-w-[90%] h-auto mx-auto"
+                className="w-[120px] md:w-[180px] lg:w-[220px] max-w-[80%] h-auto mx-auto"
               />
             </motion.div>
           )}
@@ -99,7 +99,7 @@ export default function SpecificationsVideo({
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
             >
-              <p className="text-white text-lg md:text-2xl lg:text-3xl font-medium leading-normal px-4">
+              <p className="text-white text-sm md:text-lg lg:text-xl font-medium leading-tight px-4">
                 {description}
               </p>
             </motion.div>
