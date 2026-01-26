@@ -9,7 +9,8 @@ export default function SpecificationsVideo({
   title = "Especificaciones técnicas",
   model = "",
   logoImage,
-  logoAlt
+  logoAlt,
+  description = ""
 }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const videoRef = useRef(null);
@@ -72,22 +73,39 @@ export default function SpecificationsVideo({
       {/* Overlay con gradiente sutil */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-black/30" />
 
-      {/* Logo del modelo */}
-      {logoImage && (
-        <div className="absolute top-8 left-8 md:top-12 md:left-12 z-20">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-          >
-            <img
-              src={logoImage}
-              alt={logoAlt || `${model} Logo`}
-              className="w-[150px] md:w-[200px] lg:w-[250px] max-w-[300px] h-auto"
-            />
-          </motion.div>
+      {/* Contenido centrado */}
+      <div className="absolute inset-0 flex items-center justify-center z-20">
+        <div className="w-full max-w-[900px] px-8 md:px-12 text-center">
+          {/* Logo del modelo */}
+          {logoImage && (
+            <motion.div
+              initial={{ opacity: 0, y: -30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="mb-8 md:mb-12"
+            >
+              <img
+                src={logoImage}
+                alt={logoAlt || `${model} Logo`}
+                className="w-[180px] md:w-[250px] lg:w-[300px] max-w-[90%] h-auto mx-auto"
+              />
+            </motion.div>
+          )}
+          
+          {/* Texto descriptivo */}
+          {description && (
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+            >
+              <p className="text-white text-xl md:text-3xl lg:text-4xl font-medium leading-relaxed px-4">
+                {description}
+              </p>
+            </motion.div>
+          )}
         </div>
-      )}
+      </div>
 
       {/* Control de reproducción */}
       <button
