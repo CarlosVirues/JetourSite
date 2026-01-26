@@ -31,7 +31,7 @@ export default function VehicleColorsNew({ colorsData }) {
           alt="Background"
           fill
           className="object-cover"
-          style={{ objectPosition: '50% 20%' }}
+          style={{ objectPosition: '50% 40%' }}
           priority
         />
       </div>
@@ -94,7 +94,7 @@ export default function VehicleColorsNew({ colorsData }) {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: isInView ? 1 : 0, scale: isInView ? 1 : 0.9 }}
             transition={{ duration: 1, delay: 0.4 }}
-            className="relative w-full max-w-5xl h-[300px] md:h-[400px] lg:h-[500px]"
+            className="relative w-full max-w-5xl h-[300px] md:h-[400px] lg:h-[500px] mt-12 md:mt-16 lg:mt-20"
           >
             {/* Vehicle Image */}
             <Image
