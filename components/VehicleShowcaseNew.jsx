@@ -279,11 +279,11 @@ export default function VehicleShowcaseNew() {
           </button>
 
           {/* Models Scrolling Container */}
-          <div className="px-12 md:px-16 pt-4 pb-4">
+          <div className="px-12 md:px-16 lg:px-20 pt-4 pb-4">
             <div 
-              className="flex gap-3 md:gap-4 transition-transform duration-500 ease-out"
+              className="flex gap-2 md:gap-3 lg:gap-4 transition-transform duration-500 ease-out"
               style={{
-                transform: `translateX(-${carouselIndex * (96 + 12)}px)` // 96px (w-24) + 12px (gap-3)
+                transform: `translateX(-${carouselIndex * 110}px)` // Ajustado para scroll suave
               }}
             >
               {/* Duplicar modelos 3 veces para loop infinito suave */}
@@ -293,7 +293,7 @@ export default function VehicleShowcaseNew() {
                   <div
                     key={`${model.id}-${idx}`}
                     onClick={() => goToModel(originalIndex)}
-                    className={`relative cursor-pointer transition-all duration-300 flex-shrink-0 w-20 md:w-24 ${
+                    className={`relative cursor-pointer transition-all duration-300 flex-shrink-0 w-20 sm:w-24 md:w-28 lg:w-32 xl:w-36 ${
                       originalIndex === currentModel
                         ? "scale-110 opacity-100"
                         : "scale-100 opacity-60 hover:opacity-80"
@@ -307,7 +307,7 @@ export default function VehicleShowcaseNew() {
                         className={`object-contain transition-all duration-300 ${
                           originalIndex === currentModel ? "" : "grayscale"
                         }`}
-                        sizes="(max-width: 768px) 80px, 96px"
+                        sizes="(max-width: 640px) 80px, (max-width: 768px) 96px, (max-width: 1024px) 112px, (max-width: 1280px) 128px, 144px"
                       />
                     </div>
                     <div className="text-center">
