@@ -111,8 +111,10 @@ export default function Footer() {
                 { href: "/vehiculos/x70-plus", label: "X70 Plus" },
                 { href: "/vehiculos/dashing", label: "Dashing" },
                 { href: "/vehiculos/t1", label: "T1" },
+                { href: "/vehiculos/t1-phev", label: "T1 PHEV" },
                 { href: "/vehiculos/t2", label: "T2" },
                 { href: "/vehiculos/t2-phev", label: "T2 PHEV" },
+                { href: "/vehiculos/g700", label: "G700" },
               ].map((link, index) => (
                 <motion.li
                   key={link.href}
