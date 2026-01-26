@@ -235,21 +235,22 @@ export default function VehicleShowcaseNew() {
         </div>
 
         {/* Main Vehicle Image */}
-        <div className="mt-0 md:mt-0 relative">
+        <div className="mt-4 md:mt-6 relative">
           <div className="flex justify-center">
-            <Link href={`/vehiculos/${currentVehicle.slug}`} className="block">
+            <Link href={`/vehiculos/${currentVehicle.slug}`} className="block w-full max-w-4xl">
               <motion.div
                 key={currentModel}
-                initial={{ opacity: 0, scale: 0.9 }}
+                initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
-                className="relative w-full max-w-4xl h-64 md:h-96 lg:h-[500px] cursor-pointer hover:scale-105 transition-transform duration-300"
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                className="relative w-full h-64 md:h-96 lg:h-[500px] cursor-pointer group"
               >
                 <Image
+                  key={currentVehicle.slug}
                   src={currentVehicle.mainImage}
                   alt={currentVehicle.name}
                   fill
-                  className="object-contain -mt-10"
+                  className="object-contain transition-transform duration-300 group-hover:scale-105"
                   priority
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 80vw, 1024px"
                 />
