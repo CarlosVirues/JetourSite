@@ -18,7 +18,7 @@ export default function Hero({
 }) {
   // Ajustar altura para móvil si tiene imagen adicional
   const adjustedHeight = additionalImage 
-    ? height?.replace('h-96', 'h-[600px]').replace('h-[500px]', 'h-[600px]') 
+    ? height?.replace('h-96', 'h-screen').replace('h-[500px]', 'h-screen').replace('h-[600px]', 'h-screen').replace('lg:h-[800px]', 'h-screen') 
     : height;
 
   return (
@@ -26,7 +26,7 @@ export default function Hero({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
-      className={`relative ${adjustedHeight || 'h-[600px] lg:h-[800px]'} w-full overflow-hidden bg-gradient-to-br from-slate-900 via-black to-slate-800`}
+      className={`relative ${adjustedHeight || 'h-screen'} w-full overflow-hidden bg-gradient-to-br from-slate-900 via-black to-slate-800`}
     >
       {/* Background Image/Video */}
       <div className="absolute inset-0">
@@ -62,7 +62,7 @@ export default function Hero({
 
       {/* Main Content */}
       <div
-        className={`relative z-20 flex flex-col items-center justify-center ${adjustedHeight || 'h-[600px] lg:h-[800px]'} px-6 lg:px-12`}
+        className={`relative z-20 flex flex-col items-center justify-center ${adjustedHeight || 'h-screen'} px-6 lg:px-12`}
       >
         <div className="text-center max-w-4xl mx-auto w-full">
           {/* Main JETOUR Logo/Text - Optional */}
