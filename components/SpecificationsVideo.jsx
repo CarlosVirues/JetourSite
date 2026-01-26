@@ -99,7 +99,7 @@ export default function SpecificationsVideo({
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
             >
-              <p className="text-white text-xl md:text-3xl lg:text-4xl font-medium leading-relaxed px-4">
+              <p className="text-white text-lg md:text-2xl lg:text-3xl font-medium leading-normal px-4">
                 {description}
               </p>
             </motion.div>
