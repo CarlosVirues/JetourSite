@@ -280,7 +280,7 @@ export default function VehicleShowcaseNew() {
           </motion.button>
 
           {/* Models Grid */}
-          <div className="flex justify-center space-x-4 md:space-x-8 px-8 md:px-16 overflow-x-auto pt-4">
+          <div className="flex justify-center space-x-2 md:space-x-4 px-4 md:px-8 overflow-x-auto pt-4 pb-4">
             {models.map((model, index) => (
               <motion.div
                 key={model.id}
@@ -293,17 +293,17 @@ export default function VehicleShowcaseNew() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <div className="w-16 h-12 md:w-24 md:h-16 relative mb-2">
+                <div className="w-20 h-16 md:w-32 md:h-20 relative mb-2">
                   <Image
                     src={model.thumbnail}
                     alt={model.name}
                     fill
-                    className={`object-cover rounded-lg transition-all duration-300 ${
+                    className={`object-contain transition-all duration-300 ${
                       index === currentModel
-                        ? "ring-2 ring-gray-800"
+                        ? ""
                         : "grayscale"
                     }`}
-                    sizes="(max-width: 768px) 64px, 96px"
+                    sizes="(max-width: 768px) 80px, 128px"
                   />
                 </div>
                 <div className="text-center">
