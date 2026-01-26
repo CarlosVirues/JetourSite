@@ -3,7 +3,6 @@
 import { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
-import { ChevronDown } from "lucide-react";
 
 export default function VehicleColorsNew({ colorsData }) {
   const [activeColor, setActiveColor] = useState(0);
@@ -157,21 +156,6 @@ export default function VehicleColorsNew({ colorsData }) {
           </div>
         </motion.div>
 
-        {/* Scroll Indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: isInView ? 1 : 0 }}
-          transition={{ duration: 1, delay: 1.2 }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        >
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="flex flex-col items-center gap-2 text-white/60"
-          >
-            <ChevronDown className="w-8 h-8" />
-          </motion.div>
-        </motion.div>
       </div>
     </motion.section>
   );
