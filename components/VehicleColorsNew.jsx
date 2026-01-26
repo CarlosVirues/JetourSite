@@ -30,8 +30,8 @@ export default function VehicleColorsNew({ colorsData }) {
           src="/bg-360.jpg"
           alt="Background"
           fill
-          className="object-cover object-bottom"
-          style={{ objectPosition: '50% 50%' }}
+          className="object-cover"
+          style={{ objectPosition: '50% 35%' }}
           priority
         />
       </div>
@@ -54,7 +54,7 @@ export default function VehicleColorsNew({ colorsData }) {
         </motion.div>
 
         {/* Main Content */}
-        <div className="flex-1 flex flex-col items-center justify-center px-8 lg:px-20 pb-10 lg:pb-20">
+        <div className="flex-1 flex flex-col items-center justify-center px-8 lg:px-20 pb-4 md:pb-10 lg:pb-20">
           {/* Color Selectors - Horizontal on mobile, above car */}
           <motion.div
             initial={{ opacity: 0, y: -50 }}
@@ -147,7 +147,7 @@ export default function VehicleColorsNew({ colorsData }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 20 }}
           transition={{ duration: 0.8, delay: 0.8 }}
-          className="text-center pb-8 lg:pb-16 mt-4 lg:mt-0"
+          className="text-center pb-4 md:pb-8 lg:pb-16 mt-2 md:mt-4 lg:mt-0"
         >
           <div className="inline-block">
             <h3 className="text-xl md:text-2xl lg:text-3xl font-medium text-white mb-2">
