@@ -237,7 +237,7 @@ export default function VehicleShowcaseNew() {
         {/* Main Vehicle Image */}
         <div className="mt-4 md:mt-6 relative">
           <div className="flex justify-center">
-            <Link href={`/vehiculos/${currentVehicle.slug}`} className="block w-full max-w-4xl">
+            <Link href={`/vehiculos/${currentVehicle.slug}`} className="block w-full max-w-4xl cursor-pointer">
               <motion.div
                 key={currentModel}
                 initial={{ opacity: 0, scale: 0.95 }}
