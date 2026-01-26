@@ -38,13 +38,6 @@ export default function PostventaPage() {
         </div>
       </section>
 
-      {/* WhatsApp Info Button */}
-      <div className="bg-black py-8 flex justify-center">
-        <WhatsAppInfoButton 
-          message="Hola, estoy interesado en los servicios de posventa y mantenimiento para mi Jetour, por favor ayúdenme con mayor información."
-        />
-      </div>
-
 {/* Service Form */}
       <div className="px-4 md:px-8 lg:px-16 py-12">
               <div className="max-w-7xl mx-auto px-6 lg:px-12">
@@ -77,6 +70,9 @@ export default function PostventaPage() {
       <WhatsAppCTA />
 
       <Footer />
+      
+      {/* Floating WhatsApp Button */}
+      <WhatsAppInfoButton />
     </div>
   );
 }

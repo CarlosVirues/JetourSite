@@ -39,13 +39,6 @@ export default async function ConcesionariosPage() {
         </div>
       </section>
 
-      {/* WhatsApp Info Button */}
-      <div className="bg-black py-8 flex justify-center">
-        <WhatsAppInfoButton 
-          message="Hola, estoy interesado en visitar uno de sus concesionarios, por favor ayúdenme con información sobre sus ubicaciones y horarios."
-        />
-      </div>
-
       {/* Main Content Area */}
       <section className="bg-black py-16 lg:py-24">
         <ConcesionariosMap
@@ -58,6 +51,9 @@ export default async function ConcesionariosPage() {
       <RoldanSection {...(homeData?.roldanSection || pageData.roldanSection)} />
 
       <Footer />
+      
+      {/* Floating WhatsApp Button */}
+      <WhatsAppInfoButton />
     </div>
   );
 }

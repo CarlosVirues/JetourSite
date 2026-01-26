@@ -29,13 +29,6 @@ export default async function HomePage() {
         additionalImageAlt="2026 Life is a Ride"
       />}
 
-      {/* WhatsApp Info Button */}
-      <div className="bg-black py-8 flex justify-center">
-        <WhatsAppInfoButton 
-          message="Hola, estoy interesado en conocer más sobre los vehículos Jetour, por favor ayúdenme con mayor información."
-        />
-      </div>
-
       {/* Vehicle Showcase Section */}
       <VehicleShowcaseNew />
 
@@ -52,6 +45,9 @@ export default async function HomePage() {
       <QuoteForm {...pageData.quoteForm} currentModel={null} source="home" />
 
       <Footer />
+      
+      {/* Floating WhatsApp Button */}
+      <WhatsAppInfoButton />
     </div>
   );
 }

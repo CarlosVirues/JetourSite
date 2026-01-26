@@ -37,13 +37,6 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* WhatsApp Info Button */}
-      <div className="bg-black py-8 flex justify-center">
-        <WhatsAppInfoButton 
-          message="Hola, estoy interesado en realizar una consulta general con un asesor, por favor ayúdenme con mayor información."
-        />
-      </div>
-
       {/* Main Content Area */}
       <section className="bg-black py-16 lg:py-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
@@ -62,6 +55,9 @@ export default function ContactPage() {
       </section>
 
       <Footer />
+      
+      {/* Floating WhatsApp Button */}
+      <WhatsAppInfoButton />
     </div>
   );
 }

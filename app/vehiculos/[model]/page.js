@@ -74,13 +74,6 @@ export default async function VehicleModelPage({ params }) {
         />
       )}
 
-      {/* WhatsApp Info Button */}
-      <div className="bg-black py-8 flex justify-center">
-        <WhatsAppInfoButton 
-          message={`Hola, estoy interesado en el modelo ${modelPageData.hero?.vehicleName || model.toUpperCase()}, por favor ayúdenme con mayor información y disponibilidad.`}
-        />
-      </div>
-
       {/* Vehicle Features Section */}
       {/*
       {hasModules.features && (
@@ -167,6 +160,9 @@ export default async function VehicleModelPage({ params }) {
       <FloatingQuoteButton />
 
       <Footer />
+      
+      {/* Floating WhatsApp Button */}
+      <WhatsAppInfoButton modelName={modelPageData.hero?.vehicleName || model.toUpperCase()} />
     </div>
   );
 }
