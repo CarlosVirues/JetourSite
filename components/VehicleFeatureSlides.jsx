@@ -45,7 +45,7 @@ export default function VehicleFeatureSlides({ featuresData }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
-          className="relative h-screen w-full"
+          className="relative h-[60vh] md:h-[80vh] lg:h-screen w-full"
         >
           {/* Background Image */}
           {currentSlide.backgroundImage && (
@@ -123,70 +123,43 @@ export default function VehicleFeatureSlides({ featuresData }) {
               )}
             </motion.div>
 
-            {/* Navigation Arrows - Positioned at sides of screen */}
-            <motion.button
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={handlePrevSlide}
-              disabled={activeSlide === 0}
-              className={`absolute left-8 top-1/2 -translate-y-1/2 w-16 h-16 rounded-full flex items-center justify-center transition-all duration-300 ${
-                activeSlide === 0
-                  ? "bg-white/5 text-gray-500 cursor-not-allowed"
-                  : "bg-white/10 hover:bg-white/20 text-white backdrop-blur-sm"
-              }`}
-              aria-label="Slide anterior"
-            >
-              <ChevronLeft className="w-8 h-8" />
-            </motion.button>
+            {/* Navigation Arrows - Only show if there are multiple slides */}
+            {featuresData.slides.length > 1 && (
+              <>
+                {activeSlide > 0 && (
+                  <motion.button
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -30 }}
+                    transition={{ duration: 0.8, delay: 0.3 }}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={handlePrevSlide}
+                    className="absolute left-8 top-1/2 -translate-y-1/2 w-16 h-16 rounded-full flex items-center justify-center transition-all duration-300 bg-white/10 hover:bg-white/20 text-white backdrop-blur-sm"
+                    aria-label="Slide anterior"
+                  >
+                    <ChevronLeft className="w-8 h-8" />
+                  </motion.button>
+                )}
 
-            <motion.button
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={handleNextSlide}
-              disabled={activeSlide === featuresData.slides.length - 1}
-              className={`absolute right-8 top-1/2 -translate-y-1/2 w-16 h-16 rounded-full flex items-center justify-center transition-all duration-300 ${
-                activeSlide === featuresData.slides.length - 1
-                  ? "bg-white/5 text-gray-500 cursor-not-allowed"
-                  : "bg-white/10 hover:bg-white/20 text-white backdrop-blur-sm"
-              }`}
-              aria-label="Siguiente slide"
-            >
-              <ChevronRight className="w-8 h-8" />
-            </motion.button>
-
-            {/* Next Slide Preview - Bottom right - Hidden on mobile */}
-            {nextSlide && (
-              <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.6 }}
-                className="absolute bottom-12 right-12 lg:bottom-20 lg:right-20 [display:none] [@media(min-width:801px)]:[display:block]"
-              >
-                <div 
-                  className="relative group cursor-pointer"
-                  onClick={handleNextSlide}
-                >
-                  <div className="relative w-48 h-32 lg:w-64 lg:h-40 rounded-lg overflow-hidden border-2 border-white/20 transition-all duration-300 group-hover:border-white/40 shadow-2xl">
-                    <Image
-                      src={nextSlide.backgroundImage}
-                      alt="Siguiente"
-                      fill
-                      className="object-cover"
-                    />
-                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors" />
-                    <div className="absolute bottom-2 right-2">
-                      <Expand className="w-5 h-5 text-white opacity-70 group-hover:opacity-100 transition-opacity" />
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
+                {activeSlide < featuresData.slides.length - 1 && (
+                  <motion.button
+                    initial={{ opacity: 0, x: 30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 30 }}
+                    transition={{ duration: 0.8, delay: 0.3 }}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={handleNextSlide}
+                    className="absolute right-8 top-1/2 -translate-y-1/2 w-16 h-16 rounded-full flex items-center justify-center transition-all duration-300 bg-white/10 hover:bg-white/20 text-white backdrop-blur-sm"
+                    aria-label="Siguiente slide"
+                  >
+                    <ChevronRight className="w-8 h-8" />
+                  </motion.button>
+                )}
+              </>
             )}
+
           </div>
 
           {/* Scroll Indicator - Bottom center */}
