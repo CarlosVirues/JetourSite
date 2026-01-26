@@ -6,6 +6,7 @@ import RoldanSection from "@/components/RoldanSection";
 import VideoGallery from "@/components/VideoGallery";
 import QuoteForm from "@/components/QuoteForm";
 import Footer from "@/components/Footer";
+import WhatsAppInfoButton from "@/components/WhatsAppInfoButton";
 import Image from "next/image";
 import { getPageData } from "@/lib/page-data";
 import { getHomePageData } from "@/lib/sanity";
@@ -27,6 +28,13 @@ export default async function HomePage() {
         additionalImage="/2026-life-is-a-ride.png"
         additionalImageAlt="2026 Life is a Ride"
       />}
+
+      {/* WhatsApp Info Button */}
+      <div className="bg-black py-8 flex justify-center">
+        <WhatsAppInfoButton 
+          message="Hola, estoy interesado en conocer más sobre los vehículos Jetour, por favor ayúdenme con mayor información."
+        />
+      </div>
 
       {/* Vehicle Showcase Section */}
       <VehicleShowcaseNew />

@@ -15,6 +15,7 @@ import { getPageData, getVehicleModelPageData } from "@/lib/page-data";
 import TechnicalSheetButton from "@/components/TechnicalSheetButton";
 import SpecificationsVideo from "@/components/SpecificationsVideo";
 import VehicleFeatureSlides from "@/components/VehicleFeatureSlides";
+import WhatsAppInfoButton from "@/components/WhatsAppInfoButton";
 
 export async function generateMetadata({ params }) {
   const pageParams = await params;
@@ -72,6 +73,13 @@ export default async function VehicleModelPage({ params }) {
           highlights={modelPageData.hero.highlights}
         />
       )}
+
+      {/* WhatsApp Info Button */}
+      <div className="bg-black py-8 flex justify-center">
+        <WhatsAppInfoButton 
+          message={`Hola, estoy interesado en el modelo ${modelPageData.hero?.vehicleName || model.toUpperCase()}, por favor ayúdenme con mayor información y disponibilidad.`}
+        />
+      </div>
 
       {/* Vehicle Features Section */}
       {/*

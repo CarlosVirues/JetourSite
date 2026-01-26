@@ -3,6 +3,7 @@ import ConcesionariosMap from "@/components/ConcesionariosMap";
 import Footer from "@/components/Footer";
 import Image from "next/image";
 import RoldanSection from "@/components/RoldanSection";
+import WhatsAppInfoButton from "@/components/WhatsAppInfoButton";
 import { getPageData } from "@/lib/page-data";
 import { getConcesionariosPageData, getHomePageData } from "@/lib/sanity";
 
@@ -37,6 +38,13 @@ export default async function ConcesionariosPage() {
           </div>
         </div>
       </section>
+
+      {/* WhatsApp Info Button */}
+      <div className="bg-black py-8 flex justify-center">
+        <WhatsAppInfoButton 
+          message="Hola, estoy interesado en visitar uno de sus concesionarios, por favor ayúdenme con información sobre sus ubicaciones y horarios."
+        />
+      </div>
 
       {/* Main Content Area */}
       <section className="bg-black py-16 lg:py-24">

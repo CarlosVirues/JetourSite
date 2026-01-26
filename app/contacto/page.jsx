@@ -3,6 +3,7 @@ import ContactInfo from "@/components/ContactInfo";
 import ContactForm from "@/components/ContactForm";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
+import WhatsAppInfoButton from "@/components/WhatsAppInfoButton";
 import { getPageData } from "@/lib/page-data";
 import Image from "next/image";
 
@@ -35,6 +36,13 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+
+      {/* WhatsApp Info Button */}
+      <div className="bg-black py-8 flex justify-center">
+        <WhatsAppInfoButton 
+          message="Hola, estoy interesado en realizar una consulta general con un asesor, por favor ayúdenme con mayor información."
+        />
+      </div>
 
       {/* Main Content Area */}
       <section className="bg-black py-16 lg:py-24">

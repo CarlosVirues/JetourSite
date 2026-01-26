@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import ServiceHero from "@/components/ServiceHero";
 import OriginalParts from "@/components/OriginalParts";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
+import WhatsAppInfoButton from "@/components/WhatsAppInfoButton";
 // import ServiceCenters from "@/components/ServiceCenters";
 // import ServiceTestimonials from "@/components/ServiceTestimonials";
 import ServiceForm from "@/components/ServiceForm";
@@ -36,6 +37,13 @@ export default function PostventaPage() {
           </div>
         </div>
       </section>
+
+      {/* WhatsApp Info Button */}
+      <div className="bg-black py-8 flex justify-center">
+        <WhatsAppInfoButton 
+          message="Hola, estoy interesado en los servicios de posventa y mantenimiento para mi Jetour, por favor ayúdenme con mayor información."
+        />
+      </div>
 
 {/* Service Form */}
       <div className="px-4 md:px-8 lg:px-16 py-12">
