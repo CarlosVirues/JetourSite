@@ -55,30 +55,12 @@ export default function VehicleColorsNew({ colorsData }) {
 
         {/* Main Content */}
         <div className="flex-1 flex flex-col items-center justify-center px-8 lg:px-20 pb-10 lg:pb-20">
-          {/* Vehicle Image Container */}
+          {/* Color Selectors - Horizontal on mobile, above car */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: isInView ? 1 : 0, scale: isInView ? 1 : 0.9 }}
-            transition={{ duration: 1, delay: 0.4 }}
-            className="relative w-full max-w-5xl h-[300px] md:h-[400px] lg:h-[500px]"
-          >
-            {/* Vehicle Image */}
-            <Image
-              src={currentColor.image}
-              alt={`${colorsData.modelName} en color ${currentColor.name}`}
-              fill
-              className="object-contain z-10"
-              priority
-              sizes="(max-width: 768px) 100vw, 80vw"
-            />
-          </motion.div>
-
-          {/* Color Selectors - Horizontal on mobile, Vertical on desktop */}
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 0 }}
             transition={{ duration: 1, delay: 0.6 }}
-            className="flex flex-row gap-3 mt-8 lg:hidden"
+            className="flex flex-row gap-3 mb-8 lg:hidden"
           >
             {colorsData.colors.map((color, index) => (
               <motion.button
@@ -105,6 +87,24 @@ export default function VehicleColorsNew({ colorsData }) {
                 )}
               </motion.button>
             ))}
+          </motion.div>
+
+          {/* Vehicle Image Container */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: isInView ? 1 : 0, scale: isInView ? 1 : 0.9 }}
+            transition={{ duration: 1, delay: 0.4 }}
+            className="relative w-full max-w-5xl h-[300px] md:h-[400px] lg:h-[500px]"
+          >
+            {/* Vehicle Image */}
+            <Image
+              src={currentColor.image}
+              alt={`${colorsData.modelName} en color ${currentColor.name}`}
+              fill
+              className="object-contain z-10"
+              priority
+              sizes="(max-width: 768px) 100vw, 80vw"
+            />
           </motion.div>
 
           {/* Color Selectors - Desktop (absolute position) */}
