@@ -261,23 +261,21 @@ export default function VehicleShowcaseNew() {
         {/* Model Carousel */}
         <div className="-mt-20 md:-mt-20 relative">
           {/* Navigation Arrows */}
-          <motion.button
+          <button
             onClick={prevModel}
-            className="absolute left-0 top-1/2 transform -translate-y-1/2 z-30 bg-white hover:bg-gray-50 text-gray-800 p-2 md:p-3 rounded-full shadow-lg transition-all duration-300"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
+            className="absolute left-0 top-1/2 transform -translate-y-1/2 z-40 bg-white hover:bg-gray-50 text-gray-800 p-3 md:p-4 rounded-full shadow-xl transition-all duration-300 hover:scale-110 active:scale-95"
+            aria-label="Modelo anterior"
           >
-            <ChevronLeft className="w-4 h-4 md:w-6 md:h-6" />
-          </motion.button>
+            <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
+          </button>
 
-          <motion.button
+          <button
             onClick={nextModel}
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 z-30 bg-white hover:bg-gray-50 text-gray-800 p-2 md:p-3 rounded-full shadow-lg transition-all duration-300"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 z-40 bg-white hover:bg-gray-50 text-gray-800 p-3 md:p-4 rounded-full shadow-xl transition-all duration-300 hover:scale-110 active:scale-95"
+            aria-label="Modelo siguiente"
           >
-            <ChevronRight className="w-4 h-4 md:w-6 md:h-6" />
-          </motion.button>
+            <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
+          </button>
 
           {/* Models Grid */}
           <div className="flex justify-center space-x-2 md:space-x-4 px-4 md:px-8 overflow-x-auto pt-4 pb-4">
