@@ -160,13 +160,13 @@ export default function VehicleFeatureSlides({ featuresData }) {
               <ChevronRight className="w-8 h-8" />
             </motion.button>
 
-            {/* Next Slide Preview - Bottom right */}
+            {/* Next Slide Preview - Bottom right - Hidden on mobile */}
             {nextSlide && (
               <motion.div
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
-                className="absolute bottom-12 right-12 lg:bottom-20 lg:right-20"
+                className="absolute bottom-12 right-12 lg:bottom-20 lg:right-20 [display:none] [@media(min-width:801px)]:[display:block]"
               >
                 <div 
                   className="relative group cursor-pointer"
