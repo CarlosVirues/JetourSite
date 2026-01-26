@@ -129,6 +129,9 @@ export default function ServiceForm({
       <form action={formAction} noValidate className="space-y-6">
         {/* Nombre */}
         <div>
+          <label htmlFor="nombre" className="block text-white text-sm font-medium mb-2">
+            Nombre y Apellido
+          </label>
           <div
             className={`flex items-center border-b pb-2 ${
               state.errors?.nombre ? "border-red-500" : "border-blue-500"
@@ -141,10 +144,11 @@ export default function ServiceForm({
             />
             <Input
               type="text"
+              id="nombre"
               name="nombre"
               defaultValue={state.values?.nombre || ""}
-              placeholder="Nombre y apellido"
-              className="bg-transparent border-none text-white placeholder:text-gray-300 focus:ring-0 focus:border-none p-0"
+              placeholder="Ej: Juan Pérez"
+              className="bg-transparent border-none text-white placeholder:text-gray-400 focus:ring-0 focus:border-none p-0"
               required
             />
           </div>
@@ -157,6 +161,9 @@ export default function ServiceForm({
 
         {/* Email */}
         <div>
+          <label htmlFor="email" className="block text-white text-sm font-medium mb-2">
+            Correo Electrónico
+          </label>
           <div
             className={`flex items-center border-b pb-2 ${
               state.errors?.email ? "border-red-500" : "border-blue-500"
@@ -169,10 +176,11 @@ export default function ServiceForm({
             />
             <Input
               type="email"
+              id="email"
               name="email"
               defaultValue={state.values?.email || ""}
-              placeholder="Correo electrónico"
-              className="bg-transparent border-none text-white placeholder:text-gray-300 focus:ring-0 focus:border-none p-0"
+              placeholder="Ej: correo@ejemplo.com"
+              className="bg-transparent border-none text-white placeholder:text-gray-400 focus:ring-0 focus:border-none p-0"
               required
             />
           </div>
@@ -185,6 +193,9 @@ export default function ServiceForm({
 
          {/* Teléfono */}
         <div>
+          <label htmlFor="telefono" className="block text-white text-sm font-medium mb-2">
+            Teléfono
+          </label>
           <div
             className={`flex items-center border-b pb-2 ${
               state.errors?.telefono ? "border-red-500" : "border-blue-500"
@@ -197,10 +208,11 @@ export default function ServiceForm({
             />
             <Input
               type="tel"
+              id="telefono"
               name="telefono"
               defaultValue={state.values?.telefono || ""}
-              placeholder="Teléfono"
-              className="bg-transparent border-none text-white placeholder:text-gray-300 focus:ring-0 focus:border-none p-0"
+              placeholder="Ej: 0991234567"
+              className="bg-transparent border-none text-white placeholder:text-gray-400 focus:ring-0 focus:border-none p-0"
               required
             />
           </div>
@@ -213,6 +225,9 @@ export default function ServiceForm({
 
         {/* Cédula / RUC */}
         <div>
+          <label htmlFor="cedulaRuc" className="block text-white text-sm font-medium mb-2">
+            Cédula o RUC
+          </label>
           <div
             className={`flex items-center border-b pb-2 ${
               state.errors?.cedulaRuc ? "border-red-500" : "border-blue-500"
@@ -225,10 +240,11 @@ export default function ServiceForm({
             />
             <Input
               type="text"
+              id="cedulaRuc"
               name="cedulaRuc"
               defaultValue={state.values?.cedulaRuc || ""}
-              placeholder="Cédula o RUC"
-              className="bg-transparent border-none text-white placeholder:text-gray-300 focus:ring-0 focus:border-none p-0"
+              placeholder="Ej: 0123456789 o 1234567890001"
+              className="bg-transparent border-none text-white placeholder:text-gray-400 focus:ring-0 focus:border-none p-0"
               required
             />
           </div>
@@ -323,6 +339,9 @@ export default function ServiceForm({
 
         {/* Placa */}
         <div>
+          <label htmlFor="placa" className="block text-white text-sm font-medium mb-2">
+            Placa del Vehículo
+          </label>
           <div
             className={`flex items-center border-b pb-2 ${
               state.errors?.placa ? "border-red-500" : "border-blue-500"
@@ -335,10 +354,11 @@ export default function ServiceForm({
             />
             <Input
               type="text"
+              id="placa"
               name="placa"
               defaultValue={state.values?.placa || ""}
-              placeholder="Placa"
-              className="bg-transparent border-none text-white placeholder:text-gray-300 focus:ring-0 focus:border-none p-0"
+              placeholder="Ej: ABC-1234"
+              className="bg-transparent border-none text-white placeholder:text-gray-400 focus:ring-0 focus:border-none p-0"
               required
             />
           </div>

@@ -78,6 +78,9 @@ export default function ContactForm() {
       <form action={action} noValidate className="space-y-6">
         {/* Nombre */}
         <div>
+          <label htmlFor="nombre" className="block text-white text-sm font-medium mb-2">
+            Nombre y Apellido
+          </label>
           <div
             className={`flex items-center border-b pb-2 ${
               state.errors?.nombre ? "border-red-500" : "border-blue-500"
@@ -90,10 +93,11 @@ export default function ContactForm() {
             />
             <Input
               type="text"
+              id="nombre"
               name="nombre"
               defaultValue={state.values?.nombre || ""}
-              placeholder="Nombre y apellido"
-              className="bg-transparent border-none text-white placeholder:text-gray-300 focus:ring-0 focus:border-none p-0"
+              placeholder="Ej: Juan Pérez"
+              className="bg-transparent border-none text-white placeholder:text-gray-400 focus:ring-0 focus:border-none p-0"
               required
             />
           </div>
@@ -106,6 +110,9 @@ export default function ContactForm() {
 
         {/* Email */}
         <div>
+          <label htmlFor="email" className="block text-white text-sm font-medium mb-2">
+            Correo Electrónico
+          </label>
           <div
             className={`flex items-center border-b pb-2 ${
               state.errors?.email ? "border-red-500" : "border-blue-500"
@@ -118,10 +125,11 @@ export default function ContactForm() {
             />
             <Input
               type="email"
+              id="email"
               name="email"
               defaultValue={state.values?.email || ""}
-              placeholder="Correo electrónico"
-              className="bg-transparent border-none text-white placeholder:text-gray-300 focus:ring-0 focus:border-none p-0"
+              placeholder="Ej: correo@ejemplo.com"
+              className="bg-transparent border-none text-white placeholder:text-gray-400 focus:ring-0 focus:border-none p-0"
               required
             />
           </div>
@@ -134,6 +142,9 @@ export default function ContactForm() {
 
         {/* Teléfono */}
         <div>
+          <label htmlFor="telefono" className="block text-white text-sm font-medium mb-2">
+            Teléfono
+          </label>
           <div
             className={`flex items-center border-b pb-2 ${
               state.errors?.telefono ? "border-red-500" : "border-blue-500"
@@ -146,10 +157,11 @@ export default function ContactForm() {
             />
             <Input
               type="tel"
+              id="telefono"
               name="telefono"
               defaultValue={state.values?.telefono || ""}
-              placeholder="Teléfono"
-              className="bg-transparent border-none text-white placeholder:text-gray-300 focus:ring-0 focus:border-none p-0"
+              placeholder="Ej: 0991234567"
+              className="bg-transparent border-none text-white placeholder:text-gray-400 focus:ring-0 focus:border-none p-0"
               required
             />
           </div>
@@ -162,6 +174,9 @@ export default function ContactForm() {
 
         {/* Cédula */}
         <div>
+          <label htmlFor="cedula" className="block text-white text-sm font-medium mb-2">
+            Cédula
+          </label>
           <div
             className={`flex items-center border-b pb-2 ${
               state.errors?.cedula ? "border-red-500" : "border-blue-500"
@@ -174,10 +189,11 @@ export default function ContactForm() {
             />
             <Input
               type="text"
+              id="cedula"
               name="cedula"
               defaultValue={state.values?.cedula || ""}
-              placeholder="Cédula de identidad (10 dígitos)"
-              className="bg-transparent border-none text-white placeholder:text-gray-300 focus:ring-0 focus:border-none p-0"
+              placeholder="Ej: 0123456789"
+              className="bg-transparent border-none text-white placeholder:text-gray-400 focus:ring-0 focus:border-none p-0"
               required
             />
           </div>
@@ -231,6 +247,9 @@ export default function ContactForm() {
 
         {/* Mensaje */}
         <div>
+          <label htmlFor="mensaje" className="block text-white text-sm font-medium mb-2">
+            Mensaje
+          </label>
           <div
             className={`flex items-start border-b pb-2 ${
               state.errors?.mensaje ? "border-red-500" : "border-blue-500"
@@ -242,10 +261,11 @@ export default function ContactForm() {
               }`}
             />
             <Textarea
+              id="mensaje"
               name="mensaje"
               defaultValue={state.values?.mensaje || ""}
-              placeholder="Mensaje"
-              className="bg-transparent border-none text-white placeholder:text-gray-300 focus:ring-0 focus:border-none p-0 resize-none min-h-[80px]"
+              placeholder="Escribe tu mensaje aquí..."
+              className="bg-transparent border-none text-white placeholder:text-gray-400 focus:ring-0 focus:border-none p-0 resize-none min-h-[80px]"
               required
             />
           </div>

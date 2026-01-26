@@ -152,14 +152,18 @@ export default function QuoteForm({ currentModel = null, source = null }) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Nombre y apellido */}
               <motion.div variants={formFieldVariants} className="relative">
+                <label htmlFor="nombre" className="block text-white text-sm font-medium mb-2">
+                  Nombre y Apellido
+                </label>
                 <div className="flex items-center border-b border-blue-500 pb-2">
                   <User className="w-5 h-5 text-blue-500 mr-3" />
                   <input
                     type="text"
+                    id="nombre"
                     name="nombre"
                     defaultValue={state.values?.nombre || ""}
-                    placeholder="Nombre y apellido"
-                    className="flex-1 bg-transparent text-white placeholder-gray-400 focus:outline-none"
+                    placeholder="Ej: Juan Pérez"
+                    className="flex-1 bg-transparent text-white placeholder-gray-500 focus:outline-none"
                     required
                   />
                 </div>
@@ -173,14 +177,18 @@ export default function QuoteForm({ currentModel = null, source = null }) {
 
               {/* Celular */}
               <motion.div variants={formFieldVariants} className="relative">
+                <label htmlFor="celular" className="block text-white text-sm font-medium mb-2">
+                  Celular
+                </label>
                 <div className="flex items-center border-b border-blue-500 pb-2">
                   <Phone className="w-5 h-5 text-blue-500 mr-3" />
                   <input
                     type="tel"
+                    id="celular"
                     name="celular"
                     defaultValue={state.values?.celular || ""}
-                    placeholder="Celular"
-                    className="flex-1 bg-transparent text-white placeholder-gray-400 focus:outline-none"
+                    placeholder="Ej: 0991234567"
+                    className="flex-1 bg-transparent text-white placeholder-gray-500 focus:outline-none"
                     required
                   />
                 </div>
@@ -194,14 +202,18 @@ export default function QuoteForm({ currentModel = null, source = null }) {
 
               {/* Mail */}
               <motion.div variants={formFieldVariants} className="relative">
+                <label htmlFor="mail" className="block text-white text-sm font-medium mb-2">
+                  Correo Electrónico
+                </label>
                 <div className="flex items-center border-b border-blue-500 pb-2">
                   <Mail className="w-5 h-5 text-blue-500 mr-3" />
                   <input
                     type="email"
+                    id="mail"
                     name="mail"
                     defaultValue={state.values?.mail || ""}
-                    placeholder="Mail"
-                    className="flex-1 bg-transparent text-white placeholder-gray-400 focus:outline-none"
+                    placeholder="Ej: correo@ejemplo.com"
+                    className="flex-1 bg-transparent text-white placeholder-gray-500 focus:outline-none"
                     required
                   />
                 </div>
@@ -215,14 +227,18 @@ export default function QuoteForm({ currentModel = null, source = null }) {
 
               {/* Cédula */}
               <motion.div variants={formFieldVariants} className="relative">
+                <label htmlFor="cedula" className="block text-white text-sm font-medium mb-2">
+                  Cédula
+                </label>
                 <div className="flex items-center border-b border-blue-500 pb-2">
                   <CreditCard className="w-5 h-5 text-blue-500 mr-3" />
                   <input
                     type="text"
+                    id="cedula"
                     name="cedula"
                     defaultValue={state.values?.cedula || ""}
-                    placeholder="Cédula"
-                    className="flex-1 bg-transparent text-white placeholder-gray-400 focus:outline-none"
+                    placeholder="Ej: 0123456789"
+                    className="flex-1 bg-transparent text-white placeholder-gray-500 focus:outline-none"
                     required
                   />
                 </div>
@@ -239,18 +255,22 @@ export default function QuoteForm({ currentModel = null, source = null }) {
                 variants={formFieldVariants}
                 className="relative md:col-span-2"
               >
+                <label htmlFor="ciudad" className="block text-white text-sm font-medium mb-2">
+                  Concesionario
+                </label>
                 <div className="flex items-center border-b border-blue-500 pb-2">
                   <MapPin className="w-5 h-5 text-blue-500 mr-3" />
 
                   <select
                     key={state.values?.ciudad || ""}
+                    id="ciudad"
                     name="ciudad"
                     defaultValue={state.values?.ciudad || ""}
                     className="flex-1 bg-black text-white focus:outline-none w-full"
                     required
                   >
                     <option value="">
-                      Selecciona el concesionario mas cercano
+                      Selecciona el concesionario más cercano
                     </option>
                     {ciudades.map((city) => (
                       <option
