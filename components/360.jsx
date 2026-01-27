@@ -218,58 +218,6 @@ export default function ThreeSixty({
           </div>
         </div>
 
-        {/* Mobile Navigation Controls */}
-        <div className="md:hidden flex justify-center items-center gap-6 -mt-6">
-          <button
-            onClick={prevFrame}
-            disabled={currentFrame === 1}
-            className={`p-3 rounded-full transition-all duration-200 backdrop-blur-sm border border-white border-opacity-20 shadow-lg ${
-              currentFrame === 1
-                ? "bg-black bg-opacity-30 text-gray-500 cursor-not-allowed"
-                : "bg-black bg-opacity-60 hover:bg-opacity-80 text-white"
-            }`}
-            aria-label="Vista anterior"
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              strokeWidth={3}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
-          </button>
-
-          <button
-            onClick={nextFrame}
-            disabled={currentFrame === totalFrames}
-            className={`p-3 rounded-full transition-all duration-200 backdrop-blur-sm border border-white border-opacity-20 shadow-lg ${
-              currentFrame === totalFrames
-                ? "bg-black bg-opacity-30 text-gray-500 cursor-not-allowed"
-                : "bg-black bg-opacity-60 hover:bg-opacity-80 text-white"
-            }`}
-            aria-label="Vista siguiente"
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              strokeWidth={3}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
-          </button>
-        </div>
 
         {/* Slider Control */}
         <div className="px-4 mt-8 md:mt-12 z-20 relative">
