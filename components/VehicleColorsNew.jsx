@@ -21,7 +21,7 @@ export default function VehicleColorsNew({ colorsData }) {
       initial={{ opacity: 0 }}
       animate={{ opacity: isInView ? 1 : 0 }}
       transition={{ duration: 1 }}
-      className="relative h-[60vh] md:h-[70vh] lg:h-[75vh] w-full overflow-hidden"
+      className="relative min-h-[70vh] md:min-h-[75vh] lg:min-h-[80vh] w-full overflow-hidden"
     >
       {/* Background image from 360 module */}
       <div className="absolute inset-0 z-0">
@@ -42,7 +42,7 @@ export default function VehicleColorsNew({ colorsData }) {
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : -30 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-center pt-16 lg:pt-20 pb-6 lg:pb-10 px-4"
+          className="text-center pt-8 md:pt-12 lg:pt-16 pb-4 md:pb-6 lg:pb-8 px-4"
         >
           <h2 className="text-3xl md:text-4xl lg:text-6xl font-bold text-white mb-4">
             Tu {colorsData.modelName || "vehículo"} disponible en estos colores.
@@ -53,7 +53,7 @@ export default function VehicleColorsNew({ colorsData }) {
         </motion.div>
 
         {/* Main Content */}
-        <div className="flex-1 flex flex-col items-center justify-center px-8 lg:px-20 pb-4 md:pb-10 lg:pb-20">
+        <div className="flex-1 flex flex-col items-center justify-center px-4 md:px-8 lg:px-20 pb-4 md:pb-8 lg:pb-12">
           {/* Color Selectors - Horizontal on mobile, above car */}
           <motion.div
             initial={{ opacity: 0, y: -50 }}
@@ -93,7 +93,7 @@ export default function VehicleColorsNew({ colorsData }) {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: isInView ? 1 : 0, scale: isInView ? 1 : 0.9 }}
             transition={{ duration: 1, delay: 0.4 }}
-            className="relative w-full max-w-5xl h-[300px] md:h-[400px] lg:h-[500px] mt-12 md:mt-16 lg:mt-20"
+            className="relative w-full max-w-5xl h-[250px] md:h-[350px] lg:h-[450px] mt-4 md:mt-8 lg:mt-12"
           >
             {/* Vehicle Image */}
             <Image
