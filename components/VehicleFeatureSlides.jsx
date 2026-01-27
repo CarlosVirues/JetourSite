@@ -3,7 +3,7 @@
 import { useState, useRef } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, ChevronDown, Expand } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function VehicleFeatureSlides({ featuresData }) {
   const [activeSlide, setActiveSlide] = useState(0);
@@ -166,23 +166,6 @@ export default function VehicleFeatureSlides({ featuresData }) {
 
           </div>
 
-          {/* Scroll Indicator - Bottom center */}
-          {activeSlide < featuresData.slides.length - 1 && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 1.2 }}
-              className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-10"
-            >
-              <motion.div
-                animate={{ y: [0, 10, 0] }}
-                transition={{ duration: 2, repeat: Infinity }}
-                className="flex flex-col items-center gap-2"
-              >
-                <ChevronDown className="w-8 h-8 text-white/60" />
-              </motion.div>
-            </motion.div>
-          )}
         </motion.div>
       </AnimatePresence>
     </motion.section>
