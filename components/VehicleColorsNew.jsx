@@ -141,15 +141,15 @@ export default function VehicleColorsNew({ colorsData }) {
           </motion.div>
         </div>
 
-        {/* Color Name */}
+        {/* Color Name - Same position on all screens */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 20 }}
           transition={{ duration: 0.8, delay: 0.8 }}
-          className="text-center pb-4 md:pb-8 lg:pb-16 mt-2 md:mt-4 lg:mt-0"
+          className="text-center pb-6 md:pb-10 mt-4 md:mt-6"
         >
           <div className="inline-block">
-            <h3 className="text-xl md:text-2xl lg:text-3xl font-medium text-white mb-2">
+            <h3 className="text-2xl md:text-3xl lg:text-4xl font-medium text-white mb-2">
               {currentColor.name}
             </h3>
             <div className="h-1 bg-white/30 w-full" />
