@@ -63,7 +63,7 @@ export default function VehicleFeatureSlides({ featuresData }) {
           )}
 
           {/* Content */}
-          <div className="relative z-10 h-full flex flex-col justify-between p-6 md:p-12 lg:p-20">
+          <div className="relative z-10 h-full flex flex-col justify-between p-4 md:p-12 lg:p-20">
             {/* Top Content - Category Title at top left */}
             <motion.div
               initial={{ opacity: 0, y: -30 }}
@@ -106,17 +106,17 @@ export default function VehicleFeatureSlides({ featuresData }) {
 
               {/* Bullets - Tamaño ajustado para textos largos */}
               {currentSlide.bullets && currentSlide.bullets.length > 0 && (
-                <ul className="space-y-3">
+                <ul className="space-y-2 md:space-y-3">
                   {currentSlide.bullets.map((bullet, index) => (
                     <motion.li
                       key={index}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
-                      className="flex items-start gap-3"
+                      className="flex items-start gap-2 md:gap-3"
                     >
-                      <span className="text-white/60 text-base leading-none mt-1">•</span>
-                      <span className="text-base lg:text-lg text-white/85 leading-relaxed">{bullet}</span>
+                      <span className="text-white/60 text-sm md:text-base leading-none mt-1">•</span>
+                      <span className="text-sm md:text-base lg:text-lg text-white/85 leading-snug md:leading-relaxed">{bullet}</span>
                     </motion.li>
                   ))}
                 </ul>
