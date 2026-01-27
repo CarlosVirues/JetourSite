@@ -103,7 +103,7 @@ export default function ThreeSixty({
         <div className="relative">
           <div
             ref={containerRef}
-            className="relative w-full h-[400px] md:h-[600px] bg-transparent overflow-hidden select-none"
+            className="relative w-full h-[500px] md:h-[700px] lg:h-[800px] bg-transparent overflow-hidden select-none"
           >
             {/* Logo de fondo con baja opacidad */}
             {logoImage && !isLoading && (

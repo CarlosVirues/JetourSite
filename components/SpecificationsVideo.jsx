@@ -56,7 +56,7 @@ export default function SpecificationsVideo({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
-      className="relative h-screen w-full overflow-hidden bg-black"
+      className="relative h-[60vh] md:h-[70vh] lg:h-[80vh] w-full overflow-hidden bg-black"
     >
       {/* Video de fondo */}
       <video

@@ -61,8 +61,8 @@ export default function VehicleFeatureSlides({ featuresData }) {
               <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/60" />
               
               {/* Degradados de transición - superior e inferior */}
-              <div className="absolute top-0 left-0 right-0 h-[8%] bg-gradient-to-b from-black to-transparent z-10" />
-              <div className="absolute bottom-0 left-0 right-0 h-[8%] bg-gradient-to-t from-black to-transparent z-10" />
+              <div className="absolute top-0 left-0 right-0 h-[15%] bg-gradient-to-b from-black to-transparent z-10" />
+              <div className="absolute bottom-0 left-0 right-0 h-[15%] bg-gradient-to-t from-black to-transparent z-10" />
             </div>
           )}
 
@@ -85,7 +85,7 @@ export default function VehicleFeatureSlides({ featuresData }) {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="max-w-2xl mb-0"
+              className="max-w-2xl mb-8 md:mb-12"
             >
               {/* Slide Title */}
               {currentSlide.title && (

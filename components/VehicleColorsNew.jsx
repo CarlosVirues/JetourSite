@@ -21,7 +21,7 @@ export default function VehicleColorsNew({ colorsData }) {
       initial={{ opacity: 0 }}
       animate={{ opacity: isInView ? 1 : 0 }}
       transition={{ duration: 1 }}
-      className="relative min-h-screen w-full overflow-hidden"
+      className="relative h-[80vh] w-full overflow-hidden"
     >
       {/* Background image from 360 module */}
       <div className="absolute inset-0 z-0">
@@ -36,7 +36,7 @@ export default function VehicleColorsNew({ colorsData }) {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 h-screen flex flex-col">
+      <div className="relative z-10 h-full flex flex-col">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -30 }}

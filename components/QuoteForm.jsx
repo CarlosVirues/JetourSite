@@ -270,7 +270,7 @@ export default function QuoteForm({ currentModel = null, source = null }) {
                     required
                   >
                     <option value="">
-                      Selecciona el concesionario más cercano
+                      Seleccionar
                     </option>
                     {ciudades.map((city) => (
                       <option
@@ -311,16 +311,16 @@ export default function QuoteForm({ currentModel = null, source = null }) {
 
             {/* Model Selection */}
             <motion.div variants={itemVariants} className="mt-8">
-              <motion.h3
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="text-xl font-semibold text-white mb-4 text-center"
-              >
-                {isTopForm 
-                  ? `Confirma tu modelo: ${carModels.find(m => m.id === currentModel)?.name || 'Jetour'}`
-                  : "Selecciona tu modelo preferido"}
-              </motion.h3>
+              {!isTopForm && (
+                <motion.h3
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  className="text-xl font-semibold text-white mb-4 text-center"
+                >
+                  Selecciona tu modelo preferido
+                </motion.h3>
+              )}
 
               <div className="flex flex-wrap justify-center gap-2 md:gap-3">
                 {displayModels.map((model, index) => (
