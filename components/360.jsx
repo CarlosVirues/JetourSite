@@ -164,12 +164,12 @@ export default function ThreeSixty({
             )}
           </div>
 
-          {/* Navigation Controls - Desktop */}
-          <div className="hidden md:block absolute top-1/2 left-4 transform -translate-y-1/2 z-10">
+          {/* Navigation Controls - Desktop - Positioned at top center */}
+          <div className="hidden md:flex absolute top-8 left-1/2 transform -translate-x-1/2 z-10 gap-4">
             <button
               onClick={prevFrame}
               disabled={currentFrame === 1}
-              className={`p-4 rounded-full transition-all duration-200 backdrop-blur-sm border border-white border-opacity-20 shadow-lg ${
+              className={`p-3 rounded-full transition-all duration-200 backdrop-blur-sm border border-white border-opacity-20 shadow-lg ${
                 currentFrame === 1
                   ? "bg-black bg-opacity-30 text-gray-500 cursor-not-allowed"
                   : "bg-black bg-opacity-60 hover:bg-opacity-80 text-white"
@@ -177,7 +177,7 @@ export default function ThreeSixty({
               aria-label="Vista anterior"
             >
               <svg
-                className="w-8 h-8"
+                className="w-6 h-6"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -190,13 +190,11 @@ export default function ThreeSixty({
                 />
               </svg>
             </button>
-          </div>
 
-          <div className="hidden md:block absolute top-1/2 right-4 transform -translate-y-1/2 z-10">
             <button
               onClick={nextFrame}
               disabled={currentFrame === totalFrames}
-              className={`p-4 rounded-full transition-all duration-200 backdrop-blur-sm border border-white border-opacity-20 shadow-lg ${
+              className={`p-3 rounded-full transition-all duration-200 backdrop-blur-sm border border-white border-opacity-20 shadow-lg ${
                 currentFrame === totalFrames
                   ? "bg-black bg-opacity-30 text-gray-500 cursor-not-allowed"
                   : "bg-black bg-opacity-60 hover:bg-opacity-80 text-white"
@@ -204,7 +202,7 @@ export default function ThreeSixty({
               aria-label="Vista siguiente"
             >
               <svg
-                className="w-8 h-8"
+                className="w-6 h-6"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
