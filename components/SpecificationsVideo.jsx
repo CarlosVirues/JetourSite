@@ -75,7 +75,7 @@ export default function SpecificationsVideo({
 
       {/* Contenido centrado */}
       <div className="absolute inset-0 flex items-center justify-center z-20">
-        <div className="w-full max-w-[900px] px-8 md:px-12 text-center">
+        <div className="w-full max-w-[900px] px-8 md:px-12 text-center -mt-16 md:-mt-20 lg:-mt-24">
           {/* Logo del modelo */}
           {logoImage && (
             <motion.div
