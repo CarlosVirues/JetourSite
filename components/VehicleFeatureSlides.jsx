@@ -61,8 +61,8 @@ export default function VehicleFeatureSlides({ featuresData }) {
               <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/60" />
               
               {/* Degradados de transición - superior e inferior */}
-              <div className="absolute top-0 left-0 right-0 h-[25%] bg-gradient-to-b from-black to-transparent z-10" />
-              <div className="absolute bottom-0 left-0 right-0 h-[25%] bg-gradient-to-t from-black to-transparent z-10" />
+              <div className="absolute top-0 left-0 right-0 h-[35%] bg-gradient-to-b from-black to-transparent z-10" />
+              <div className="absolute bottom-0 left-0 right-0 h-[35%] bg-gradient-to-t from-black to-transparent z-10" />
             </div>
           )}
 

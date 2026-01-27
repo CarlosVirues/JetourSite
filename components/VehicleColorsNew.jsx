@@ -21,7 +21,7 @@ export default function VehicleColorsNew({ colorsData }) {
       initial={{ opacity: 0 }}
       animate={{ opacity: isInView ? 1 : 0 }}
       transition={{ duration: 1 }}
-      className="relative h-[80vh] w-full overflow-hidden"
+      className="relative h-[60vh] md:h-[70vh] lg:h-[75vh] w-full overflow-hidden"
     >
       {/* Background image from 360 module */}
       <div className="absolute inset-0 z-0">
