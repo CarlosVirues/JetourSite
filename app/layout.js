@@ -52,7 +52,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           />
         </>
       )}
-      <body className={`${poppins.variable} antialiased`}>{children}</body>
+      <body className={`${poppins.variable} antialiased overflow-x-hidden`}>{children}</body>
     </html>
   );
 }
