@@ -54,12 +54,12 @@ export default function VehicleColorsNew({ colorsData }) {
 
         {/* Main Content */}
         <div className="flex-1 flex flex-col items-center justify-center px-4 md:px-8 lg:px-20 pb-4 md:pb-8 lg:pb-12">
-          {/* Color Selectors - Horizontal on mobile, above car */}
+          {/* Color Selectors - Horizontal on all screens */}
           <motion.div
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 0 }}
             transition={{ duration: 1, delay: 0.6 }}
-            className="flex flex-row gap-3 mb-8 lg:hidden"
+            className="flex flex-row gap-3 mb-6 md:mb-8"
           >
             {colorsData.colors.map((color, index) => (
               <motion.button
@@ -68,7 +68,7 @@ export default function VehicleColorsNew({ colorsData }) {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.3, delay: 0.7 + index * 0.1 }}
                 onClick={() => setActiveColor(index)}
-                className={`relative w-12 h-12 rounded-full border-3 transition-all duration-300 ${
+                className={`relative w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-full border-3 transition-all duration-300 ${
                   activeColor === index
                     ? "border-white scale-110 shadow-lg"
                     : "border-gray-600 hover:border-gray-400"
@@ -88,12 +88,27 @@ export default function VehicleColorsNew({ colorsData }) {
             ))}
           </motion.div>
 
+          {/* Color Name */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 20 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="text-center mb-6 md:mb-8"
+          >
+            <div className="inline-block">
+              <h3 className="text-2xl md:text-3xl lg:text-4xl font-medium text-white mb-2">
+                {currentColor.name}
+              </h3>
+              <div className="h-1 bg-white/30 w-full" />
+            </div>
+          </motion.div>
+
           {/* Vehicle Image Container */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: isInView ? 1 : 0, scale: isInView ? 1 : 0.9 }}
             transition={{ duration: 1, delay: 0.4 }}
-            className="relative w-full max-w-5xl h-[250px] md:h-[350px] lg:h-[450px] mt-4 md:mt-8 lg:mt-12"
+            className="relative w-full max-w-5xl h-[250px] md:h-[350px] lg:h-[450px]"
           >
             {/* Vehicle Image */}
             <Image
@@ -105,56 +120,7 @@ export default function VehicleColorsNew({ colorsData }) {
               sizes="(max-width: 768px) 100vw, 80vw"
             />
           </motion.div>
-
-          {/* Color Selectors - Desktop (absolute position) */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: isInView ? 1 : 0, x: isInView ? 0 : 50 }}
-            transition={{ duration: 1, delay: 0.6 }}
-            className="hidden lg:flex absolute right-20 lg:right-32 top-1/2 -translate-y-1/2 flex-col gap-4"
-          >
-            {colorsData.colors.map((color, index) => (
-              <motion.button
-                key={index}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.3, delay: 0.7 + index * 0.1 }}
-                onClick={() => setActiveColor(index)}
-                className={`relative w-14 h-14 lg:w-16 lg:h-16 rounded-full border-3 transition-all duration-300 ${
-                  activeColor === index
-                    ? "border-white scale-110 shadow-lg"
-                    : "border-gray-600 hover:border-gray-400"
-                }`}
-                aria-label={`Seleccionar color ${color.name}`}
-                style={{ backgroundColor: color.hex }}
-              >
-                {activeColor === index && (
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ duration: 0.3 }}
-                    className="absolute inset-0 rounded-full border-2 border-white animate-pulse"
-                  />
-                )}
-              </motion.button>
-            ))}
-          </motion.div>
         </div>
-
-        {/* Color Name - Same position on all screens */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 20 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="text-center pb-6 md:pb-10 mt-4 md:mt-6"
-        >
-          <div className="inline-block">
-            <h3 className="text-2xl md:text-3xl lg:text-4xl font-medium text-white mb-2">
-              {currentColor.name}
-            </h3>
-            <div className="h-1 bg-white/30 w-full" />
-          </div>
-        </motion.div>
 
       </div>
     </motion.section>
