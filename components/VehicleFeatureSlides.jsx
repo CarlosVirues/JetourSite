@@ -67,26 +67,18 @@ export default function VehicleFeatureSlides({ featuresData }) {
           )}
 
           {/* Content */}
-          <div className="relative z-10 h-full flex flex-col justify-between p-4 md:p-12 lg:p-20">
-            {/* Top Content - Category Title at top left */}
-            <motion.div
-              initial={{ opacity: 0, y: -30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              {/* Category Title */}
-              <h2 className="text-3xl lg:text-5xl font-bold text-white mb-4">
-                {featuresData.title}
-              </h2>
-            </motion.div>
-
-            {/* Bottom Content - Slide details */}
+          <div className="relative z-10 h-full flex flex-col justify-end p-4 md:p-12 lg:p-20">
+            {/* All Content Grouped at Bottom */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
               className="max-w-2xl mb-8 md:mb-12"
             >
+              {/* Category Title */}
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 md:mb-6">
+                {featuresData.title}
+              </h2>
               {/* Slide Title */}
               {currentSlide.title && (
                 <h3 className="text-xl lg:text-3xl font-bold text-white mb-6">
