@@ -36,7 +36,7 @@ export default function VehicleFeatureSlides({ featuresData }) {
       initial={{ opacity: 0 }}
       animate={{ opacity: isInView ? 1 : 0 }}
       transition={{ duration: 1 }}
-      className="relative w-full overflow-x-hidden bg-black"
+      className="relative w-full overflow-x-hidden bg-black py-4 md:py-6"
     >
       <AnimatePresence mode="wait">
         <motion.div
@@ -45,7 +45,7 @@ export default function VehicleFeatureSlides({ featuresData }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
-          className="relative h-[60vh] md:h-[80vh] lg:h-screen w-full"
+          className="relative h-[60vh] md:h-[80vh] lg:h-screen w-full rounded-lg overflow-hidden"
         >
           {/* Background Image */}
           {currentSlide.backgroundImage && (
@@ -57,12 +57,8 @@ export default function VehicleFeatureSlides({ featuresData }) {
                 className="object-cover"
                 priority
               />
-              {/* Overlay gradient */}
-              <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/60" />
-              
-              {/* Degradados de transición - superior e inferior */}
-              <div className="absolute top-0 left-0 right-0 h-[45%] bg-gradient-to-b from-black via-black/70 to-transparent z-10" />
-              <div className="absolute bottom-0 left-0 right-0 h-[55%] bg-gradient-to-t from-black via-black/60 to-transparent z-10" />
+              {/* Gradiente mínimo solo en la parte inferior para legibilidad */}
+              <div className="absolute bottom-0 left-0 right-0 h-[30%] bg-gradient-to-t from-black/90 via-black/40 to-transparent z-10" />
             </div>
           )}
 
