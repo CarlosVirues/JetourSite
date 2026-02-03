@@ -36,7 +36,7 @@ export default function VehicleFeatureSlides({ featuresData }) {
       initial={{ opacity: 0 }}
       animate={{ opacity: isInView ? 1 : 0 }}
       transition={{ duration: 1 }}
-      className="relative w-full overflow-x-hidden bg-black py-4 md:py-6"
+      className="relative w-full overflow-x-hidden bg-black py-4 md:py-6 px-4 md:px-6 lg:px-8"
     >
       <AnimatePresence mode="wait">
         <motion.div
@@ -45,7 +45,7 @@ export default function VehicleFeatureSlides({ featuresData }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
-          className="relative h-[60vh] md:h-[80vh] lg:h-screen w-full rounded-lg overflow-hidden"
+          className="relative h-[60vh] md:h-[80vh] lg:h-screen w-full rounded-xl md:rounded-2xl overflow-hidden shadow-2xl"
         >
           {/* Background Image */}
           {currentSlide.backgroundImage && (
