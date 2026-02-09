@@ -655,15 +655,25 @@ export default function ConcesionariosMap({
   const filteredCities = useMemo(() => {
     if (!cities.length) return [];
 
+    // Si no hay término de búsqueda, mostrar todas las ciudades
+    if (!searchTerm.trim()) return cities;
+
     return cities
-      .map((city) => ({
-        ...city,
-        distributors: city.distributors.filter(
-          (distributor) =>
-            distributor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            distributor.address.toLowerCase().includes(searchTerm.toLowerCase())
-        ),
-      }))
+      .map((city) => {
+        // Si el término coincide con el nombre de la ciudad, mostrar todos sus distribuidores
+        const cityMatches = city.cityName.toLowerCase().includes(searchTerm.toLowerCase());
+        
+        return {
+          ...city,
+          distributors: cityMatches 
+            ? city.distributors // Mostrar todos si la ciudad coincide
+            : city.distributors.filter(
+                (distributor) =>
+                  distributor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                  distributor.address.toLowerCase().includes(searchTerm.toLowerCase())
+              ),
+        };
+      })
       .filter((city) => city.distributors.length > 0);
   }, [cities, searchTerm]);
 
