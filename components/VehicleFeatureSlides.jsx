@@ -45,7 +45,7 @@ export default function VehicleFeatureSlides({ featuresData }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
-          className="relative h-[48vh] md:h-[65vh] lg:h-[80vh] w-full rounded-xl md:rounded-2xl overflow-hidden shadow-2xl"
+          className="relative aspect-[4/3] md:aspect-[16/10] lg:aspect-[16/9] w-full rounded-xl md:rounded-2xl overflow-hidden shadow-2xl"
         >
           {/* Background Image */}
           {currentSlide.backgroundImage && (
@@ -69,7 +69,7 @@ export default function VehicleFeatureSlides({ featuresData }) {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="max-w-2xl mb-8 md:mb-12"
+              className="max-w-2xl mb-4 md:mb-6"
             >
               {/* Category Title */}
               <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 md:mb-6">
