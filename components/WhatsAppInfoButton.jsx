@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 
 export default function WhatsAppInfoButton({ modelName = null }) {
   const pathname = usePathname();
-  const phoneNumber = "593999999999"; // TODO: Reemplazar con el número real de WhatsApp
+  const phoneNumber = "+593997001986"; // TODO: Reemplazar con el número real de WhatsApp
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
