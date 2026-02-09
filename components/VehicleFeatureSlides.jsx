@@ -45,7 +45,7 @@ export default function VehicleFeatureSlides({ featuresData }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
-          className="relative aspect-video md:h-[70vh] lg:h-[85vh] w-full rounded-xl md:rounded-2xl overflow-hidden shadow-2xl"
+          className="relative h-[55vh] md:h-[70vh] lg:h-[85vh] w-full rounded-xl md:rounded-2xl overflow-hidden shadow-2xl"
         >
           {/* Background Image */}
           {currentSlide.backgroundImage && (
