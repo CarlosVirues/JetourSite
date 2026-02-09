@@ -45,7 +45,7 @@ export default function VehicleFeatureSlides({ featuresData }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
-          className="relative h-[50vh] md:h-[70vh] lg:h-[85vh] w-full rounded-xl md:rounded-2xl overflow-hidden shadow-2xl"
+          className="relative aspect-video md:h-[70vh] lg:h-[85vh] w-full rounded-xl md:rounded-2xl overflow-hidden shadow-2xl"
         >
           {/* Background Image */}
           {currentSlide.backgroundImage && (
@@ -98,7 +98,7 @@ export default function VehicleFeatureSlides({ featuresData }) {
 
               {/* Bullets - Tamaño ajustado para textos largos */}
               {currentSlide.bullets && currentSlide.bullets.length > 0 && (
-                <ul className="space-y-2 md:space-y-3">
+                <ul className="space-y-1 md:space-y-2">
                   {currentSlide.bullets.map((bullet, index) => (
                     <motion.li
                       key={index}
