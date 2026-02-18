@@ -95,8 +95,7 @@ export default function ThreeSixty({
             {title.replace("Vista 360° del", "Descubre los detalles y estilo del")}
           </h2>
           <p className="text-gray-300 text-lg">
-            <span className="md:hidden">Usa el slider para rotar el vehículo.</span>
-            <span className="hidden md:inline">Usa el slider o los controles de navegación para rotar el vehículo.</span>
+            Usa el slider o los controles de navegación para rotar el vehículo.
           </p>
         </div>
 
@@ -137,11 +136,11 @@ export default function ThreeSixty({
               </div>
             )}
             {!isLoading && (
-              <img
-                src={`${imagePath}/${currentFrame}.png`}
-                alt={`Vista 360° del ${model.toUpperCase()} - Frame ${currentFrame}`}
+            <img
+              src={`${imagePath}/${currentFrame}.png`}
+              alt={`Vista 360° del ${model.toUpperCase()} - Frame ${currentFrame}`}
                 className="absolute w-full h-full inset-0 object-contain z-10 mt-28 md:mt-24"
-              />
+            />
             )}
             {/* Loading overlay - only show while loading */}
             {isLoading && (
@@ -165,12 +164,12 @@ export default function ThreeSixty({
             )}
           </div>
 
-          {/* Navigation Controls - Desktop - Positioned at top center */}
-          <div className="hidden md:flex absolute top-8 left-1/2 transform -translate-x-1/2 z-10 gap-4">
+          {/* Navigation Controls - Positioned at top center */}
+          <div className="flex absolute top-4 md:top-8 left-1/2 transform -translate-x-1/2 z-10 gap-3 md:gap-4">
             <button
               onClick={prevFrame}
               disabled={currentFrame === 1}
-              className={`p-3 rounded-full transition-all duration-200 backdrop-blur-sm border border-white border-opacity-20 shadow-lg ${
+              className={`p-2 md:p-3 rounded-full transition-all duration-200 backdrop-blur-sm border border-white border-opacity-20 shadow-lg ${
                 currentFrame === 1
                   ? "bg-black bg-opacity-30 text-gray-500 cursor-not-allowed"
                   : "bg-black bg-opacity-60 hover:bg-opacity-80 text-white"
@@ -178,7 +177,7 @@ export default function ThreeSixty({
               aria-label="Vista anterior"
             >
               <svg
-                className="w-6 h-6"
+                className="w-5 h-5 md:w-6 md:h-6"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -195,7 +194,7 @@ export default function ThreeSixty({
             <button
               onClick={nextFrame}
               disabled={currentFrame === totalFrames}
-              className={`p-3 rounded-full transition-all duration-200 backdrop-blur-sm border border-white border-opacity-20 shadow-lg ${
+              className={`p-2 md:p-3 rounded-full transition-all duration-200 backdrop-blur-sm border border-white border-opacity-20 shadow-lg ${
                 currentFrame === totalFrames
                   ? "bg-black bg-opacity-30 text-gray-500 cursor-not-allowed"
                   : "bg-black bg-opacity-60 hover:bg-opacity-80 text-white"
@@ -203,7 +202,7 @@ export default function ThreeSixty({
               aria-label="Vista siguiente"
             >
               <svg
-                className="w-6 h-6"
+                className="w-5 h-5 md:w-6 md:h-6"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
