@@ -95,7 +95,8 @@ export default function ThreeSixty({
             {title.replace("Vista 360° del", "Descubre los detalles y estilo del")}
           </h2>
           <p className="text-gray-300 text-lg">
-            Usa el slider o los controles de navegación para rotar el vehículo.
+            <span className="md:hidden">Usa el slider para rotar el vehículo.</span>
+            <span className="hidden md:inline">Usa el slider o los controles de navegación para rotar el vehículo.</span>
           </p>
         </div>
 
