@@ -336,13 +336,13 @@ export default function QuoteForm({ currentModel = null, source = null }) {
                     <motion.button
                       type="button"
                       onClick={(e) => {
-                        const hiddenInput = e.target
-                          .closest("form")
-                          .querySelector('input[name="selectedModel"]');
+                        const button = e.currentTarget;
+                        const form = button.closest("form");
+                        const hiddenInput = form.querySelector('input[name="selectedModel"]');
                         hiddenInput.value = model.id;
-                        const allButtons = e.target
-                          .closest(".grid")
-                          .querySelectorAll("button");
+                        
+                        const grid = button.closest(".grid");
+                        const allButtons = grid.querySelectorAll("button");
                         allButtons.forEach((btn) => {
                           btn.classList.remove(
                             "border-blue-500",
@@ -350,12 +350,9 @@ export default function QuoteForm({ currentModel = null, source = null }) {
                           );
                           btn.classList.add("border-gray-600");
                         });
-                        e.target
-                          .closest("button")
-                          .classList.remove("border-gray-600");
-                        e.target
-                          .closest("button")
-                          .classList.add("border-blue-500", "bg-blue-500/10");
+                        
+                        button.classList.remove("border-gray-600");
+                        button.classList.add("border-blue-500", "bg-blue-500/10");
                       }}
                       className={`w-full aspect-square rounded-lg border-2 transition-all duration-300 ${
                         (state.values?.selectedModel || currentModel) ===
