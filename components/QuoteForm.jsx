@@ -339,10 +339,15 @@ export default function QuoteForm({ currentModel = null, source = null }) {
                         const button = e.currentTarget;
                         const form = button.closest("form");
                         const hiddenInput = form.querySelector('input[name="selectedModel"]');
-                        hiddenInput.value = model.id;
                         
-                        const grid = button.closest(".grid");
-                        const allButtons = grid.querySelectorAll("button");
+                        if (hiddenInput) {
+                          hiddenInput.value = model.id;
+                        }
+                        
+                        // Find the container with all model buttons
+                        const container = button.parentElement.parentElement;
+                        const allButtons = container.querySelectorAll("button");
+                        
                         allButtons.forEach((btn) => {
                           btn.classList.remove(
                             "border-blue-500",
