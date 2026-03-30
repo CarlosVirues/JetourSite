@@ -68,7 +68,7 @@ export default function Hero({
       >
         <div
           className={`text-center mx-auto w-full ${
-            additionalImage ? "max-w-full sm:max-w-[min(92vw,1440px)]" : "max-w-4xl"
+            additionalImage ? "max-w-full md:max-w-[800px]" : "max-w-4xl"
           }`}
         >
           {/* Main JETOUR Logo/Text - Optional (omit when additionalImage includes branding) */}
@@ -107,7 +107,7 @@ export default function Hero({
                   width={4163}
                   height={564}
                   className="w-full h-auto max-w-full"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1280px) 92vw, 1440px"
+                  sizes="(max-width: 767px) 100vw, 800px"
                   priority
                 />
               </div>
