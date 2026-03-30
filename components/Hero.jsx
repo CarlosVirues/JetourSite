@@ -62,16 +62,22 @@ export default function Hero({
 
       {/* Main Content */}
       <div
-        className={`relative z-20 flex flex-col items-center justify-center ${adjustedHeight || 'h-screen'} px-6 lg:px-12`}
+        className={`relative z-20 flex flex-col items-center justify-center ${adjustedHeight || "h-screen"} ${
+          additionalImage ? "px-3 sm:px-6 lg:px-12" : "px-6 lg:px-12"
+        }`}
       >
-        <div className="text-center max-w-4xl mx-auto w-full">
-          {/* Main JETOUR Logo/Text - Optional */}
-          {logoUrl && logoWidth && logoHeight && (
+        <div
+          className={`text-center mx-auto w-full ${
+            additionalImage ? "max-w-full sm:max-w-[min(92vw,1440px)]" : "max-w-4xl"
+          }`}
+        >
+          {/* Main JETOUR Logo/Text - Optional (omit when additionalImage includes branding) */}
+          {logoUrl && logoWidth && logoHeight && !additionalImage && (
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className={additionalImage ? "mb-4 md:mb-8" : "mb-20 md:mb-36"}
+              className="mb-20 md:mb-36"
             >
               <div className="w-[200px] md:w-[280px] lg:w-[350px] xl:w-[400px] mx-auto">
                 <Image
@@ -91,16 +97,17 @@ export default function Hero({
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
-              className="mb-20 md:mb-36"
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="mb-12 sm:mb-20 md:mb-36 w-full min-w-0"
             >
-              <div className="w-[160px] md:w-[224px] lg:w-[280px] xl:w-[320px] mx-auto">
+              <div className="w-full min-w-0">
                 <Image
                   src={additionalImage}
                   alt={additionalImageAlt || "2026 Life is a Ride"}
-                  width={320}
-                  height={100}
-                  className="w-full h-auto"
+                  width={4163}
+                  height={564}
+                  className="w-full h-auto max-w-full"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1280px) 92vw, 1440px"
                   priority
                 />
               </div>
