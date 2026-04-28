@@ -15,9 +15,7 @@ import {
 import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import GlobalStats from "@/components/GlobalStats";
 import { submitQuoteForm } from "@/app/actions/quote";
-import { globalStatsData } from "@/lib/page-data";
 
 const ciudades = [
   "ambato",
@@ -334,9 +332,6 @@ export default function LanzamientoS06Page() {
           </motion.div>
         </div>
       </motion.section>
-
-      {/* Global Stats */}
-      <GlobalStats {...globalStatsData.home} />
 
       <Footer />
     </div>
