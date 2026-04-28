@@ -68,7 +68,7 @@ export default function LanzamientoS06Page() {
       <Header transparent={true} />
 
       {/* Hero Banner */}
-      <section className="relative w-full aspect-[1920/750] max-h-[80vh] overflow-hidden">
+      <section className="relative w-full min-h-[260px] aspect-[1920/750] max-h-[80vh] overflow-hidden">
         <Image
           src="/bg-lanzamiento-s06.jpg"
           alt="Lanzamiento JETOUR S06"

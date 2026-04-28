@@ -55,7 +55,7 @@ export async function submitQuoteForm(prevState, formData) {
     ci: validatedData.data.cedula,
     ciudad: validatedData.data.ciudad,
     modelo_jetour: validatedData.data.selectedModel,
-    source: validatedData.data.s,
+    source: validatedData.data.source,
     webhook: "3gsucehc5964ebuy3ttxlblx", // el webhook del CRM
   };
 
