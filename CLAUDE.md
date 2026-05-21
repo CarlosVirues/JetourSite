@@ -242,6 +242,20 @@ Aproximadamente **980 MB** de media pesada vive **fuera del repo** (en bucket GC
 - **No modificar textos del sitio.** Los textos vienen de Sanity o están hardcodeados — son del cliente.
 - Si se encuentra un typo, reportarlo, no corregir sin permiso.
 
+### Principio operativo — observar agudo, recomendar siempre, ejecutar con aprobación
+Carlos pidió explícitamente lo siguiente:
+
+> "No debo cambiar estructura pero si recomendar si veo algo malo, eso sí tenlo presente."
+
+Esto significa:
+
+- **Observar agudo:** durante cualquier tarea, si se detectan deudas técnicas, bugs heredados, anti-patterns, oportunidades de SEO/performance/UX, riesgos de seguridad o cualquier cosa "rara" — **siempre reportarlo a Carlos**.
+- **Recomendar siempre:** no quedarse callado. Hasta el detalle menor merece ser señalado, con prioridad clara (crítico / mejora / nice-to-have).
+- **Ejecutar solo con aprobación:** cambios estructurales, refactors, rediseños, eliminación de features, o cualquier modificación que no sea estrictamente la tarea acordada **requiere aprobación explícita** antes de tocar el código.
+- **Cotizable aparte:** si un hallazgo justifica un sprint propio (ej. los 4 SEO Quick Wins detectados), preparar brief para presentar al cliente. Nunca incorporarlo silenciosamente al scope actual.
+
+Aplica a todo: código, infraestructura, contenido, procesos.
+
 ### Performance targets
 - **Lighthouse Mobile:** Performance ≥ 85 (sitio automotriz con video pesado, no se exige 95)
 - **LCP < 2.5s** en mobile 4G
