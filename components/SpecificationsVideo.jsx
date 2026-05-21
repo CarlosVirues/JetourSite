@@ -6,6 +6,7 @@ import Image from "next/image";
 
 export default function SpecificationsVideo({ 
   videoUrl,
+  imageUrl,
   title = "Especificaciones técnicas",
   model = "",
   logoImage,
@@ -14,9 +15,10 @@ export default function SpecificationsVideo({
 }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const videoRef = useRef(null);
+  const hasVideo = !!videoUrl;
 
   useEffect(() => {
-    // Auto-play cuando el video entra en viewport
+    if (!hasVideo) return;
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -28,25 +30,13 @@ export default function SpecificationsVideo({
       },
       { threshold: 0.5 }
     );
-
-    if (videoRef.current) {
-      observer.observe(videoRef.current);
-    }
-
-    return () => {
-      if (videoRef.current) {
-        observer.unobserve(videoRef.current);
-      }
-    };
-  }, []);
+    if (videoRef.current) observer.observe(videoRef.current);
+    return () => { if (videoRef.current) observer.unobserve(videoRef.current); };
+  }, [hasVideo]);
 
   const togglePlayPause = () => {
     if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
-      }
+      if (isPlaying) { videoRef.current.pause(); } else { videoRef.current.play(); }
       setIsPlaying(!isPlaying);
     }
   };
@@ -58,25 +48,34 @@ export default function SpecificationsVideo({
       transition={{ duration: 0.8 }}
       className="relative h-[60vh] md:h-[70vh] lg:h-[80vh] w-full overflow-hidden bg-black"
     >
-      {/* Video de fondo */}
-      <video
-        ref={videoRef}
-        className="absolute inset-0 w-full h-full object-cover"
-        src={videoUrl}
-        loop
-        muted
-        playsInline
-        onPlay={() => setIsPlaying(true)}
-        onPause={() => setIsPlaying(false)}
-      />
+      {/* Fondo: video o imagen estática */}
+      {hasVideo ? (
+        <video
+          ref={videoRef}
+          className="absolute inset-0 w-full h-full object-cover"
+          src={videoUrl}
+          loop
+          muted
+          playsInline
+          onPlay={() => setIsPlaying(true)}
+          onPause={() => setIsPlaying(false)}
+        />
+      ) : imageUrl ? (
+        <Image
+          src={imageUrl}
+          alt={title}
+          fill
+          className="object-cover"
+          priority={false}
+        />
+      ) : null}
 
-      {/* Overlay con gradiente sutil */}
+      {/* Overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-black/30" />
 
       {/* Contenido centrado */}
       <div className="absolute inset-0 flex items-center justify-center z-20">
         <div className="w-full max-w-[900px] px-8 md:px-12 text-center -mt-16 md:-mt-20 lg:-mt-24">
-          {/* Logo del modelo */}
           {logoImage && (
             <motion.div
               initial={{ opacity: 0, y: -30 }}
@@ -91,8 +90,6 @@ export default function SpecificationsVideo({
               />
             </motion.div>
           )}
-          
-          {/* Texto descriptivo */}
           {description && (
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -107,22 +104,24 @@ export default function SpecificationsVideo({
         </div>
       </div>
 
-      {/* Control de reproducción */}
-      <button
-        onClick={togglePlayPause}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 bg-white/10 hover:bg-white/20 backdrop-blur-sm p-4 rounded-full transition-all duration-300 group"
-        aria-label={isPlaying ? "Pausar video" : "Reproducir video"}
-      >
-        {isPlaying ? (
-          <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 9v6m4-6v6" />
-          </svg>
-        ) : (
-          <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-          </svg>
-        )}
-      </button>
+      {/* Control de reproducción — solo si hay video */}
+      {hasVideo && (
+        <button
+          onClick={togglePlayPause}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 bg-white/10 hover:bg-white/20 backdrop-blur-sm p-4 rounded-full transition-all duration-300 group"
+          aria-label={isPlaying ? "Pausar video" : "Reproducir video"}
+        >
+          {isPlaying ? (
+            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 9v6m4-6v6" />
+            </svg>
+          ) : (
+            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+            </svg>
+          )}
+        </button>
+      )}
 
       {/* Indicador de scroll */}
       <motion.div
