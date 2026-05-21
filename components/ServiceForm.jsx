@@ -68,6 +68,7 @@ export default function ServiceForm({
     "x70-plus",
     "x70-sport",
     "dashing",
+    "dashing-phev",
     "t1",
     "t1-phev",
     "t2",

@@ -34,6 +34,7 @@ export default function QuoteForm({ currentModel = null, source = null }) {
     { id: "x70-sport", name: "X70 Sport", image: "/mini/mini-x70-sport.png" },
     { id: "x70-plus", name: "X70 Plus", image: "/mini/mini-x70-plus.png" },
     { id: "dashing", name: "Dashing", image: "/mini/mini-dashing.png" },
+    { id: "dashing-phev", name: "Dashing PHEV", image: "/mini/mini-dashing-phev.png" },
     { id: "t1", name: "T1", image: "/mini/mini-t1.png" },
     { id: "t1-phev", name: "T1 PHEV", image: "/mini/mini-t1-phev.png" },
     { id: "t2", name: "T2", image: "/mini/mini-t2.png" },

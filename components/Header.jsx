@@ -50,6 +50,7 @@ export default function Header({ transparent = false, border = false }) {
     "x70-sport",
     "x70-plus",
     "dashing",
+    "dashing-phev",
     "t1",
     "t1-phev",
     "t2",
