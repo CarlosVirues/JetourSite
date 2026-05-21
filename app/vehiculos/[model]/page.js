@@ -18,7 +18,7 @@ import WhatsAppInfoButton from "@/components/WhatsAppInfoButton";
 
 export async function generateMetadata({ params }) {
   const pageParams = await params;
-  const { model } = pageParams;
+  const model = pageParams.model.toLowerCase();
   const vehicleData = getVehicleModel(model);
 
   return {
@@ -29,7 +29,7 @@ export async function generateMetadata({ params }) {
 
 export default async function VehicleModelPage({ params }) {
   const pageParams = await params;
-  const { model } = pageParams;
+  const model = pageParams.model.toLowerCase();
   const pageData = getPageData("vehiculos"); // Datos específicos para páginas de vehículos
   const modelPageData = getVehicleModelPageData(model); // Datos específicos del modelo
 
