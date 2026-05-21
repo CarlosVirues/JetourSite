@@ -130,6 +130,9 @@ DATABASE_URL                     # postgresql://... (Vercel Postgres)
 | 2026-05 | **Mantener Next.js + Vercel** | Migración 1:1 para minimizar riesgo SEO. Reescritura a otro stack es proyecto aparte. |
 | 2026-05 | **Defensive checks contra Sanity null** | Home reventaba con `.map()` undefined si Sanity falla. Ahora renderiza con secciones vacías. |
 | 2026-05 | **Eliminar import directo de `next`** | Removido `import { MetadataRoute } from "next"` en `robots.js` y `sitemap.js` — era warning y no servía en JS. |
+| 2026-05 | **Mantener Sanity en uso mínimo (solo home)** | Auditoría detectó que /vehiculos/[model], /concesionarios y /posventa NO consumen Sanity — todo viene de `lib/page-data.js` (2669 líneas hardcoded). Se decidió **NO re-cablear** durante esta migración. Activar Sanity para modelos es proyecto aparte futuro. |
+| 2026-05 | **Modelos sin Sanity quedan hardcoded** | g700, t1-phev, dashing-phev no tienen doc en Sanity export. Como el sitio igual no lee Sanity para modelos, no se crean. Quedan en `lib/vehicle-models.js`. |
+| 2026-05 | **Variantes "new" de assets GCS** | Cuando GCS tiene duplicados (`t2-phev-new`, `x70-sport-new`, `dashing-2`, `banner-t2-phev2.mp4`), se usa la versión "new" / más reciente. La antigua se descarta. |
 
 ---
 
@@ -163,7 +166,12 @@ Todos los inserts validados con **Zod** antes de tocar Prisma. Cédula ecuatoria
 
 **Singletons protegidos:** El config de Sanity bloquea crear duplicados de `homePage`, `concesionariosPage`, `posventaPage`. Sólo permite `publish`, `discardChanges`, `restore`.
 
-**⚠️ Hallazgo:** `lib/sanity.js` consulta `*[_type == "homePage"][1]` (índice 1, no 0). En el export NDJSON hay 2 docs homePage — al re-importar, validar cuál es el que se debe mantener.
+**⚠️ Hallazgos auditoría mayo 2026:**
+
+1. `lib/sanity.js` consulta `*[_type == "homePage"][1]` (índice 1, no 0). En el export NDJSON hay 2 docs homePage — al re-importar, validar cuál es el que se debe mantener.
+2. **Solo `app/page.js` (home) importa de `@/lib/sanity`.** Las páginas de vehículos, concesionarios y postventa consumen contenido hardcoded de `lib/page-data.js` y `lib/vehicle-models.js`. Los docs de Sanity para esas páginas son "zombis" — existen pero nadie los lee.
+3. **Slug roto en Sanity:** vehicleModel X70 Sport tiene `slug.current = "70-sport"` en vez de `x70-sport`. Corregir antes de re-importar (aunque hoy no afecta porque la página no consulta Sanity).
+4. **Asset faltante:** `/models/hero/x70-hero.jpg` se referencia en código para X70 Sport y X70 Plus pero no existe en `public/`. Bug heredado.
 
 ---
 
