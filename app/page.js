@@ -12,8 +12,9 @@ import { getPageData } from "@/lib/page-data";
 import { getHomePageData } from "@/lib/sanity";
 
 export default async function HomePage() {
-  // Obtener datos del hero desde Sanity
-  const sanityData = await getHomePageData();
+  // Obtener datos del hero desde Sanity con fallback seguro:
+  // si Sanity falla o devuelve null, evitamos romper el render.
+  const sanityData = (await getHomePageData()) ?? {};
 
   // Obtener datos estáticos para las otras secciones (temporal)
   const pageData = getPageData("home");
@@ -23,29 +24,35 @@ export default async function HomePage() {
       <Header transparent={true} />
 
       {/* Hero Section - Full Screen */}
-      {<Hero 
-        {...sanityData?.hero} 
+      <Hero
+        {...sanityData.hero}
         additionalImage="/2026-life-is-a-ride.png"
         additionalImageAlt="2026 Life is a Ride"
-      />}
+      />
 
       {/* Vehicle Showcase Section */}
       <VehicleShowcaseNew />
 
       {/* Global Stats Section */}
-      <GlobalStats {...sanityData?.globalStats} />
+      {sanityData.globalStats?.stats?.length > 0 && (
+        <GlobalStats {...sanityData.globalStats} />
+      )}
 
       {/* Roldan Section */}
-      <RoldanSection {...sanityData?.roldanSection} />
+      {sanityData.roldanSection && (
+        <RoldanSection {...sanityData.roldanSection} />
+      )}
 
       {/* Video Gallery Section */}
-      <VideoGallery {...sanityData?.videoGallery} />
+      {sanityData.videoGallery?.videos?.length > 0 && (
+        <VideoGallery {...sanityData.videoGallery} />
+      )}
 
       {/* Quote Form Section */}
       <QuoteForm {...pageData.quoteForm} currentModel={null} source="home" />
 
       <Footer />
-      
+
       {/* Floating WhatsApp Button */}
       <WhatsAppInfoButton />
     </div>

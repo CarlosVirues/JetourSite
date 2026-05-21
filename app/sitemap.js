@@ -1,4 +1,3 @@
-import { MetadataRoute } from "next";
 import { getAllModels } from "@/lib/vehicle-models";
 
 export default function sitemap() {
