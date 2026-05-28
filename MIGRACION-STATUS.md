@@ -1,0 +1,87 @@
+# Migración Jetour Ecuador — Status a 2026-05-28
+
+Documento operativo. Para contexto completo del proyecto ver [CLAUDE.md](./CLAUDE.md).
+
+---
+
+## 1. Cerrado ✅
+
+| Item | Detalle |
+|---|---|
+| Fase 0 — Auditoría | Repo, assets, Sanity, BD documentados en CLAUDE.md |
+| Fase 0.5 — Limpieza técnica | Defensive checks, postgres, build limpio (24/24 static) |
+| BD migrada MySQL → Postgres | Schema Prisma + Vercel Postgres (Neon) |
+| Leads históricos importados | 174 contacts + 8,524 quotes + 88 service_submissions = **8,786** |
+| Sanity project nuevo | `j182601n` (bajo cuenta personal Carlos — pendiente traspaso) |
+| Initial Prisma migration | Auto-apply en cada deploy |
+| News migradas a Sanity | `feat(news): migrate hardcoded news to Sanity CMS` |
+| Vehicle migration script + schema | `scripts/migrate-vehicles.js` + `sanity/schemaTypes/vehicleModel.js`. Dry-run production OK (10/10). |
+
+---
+
+## 2. Acciones técnicas listas para ejecutar (sin bloqueantes)
+
+```bash
+# 1. Migrar vehículos a Sanity production (requiere confirmación "yes" interactiva)
+cd /Users/elsarito/Jeteour/jetour-site
+npm run migrate-vehicles -- --dataset=production
+
+# 2. Verificar en Sanity Studio
+npm run dev   # → http://localhost:3000/studio
+
+# 3. Lighthouse local antes de staging
+npm run build && npm run start
+```
+
+---
+
+## 3. Bloqueantes externos — requieren acción del cliente
+
+| # | Item | Solicitar a | Qué se necesita |
+|---|---|---|---|
+| 1 | Credenciales GoDaddy `jetourecuador.com` | Cris / Jetour | Login o acceso delegado para apuntar DNS a Vercel |
+| 2 | Cuenta **Vercel Pro a nombre de Jetour** | Cris / Jetour | Email corporativo Jetour. Transferir el proyecto desde la cuenta personal de Carlos |
+| 3 | **Sanity org a nombre de Jetour** | Cris / Jetour | Email corporativo Jetour. Transferir el project `j182601n` |
+| 4 | GitHub org `jetour-ecuador` | Carlos | Crear org y transferir `CarlosVirues/JetourSite` |
+
+Sin items 1–3 no hay cutover posible.
+
+---
+
+## 4. Pendientes técnicos (post-bloqueantes)
+
+### Fase 2 — cerrar contenido
+- [ ] Correr `migrate-vehicles` en production (comando arriba)
+- [ ] Decisión: ¿migrar `concesionariosPage` y `posventaPage` a Sanity? (hoy 2,669 líneas hardcoded en `lib/page-data.js` — deuda técnica, pero funciona)
+- [ ] Decisión: ¿assets GCS (980 MB) en `public/` o CDN externo (Cloudflare Stream / Mux)?
+- [ ] Bug heredado: `/models/hero/x70-hero.jpg` falta — agregar o re-rutear
+
+### Fase 3 — staging + QA
+- [ ] Deploy preview a `staging.jetourecuador.com` (o `jetour-staging.vercel.app`)
+- [ ] QA manual: 24 rutas + 3 forms (contact, quote, service)
+- [ ] Lighthouse Mobile ≥ 85
+- [ ] 0 errores consola
+
+### Fase 4 — SEO + cutover
+- [ ] Re-correr Screaming Frog (comparar con `/Users/elsarito/Jeteour/snapshot-pre-cutover/`)
+- [ ] Mapa de redirects 301 si cambia URL alguna
+- [ ] Ventana de cutover acordada con Cris
+- [ ] Cambio DNS GoDaddy → Vercel
+- [ ] Resubmit `sitemap.xml` en Google Search Console
+
+### Fase 5 — post-launch
+- [ ] Monitoreo T+72h: errors, GSC coverage, bandwidth Vercel
+- [ ] Monitoreo T+30d: rankings vs snapshot pre-cutover
+
+---
+
+## 5. Riesgos abiertos
+
+1. **Bandwidth Vercel >1 TB** si sitio sirve los 1.25 GB de media a 35K visitas/día. Mitigación pendiente: evaluar CDN externo para video tras primer mes.
+2. **Sanity outage** → secciones de home renderizan vacías (mitigado en Fase 0.5).
+3. **Sin tests automatizados** → toda regresión depende de QA manual.
+4. **`lib/data-site.js` con noticias antiguas hardcoded** → revisar si quedó deuda residual tras migración de news.
+
+---
+
+*Generado 2026-05-28. Mantener sincronizado con [CLAUDE.md §10–§11](./CLAUDE.md).*
