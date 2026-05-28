@@ -52,9 +52,9 @@ Sin items 1–3 no hay cutover posible.
 
 ### Fase 2 — cerrar contenido
 - [ ] Correr `migrate-vehicles` en production (comando arriba)
-- [ ] Decisión: ¿migrar `concesionariosPage` y `posventaPage` a Sanity? (hoy 2,669 líneas hardcoded en `lib/page-data.js` — deuda técnica, pero funciona)
-- [ ] Decisión: ¿assets GCS (980 MB) en `public/` o CDN externo (Cloudflare Stream / Mux)?
-- [ ] Bug heredado: `/models/hero/x70-hero.jpg` falta — agregar o re-rutear
+- [x] **DECIDIDO 2026-05-28:** `concesionariosPage` y `posventaPage` quedan como deuda técnica — siguen hardcoded en `lib/page-data.js`. Razón: alineado con principio de migración 1:1, el sitio actual tampoco lee Sanity para esas páginas. Sprint aparte post-cutover.
+- [x] **DECIDIDO 2026-05-28:** GCS assets se quedan apuntando al bucket público de devxiy (`xiyimgengine`) hasta que Jetour tenga su propia infra (Vercel Pro + bucket propio). Razón: 980 MB no caben en `public/` (deploy size limit + bandwidth Vercel), y Cloudflare Stream/Mux requiere cuenta nueva. Riesgo: si devxiy borra el bucket el sitio pierde videos. **Mitigación:** backup local completo en `/Users/elsarito/Jeteour/gcs-jetour-export/` (980 MB). Sprint post-cutover: rehosting a bucket Jetour.
+- [x] **FIX 2026-05-28:** `vehicle-models.js` apuntaba a `/models/hero/x70-hero.jpg` (inexistente) para X70 Sport y X70 Plus. Corregido a `x70-sport-hero.jpg` y `x70-plus-hero.jpg` (que sí existen). Era campo dead (vehicle-models.js sólo se usa para nav del Header), no había bug visible.
 
 ### Fase 3 — staging + QA
 - [ ] Deploy preview a `staging.jetourecuador.com` (o `jetour-staging.vercel.app`)
