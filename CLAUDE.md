@@ -206,11 +206,27 @@ Aproximadamente **980 MB** de media pesada vive **fuera del repo** (en bucket GC
 |---|---|---|
 | 0 | Auditoría del repo + assets entregados | ✅ Completada |
 | 0.5 | Limpieza técnica (fixes, postgresql, build limpio) | ✅ Completada |
-| 1 | Provisionar infra propia de Jetour | 🟡 Pendiente |
-| 2 | Importar Sanity + DB + assets | 🟡 Pendiente |
+| 1 | Provisionar infra propia de Jetour | 🟡 Parcial (Sanity `j182601n` y Vercel bajo cuenta personal; pendiente traspaso a Jetour) |
+| 2 | Importar Sanity + DB + assets | 🟡 Leads ✅ · News ✅ · Vehicles 🟡 schema+script listos, falta correr en production · Concesionarios/Posventa ❓ |
 | 3 | Deploy en staging + QA | 🟡 Pendiente |
 | 4 | Protección SEO + cutover | 🟡 Pendiente |
 | 5 | Monitoreo post-launch (T+72h y T+30d) | 🟡 Pendiente |
+
+### Estado de la migración a 2026-05-28
+
+**Cerrado:**
+- Schema `vehicleModel` reescrito + script `scripts/migrate-vehicles.js` (idempotente, dry-run, confirmación interactiva en production).
+- Dry-run en dataset `production`: 10 vehículos, 0 errores.
+
+**Para cerrar Fase 2 sin bloqueantes externos:**
+
+```bash
+# Correr cuando se quiera publicar los docs en Sanity prod
+npm run migrate-vehicles -- --dataset=production
+# (pide confirmación "yes" interactiva)
+```
+
+**Pendientes que requieren acción externa (ver §11).**
 
 ---
 
