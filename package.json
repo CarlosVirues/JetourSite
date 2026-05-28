@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "postinstall": "prisma generate",
-    "migrate-news": "node scripts/migrate-news.js"
+    "migrate-news": "node scripts/migrate-news.js",
+    "migrate-vehicles": "node scripts/migrate-vehicles.js"
   },
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.16.10",

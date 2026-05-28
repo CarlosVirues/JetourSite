@@ -41,6 +41,7 @@ yarn-error.log*
 backups/
 exports/
 dist/
+scripts/migration-log-*.json
 
 # typescript
 *.tsbuildinfo

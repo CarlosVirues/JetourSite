@@ -22,44 +22,41 @@ const vehicleModel = {
       validation: (Rule) => Rule.required(),
     },
     {
-      name: "description",
-      title: "Descripción General",
-      type: "text",
-      rows: 3,
-      description: "Descripción breve del vehículo",
-    },
-    {
       name: "hero",
       title: "Sección Hero",
       type: "object",
       fields: [
         {
           name: "backgroundImage",
-          title: "Imagen de Fondo",
+          title: "Imagen de Fondo (Fallback)",
           type: "image",
           options: {
             hotspot: true,
           },
-          validation: (Rule) => Rule.required(),
+        },
+        {
+          name: "backgroundVideo",
+          title: "Video de Fondo",
+          type: "string",
+          description: "URL del video MP4 para el hero (Google Cloud Storage)",
         },
         {
           name: "vehicleName",
           title: "Nombre del Vehículo",
           type: "string",
-          description: "Nombre mostrado en el hero",
+          validation: (Rule) => Rule.required(),
         },
         {
           name: "vehicleDescription",
           title: "Descripción del Hero",
           type: "string",
-          description: "Frase descriptiva del hero",
+          validation: (Rule) => Rule.required(),
         },
         {
           name: "height",
           title: "Altura del Hero",
           type: "string",
-          description: "Clases de Tailwind para la altura",
-          initialValue: "h-96 lg:h-[600px]",
+          initialValue: "h-screen",
         },
         {
           name: "logoImage",
@@ -74,47 +71,103 @@ const vehicleModel = {
           title: "Alt del Logo",
           type: "string",
         },
-      ],
-    },
-    {
-      name: "features",
-      title: "Características Principales",
-      type: "object",
-      fields: [
         {
-          name: "items",
-          title: "Lista de Características",
+          name: "highlights",
+          title: "Highlights del Hero",
           type: "array",
           of: [
             {
               type: "object",
               fields: [
                 {
+                  name: "id",
+                  title: "ID",
+                  type: "number",
+                },
+                {
+                  name: "text",
+                  title: "Texto",
+                  type: "string",
+                  validation: (Rule) => Rule.required(),
+                },
+              ],
+              preview: {
+                select: {
+                  text: "text",
+                },
+              },
+            },
+          ],
+        },
+      ],
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: "videoGallery",
+      title: "Galería de Videos",
+      type: "object",
+      fields: [
+        {
+          name: "title",
+          title: "Título",
+          type: "string",
+        },
+        {
+          name: "videos",
+          title: "Videos",
+          type: "array",
+          of: [
+            {
+              type: "object",
+              fields: [
+                {
+                  name: "id",
+                  title: "ID",
+                  type: "number",
+                },
+                {
                   name: "title",
-                  title: "Título",
+                  title: "Título del Video",
                   type: "string",
                   validation: (Rule) => Rule.required(),
                 },
                 {
-                  name: "description",
-                  title: "Descripción",
-                  type: "string",
-                  validation: (Rule) => Rule.required(),
-                },
-                {
-                  name: "image",
-                  title: "Imagen",
+                  name: "thumbnail",
+                  title: "Miniatura",
                   type: "image",
                   options: {
                     hotspot: true,
                   },
                 },
+                {
+                  name: "videoUrl",
+                  title: "URL del Video",
+                  type: "url",
+                  validation: (Rule) => Rule.required(),
+                },
+                {
+                  name: "views",
+                  title: "Texto del Botón",
+                  type: "string",
+                  initialValue: "Ver video",
+                },
+                {
+                  name: "type",
+                  title: "Tipo",
+                  type: "string",
+                  options: {
+                    list: [
+                      { title: "Video", value: "video" },
+                      { title: "Imagen", value: "image" },
+                    ],
+                  },
+                  initialValue: "video",
+                },
               ],
               preview: {
                 select: {
                   title: "title",
-                  subtitle: "description",
-                  media: "image",
+                  media: "thumbnail",
                 },
               },
             },
@@ -146,7 +199,12 @@ const vehicleModel = {
               type: "object",
               fields: [
                 {
-                  name: "image",
+                  name: "id",
+                  title: "ID",
+                  type: "number",
+                },
+                {
+                  name: "src",
                   title: "Imagen",
                   type: "image",
                   options: {
@@ -164,7 +222,7 @@ const vehicleModel = {
               preview: {
                 select: {
                   title: "alt",
-                  media: "image",
+                  media: "src",
                 },
               },
             },
@@ -176,119 +234,84 @@ const vehicleModel = {
       name: "threeSixty",
       title: "Vista 360°",
       type: "object",
-      description: "Configuración para la vista 360° (opcional)",
       fields: [
         {
-          name: "enabled",
-          title: "Habilitar Vista 360°",
-          type: "boolean",
-          initialValue: false,
+          name: "model",
+          title: "Modelo",
+          type: "string",
+          description: "Slug del modelo (ej: t1, t2)",
         },
         {
           name: "totalFrames",
           title: "Total de Frames",
           type: "number",
-          description: "Número total de imágenes para la rotación 360°",
-          hidden: ({ parent }) => !parent?.enabled,
         },
         {
           name: "title",
           title: "Título de la Sección",
           type: "string",
-          hidden: ({ parent }) => !parent?.enabled,
         },
         {
           name: "subtitle",
           title: "Subtítulo",
           type: "string",
-          hidden: ({ parent }) => !parent?.enabled,
         },
         {
           name: "imagePath",
           title: "Ruta Base de las Imágenes",
           type: "string",
-          description: "URL base donde están las imágenes 360°",
-          hidden: ({ parent }) => !parent?.enabled,
+          description: "URL base de Google Cloud Storage (ej: https://storage.googleapis.com/xiyimgengine/jetour/360/t1)",
         },
         {
           name: "showInstructions",
           title: "Mostrar Instrucciones",
           type: "boolean",
           initialValue: true,
-          hidden: ({ parent }) => !parent?.enabled,
-        },
-        {
-          name: "colorsPath",
-          title: "Ruta de Colores",
-          type: "string",
-          description: "Ruta donde están las imágenes de colores",
-          hidden: ({ parent }) => !parent?.enabled,
-        },
-        {
-          name: "totalColors",
-          title: "Total de Colores",
-          type: "number",
-          hidden: ({ parent }) => !parent?.enabled,
-        },
-        {
-          name: "colorNames",
-          title: "Nombres de Colores",
-          type: "array",
-          of: [{ type: "string" }],
-          hidden: ({ parent }) => !parent?.enabled,
         },
       ],
     },
     {
-      name: "heroShowcase",
-      title: "Hero Showcase",
+      name: "vehicleColorsNew",
+      title: "Selector de Colores (Nuevo)",
       type: "object",
       fields: [
         {
-          name: "title",
-          title: "Título",
+          name: "modelName",
+          title: "Nombre del Modelo",
           type: "string",
         },
         {
-          name: "subtitle",
-          title: "Subtítulo",
-          type: "text",
-          rows: 2,
-        },
-        {
-          name: "slides",
-          title: "Slides del Showcase",
+          name: "colors",
+          title: "Colores Disponibles",
           type: "array",
           of: [
             {
               type: "object",
               fields: [
                 {
+                  name: "name",
+                  title: "Nombre del Color",
+                  type: "string",
+                  validation: (Rule) => Rule.required(),
+                },
+                {
+                  name: "hex",
+                  title: "Código HEX",
+                  type: "string",
+                  validation: (Rule) => Rule.required(),
+                },
+                {
                   name: "image",
-                  title: "Imagen",
+                  title: "Imagen del Color",
                   type: "image",
                   options: {
                     hotspot: true,
                   },
-                  validation: (Rule) => Rule.required(),
-                },
-                {
-                  name: "title",
-                  title: "Título del Slide",
-                  type: "string",
-                  validation: (Rule) => Rule.required(),
-                },
-                {
-                  name: "description",
-                  title: "Descripción",
-                  type: "string",
-                  validation: (Rule) => Rule.required(),
                 },
               ],
               preview: {
                 select: {
-                  title: "title",
-                  subtitle: "description",
+                  title: "name",
                   media: "image",
                 },
               },
@@ -298,92 +321,118 @@ const vehicleModel = {
       ],
     },
     {
-      name: "videoGallery",
-      title: "Galería de Videos",
-      type: "object",
-      fields: [
+      name: "featureSlides",
+      title: "Módulos de Características",
+      type: "array",
+      description: "Módulos dinámicos de features (Tecnología, Confort, Seguridad, etc.)",
+      of: [
         {
-          name: "title",
-          title: "Título",
-          type: "string",
-        },
-        {
-          name: "videos",
-          title: "Videos",
-          type: "array",
-          of: [
+          type: "object",
+          fields: [
             {
-              type: "object",
-              fields: [
+              name: "title",
+              title: "Título del Módulo",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: "slides",
+              title: "Slides del Módulo",
+              type: "array",
+              of: [
                 {
-                  name: "title",
-                  title: "Título del Video",
-                  type: "string",
-                  validation: (Rule) => Rule.required(),
-                },
-                {
-                  name: "thumbnail",
-                  title: "Miniatura",
-                  type: "image",
-                  options: {
-                    hotspot: true,
+                  type: "object",
+                  fields: [
+                    {
+                      name: "backgroundImage",
+                      title: "Imagen de Fondo",
+                      type: "image",
+                      options: {
+                        hotspot: true,
+                      },
+                      validation: (Rule) => Rule.required(),
+                    },
+                    {
+                      name: "bullets",
+                      title: "Puntos de Características",
+                      type: "array",
+                      of: [{ type: "string" }],
+                    },
+                  ],
+                  preview: {
+                    select: {
+                      media: "backgroundImage",
+                    },
                   },
-                  validation: (Rule) => Rule.required(),
-                },
-                {
-                  name: "videoUrl",
-                  title: "URL del Video",
-                  type: "url",
-                  validation: (Rule) => Rule.required(),
-                },
-                {
-                  name: "views",
-                  title: "Texto del Botón",
-                  type: "string",
-                  initialValue: "Ver video",
-                },
-                {
-                  name: "type",
-                  title: "Tipo",
-                  type: "string",
-                  options: {
-                    list: [
-                      { title: "Video", value: "video" },
-                      { title: "Imagen", value: "image" },
-                    ],
-                  },
-                  initialValue: "video",
                 },
               ],
-              preview: {
-                select: {
-                  title: "title",
-                  subtitle: "type",
-                  media: "thumbnail",
-                },
-              },
             },
           ],
+          preview: {
+            select: {
+              title: "title",
+            },
+          },
         },
       ],
     },
     {
       name: "technicalSheet",
       title: "Ficha Técnica",
+      type: "boolean",
+      initialValue: false,
+      description: "Mostrar botón de ficha técnica",
+    },
+    {
+      name: "specificationsVideo",
+      title: "Video de Especificaciones",
       type: "object",
       fields: [
         {
-          name: "enabled",
-          title: "Habilitar Ficha Técnica",
-          type: "boolean",
-          initialValue: true,
+          name: "videoUrl",
+          title: "URL del Video",
+          type: "string",
+          description: "URL del video MP4 (Google Cloud Storage)",
         },
         {
-          name: "pdfFile",
-          title: "Archivo PDF",
-          type: "file",
-          description: "Archivo PDF de la ficha técnica",
-          hidden: ({ parent }) => !parent?.enabled,
+          name: "imageUrl",
+          title: "URL de Imagen (alternativa)",
+          type: "string",
+          description: "Para modelos que usan imagen en vez de video",
+        },
+        {
+          name: "title",
+          title: "Título",
+          type: "string",
+        },
+        {
+          name: "subtitle",
+          title: "Subtítulo",
+          type: "string",
+        },
+        {
+          name: "model",
+          title: "Modelo",
+          type: "string",
+        },
+        {
+          name: "logoImage",
+          title: "Logo del Modelo",
+          type: "image",
+          options: {
+            hotspot: true,
+          },
+        },
+        {
+          name: "logoAlt",
+          title: "Alt del Logo",
+          type: "string",
+        },
+        {
+          name: "description",
+          title: "Descripción",
+          type: "text",
+          rows: 2,
         },
       ],
     },
@@ -391,13 +440,11 @@ const vehicleModel = {
   preview: {
     select: {
       title: "name",
-      subtitle: "description",
       media: "hero.backgroundImage",
     },
-    prepare({ title, subtitle, media }) {
+    prepare({ title, media }) {
       return {
         title: title || "Modelo sin nombre",
-        subtitle: subtitle || "Sin descripción",
         media,
       };
     },
