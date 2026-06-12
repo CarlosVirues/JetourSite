@@ -65,7 +65,9 @@ Sin items 1–3 no hay cutover posible.
 - [ ] Conectar repo Git al proyecto Vercel (auto-deploys) — pendiente, requiere autorizar GitHub app
 - [ ] Promover a producción (`--prod`) cuando se decida cutover
 
-> ⚠️ **HALLAZGO CLAVE (2026-06-11):** el front-end **NO lee de Sanity todavía**. `app/vehiculos/[model]/page.js` renderiza desde `lib/page-data.js` (hardcode) con imágenes de `public/`; las páginas de news idem desde `lib/data-site.js`. La migración a Sanity (vehículos + news) dejó el contenido **poblado en el CMS pero sin conectar al render**. El staging es copia fiel del sitio actual (1:1). El rewire de componentes a Sanity es trabajo post-cutover (ver Riesgo #4 y deuda de news).
+> **REWIRE A SANITY (2026-06-11):**
+> - ✅ **Vehículos CONECTADOS a Sanity.** `app/vehiculos/[model]/page.js` ahora lee de Sanity vía `getVehicleModelPageDataFromSanity()` (con fallback al hardcode si Sanity cae). Verificado en staging: 10/10 modelos 200, imágenes desde `cdn.sanity.io`, videos GCS preservados. **El contenido de vehículos es editable desde `/studio`.**
+> - ⏸️ **News DIFERIDO a propósito.** No conviene rewirear ahora: (1) los 3 componentes (`NewsGrid`, `FeaturedNews`, `RelatedNews`) son `"use client"` con funciones síncronas → refactor invasivo; (2) el schema Sanity no calza (`mainImage` vs `image`, `category` como referencia, `publishedAt` datetime, sin `contentImage1/2/3`) y **los `newsCategory` tienen `name: null`** (categorías sin poblar); (3) el contenido es Lorem ipsum placeholder. Retomar cuando haya contenido real + schema/categorías arregladas. Sigue renderizando del hardcode `lib/data-site.js` (funciona 1:1).
 
 ### Fase 4 — SEO + cutover
 - [ ] Re-correr Screaming Frog (comparar con `/Users/elsarito/Jeteour/snapshot-pre-cutover/`)
