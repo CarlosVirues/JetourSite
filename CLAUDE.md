@@ -207,24 +207,22 @@ Aproximadamente **980 MB** de media pesada vive **fuera del repo** (en bucket GC
 | 0 | Auditoría del repo + assets entregados | ✅ Completada |
 | 0.5 | Limpieza técnica (fixes, postgresql, build limpio) | ✅ Completada |
 | 1 | Provisionar infra propia de Jetour | 🟡 Parcial (Sanity `j182601n` y Vercel bajo cuenta personal; pendiente traspaso a Jetour) |
-| 2 | Importar Sanity + DB + assets | 🟡 Leads ✅ · News ✅ · Vehicles 🟡 schema+script listos, falta correr en production · Concesionarios/Posventa ❓ |
+| 2 | Importar Sanity + DB + assets | ✅ Leads ✅ · News ✅ · Vehicles ✅ (10/10 en production, 241 imageAssets) · Concesionarios/Posventa = deuda técnica (hardcoded, sprint post-cutover) |
 | 3 | Deploy en staging + QA | 🟡 Pendiente |
 | 4 | Protección SEO + cutover | 🟡 Pendiente |
 | 5 | Monitoreo post-launch (T+72h y T+30d) | 🟡 Pendiente |
 
-### Estado de la migración a 2026-05-28
+### Estado de la migración a 2026-06-11
 
 **Cerrado:**
 - Schema `vehicleModel` reescrito + script `scripts/migrate-vehicles.js` (idempotente, dry-run, confirmación interactiva en production).
-- Dry-run en dataset `production`: 10 vehículos, 0 errores.
+- **Migración de vehículos a Sanity `production` EJECUTADA (2026-06-11): 10/10 vehicleModel creados, 241 imageAssets subidos, 0 errores, 12 warnings (imágenes locales inexistentes — referencias muertas en `page-data.js`, sobre todo thumbnails `*-video-1.jpg` y 2 logos; los `videoUrl` de GCS sí quedaron preservados).**
+- Build de producción local limpio: 24/24 páginas estáticas, exit 0.
 
-**Para cerrar Fase 2 sin bloqueantes externos:**
+**Fase 2 cerrada técnicamente.** Lo que queda (staging, DNS, cutover) depende de los bloqueantes externos (§11).
 
-```bash
-# Correr cuando se quiera publicar los docs en Sanity prod
-npm run migrate-vehicles -- --dataset=production
-# (pide confirmación "yes" interactiva)
-```
+**Deuda técnica conocida (no tocar hasta post-cutover con QA):**
+- `lib/data-site.js` aún tiene `newsData` hardcoded y 4 componentes (`NewsGrid`, `FeaturedNews`, `RelatedNews`, `app/noticias/[slug]`) lo consumen. Aunque el dato existe en Sanity, los componentes NO se reconectaron. Rewirearlos ahora dejaría `/noticias` vacío hasta poblar news en Sanity prod. Diferido.
 
 **Pendientes que requieren acción externa (ver §11).**
 
