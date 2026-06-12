@@ -59,11 +59,14 @@ Sin items 1–3 no hay cutover posible.
   - 22 env vars cargadas en production+preview+development (Sanity + Postgres/Neon, copiadas de `.env.local`).
   - Framework preset = `nextjs`, build verde, 24 rutas. Smoke test: 10 rutas → 200.
   - Vercel Authentication DESACTIVADO (Password Protection requiere add-on de pago; se optó por link público + noindex).
-- [ ] QA manual: 24 rutas + 3 forms (contact, quote, service)
-- [ ] Lighthouse Mobile ≥ 85
-- [ ] 0 errores consola
-- [ ] Conectar repo Git al proyecto Vercel (auto-deploys) — pendiente, requiere autorizar GitHub app
-- [ ] Promover a producción (`--prod`) cuando se decida cutover
+- [x] **QA automatizado 2026-06-11**: 30/30 rutas → 200 (home, 10 vehículos, noticias+detalle, posventa, concesionarios, contacto, test-drive, 6 landings, sitemap/robots). 0 errores de consola (home, vehículo, contacto). Imágenes de vehículos desde Sanity CDN.
+- [x] **Formularios protegidos para QA del cliente**: contact/quote/service validan + guardan en BD + redirigen a gracias, pero los webhooks externos (CRM JAC, Zapier, GTM) **solo disparan en producción real** (`VERCEL_ENV=production`). En staging quedan suprimidos → Cris puede probar sin contaminar el CRM en vivo. Se reactivan solos al cutover.
+- [x] **noindex en staging**: `X-Robots-Tag: noindex, nofollow` en preview (producción indexa normal).
+- [x] Conectar repo Git al proyecto Vercel (auto-deploys) — HECHO (`CarlosVirues/JetourSite`).
+- [x] **Doc de revisión para Cris**: `docs/REVISION-CRIS.md` (link + qué revisar + qué falta).
+- [ ] QA visual humano de Cris (contenido/diseño por modelo) — pendiente del cliente.
+- [ ] Lighthouse Mobile ≥ 85 — no corrido aún (opcional pre-cutover).
+- [ ] Promover a producción (`--prod`) cuando se decida cutover.
 
 > **REWIRE A SANITY (2026-06-11):**
 > - ✅ **Vehículos CONECTADOS a Sanity.** `app/vehiculos/[model]/page.js` ahora lee de Sanity vía `getVehicleModelPageDataFromSanity()` (con fallback al hardcode si Sanity cae). Verificado en staging: 10/10 modelos 200, imágenes desde `cdn.sanity.io`, videos GCS preservados. **El contenido de vehículos es editable desde `/studio`.**
