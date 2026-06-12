@@ -3,6 +3,7 @@
 import { z } from "zod";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
+import { leadWebhooksEnabled } from "@/lib/lead-sinks";
 
 const contactSchema = z.object({
   nombre: z.string().min(2, "El nombre debe tener al menos 2 caracteres"),
@@ -45,50 +46,55 @@ export async function submitContactForm(prevState, formData) {
     };
   }
 
-  // Enviar a Zapier
-  try {
-    const zapierRes = await fetch("https://hooks.zapier.com/hooks/catch/3497280/uhtw0kh/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        ...cleanData,
-        formType: "contact",
-        timestamp: new Date().toISOString(),
-      }),
-    });
+  // Webhooks externos solo en producción real (ver lib/lead-sinks.js)
+  if (leadWebhooksEnabled) {
+    // Enviar a Zapier
+    try {
+      const zapierRes = await fetch("https://hooks.zapier.com/hooks/catch/3497280/uhtw0kh/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...cleanData,
+          formType: "contact",
+          timestamp: new Date().toISOString(),
+        }),
+      });
 
-    if (!zapierRes.ok) {
-      console.error("Zapier respondió con error:", zapierRes.status, await zapierRes.text());
-    } else {
-      console.log("Zapier recibió los datos correctamente");
+      if (!zapierRes.ok) {
+        console.error("Zapier respondió con error:", zapierRes.status, await zapierRes.text());
+      } else {
+        console.log("Zapier recibió los datos correctamente");
+      }
+    } catch (err) {
+      console.error("Error enviando a Zapier:", err);
     }
-  } catch (err) {
-    console.error("Error enviando a Zapier:", err);
-  }
 
-  // Enviar al CRM
-  try {
-    const crmRes = await fetch("https://crm.jacecuador.com/slt_crm/webhook", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        full_name: cleanData.nombre,
-        email: cleanData.email,
-        phone_number: cleanData.telefono,
-        ci: cleanData.cedula,
-        ciudad: cleanData.ciudad,
-        mensaje: cleanData.mensaje,
-        webhook: "ca8f540qm19akr16s80rd083",
-      }),
-    });
+    // Enviar al CRM
+    try {
+      const crmRes = await fetch("https://crm.jacecuador.com/slt_crm/webhook", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          full_name: cleanData.nombre,
+          email: cleanData.email,
+          phone_number: cleanData.telefono,
+          ci: cleanData.cedula,
+          ciudad: cleanData.ciudad,
+          mensaje: cleanData.mensaje,
+          webhook: "ca8f540qm19akr16s80rd083",
+        }),
+      });
 
-    if (!crmRes.ok) {
-      console.error("CRM respondió con error:", crmRes.status, await crmRes.text());
-    } else {
-      console.log("CRM recibió los datos correctamente");
+      if (!crmRes.ok) {
+        console.error("CRM respondió con error:", crmRes.status, await crmRes.text());
+      } else {
+        console.log("CRM recibió los datos correctamente");
+      }
+    } catch (err) {
+      console.error("Error enviando a CRM:", err);
     }
-  } catch (err) {
-    console.error("Error enviando a CRM:", err);
+  } else {
+    console.log("[leads] webhooks externos suprimidos (no es producción)");
   }
 
   return {
