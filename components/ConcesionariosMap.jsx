@@ -298,15 +298,63 @@ function getDefaultDistributors() {
         contact: "",
         map: null,
       },
+      {
+        id: 16,
+        name: "Jetour Riobamba La Campana",
+        address:
+          "Av. Canónigo Ramos y Pedro León Donoso., A una cuadra del monumento a La Campana.",
+        phone: "",
+        mobile: "098 768 5621",
+        hours_weekdays: "08:30 - 18:30",
+        hours_saturday: "09:00 - 14:00",
+        status: "Abierto",
+        // TODO: foto propia del local (por ahora reusa la imagen de Riobamba)
+        image: "/distributor-riobamba-15.jpg",
+        // Coordenadas aproximadas sobre Av. Canónigo Ramos (norte de Riobamba).
+        // TODO: verificar con Google Maps la ubicación exacta del local.
+        location: {
+          lat: -1.6475,
+          lng: -78.67,
+        },
+        contact: "",
+        map: null,
+      },
     ],
   };
 }
 
+// Transforma el objeto de getDefaultDistributors() (agrupado por clave de ciudad)
+// al shape { cityName, distributors } que consume el componente (igual que Sanity).
+function getDefaultCities() {
+  const labels = {
+    cuenca: "Cuenca",
+    guayaquil: "Guayaquil",
+    machala: "Machala",
+    riobamba: "Riobamba",
+    manta: "Manta",
+    loja: "Loja",
+    ibarra: "Ibarra",
+    quito: "Quito",
+  };
+  const byCity = getDefaultDistributors();
+  return Object.entries(byCity).map(([key, distributors]) => ({
+    cityName: labels[key] || key,
+    distributors,
+  }));
+}
+
 export default function ConcesionariosMap({
   title = "Nuestro equipo de especialistas está en 26 puntos de servicio en todo el país.",
-  cities = [],
+  cities: citiesProp = [],
 }) {
-  // Solo usar datos de Sanity - crear array plano de todos los distribuidores con ID único
+  // Si Sanity trae datos, se usan; si viene vacío (concesionariosPage no migrado a Sanity),
+  // caemos al listado hardcoded. Concesionarios = deuda técnica (ver MIGRACION-STATUS.md).
+  const cities = useMemo(
+    () => (citiesProp.length > 0 ? citiesProp : getDefaultCities()),
+    [citiesProp]
+  );
+
+  // Crear array plano de todos los distribuidores con ID único
   const allDistributors = useMemo(() => {
     if (cities.length === 0) return [];
 
