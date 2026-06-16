@@ -386,6 +386,10 @@ export default function ConcesionariosMap({
   const [infoWindows, setInfoWindows] = useState([]);
   const [markerMap, setMarkerMap] = useState(new Map()); // Map distributor.id -> {marker, infoWindow}
   const mapRef = useRef(null);
+  // Solo intentamos cargar Google Maps si hay API key. Sin key ocultamos el mapa (en vez
+  // de mostrar el recuadro de error de Google) y el listado ocupa todo el ancho.
+  // Al cargar NEXT_PUBLIC_GOOGLE_MAPS_API_KEY en Vercel y redeployar, el mapa reaparece solo.
+  const hasMapsKey = Boolean(process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY);
 
   // const distributors = {
   //   ambato: [
@@ -537,10 +541,10 @@ export default function ConcesionariosMap({
       }
     };
 
-    if (mapRef.current) {
+    if (hasMapsKey && mapRef.current) {
       initMap();
     }
-  }, []);
+  }, [hasMapsKey]);
 
   // Add markers when map is ready or distributors change
   useEffect(() => {
@@ -777,7 +781,7 @@ export default function ConcesionariosMap({
         {/* Left Section - Search and Distributors List */}
         <motion.div
           variants={itemVariants}
-          className="lg:col-span-1 bg-gray-900 rounded-lg p-6"
+          className={`${hasMapsKey ? "lg:col-span-1" : "lg:col-span-3"} bg-gray-900 rounded-lg p-6`}
         >
           {/* Search Bar */}
           <motion.div
@@ -962,21 +966,23 @@ export default function ConcesionariosMap({
           </motion.div>
         </motion.div>
 
-        {/* Right Section - Google Map */}
-        <motion.div
-          variants={itemVariants}
-          className="lg:col-span-2 bg-gray-900 rounded-lg p-6 relative h-full"
-        >
+        {/* Right Section - Google Map (solo si hay API key configurada) */}
+        {hasMapsKey && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            ref={mapRef}
-            className="w-full h-full rounded-lg"
-            style={{ minHeight: "400px" }}
-          />
-          {/* Info is now shown directly on map markers via InfoWindows */}
-        </motion.div>
+            variants={itemVariants}
+            className="lg:col-span-2 bg-gray-900 rounded-lg p-6 relative h-full"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              ref={mapRef}
+              className="w-full h-full rounded-lg"
+              style={{ minHeight: "400px" }}
+            />
+            {/* Info is now shown directly on map markers via InfoWindows */}
+          </motion.div>
+        )}
       </div>
     </motion.div>
   );
