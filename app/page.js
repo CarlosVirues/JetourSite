@@ -24,7 +24,10 @@ export default async function HomePage() {
       <Header transparent={true} />
 
       {/* Hero Section - Full Screen */}
+      {/* Fallback del video de portada (GCS) cuando Sanity no trae homePage.
+          Si Sanity provee hero, sus valores tienen prioridad (van después del spread). */}
       <Hero
+        backgroundVideo="https://storage.googleapis.com/xiyimgengine/jetour/video-home-marzo2026.mp4"
         {...sanityData.hero}
         additionalImage="/2026-life-is-a-ride.png"
         additionalImageAlt="2026 Life is a Ride"
