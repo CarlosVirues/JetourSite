@@ -218,6 +218,27 @@ function getDefaultDistributors() {
         contact: "",
         map: null,
       },
+      {
+        id: 17,
+        name: "Jetour Granados",
+        address:
+          "Av. de los Granados y Vía a Nayón, Esquina., Frente al ECOPARK.",
+        phone: "",
+        // TODO: contacto PENDIENTE — el cliente enviará el número
+        mobile: "",
+        hours_weekdays: "08:30 - 18:30",
+        hours_saturday: "08:30 - 14:00",
+        status: "Abierto",
+        // TODO: foto propia del local (por ahora reusa imagen de Quito)
+        image: "/distributor-quito-7.jpg",
+        // Coordenadas exactas provistas por el cliente
+        location: {
+          lat: -0.16271676872760302,
+          lng: -78.46277150118105,
+        },
+        contact: "",
+        map: null,
+      },
     ],
     ibarra: [
       {
@@ -917,7 +938,11 @@ export default function ConcesionariosMap({
                                     >
                                       <Phone className="w-4 h-4 mr-2" />
                                     </motion.div>
-                                    {distributor.phone} / {distributor.mobile}
+                                    {distributor.phone || distributor.mobile
+                                      ? [distributor.phone, distributor.mobile]
+                                          .filter(Boolean)
+                                          .join(" / ")
+                                      : "Contacto próximamente"}
                                   </div>
                                   <div className="flex items-center">
                                     <motion.div
