@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import Header from "@/components/Header";
 import HeroShowcase from "@/components/HeroShowcase";
 import VideoGallery from "@/components/VideoGallery";
@@ -9,33 +10,44 @@ import ThreeSixty from "@/components/360";
 import VehicleColors from "@/components/VehicleColors";
 import VehicleColorsNew from "@/components/VehicleColorsNew";
 import Footer from "@/components/Footer";
-import { getVehicleModel } from "@/lib/vehicle-models";
-import { getPageData, getVehicleModelPageData } from "@/lib/page-data";
+import { getPageData, getVehicleModelPageData, isKnownVehicleModel } from "@/lib/page-data";
 import { getVehicleModelPageDataFromSanity } from "@/lib/sanity";
 import TechnicalSheetButton from "@/components/TechnicalSheetButton";
 import SpecificationsVideo from "@/components/SpecificationsVideo";
 import VehicleFeatureSlides from "@/components/VehicleFeatureSlides";
 import WhatsAppInfoButton from "@/components/WhatsAppInfoButton";
 
+// Datos del modelo: primero desde Sanity (editable por el cliente en /studio), con
+// fallback al hardcode de page-data.js si Sanity no responde o no tiene el doc todavía.
+// Se centraliza aquí para que generateMetadata y la página vean exactamente lo mismo
+// (antes generateMetadata leía solo el hardcode, así que el <title> no reflejaba
+// ediciones hechas en Sanity Studio).
+async function getModelData(model) {
+  const sanityModelData = await getVehicleModelPageDataFromSanity(model);
+  return sanityModelData ?? getVehicleModelPageData(model);
+}
+
 export async function generateMetadata({ params }) {
   const pageParams = await params;
   const model = pageParams.model.toLowerCase();
-  const vehicleData = getVehicleModel(model);
+  if (!isKnownVehicleModel(model)) return {};
+
+  const modelPageData = await getModelData(model);
+  const name = modelPageData.hero?.vehicleName || model.toUpperCase();
 
   return {
-    title: `${vehicleData.name} - JETOUR Ecuador`,
-    description: vehicleData.description,
+    title: `${name} - JETOUR Ecuador`,
+    description: modelPageData.hero?.vehicleDescription,
   };
 }
 
 export default async function VehicleModelPage({ params }) {
   const pageParams = await params;
   const model = pageParams.model.toLowerCase();
+  if (!isKnownVehicleModel(model)) notFound();
+
   const pageData = getPageData("vehiculos"); // Datos específicos para páginas de vehículos
-  // Datos del modelo: primero desde Sanity (editable por el cliente en /studio),
-  // con fallback al hardcode de page-data.js si Sanity no responde o no tiene el doc.
-  const sanityModelData = await getVehicleModelPageDataFromSanity(model);
-  const modelPageData = sanityModelData ?? getVehicleModelPageData(model);
+  const modelPageData = await getModelData(model);
 
   // Verificar qué módulos están disponibles para este modelo
   // Esto permite ocultar automáticamente secciones que no tienen datos
