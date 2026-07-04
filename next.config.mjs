@@ -21,10 +21,10 @@ const nextConfig = {
     ],
   },
   async headers() {
-    // En preview/staging (todo lo que no sea producción real) bloqueamos la indexación
-    // para no filtrar el sitio sin lanzar. Vercel setea VERCEL_ENV=production solo en
-    // deploys de producción, así que al cutover el sitio vuelve a ser indexable solo.
-    if (process.env.VERCEL_ENV === "production") return [];
+    // Bloqueamos la indexación en todo lo que no sea EL SITIO PÚBLICO REAL (SITE_LIVE=true,
+    // seteado en Vercel recién al cutover). Los deployments de producción pre-cutover en
+    // *.vercel.app también quedan con noindex. Ver lib/lead-sinks.js para el mismo gate.
+    if (process.env.SITE_LIVE === "true") return [];
     return [
       {
         source: "/:path*",

@@ -60,7 +60,7 @@ Sin items 1–3 no hay cutover posible.
   - Framework preset = `nextjs`, build verde, 24 rutas. Smoke test: 10 rutas → 200.
   - Vercel Authentication DESACTIVADO (Password Protection requiere add-on de pago; se optó por link público + noindex).
 - [x] **QA automatizado 2026-06-11**: 30/30 rutas → 200 (home, 10 vehículos, noticias+detalle, posventa, concesionarios, contacto, test-drive, 6 landings, sitemap/robots). 0 errores de consola (home, vehículo, contacto). Imágenes de vehículos desde Sanity CDN.
-- [x] **Formularios protegidos para QA del cliente**: contact/quote/service validan + guardan en BD + redirigen a gracias, pero los webhooks externos (CRM JAC, Zapier, GTM) **solo disparan en producción real** (`VERCEL_ENV=production`). En staging quedan suprimidos → Cris puede probar sin contaminar el CRM en vivo. Se reactivan solos al cutover.
+- [x] **Formularios protegidos para QA del cliente**: contact/quote/service validan + guardan en BD + redirigen a gracias, pero los webhooks externos (CRM JAC, Zapier, GTM) **solo disparan si `SITE_LIVE=true`** (variable que se setea en Vercel recién al cutover). En staging, previews e incluso los deployments de producción pre-cutover quedan suprimidos → nadie puede contaminar el CRM en vivo. (Antes se gateaba por `VERCEL_ENV`, pero los git-push crean deployments target=production en *.vercel.app con webhooks armados — corregido 2026-07-02.)
 - [x] **noindex en staging**: `X-Robots-Tag: noindex, nofollow` en preview (producción indexa normal).
 - [x] Conectar repo Git al proyecto Vercel (auto-deploys) — HECHO (`CarlosVirues/JetourSite`).
 - [x] **Doc de revisión para Cris**: `docs/REVISION-CRIS.md` (link + qué revisar + qué falta).
@@ -76,6 +76,7 @@ Sin items 1–3 no hay cutover posible.
 - [ ] Re-correr Screaming Frog (comparar con `/Users/elsarito/Jeteour/snapshot-pre-cutover/`)
 - [ ] Mapa de redirects 301 si cambia URL alguna
 - [ ] Ventana de cutover acordada con Cris
+- [ ] **Setear `SITE_LIVE=true` en el environment Production de Vercel + redeploy** (activa webhooks CRM/Zapier/GTM y quita el noindex — sin esto el sitio lanzado NO envía leads)
 - [ ] Cambio DNS GoDaddy → Vercel
 - [ ] Resubmit `sitemap.xml` en Google Search Console
 

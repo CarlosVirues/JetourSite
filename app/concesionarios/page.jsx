@@ -41,8 +41,10 @@ export default async function ConcesionariosPage() {
 
       {/* Main Content Area */}
       <section className="bg-black py-16 lg:py-24">
+        {/* Título "Concesionarios" = el que muestra el sitio original (su Sanity);
+            el default del componente ("26 puntos...") ya no es exacto y difiere del original */}
         <ConcesionariosMap
-          title={concesionariosData?.title}
+          title={concesionariosData?.title || "Concesionarios"}
           cities={concesionariosData?.cities || []}
         />
       </section>

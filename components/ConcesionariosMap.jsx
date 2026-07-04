@@ -622,7 +622,7 @@ export default function ConcesionariosMap({
             
             <div style="margin-bottom: 8px; display: flex; align-items: center; font-size: 14px;">
               <span style="color: #9ca3af; margin-right: 8px;">📞</span>
-              <span style="color: #000;">${distributor.mobile}</span>
+              <span style="color: #000;">${distributor.mobile || distributor.phone || "Contacto próximamente"}</span>
             </div>
             
             <div style="margin-bottom: 8px; display: flex; align-items: center; font-size: 14px;">
