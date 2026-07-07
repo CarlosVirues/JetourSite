@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Facebook, Instagram, Youtube, MessageCircle } from "lucide-react";
+import { Facebook, Instagram, Youtube, MessageCircle, Linkedin } from "lucide-react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
@@ -185,6 +185,10 @@ export default function Footer() {
                 {
                   icon: Youtube,
                   href: "https://www.youtube.com/@JetourEcuador",
+                },
+                {
+                  icon: Linkedin,
+                  href: "https://www.linkedin.com/company/jetourecuador/",
                 },
                 {
                   icon: MessageCircle,

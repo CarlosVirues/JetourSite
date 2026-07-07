@@ -40,6 +40,9 @@ export default function QuoteForm({ currentModel = null, source = null }) {
     { id: "t2", name: "T2", image: "/mini/mini-t2.png" },
     { id: "t2-phev", name: "T2 PHEV", image: "/mini/mini-t2-phev.png" },
     { id: "g700", name: "G700", image: "/mini/mini-g700.png" },
+    // Sin foto todavía: creativo está preparando el material de F700 (landing
+    // pendiente). Se agrega solo para poder capturar leads de interés.
+    { id: "f700", name: "F700", image: null },
   ];
 
   // Determinar si es el formulario superior (tanto en aeropuerto como en páginas de modelo)
@@ -66,6 +69,7 @@ export default function QuoteForm({ currentModel = null, source = null }) {
     "quito_sur",
     "quito_cumbaya_tumbaco",
     "quito_sangolqui",
+    "quito_granados",
     "riobamba",
     "santo_domingo",
   ];
@@ -371,15 +375,17 @@ export default function QuoteForm({ currentModel = null, source = null }) {
                     >
                       <div className="w-full h-full bg-gray-800 rounded-lg flex items-center justify-center p-2">
                         <div className="text-center">
-                          <div className="relative w-12 h-10 mx-auto mb-1">
-                            <Image
-                              src={model.image}
-                              alt={model.name}
-                              fill
-                              className="object-contain"
-                              sizes="(max-width: 768px) 80px, 96px"
-                            />
-                          </div>
+                          {model.image && (
+                            <div className="relative w-12 h-10 mx-auto mb-1">
+                              <Image
+                                src={model.image}
+                                alt={model.name}
+                                fill
+                                className="object-contain"
+                                sizes="(max-width: 768px) 80px, 96px"
+                              />
+                            </div>
+                          )}
                           <p className="text-[10px] md:text-xs text-white font-medium">
                             {model.name}
                           </p>

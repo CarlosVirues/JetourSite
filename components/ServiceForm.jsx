@@ -59,6 +59,7 @@ export default function ServiceForm({
     "quito_sur",
     "quito_cumbaya_tumbaco",
     "quito_sangolqui",
+    "quito_granados",
     "riobamba",
     "santo_domingo",
   ];
@@ -74,7 +75,7 @@ export default function ServiceForm({
     "t2",
     "t2-phev",
     "g700",
-    
+    "f700",
   ];
 
   const tiposServicio = [

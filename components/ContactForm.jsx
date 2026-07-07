@@ -47,6 +47,7 @@ export default function ContactForm() {
     "quito_sur",
     "quito_cumbaya_tumbaco",
     "quito_sangolqui",
+    "quito_granados",
     "riobamba",
     "santo_domingo",
   ];
