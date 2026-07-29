@@ -43,6 +43,10 @@ exports/
 dist/
 scripts/migration-log-*.json
 
+# material fuente entregado por el cliente (388 MB: fichas sin comprimir, zips, docx)
+# los assets procesados sí van al repo bajo public/models/
+Nuevas fotos/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
