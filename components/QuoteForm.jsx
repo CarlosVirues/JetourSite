@@ -40,9 +40,7 @@ export default function QuoteForm({ currentModel = null, source = null }) {
     { id: "t2", name: "T2", image: "/mini/mini-t2.png" },
     { id: "t2-phev", name: "T2 PHEV", image: "/mini/mini-t2-phev.png" },
     { id: "g700", name: "G700", image: "/mini/mini-g700.png" },
-    // Sin foto todavía: creativo está preparando el material de F700 (landing
-    // pendiente). Se agrega solo para poder capturar leads de interés.
-    { id: "f700", name: "F700", image: null },
+    { id: "f700", name: "F700", image: "/mini/mini-f700.png" },
   ];
 
   // Determinar si es el formulario superior (tanto en aeropuerto como en páginas de modelo)
