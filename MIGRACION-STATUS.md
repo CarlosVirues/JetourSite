@@ -1,6 +1,11 @@
-# Migración Jetour Ecuador — Status a 2026-06-11
+# Migración Jetour Ecuador — Status a 2026-07-28
 
 Documento operativo. Para contexto completo del proyecto ver [CLAUDE.md](./CLAUDE.md).
+
+> **2026-07-28 — El cliente APROBÓ la migración.** Todo lo técnico que no depende de accesos
+> está cerrado y mergeado a `main`. **El cutover está bloqueado por un único item duro: las
+> credenciales DNS de GoDaddy** (§3.1). Sin eso no hay forma de apuntar el dominio a nuestro
+> Vercel, por más que el resto esté listo.
 
 ---
 
@@ -25,7 +30,17 @@ Documento operativo. Para contexto completo del proyecto ver [CLAUDE.md](./CLAUD
 
 - [x] **Migrar vehículos a Sanity production** — ✅ ejecutado 2026-06-11 (10/10 docs, 241 imageAssets, 0 errores).
 - [ ] Verificar visualmente en Sanity Studio: `npm run dev` → http://localhost:3000/studio
-- [x] Build de producción local: ✅ 24/24 static pages, exit 0.
+- [x] Build de producción local: ✅ 25/25 static pages, exit 0 (2026-07-28, con `/f700`).
+- [x] **Colores por modelo sincronizados a Sanity production — EJECUTADO 2026-07-28.** 9 modelos
+      actualizados, 50 imágenes, 1 omisión esperada (`f700`, sin doc en Sanity). Script:
+      `npm run update-vehicle-colors -- --dataset=production` (dry-run primero, siempre).
+- [x] **Landing `/f700` + colores confirmados por Jetour mergeados a `main`** (2026-07-28).
+
+> ⚠️ **Ojo con `migrate-vehicles.js`: es create-only.** Si el doc ya existe hace `skipping`, así
+> que NO sirve para actualizar contenido. Para eso está `scripts/update-vehicle-colors.js`, que
+> hace `patch`. El script viejo además (a) no propaga `hidden` — los colores retirados a pedido
+> del cliente reaparecerían en el sitio — y (b) reutiliza assets por `originalFilename`, lo que
+> deja la imagen vieja cuando una PNG cambia de contenido conservando el nombre.
 
 > Ya no quedan acciones técnicas pendientes sin bloqueante. Todo lo que sigue (§3) depende del cliente.
 
@@ -74,7 +89,9 @@ Sin items 1–3 no hay cutover posible.
 
 ### Fase 4 — SEO + cutover
 - [ ] Re-correr Screaming Frog (comparar con `/Users/elsarito/Jeteour/snapshot-pre-cutover/`)
-- [ ] Mapa de redirects 301 si cambia URL alguna
+- [x] **Mapa de redirects 301 — NO se necesitan (re-verificado 2026-07-28).** Diff de sitemaps
+      en vivo vs nuestro: 18 URLs a cada lado, cero diferencias. `/f700` es net-new y queda
+      fuera del sitemap a propósito. Ver `docs/url-map.md`.
 - [ ] Ventana de cutover acordada con Cris
 - [ ] **Setear `SITE_LIVE=true` en el environment Production de Vercel + redeploy** (activa webhooks CRM/Zapier/GTM y quita el noindex — sin esto el sitio lanzado NO envía leads)
 - [ ] Cambio DNS GoDaddy → Vercel
@@ -92,6 +109,16 @@ Sin items 1–3 no hay cutover posible.
 2. **Sanity outage** → secciones de home renderizan vacías (mitigado en Fase 0.5).
 3. **Sin tests automatizados** → toda regresión depende de QA manual.
 4. **`lib/data-site.js` con noticias antiguas hardcoded** → revisar si quedó deuda residual tras migración de news.
+5. **El deployment viejo de devxiy sigue en línea, público e indexable** (detectado 2026-07-28):
+   `https://jetour-site.vercel.app` responde 200 **sin `noindex`**. Se confirmó que NO es nuestro
+   (no tiene LinkedIn en footer ni Jetour Granados, y su X70 Plus no muestra Plomo → no lee
+   nuestro Sanity). Post-cutover queda como contenido duplicado compitiendo con el dominio real,
+   y no está bajo nuestro control. **Acción: pedir a Cris/devxiy que lo bajen o le pongan
+   noindex + canonical al dominio.** Súmalo a la lista de cutover.
+6. **`SITE_LIVE` es el único freno de los leads.** Antes del cutover, verificar en el dashboard de
+   Vercel que no esté seteada en Production. Proxy rápido para chequearlo sin entrar al dashboard:
+   si la URL devuelve el header `x-robots-tag: noindex, nofollow`, `SITE_LIVE` está apagada
+   (`next.config.mjs` omite los headers cuando vale `"true"`).
 
 ---
 
@@ -111,4 +138,4 @@ Sprint post-cutover: conseguir los assets reales o limpiar las referencias en `p
 
 ---
 
-*Actualizado 2026-06-11. Mantener sincronizado con [CLAUDE.md §10–§11](./CLAUDE.md).*
+*Actualizado 2026-07-28. Mantener sincronizado con [CLAUDE.md §10–§11](./CLAUDE.md).*
