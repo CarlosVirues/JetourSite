@@ -45,6 +45,12 @@ export default function Header({ transparent = false, border = false }) {
 
   const shouldBeTransparent = transparent && !isScrolled;
 
+  // Orden del dropdown "Modelos". Es la ÚNICA fuente del menú: el sitemap se genera
+  // aparte con getAllModels(), así que sacar un modelo de acá no lo desindexa.
+  //
+  // T2 retirado del menú a pedido de Jetour (2026-07-29, Verónica Vergara): "eliminar el
+  // acceso directo en la página web". La página /vehiculos/t2 sigue viva e indexada a
+  // propósito — sale del menú, no del sitio.
   const modelOrder = [
     "x50",
     "x70-sport",
@@ -53,7 +59,6 @@ export default function Header({ transparent = false, border = false }) {
     "dashing-phev",
     "t1",
     "t1-phev",
-    "t2",
     "t2-phev",
     "g700",
   ];

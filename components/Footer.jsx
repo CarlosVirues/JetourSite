@@ -113,7 +113,10 @@ export default function Footer() {
                 { href: "/vehiculos/dashing-phev", label: "Dashing PHEV" },
                 { href: "/vehiculos/t1", label: "T1" },
                 { href: "/vehiculos/t1-phev", label: "T1 PHEV" },
-                { href: "/vehiculos/t2", label: "T2" },
+                // T2 retirado de la navegación a pedido de Jetour (2026-07-29): "eliminar el
+                // acceso directo en la página web". Se saca del menú y del footer; la página
+                // /vehiculos/t2 sigue viva e indexada. Para reponerlo, descomentar.
+                // { href: "/vehiculos/t2", label: "T2" },
                 { href: "/vehiculos/t2-phev", label: "T2 PHEV" },
                 { href: "/vehiculos/g700", label: "G700" },
               ].map((link, index) => (
