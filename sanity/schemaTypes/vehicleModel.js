@@ -308,11 +308,26 @@ const vehicleModel = {
                     hotspot: true,
                   },
                 },
+                {
+                  name: "hidden",
+                  title: "Oculto en el sitio",
+                  type: "boolean",
+                  description:
+                    "Colores retirados a pedido del cliente. No se muestran en el sitio pero quedan guardados por si se piden reactivar.",
+                  initialValue: false,
+                },
               ],
               preview: {
                 select: {
                   title: "name",
                   media: "image",
+                  hidden: "hidden",
+                },
+                prepare({ title, media, hidden }) {
+                  return {
+                    title: hidden ? `${title} (oculto)` : title,
+                    media,
+                  };
                 },
               },
             },

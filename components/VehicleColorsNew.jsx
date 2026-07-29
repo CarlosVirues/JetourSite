@@ -9,11 +9,15 @@ export default function VehicleColorsNew({ colorsData }) {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
 
-  if (!colorsData || !colorsData.colors || colorsData.colors.length === 0) {
+  // Colores marcados con hidden:true (retirados a pedido del cliente) no se muestran,
+  // pero quedan en los datos por si se piden reactivar más adelante.
+  const visibleColors = (colorsData?.colors || []).filter((c) => !c.hidden);
+
+  if (visibleColors.length === 0) {
     return null;
   }
 
-  const currentColor = colorsData.colors[activeColor];
+  const currentColor = visibleColors[activeColor];
 
   return (
     <motion.section
@@ -48,7 +52,7 @@ export default function VehicleColorsNew({ colorsData }) {
             Tu {colorsData.modelName || "vehículo"} disponible en estos colores.
           </h2>
           <p className="text-base md:text-lg lg:text-xl text-gray-400">
-            Son {colorsData.colors.length} colores a tu disposición.
+            Son {visibleColors.length} colores a tu disposición.
           </p>
         </motion.div>
 
@@ -61,7 +65,7 @@ export default function VehicleColorsNew({ colorsData }) {
             transition={{ duration: 1, delay: 0.6 }}
             className="flex flex-row gap-3 mb-6 md:mb-8"
           >
-            {colorsData.colors.map((color, index) => (
+            {visibleColors.map((color, index) => (
               <motion.button
                 key={index}
                 initial={{ opacity: 0, scale: 0.8 }}
