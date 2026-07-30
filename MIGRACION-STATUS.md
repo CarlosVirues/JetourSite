@@ -56,14 +56,49 @@ Documento operativo. Para contexto completo del proyecto ver [CLAUDE.md](./CLAUD
 
 | # | Item | Solicitar a | Qué se necesita |
 |---|---|---|---|
-| 1 | Credenciales GoDaddy `jetourecuador.com` | Cris / Jetour | Login o acceso delegado para apuntar DNS a Vercel |
+| 1 | ⚠️ **Acceso al DNS — NO es GoDaddy** (ver §3.1 abajo) | Jetour IT / devxiy | Panel DNS de Microsoft 365 + liberación del dominio en el Vercel de devxiy |
 | 2 | ~~Cuenta Vercel Pro~~ ✅ RESUELTO 2026-06-11 | — | Cliente aprobó hostear en **server de Epifania** (team `epifania-ec735ce7`, plan Pro). Proyecto ya deployado ahí. |
 | 3 | **Sanity org a nombre de Jetour** | Cris / Jetour | Email corporativo Jetour. Transferir el project `j182601n` |
 | 4 | GitHub org `jetour-ecuador` | Carlos | Crear org y transferir `CarlosVirues/JetourSite` |
 
-**Corrección 2026-07-29:** el único que bloquea el cutover es el **item 1 (DNS)**. Lo que hace
-falta no son las credenciales en sí sino *el cambio de registros DNS* — sirve igual que Jetour nos
-dé acceso delegado, o que quien tenga el acceso aplique los registros que le dictemos.
+### 3.1 ⚠️ CORRECCIÓN CRÍTICA 2026-07-29 — el DNS no está en GoDaddy
+
+Todo este documento asumía "credenciales de GoDaddy para apuntar el DNS a Vercel". **Es falso.**
+Verificado con `dig` y `whois`:
+
+```
+Registrar:    GoDaddy.com, LLC          ← solo el REGISTRADOR
+Nameservers:  ns1-4.BDM.MICROSOFTONLINE.COM   ← la zona DNS la gestiona MICROSOFT
+www   CNAME → 18fa7dbed69f5fd2.vercel-dns-017.com   (server: Vercel)
+apex  A     → 216.150.1.1
+MX          → jetourecuador-com.mail.protection.outlook.com
+TXT         → v=spf1 include:spf.protection.outlook.com -all  +  MS=ms82842531
+```
+
+Tres consecuencias que cambian el plan:
+
+1. **Con el login de GoDaddy NO se pueden cambiar los registros A/CNAME.** La zona es de Microsoft.
+   Desde GoDaddy solo se cambian los *nameservers*. Lo que hace falta es acceso al **panel DNS del
+   tenant de Microsoft 365 de Jetour** (lo administra IT de Jetour), para tocar únicamente el A del
+   apex y el CNAME de `www`.
+
+2. **🔴 RIESGO DE TUMBAR EL CORREO CORPORATIVO.** El correo de Jetour corre en Exchange Online
+   **en esa misma zona DNS** (MX a `mail.protection.outlook.com` + SPF de Outlook). Si alguien
+   "resuelve" el cutover cambiando los nameservers de Microsoft a otro DNS sin migrar antes MX,
+   SPF y los TXT de verificación, **se cae el correo de toda la empresa**. Eso es un incidente de
+   negocio, no un problema web. **NO cambiar nameservers.** Solo editar A y CNAME dentro de la zona
+   existente.
+
+3. **El dominio está atado a un proyecto de Vercel de devxiy.** Un dominio solo puede estar en un
+   proyecto de Vercel a la vez en toda la plataforma, así que **devxiy tiene que liberarlo** antes
+   de que podamos atarlo a `epifania-ec735ce7/jetour-site`. Dependencia que no estaba registrada
+   y que ningún acceso de Jetour resuelve.
+
+Lo que hay que pedir, entonces:
+- **A IT de Jetour** (no a Cris): acceso al DNS del tenant Microsoft, o que ellos apliquen los dos
+  registros que les dictemos. Nada de nameservers.
+- **A devxiy**: liberar `jetourecuador.com` de su proyecto Vercel, coordinado en la ventana de
+  cutover.
 
 El item 3 (org de Sanity) **no bloquea nada técnico**: el sitio se conecta con `projectId` +
 dataset + token, y a quién pertenece la organización le da igual. Es gobernanza de propiedad —
