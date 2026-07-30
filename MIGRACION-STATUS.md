@@ -109,10 +109,10 @@ así que el correo no corre riesgo.
 
 | # | Paso | Quién | Impacto en el sitio en vivo |
 |---|---|---|---|
-| 1 | Agregar `jetourecuador.com` al proyecto vía **Connect External** → obtener el valor del TXT | Carlos | ninguno |
-| 2 | Agregar `TXT _vercel = <valor>` y **bajar el TTL de `www` y apex a 60 s** | IT Jetour | ninguno |
+| 1 | ✅ **HECHO 2026-07-29** — `jetourecuador.com` y `www` agregados al proyecto; TXT obtenidos | Carlos | ninguno |
+| 2 | Agregar los 2 `TXT _vercel` y **bajar el TTL de `www` y apex a 60 s** → ticket listo en [docs/cutover-dns-ticket.md](docs/cutover-dns-ticket.md) | IT Jetour | ninguno |
 | 3 | Verificar en Vercel → el dominio pasa a `epifania-ec735ce7` | Carlos | ninguno |
-| 4 | En la ventana acordada: `A` apex → IP de Vercel · `CNAME www` → target de Vercel | IT Jetour | **acá se mueve el tráfico** |
+| 4 | En la ventana: `CNAME www` → `96d7750ff6bb680e.vercel-dns-016.com.` (el apex ya está en `216.150.1.1`, la IP correcta — `ipStatus: no-change`, no hay que tocarlo) | IT Jetour | **acá se mueve el tráfico** |
 | 5 | `SITE_LIVE=true` en Production + redeploy (enciende CRM y quita el noindex) | Carlos | leads empiezan a fluir |
 | 6 | Restaurar TTL original + resubmit del sitemap en GSC | ambos | ninguno |
 
