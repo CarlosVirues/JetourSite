@@ -106,6 +106,8 @@ export default function Footer() {
             <h3 className="font-bold text-lg">Modelos</h3>
             <ul className="space-y-2 text-sm">
               {[
+                // F700: lanzamiento real (2026-07-30). Vive en /f700, la URL ya está en pauta.
+                { href: "/f700", label: "F700" },
                 { href: "/vehiculos/x50", label: "X50" },
                 { href: "/vehiculos/x70-sport", label: "X70 Sport" },
                 { href: "/vehiculos/x70-plus", label: "X70 Plus" },

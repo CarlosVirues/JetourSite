@@ -68,10 +68,16 @@ export default function Header({ transparent = false, border = false }) {
     {
       label: "Modelos",
       isDropdown: true,
-      items: modelOrder.map((key) => ({
-        href: `/vehiculos/${key}`,
-        label: vehicleModels[key].name,
-      })),
+      items: [
+        // F700: lanzamiento real confirmado por Jetour (2026-07-30), va en toda la
+        // navegación. Vive en /f700 y no en /vehiculos/f700 — la URL ya está en pauta,
+        // así que NO se mueve. Por eso entra a mano y no por modelOrder.
+        { href: "/f700", label: "F700" },
+        ...modelOrder.map((key) => ({
+          href: `/vehiculos/${key}`,
+          label: vehicleModels[key].name,
+        })),
+      ],
     },
     { href: "/posventa", label: "Posventa" },
     { href: "/concesionarios", label: "Concesionarios" },

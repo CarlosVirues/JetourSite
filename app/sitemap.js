@@ -18,6 +18,14 @@ export default function sitemap() {
       changeFrequency: "monthly",
       priority: 0.9,
     },
+    // F700: lanzamiento real confirmado por Jetour (2026-07-30). Entra a mano porque vive
+    // en /f700 y no en /vehiculos/[model], así que getAllModels() no lo alcanza.
+    {
+      url: `${baseUrl}/f700`,
+      lastModified: currentDate,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
     // {
     //   url: `${baseUrl}/noticias`,
     //   lastModified: currentDate,
