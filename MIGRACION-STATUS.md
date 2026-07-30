@@ -89,16 +89,40 @@ Tres consecuencias que cambian el plan:
    negocio, no un problema web. **NO cambiar nameservers.** Solo editar A y CNAME dentro de la zona
    existente.
 
-3. **El dominio está atado a un proyecto de Vercel de devxiy.** Un dominio solo puede estar en un
-   proyecto de Vercel a la vez en toda la plataforma, así que **devxiy tiene que liberarlo** antes
-   de que podamos atarlo a `epifania-ec735ce7/jetour-site`. Dependencia que no estaba registrada
-   y que ningún acceso de Jetour resuelve.
+3. **El dominio está atado a un proyecto de Vercel de devxiy** (`www` → CNAME
+   `18fa7dbed69f5fd2.vercel-dns-017.com`, `server: Vercel`). Un dominio solo puede estar en una
+   cuenta/team de Vercel a la vez.
+   **✅ NO hace falta la cooperación de devxiy.** Vercel tiene la opción **Connect External** para
+   exactamente este caso: se agrega el dominio, Vercel entrega un registro **TXT** de verificación
+   de propiedad, y una vez verificado **el dominio se transfiere automáticamente a nuestra cuenta**.
+   > "If you own the domain but not the other account: Use the Connect External option… You'll
+   > receive a TXT record to add to your DNS to verify ownership. Once verified, the domain will
+   > automatically transfer to your account." — docs de Vercel
+   **Ojo:** repuntar el CNAME NO libera el binding de Vercel. Son sistemas independientes — el DNS
+   dice dónde va el tráfico, el binding dice qué proyecto de Vercel responde por ese hostname. Si
+   se repunta el CNAME sin resolver el binding, el tráfico sigue cayendo en el proyecto de devxiy.
 
-Lo que hay que pedir, entonces:
-- **A IT de Jetour** (no a Cris): acceso al DNS del tenant Microsoft, o que ellos apliquen los dos
-  registros que les dictemos. Nada de nameservers.
-- **A devxiy**: liberar `jetourecuador.com` de su proyecto Vercel, coordinado en la ventana de
-  cutover.
+### 3.2 Runbook de cutover (no requiere panel de 365 ni a devxiy)
+
+Todo se resuelve con **un ticket a IT de Jetour** pidiendo 3 registros. **Ninguno toca MX ni SPF**,
+así que el correo no corre riesgo.
+
+| # | Paso | Quién | Impacto en el sitio en vivo |
+|---|---|---|---|
+| 1 | Agregar `jetourecuador.com` al proyecto vía **Connect External** → obtener el valor del TXT | Carlos | ninguno |
+| 2 | Agregar `TXT _vercel = <valor>` y **bajar el TTL de `www` y apex a 60 s** | IT Jetour | ninguno |
+| 3 | Verificar en Vercel → el dominio pasa a `epifania-ec735ce7` | Carlos | ninguno |
+| 4 | En la ventana acordada: `A` apex → IP de Vercel · `CNAME www` → target de Vercel | IT Jetour | **acá se mueve el tráfico** |
+| 5 | `SITE_LIVE=true` en Production + redeploy (enciende CRM y quita el noindex) | Carlos | leads empiezan a fluir |
+| 6 | Restaurar TTL original + resubmit del sitemap en GSC | ambos | ninguno |
+
+**Preflight verificado 2026-07-29** (todo limpio, no hay que arreglar nada antes):
+- Sin registros `CAA` → no hay que agregar `0 issue "letsencrypt.org"`.
+- Sin `_acme-challenge` residual de devxiy → no bloqueará la emisión del SSL.
+- Sin `_vercel` previo.
+- TTL actual: `www` 3543 s (~59 min), apex 1156 s (~19 min) → bajarlos antes del paso 4 para poder
+  revertir rápido.
+- El apex debe ir con registro **A**, no CNAME (RFC1034: un CNAME en el ápex rompe MX/NS).
 
 El item 3 (org de Sanity) **no bloquea nada técnico**: el sitio se conecta con `projectId` +
 dataset + token, y a quién pertenece la organización le da igual. Es gobernanza de propiedad —
