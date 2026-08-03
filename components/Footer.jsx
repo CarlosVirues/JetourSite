@@ -106,8 +106,6 @@ export default function Footer() {
             <h3 className="font-bold text-lg">Modelos</h3>
             <ul className="space-y-2 text-sm">
               {[
-                // F700: lanzamiento real (2026-07-30). Vive en /f700, la URL ya está en pauta.
-                { href: "/f700", label: "F700" },
                 { href: "/vehiculos/x50", label: "X50" },
                 { href: "/vehiculos/x70-sport", label: "X70 Sport" },
                 { href: "/vehiculos/x70-plus", label: "X70 Plus" },
@@ -121,6 +119,9 @@ export default function Footer() {
                 // { href: "/vehiculos/t2", label: "T2" },
                 { href: "/vehiculos/t2-phev", label: "T2 PHEV" },
                 { href: "/vehiculos/g700", label: "G700" },
+                // F700: lanzamiento real (2026-07-30). Último, en el mismo orden que el menú.
+                // Vive en /f700 — la URL ya está en pauta.
+                { href: "/f700", label: "F700" },
               ].map((link, index) => (
                 <motion.li
                   key={link.href}

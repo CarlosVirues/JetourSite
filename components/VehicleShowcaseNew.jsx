@@ -12,6 +12,26 @@ export default function VehicleShowcaseNew() {
   const scrollContainerRef = useRef(null);
 
   const models = [
+    // F700 primero a pedido de Jetour (2026-08-03): es lanzamiento real y encabeza la sección.
+    // Medidas tomadas de la ficha técnica oficial que entregó el cliente
+    // (public/models/f700/ficha-tecnica-f700.pdf): 5495 x 2050 x 1985 mm.
+    // Usa `href` porque la landing vive en /f700 y no en /vehiculos/f700 — esa URL ya está
+    // en pauta y no se mueve. `logo: null` hasta que entreguen el logo del modelo.
+    {
+      id: 0,
+      name: "F700",
+      type: "Hybrid Off-Road Pickup",
+      logo: null,
+      mainImage: "/models/f700/360/20.png",
+      thumbnail: "/models/f700/360/20.png",
+      dimensions: {
+        length: "5495",
+        width: "2050",
+        height: "1985",
+      },
+      slug: "f700",
+      href: "/f700",
+    },
     {
       id: 1,
       name: "G700",
@@ -180,13 +200,21 @@ export default function VehicleShowcaseNew() {
             <div className="space-y-4">
               <div className="flex items-start justify-start space-x-4">
                 <div className="w-32 md:w-48 h-8 md:h-12 relative">
-                  <Image
-                    src={currentVehicle.logo}
-                    alt={`${currentVehicle.name} Logo`}
-                    fill
-                    className="object-contain invert"
-                    sizes="(max-width: 768px) 128px, 192px"
-                  />
+                  {/* El F700 todavía no tiene logo entregado por el cliente: sin este
+                      condicional, un logo null revienta next/image. Cae al nombre en texto. */}
+                  {currentVehicle.logo ? (
+                    <Image
+                      src={currentVehicle.logo}
+                      alt={`${currentVehicle.name} Logo`}
+                      fill
+                      className="object-contain invert"
+                      sizes="(max-width: 768px) 128px, 192px"
+                    />
+                  ) : (
+                    <span className="text-2xl md:text-4xl font-bold tracking-widest text-gray-900">
+                      {currentVehicle.name}
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
@@ -237,7 +265,7 @@ export default function VehicleShowcaseNew() {
         {/* Main Vehicle Image */}
         <div className="mt-4 md:mt-6 relative">
           <div className="flex justify-center">
-            <Link href={`/vehiculos/${currentVehicle.slug}`} className="block w-full max-w-4xl cursor-pointer">
+            <Link href={currentVehicle.href || `/vehiculos/${currentVehicle.slug}`} className="block w-full max-w-4xl cursor-pointer">
               <motion.div
                 key={currentModel}
                 initial={{ opacity: 0, scale: 0.95 }}
