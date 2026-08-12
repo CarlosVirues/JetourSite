@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import VehicleHero from "@/components/VehicleHero";
 import ThreeSixty from "@/components/360";
+import SpecificationsVideo from "@/components/SpecificationsVideo";
 import VehicleColorsNew from "@/components/VehicleColorsNew";
 import VehicleFeatureSlides from "@/components/VehicleFeatureSlides";
 import VehicleGallery from "@/components/VehicleGallery";
@@ -36,6 +37,9 @@ export default function F700Page() {
     threeSixty:
       modelPageData.threeSixty &&
       Object.keys(modelPageData.threeSixty).length > 0,
+    specificationsVideo:
+      modelPageData.specificationsVideo &&
+      Object.keys(modelPageData.specificationsVideo).length > 0,
     vehicleColorsNew:
       modelPageData.vehicleColorsNew &&
       Object.keys(modelPageData.vehicleColorsNew).length > 0,
@@ -76,6 +80,10 @@ export default function F700Page() {
           logoImage={modelPageData.hero?.logoImage}
           logoAlt={modelPageData.hero?.logoAlt}
         />
+      )}
+
+      {hasModules.specificationsVideo && (
+        <SpecificationsVideo {...modelPageData.specificationsVideo} />
       )}
 
       {hasModules.vehicleColorsNew && (

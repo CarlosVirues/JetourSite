@@ -21,7 +21,7 @@ export default function VehicleShowcaseNew() {
       id: 0,
       name: "F700",
       type: "Hybrid Off-Road Pickup",
-      logo: null,
+      logo: "/models/f700/f700-logo.png",
       mainImage: "/models/f700/360/20.png",
       thumbnail: "/models/f700/360/20.png",
       dimensions: {
