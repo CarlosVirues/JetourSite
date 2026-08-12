@@ -1,11 +1,29 @@
-# Migración Jetour Ecuador — Status a 2026-07-29
+# Migración Jetour Ecuador — Status a 2026-08-12
 
 Documento operativo. Para contexto completo del proyecto ver [CLAUDE.md](./CLAUDE.md).
 
-> **2026-07-29 — El cliente APROBÓ la migración.** Todo lo técnico que no depende de accesos
-> está cerrado y mergeado a `main`. **El cutover está bloqueado por un único item duro: las
-> credenciales DNS de GoDaddy** (§3.1). Sin eso no hay forma de apuntar el dominio a nuestro
-> Vercel, por más que el resto esté listo.
+> ## ✅ CUTOVER COMPLETADO — 2026-07-30
+>
+> `jetourecuador.com` sirve este deployment desde el 30-jul 17:37. Indexable, CRM conectado,
+> leads fluyendo (20 → 23 → 37 por día). El mapa de `/concesionarios` quedó activo el 2026-08-04
+> con API key propia, y el F700 se completó el 2026-08-12 (banner, logo, 360°, colores, specs,
+> galería, video de interior y ficha).
+>
+> ### 🔴 Pendientes que NO estaban en el alcance original
+>
+> 1. **Leads de junio y 1-29 de julio: solo existen en la base de devxiy.** Nuestra tabla `quotes`
+>    tiene hasta mayo (histórico importado) y desde el 30-jul (post-cutover). Los dos meses del
+>    medio se escribieron en su servidor. **Se pierden si lo apagan — y les venimos pidiendo que
+>    lo apaguen.** Pedir dump de las 3 tablas ANTES de cualquier baja.
+> 2. **Todo el stack de medición quedó fuera del traspaso.** Sin acceso a Search Console, GTM
+>    `GTM-T8V9MML2`, Google Ads `AW-18036479605`, Meta Pixel `1762876594344919`, TikTok
+>    `D3DFS3RC77U3D7OGCNBG` ni Hotjar `6614022`. Solo GA4 (entregado 2026-08-04). Además
+>    `app/layout.js` sigue sirviendo la verificación de Search Console de devxiy
+>    (`VEy9xJOy75Ui3…`), sosteniéndoles el acceso a la propiedad con el histórico.
+> 3. **Bandwidth**: los videos del F700 se sirven desde Vercel (no hay escritura en el bucket GCS
+>    de devxiy). El hero autoreproduce: ~3 MB por visita a `/f700`. Vigilar durante la pauta.
+> 4. **Google Maps cambió de precio**: 10.000 cargas gratis/mes y $7 por cada 1.000 después,
+>    ≈ $75–300/mes con este tráfico. El §15 del CLAUDE.md quedó desactualizado.
 
 ---
 
