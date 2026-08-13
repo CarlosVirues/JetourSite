@@ -5,6 +5,14 @@ const homePage = {
   __experimental_singleton: true, // Marca como singleton
   fields: [
     {
+      name: "seo",
+      title: "SEO",
+      type: "seo",
+      description:
+        "Cómo se ve la home en Google. Hoy hereda el title y description globales " +
+        "(«JETOUR - Drive Your Future»). Llenar estos campos los reemplaza.",
+    },
+    {
       name: "hero",
       title: "Sección Hero",
       type: "object",

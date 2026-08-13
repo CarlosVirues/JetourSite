@@ -5,6 +5,13 @@ const posventaPage = {
   __experimental_singleton: true,
   fields: [
     {
+      name: "seo",
+      title: "SEO",
+      type: "seo",
+      description:
+        "Cómo se ve /posventa en Google. Hoy hereda el title y description globales.",
+    },
+    {
       name: "title",
       title: "Título de la Página",
       type: "string",

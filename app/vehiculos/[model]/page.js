@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { notFound } from "next/navigation";
 import Header from "@/components/Header";
 import HeroShowcase from "@/components/HeroShowcase";
@@ -12,6 +13,7 @@ import VehicleColorsNew from "@/components/VehicleColorsNew";
 import Footer from "@/components/Footer";
 import { getPageData, getVehicleModelPageData, isKnownVehicleModel } from "@/lib/page-data";
 import { getVehicleModelPageDataFromSanity } from "@/lib/sanity";
+import { buildMetadata } from "@/lib/seo";
 import TechnicalSheetButton from "@/components/TechnicalSheetButton";
 import SpecificationsVideo from "@/components/SpecificationsVideo";
 import VehicleFeatureSlides from "@/components/VehicleFeatureSlides";
@@ -22,10 +24,13 @@ import WhatsAppInfoButton from "@/components/WhatsAppInfoButton";
 // Se centraliza aquí para que generateMetadata y la página vean exactamente lo mismo
 // (antes generateMetadata leía solo el hardcode, así que el <title> no reflejaba
 // ediciones hechas en Sanity Studio).
-async function getModelData(model) {
+// 2026-08-12: envuelto en cache() de React. generateMetadata y el componente la llamaban
+// por separado, así que cada visita disparaba DOS queries idénticas a Sanity. cache()
+// deduplica dentro del mismo render: 2 → 1.
+const getModelData = cache(async (model) => {
   const sanityModelData = await getVehicleModelPageDataFromSanity(model);
   return sanityModelData ?? getVehicleModelPageData(model);
-}
+});
 
 export async function generateMetadata({ params }) {
   const pageParams = await params;
@@ -35,10 +40,13 @@ export async function generateMetadata({ params }) {
   const modelPageData = await getModelData(model);
   const name = modelPageData.hero?.vehicleName || model.toUpperCase();
 
-  return {
+  // 2026-08-12: el bloque `seo` de Sanity manda sobre lo derivado del hero. Mientras esté
+  // vacío —estado inicial de los 10 modelos— devuelve exactamente lo de antes: el título
+  // con la plantilla fija y la descripción tomada del tagline visible del hero.
+  return buildMetadata(modelPageData.seo, {
     title: `${name} - JETOUR Ecuador`,
     description: modelPageData.hero?.vehicleDescription,
-  };
+  });
 }
 
 export default async function VehicleModelPage({ params }) {

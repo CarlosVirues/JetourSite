@@ -8,13 +8,28 @@ import QuoteForm from "@/components/QuoteForm";
 import Footer from "@/components/Footer";
 import WhatsAppInfoButton from "@/components/WhatsAppInfoButton";
 import Image from "next/image";
+import { cache } from "react";
 import { getPageData } from "@/lib/page-data";
 import { getHomePageData } from "@/lib/sanity";
+import { buildMetadata } from "@/lib/seo";
+
+// cache() de React: generateMetadata y el componente necesitan los mismos datos, y sin esto
+// serían dos queries idénticas a Sanity por visita. Deduplica dentro del mismo render.
+const getHomeData = cache(async () => (await getHomePageData()) ?? {});
+
+// 2026-08-12: la home no tenía metadata propia — heredaba el title y la description
+// globales de app/layout.js («JETOUR - Drive Your Future» / «Drive Your Future», 17
+// caracteres). Ahora los toma del bloque `seo` de Sanity; mientras esté vacío devuelve {}
+// y se sigue heredando el global exactamente como antes.
+export async function generateMetadata() {
+  const sanityData = await getHomeData();
+  return buildMetadata(sanityData.seo);
+}
 
 export default async function HomePage() {
   // Obtener datos del hero desde Sanity con fallback seguro:
   // si Sanity falla o devuelve null, evitamos romper el render.
-  const sanityData = (await getHomePageData()) ?? {};
+  const sanityData = await getHomeData();
 
   // Obtener datos estáticos para las otras secciones (temporal)
   const pageData = getPageData("home");

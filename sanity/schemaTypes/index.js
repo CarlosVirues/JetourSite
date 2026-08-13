@@ -4,6 +4,7 @@ import vehicleModel from "./vehicleModel";
 import posventaPage from "./posventaPage";
 import newsCategory from "./newsCategory";
 import newsArticle from "./newsArticle";
+import seo from "./seo";
 
 export const schema = {
   types: [
@@ -13,5 +14,7 @@ export const schema = {
     posventaPage,
     newsCategory,
     newsArticle,
+    // Objeto reutilizable, no un documento: se embebe como campo en los 4 anteriores.
+    seo,
   ],
 };

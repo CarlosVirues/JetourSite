@@ -1,3 +1,4 @@
+import { cache } from "react";
 import Header from "@/components/Header";
 import ConcesionariosMap from "@/components/ConcesionariosMap";
 import Footer from "@/components/Footer";
@@ -6,10 +7,22 @@ import RoldanSection from "@/components/RoldanSection";
 import WhatsAppInfoButton from "@/components/WhatsAppInfoButton";
 import { getPageData } from "@/lib/page-data";
 import { getConcesionariosPageData, getHomePageData } from "@/lib/sanity";
+import { buildMetadata } from "@/lib/seo";
+
+// cache(): generateMetadata y el componente piden lo mismo. Sin esto serían dos queries.
+const getConcesionariosData = cache(async () => await getConcesionariosPageData());
+
+// 2026-08-12: igual que la home, esta página no tenía metadata propia y heredaba la global.
+// Con el bloque `seo` vacío el comportamiento no cambia. Ojo: el doc `concesionariosPage`
+// hoy NO existe en el dataset, así que esto devuelve {} hasta que se cree.
+export async function generateMetadata() {
+  const data = (await getConcesionariosData()) ?? {};
+  return buildMetadata(data.seo);
+}
 
 export default async function ConcesionariosPage() {
   // Obtener datos de Sanity para concesionarios y Roldan section
-  const concesionariosData = await getConcesionariosPageData();
+  const concesionariosData = await getConcesionariosData();
   const homeData = await getHomePageData();
 
   // Datos estáticos como fallback

@@ -22,6 +22,14 @@ const vehicleModel = {
       validation: (Rule) => Rule.required(),
     },
     {
+      name: "seo",
+      title: "SEO",
+      type: "seo",
+      description:
+        "Cómo se ve esta página en Google. Nada de esto se muestra en el sitio. " +
+        "Si se deja vacío, se conserva el comportamiento actual.",
+    },
+    {
       name: "hero",
       title: "Sección Hero",
       type: "object",
