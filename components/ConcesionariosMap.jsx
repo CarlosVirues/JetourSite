@@ -341,6 +341,32 @@ function getDefaultDistributors() {
         map: null,
       },
     ],
+    elcoca: [
+      {
+        id: 18,
+        name: "Jetour El Coca",
+        address:
+          "Avenida Alejandro Labaka y transversal 15., Junto al aeropuerto.",
+        phone: "",
+        // Contacto PENDIENTE: el cliente indicó "Próximamente". Con phone y mobile
+        // vacíos el componente ya muestra "Contacto próximamente" (mismo caso que
+        // Jetour Granados). Reemplazar cuando envíen el número.
+        mobile: "",
+        hours_weekdays: "08:30 - 18:30",
+        hours_saturday: "08:30 - 14:00",
+        status: "Abierto",
+        // El campo `image` no se renderiza en ningún lado y los /distributor-*.jpg
+        // dan 404 en producción; se deja vacío en vez de apuntar a un archivo inexistente.
+        image: "",
+        // Coordenadas exactas del link de Google Maps que envió el cliente (2026-08-14).
+        location: {
+          lat: -0.4601442515850067,
+          lng: -76.98680877685547,
+        },
+        contact: "",
+        map: null,
+      },
+    ],
   };
 }
 
@@ -356,6 +382,7 @@ function getDefaultCities() {
     loja: "Loja",
     ibarra: "Ibarra",
     quito: "Quito",
+    elcoca: "El Coca",
   };
   const byCity = getDefaultDistributors();
   return Object.entries(byCity).map(([key, distributors]) => ({
