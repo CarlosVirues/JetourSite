@@ -17,10 +17,13 @@ export default function RootLayout({ children }) {
   const isProduction = process.env.NODE_ENV === "production";
   return (
     <html lang="es" className="scroll-smooth">
-      <meta
-        name="google-site-verification"
-        content="VEy9xJOy75Ui3-w29BTFPp7jKeXcvtkgxEa3IzSfgp0"
-      />
+      {/* La verificación de Search Console de la agencia anterior (devxiy) se retiró el
+          2026-08-14: Carlos confirmó que ya no tienen relación con el cliente y le
+          estábamos sosteniendo el acceso a la propiedad.
+          La verificación vigente es por ARCHIVO, no por meta tag:
+          public/googleea3a495c0e27a164.html → carlos@epifania.ai. NO BORRAR ese archivo.
+          Para sumar otro propietario verificado (ej. redes@jetourecuador.com) se agrega su
+          archivo o meta tag; el sitio admite varias verificaciones a la vez. */}
       {isProduction && (
         <>
           <Script
