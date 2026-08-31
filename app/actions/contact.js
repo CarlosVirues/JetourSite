@@ -4,6 +4,7 @@ import { z } from "zod";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { leadWebhooksEnabled } from "@/lib/lead-sinks";
+import { getAttribution } from "@/lib/attribution";
 
 const contactSchema = z.object({
   nombre: z.string().min(2, "El nombre debe tener al menos 2 caracteres"),
@@ -47,6 +48,9 @@ export async function submitContactForm(prevState, formData) {
   }
 
   // Webhooks externos solo en producción real (ver lib/lead-sinks.js)
+  // Atribución de campaña (cookie jt_attribution) — para Fuente/Medio/Campaña en Odoo.
+  const attribution = await getAttribution();
+
   if (leadWebhooksEnabled) {
     // Enviar a Zapier
     try {
@@ -55,6 +59,7 @@ export async function submitContactForm(prevState, formData) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...cleanData,
+          ...attribution,
           formType: "contact",
           timestamp: new Date().toISOString(),
         }),
@@ -75,6 +80,7 @@ export async function submitContactForm(prevState, formData) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          ...attribution,
           full_name: cleanData.nombre,
           email: cleanData.email,
           phone_number: cleanData.telefono,

@@ -3,6 +3,7 @@
 import { z } from "zod";
 import { prisma } from "@/lib/db";
 import { leadWebhooksEnabled } from "@/lib/lead-sinks";
+import { getAttribution } from "@/lib/attribution";
 
 const tiposServicioEnum = [
   "Mantenimiento Preventivo",
@@ -67,6 +68,9 @@ export async function submitServiceForm(prevState, formData) {
   }
 
   // Webhooks externos solo en producción real (ver lib/lead-sinks.js)
+  // Atribución de campaña (cookie jt_attribution) — para Fuente/Medio/Campaña en Odoo.
+  const attribution = await getAttribution();
+
   if (leadWebhooksEnabled) {
     // Enviar a Zapier
     try {
@@ -75,6 +79,7 @@ export async function submitServiceForm(prevState, formData) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...clean,
+          ...attribution,
           formType: "service",
           timestamp: new Date().toISOString(),
         }),
@@ -95,6 +100,7 @@ export async function submitServiceForm(prevState, formData) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          ...attribution,
           full_name: clean.nombre,
           modelo_jetour: clean.modelo,
           ciudad: clean.ciudad,

@@ -4,6 +4,7 @@ import { z } from "zod";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { leadWebhooksEnabled } from "@/lib/lead-sinks";
+import { getAttribution } from "@/lib/attribution";
 
 // Zod schema for quote form validation
 const quoteSchema = z.object({
@@ -49,7 +50,11 @@ export async function submitQuoteForm(prevState, formData) {
   }
 
   // Construir payload para CRM
+  // Atribución de campaña (cookie jt_attribution) — para Fuente/Medio/Campaña en Odoo.
+  const attribution = await getAttribution();
+
   const crmPayload = {
+    ...attribution,
     full_name: validatedData.data.nombre,
     email: validatedData.data.mail,
     phone_number: validatedData.data.celular,
@@ -75,6 +80,7 @@ export async function submitQuoteForm(prevState, formData) {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             ...validatedData.data,
+            ...attribution,
             formType: "quote",
             timestamp: new Date().toISOString(),
           }),

@@ -1,6 +1,7 @@
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
+import AttributionTracker from "@/components/AttributionTracker";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -55,7 +56,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           />
         </>
       )}
-      <body className={`${poppins.variable} antialiased overflow-x-hidden`}>{children}</body>
+      <body className={`${poppins.variable} antialiased overflow-x-hidden`}>
+        {/* Captura UTMs/gclid en la primera visita para la atribución hacia Odoo. */}
+        <AttributionTracker />
+        {children}
+      </body>
     </html>
   );
 }
