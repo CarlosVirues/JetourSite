@@ -83,8 +83,8 @@ export default function VehicleShowcaseNew() {
       name: "T1 PHEV",
       type: "Hybrid Off-Road SUV",
       logo: "/models/t1/t1-phev-logo.png",
-      mainImage: "/models/t1-phev/360/22.png",
-      thumbnail: "/models/t1-phev/360/22.png",
+      mainImage: "/models/t1-phev/360/9.png",
+      thumbnail: "/models/t1-phev/360/9.png",
       dimensions: {
         length: "4705",
         width: "1967",
