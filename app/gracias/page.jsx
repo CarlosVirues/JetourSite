@@ -7,6 +7,7 @@ import JetourLife from "@/components/JetourLife";
 import VideoGallery from "@/components/VideoGallery";
 import Footer from "@/components/Footer";
 import { getPageData } from "@/lib/page-data";
+import UetConversion from "@/components/UetConversion";
 
 export default function HomePage() {
   const pageData = getPageData("home");
@@ -14,6 +15,8 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-black text-white">
       <Header transparent={true} />
+      {/* Conversión "Registrarse" de Microsoft Ads: el usuario llega acá solo tras enviar el formulario. */}
+      <UetConversion event="signup" />
 
       {/* Hero Section - Full Screen */}
       <Hero {...pageData.hero} />

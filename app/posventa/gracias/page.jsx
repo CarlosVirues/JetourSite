@@ -8,11 +8,14 @@ import ServiceCenters from "@/components/ServiceCenters";
 // import { submitServiceForm } from "@/app/actions/service";
 import Footer from "@/components/Footer";
 import Image from "next/image";
+import UetConversion from "@/components/UetConversion";
 
 export default function PostventaPage() {
   return (
     <div className="min-h-screen bg-black">
       <Header transparent={true} border={true} />
+      {/* Conversión "Registrarse" de Microsoft Ads: el usuario llega acá solo tras enviar el formulario. */}
+      <UetConversion event="signup" />
 
       {/* Hero Section */}
       <section className="relative h-96 lg:h-[500px] bg-linear-to-r from-black to-gray-900 overflow-hidden">

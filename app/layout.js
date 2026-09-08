@@ -54,6 +54,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               `,
             }}
           />
+          {/* Microsoft Advertising — UET base tag (Tag ID 97267586). Pedido de Bing Ads
+              el 2026-09-08. Los eventos de conversión (signup) se disparan en las páginas
+              /gracias con <UetConversion />, no acá. enableAutoSpaTracking cubre la
+              navegación client-side de Next. */}
+          <Script
+            id="uet-base"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `(function(w,d,t,r,u){var f,n,i;w[u]=w[u]||[],f=function(){var o={ti:"97267586", enableAutoSpaTracking: true};o.q=w[u],w[u]=new UET(o),w[u].push("pageLoad")},n=d.createElement(t),n.src=r,n.async=1,n.onload=n.onreadystatechange=function(){var s=this.readyState;s&&s!=="loaded"&&s!=="complete"||(f(),n.onload=n.onreadystatechange=null)},i=d.getElementsByTagName(t)[0],i.parentNode.insertBefore(n,i)})(window,document,"script","https://bat.bing.com/bat.js","uetq");`,
+            }}
+          />
         </>
       )}
       <body className={`${poppins.variable} antialiased overflow-x-hidden`}>
