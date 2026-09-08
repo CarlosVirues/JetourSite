@@ -2,11 +2,14 @@ import Header from "@/components/Header";
 import ContactInfo from "@/components/ContactInfo";
 import Footer from "@/components/Footer";
 import Image from "next/image";
+import UetConversion from "@/components/UetConversion";
 
 export default function ContactPage() {
   return (
     <div className="min-h-screen bg-black">
       <Header transparent={true} border={true} />
+      {/* Conversión "Registrarse" de Microsoft Ads: el usuario llega acá solo tras enviar el formulario. */}
+      <UetConversion event="signup" />
 
       {/* Hero Section */}
       <section className="relative h-96 lg:h-[500px] xl:h-[750px] bg-gradient-to-r from-black to-gray-900 overflow-hidden">
