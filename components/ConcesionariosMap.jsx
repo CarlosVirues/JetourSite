@@ -302,24 +302,6 @@ function getDefaultDistributors() {
     ],
     riobamba: [
       {
-        id: 15,
-        name: "Jetour Riobamba",
-        address:
-          'Av Lizarzaburo y Bolivar Esquina, Concesionario "Grupo Roldán"., Frente a "Terpel".',
-        phone: "",
-        mobile: "0985305363",
-        hours_weekdays: "08:30 - 18:30",
-        hours_saturday: "08:30 - 14:00",
-        status: "Abierto",
-        image: "/distributor-riobamba-15.jpg",
-        location: {
-          lat: -1.6419167,
-          lng: -78.6768056,
-        },
-        contact: "",
-        map: null,
-      },
-      {
         id: 16,
         name: "Jetour Riobamba La Campana",
         address:
