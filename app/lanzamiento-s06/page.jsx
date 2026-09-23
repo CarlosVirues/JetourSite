@@ -20,6 +20,7 @@ import { submitQuoteForm } from "@/app/actions/quote";
 const ciudades = [
   "ambato",
   "cuenca",
+  "el_coca",
   "guayaquil",
   "guayaquil_samborondon",
   "ibarra",
@@ -32,6 +33,7 @@ const ciudades = [
   "quito_sur",
   "quito_cumbaya_tumbaco",
   "quito_sangolqui",
+  "quito_granados",
   "riobamba",
   "santo_domingo",
 ];
