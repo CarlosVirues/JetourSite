@@ -1,20 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { getFeaturedNews } from "@/lib/data-site";
 
-export default function FeaturedNews() {
+export default function FeaturedNews({ articles = [] }) {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [featuredArticles, setFeaturedArticles] = useState([]);
-
-  useEffect(() => {
-    const articles = getFeaturedNews();
-    setFeaturedArticles(articles);
-  }, []);
+  const featuredArticles = articles;
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % featuredArticles.length);

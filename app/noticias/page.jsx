@@ -3,8 +3,15 @@ import FeaturedNews from "@/components/FeaturedNews";
 import NewsGrid from "@/components/NewsGrid";
 import Footer from "@/components/Footer";
 import Image from "next/image";
+import { getFeaturedNews, getAllNews, getNewsCategories } from "@/lib/sanity";
 
-export default function NoticiasPage() {
+export default async function NoticiasPage() {
+  const [featuredNews, allNews, categories] = await Promise.all([
+    getFeaturedNews(),
+    getAllNews(),
+    getNewsCategories(),
+  ]);
+
   return (
     <div className="min-h-screen bg-black">
       <Header transparent={true} border={true} />
@@ -30,10 +37,10 @@ export default function NoticiasPage() {
       </section>
 
       {/* Featured News Section */}
-      <FeaturedNews />
+      <FeaturedNews articles={featuredNews} />
 
       {/* News Grid Section */}
-      <NewsGrid />
+      <NewsGrid articles={allNews} categories={categories} />
 
       <Footer />
     </div>

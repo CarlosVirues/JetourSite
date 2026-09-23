@@ -3,14 +3,11 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { getFilteredNews } from "@/lib/data-site";
 
-export default function RelatedNews({ currentArticleId }) {
-  // Obtener 3 artículos relacionados (excluyendo el actual)
-  const { news } = getFilteredNews("all", 4, 0);
-  const relatedNews = news
-    .filter((article) => article.id !== currentArticleId)
-    .slice(0, 3);
+export default function RelatedNews({ articles = [] }) {
+  const relatedNews = articles.slice(0, 3);
+
+  if (relatedNews.length === 0) return null;
 
   return (
     <section className="py-16 md:py-20 bg-black">

@@ -1,6 +1,7 @@
 import { getAllModels } from "@/lib/vehicle-models";
+import { getAllNews } from "@/lib/sanity";
 
-export default function sitemap() {
+export default async function sitemap() {
   const baseUrl = "https://www.jetourecuador.com";
   const currentDate = new Date().toISOString();
 
@@ -26,12 +27,12 @@ export default function sitemap() {
       changeFrequency: "weekly",
       priority: 0.9,
     },
-    // {
-    //   url: `${baseUrl}/noticias`,
-    //   lastModified: currentDate,
-    //   changeFrequency: "weekly",
-    //   priority: 0.8,
-    // },
+    {
+      url: `${baseUrl}/noticias`,
+      lastModified: currentDate,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
     {
       url: `${baseUrl}/concesionarios`,
       lastModified: currentDate,
@@ -66,6 +67,15 @@ export default function sitemap() {
     priority: 0.9,
   }));
 
+  // Páginas de noticias (Sanity)
+  const news = await getAllNews();
+  const newsPages = news.map((article) => ({
+    url: `${baseUrl}/noticias/${article.slug}`,
+    lastModified: article.publishedAt || currentDate,
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
+
   // Páginas de políticas y agradecimiento
   const policyPages = [
     {
@@ -82,5 +92,5 @@ export default function sitemap() {
     },
   ];
 
-  return [...mainPages, ...vehiclePages, ...policyPages];
+  return [...mainPages, ...vehiclePages, ...newsPages, ...policyPages];
 }

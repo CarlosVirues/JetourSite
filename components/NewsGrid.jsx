@@ -1,70 +1,38 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { getFilteredNews, newsCategories } from "@/lib/data-site";
 
-export default function NewsGrid() {
+export default function NewsGrid({ articles = [], categories = [] }) {
   const [activeCategory, setActiveCategory] = useState("all");
-  const [news, setNews] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
-  const [offset, setOffset] = useState(0);
+  const [visibleCount, setVisibleCount] = useState(6);
   const itemsPerPage = 6;
 
-  // Cargar noticias iniciales y cuando cambia la categoría
-  useEffect(() => {
-    const loadInitialNews = async () => {
-      setLoading(true);
-      setNews([]);
-      setOffset(0);
+  const categoryOptions = useMemo(
+    () => [{ id: "all", name: "Todo" }, ...categories.map((c) => ({ id: c.slug, name: c.title }))],
+    [categories]
+  );
 
-      // Simular llamada al backend (reducido para mejor UX)
-      await new Promise((resolve) => setTimeout(resolve, 200));
+  const filteredNews = useMemo(() => {
+    if (activeCategory === "all") return articles;
+    return articles.filter((article) => article.categorySlug === activeCategory);
+  }, [articles, activeCategory]);
 
-      const result = getFilteredNews(activeCategory, itemsPerPage, 0);
-
-      setNews(result.news);
-      setOffset(itemsPerPage);
-      setHasMore(result.hasMore);
-      setLoading(false);
-    };
-
-    loadInitialNews();
-  }, [activeCategory]);
-
-  const loadNews = async (reset = false) => {
-    setLoading(true);
-
-    // Simular llamada al backend (reducido para mejor UX)
-    await new Promise((resolve) => setTimeout(resolve, 200));
-
-    const currentOffset = reset ? 0 : offset;
-    const result = getFilteredNews(activeCategory, itemsPerPage, currentOffset);
-
-    if (reset) {
-      setNews(result.news);
-      setOffset(itemsPerPage);
-    } else {
-      setNews((prev) => [...prev, ...result.news]);
-      setOffset((prev) => prev + itemsPerPage);
-    }
-
-    setHasMore(result.hasMore);
-    setLoading(false);
-  };
+  const news = filteredNews.slice(0, visibleCount);
+  const hasMore = visibleCount < filteredNews.length;
 
   const handleCategoryChange = (categoryId) => {
     if (categoryId !== activeCategory) {
       setActiveCategory(categoryId);
+      setVisibleCount(itemsPerPage);
     }
   };
 
   const handleLoadMore = () => {
-    loadNews(false);
+    setVisibleCount((prev) => prev + itemsPerPage);
   };
 
   const containerVariants = {
@@ -110,7 +78,7 @@ export default function NewsGrid() {
             viewport={{ once: true }}
             className="flex flex-wrap gap-3"
           >
-            {newsCategories.map((category) => (
+            {categoryOptions.map((category) => (
               <button
                 key={category.id}
                 onClick={() => handleCategoryChange(category.id)}
@@ -127,11 +95,9 @@ export default function NewsGrid() {
         </div>
 
         {/* News Grid */}
-        {loading && news.length === 0 ? (
-          // Loading placeholder
+        {news.length === 0 ? (
           <div className="text-center py-12">
-            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
-            <p className="text-gray-400 mt-4">Cargando noticias...</p>
+            <p className="text-gray-400">Muy pronto vas a encontrar novedades acá.</p>
           </div>
         ) : (
           <motion.div
@@ -190,7 +156,7 @@ export default function NewsGrid() {
         )}
 
         {/* Load More Button */}
-        {hasMore && !loading && (
+        {hasMore && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -199,7 +165,6 @@ export default function NewsGrid() {
           >
             <motion.button
               onClick={handleLoadMore}
-              disabled={loading}
               className="bg-transparent border-2 border-blue-500 text-white px-8 py-3 rounded-full font-semibold text-lg flex items-center justify-center gap-3 mx-auto hover:bg-blue-500 hover:text-white transition-all duration-300"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -208,13 +173,6 @@ export default function NewsGrid() {
               <ArrowRight className="w-5 h-5" />
             </motion.button>
           </motion.div>
-        )}
-
-        {/* Loading indicator for load more */}
-        {loading && news.length > 0 && (
-          <div className="text-center mt-12">
-            <div className="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500"></div>
-          </div>
         )}
       </div>
     </section>

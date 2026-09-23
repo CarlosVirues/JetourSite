@@ -3,15 +3,19 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ArticleDetail from "@/components/ArticleDetail";
 import RelatedNews from "@/components/RelatedNews";
-import { getNewsBySlug } from "@/lib/data-site";
+import { getNewsArticleBySlug, getRelatedNews } from "@/lib/sanity";
 
 export default async function ArticlePage({ params }) {
   const pageParams = await params;
-  const article = getNewsBySlug(pageParams.slug);
+  const article = await getNewsArticleBySlug(pageParams.slug);
 
   if (!article) {
     notFound();
   }
+
+  const relatedNews = article.categorySlug
+    ? await getRelatedNews(article.slug, article.categorySlug)
+    : [];
 
   return (
     <div className="min-h-screen bg-black">
@@ -19,7 +23,7 @@ export default async function ArticlePage({ params }) {
 
       <ArticleDetail article={article} />
 
-      <RelatedNews currentArticleId={article.id} />
+      <RelatedNews articles={relatedNews} />
 
       <Footer />
     </div>
