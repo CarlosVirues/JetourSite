@@ -45,44 +45,47 @@ export default function Header({ transparent = false, border = false }) {
 
   const shouldBeTransparent = transparent && !isScrolled;
 
-  // Orden del dropdown "Modelos". Es la ÚNICA fuente del menú: el sitemap se genera
-  // aparte con getAllModels(), así que sacar un modelo de acá no lo desindexa.
+  // Orden del dropdown "Modelos", agrupado por tipo de motor a pedido de Carlos
+  // (2026-09-21). Es la ÚNICA fuente del menú: el sitemap se genera aparte con
+  // getAllModels(), así que sacar un modelo de acá no lo desindexa.
   //
   // T2 retirado del menú a pedido de Jetour (2026-07-29, Verónica Vergara): "eliminar el
   // acceso directo en la página web". La página /vehiculos/t2 sigue viva e indexada a
-  // propósito — sale del menú, no del sitio.
-  const modelOrder = [
-    "x50",
-    "x70-sport",
-    "x70-plus",
-    "dashing",
-    "dashing-phev",
-    "t1",
-    "t1-phev",
-    "t2-phev",
-    "g700",
-  ];
+  // propósito — sale del menú, no del sitio. Se mantiene fuera del grupo Combustión.
+  const combustionModels = ["x50", "x70-sport", "x70-plus", "dashing", "t1"];
+
+  // F700 va ÚLTIMO dentro de PHEV a pedido de Carlos (2026-08-03). Vive en /f700 y no en
+  // /vehiculos/f700 — la URL ya está en pauta, así que NO se mueve. Por eso entra a mano.
+  const phevModels = ["dashing-phev", "t1-phev", "t2-phev", "g700"];
 
   const navItems = [
     { href: "/", label: "Inicio" },
     {
       label: "Modelos",
       isDropdown: true,
-      items: [
-        ...modelOrder.map((key) => ({
-          href: `/vehiculos/${key}`,
-          label: vehicleModels[key].name,
-        })),
-        // F700: lanzamiento real confirmado por Jetour (2026-07-30), va en toda la
-        // navegación. Va ÚLTIMO en el menú a pedido de Carlos (2026-08-03), aunque encabeza
-        // la sección de modelos del home. Vive en /f700 y no en /vehiculos/f700 — la URL ya
-        // está en pauta, así que NO se mueve. Por eso entra a mano y no por modelOrder.
-        { href: "/f700", label: "F700" },
+      groups: [
+        {
+          label: "Combustión",
+          items: combustionModels.map((key) => ({
+            href: `/vehiculos/${key}`,
+            label: vehicleModels[key].name,
+          })),
+        },
+        {
+          label: "PHEV",
+          items: [
+            ...phevModels.map((key) => ({
+              href: `/vehiculos/${key}`,
+              label: vehicleModels[key].name,
+            })),
+            { href: "/f700", label: "F700" },
+          ],
+        },
       ],
     },
     { href: "/posventa", label: "Posventa" },
     { href: "/concesionarios", label: "Concesionarios" },
-    // { href: "/noticias", label: "Noticias" },
+    { href: "/noticias", label: "Noticias" },
     { href: "/contacto", label: "Contacto" },
   ];
 
@@ -211,31 +214,45 @@ export default function Header({ transparent = false, border = false }) {
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           exit={{ opacity: 0, y: -10, scale: 0.95 }}
                           transition={{ duration: 0.2 }}
-                          className="absolute top-full left-0 mt-2 w-48 bg-black/95 backdrop-blur-sm border border-gray-700 rounded-lg shadow-xl z-50"
+                          className="absolute top-full left-0 mt-2 w-56 bg-black/95 backdrop-blur-sm border border-gray-700 rounded-lg shadow-xl z-50"
                         >
                           <div className="py-2">
-                            {item.items.map((model, modelIndex) => (
-                              <motion.div
-                                key={model.href}
-                                initial={{ opacity: 0, x: -10 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{
-                                  duration: 0.2,
-                                  delay: modelIndex * 0.05,
-                                }}
+                            {item.groups.map((group, groupIndex) => (
+                              <div
+                                key={group.label}
+                                className={
+                                  groupIndex > 0
+                                    ? "mt-2 pt-2 border-t border-gray-700"
+                                    : ""
+                                }
                               >
-                                <Link
-                                  href={model.href}
-                                  onClick={closeModelsDropdown}
-                                  className={`block px-4 py-2 text-sm transition-colors ${
-                                    isActive(model.href)
-                                      ? "text-blue-400 bg-blue-400/10"
-                                      : "text-white hover:text-blue-400 hover:bg-white/5"
-                                  }`}
-                                >
-                                  {model.label}
-                                </Link>
-                              </motion.div>
+                                <span className="block px-4 py-1 text-xs font-semibold uppercase tracking-wider text-gray-400">
+                                  {group.label}
+                                </span>
+                                {group.items.map((model, modelIndex) => (
+                                  <motion.div
+                                    key={model.href}
+                                    initial={{ opacity: 0, x: -10 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{
+                                      duration: 0.2,
+                                      delay: modelIndex * 0.05,
+                                    }}
+                                  >
+                                    <Link
+                                      href={model.href}
+                                      onClick={closeModelsDropdown}
+                                      className={`block px-4 py-2 text-sm transition-colors ${
+                                        isActive(model.href)
+                                          ? "text-blue-400 bg-blue-400/10"
+                                          : "text-white hover:text-blue-400 hover:bg-white/5"
+                                      }`}
+                                    >
+                                      {model.label}
+                                    </Link>
+                                  </motion.div>
+                                ))}
+                              </div>
                             ))}
                           </div>
                         </motion.div>
@@ -410,29 +427,38 @@ export default function Header({ transparent = false, border = false }) {
                                   transition={{ duration: 0.3 }}
                                   className="overflow-hidden"
                                 >
-                                  <div className="pt-4 space-y-4 text-center">
-                                    {item.items.map((model, modelIndex) => (
-                                      <motion.div
-                                        key={model.href}
-                                        initial={{ opacity: 0, x: 20 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        transition={{
-                                          duration: 0.3,
-                                          delay: modelIndex * 0.1,
-                                        }}
-                                      >
-                                        <Link
-                                          href={model.href}
-                                          onClick={closeMobileMenu}
-                                          className={`block text-lg transition-all duration-300 ${
-                                            isActive(model.href)
-                                              ? "text-blue-400"
-                                              : "text-gray-300 hover:text-blue-400"
-                                          }`}
-                                        >
-                                          {model.label}
-                                        </Link>
-                                      </motion.div>
+                                  <div className="pt-4 space-y-6 text-center">
+                                    {item.groups.map((group) => (
+                                      <div key={group.label} className="space-y-3">
+                                        <span className="block text-xs font-semibold uppercase tracking-wider text-gray-500">
+                                          {group.label}
+                                        </span>
+                                        <div className="space-y-3">
+                                          {group.items.map((model, modelIndex) => (
+                                            <motion.div
+                                              key={model.href}
+                                              initial={{ opacity: 0, x: 20 }}
+                                              animate={{ opacity: 1, x: 0 }}
+                                              transition={{
+                                                duration: 0.3,
+                                                delay: modelIndex * 0.1,
+                                              }}
+                                            >
+                                              <Link
+                                                href={model.href}
+                                                onClick={closeMobileMenu}
+                                                className={`block text-lg transition-all duration-300 ${
+                                                  isActive(model.href)
+                                                    ? "text-blue-400"
+                                                    : "text-gray-300 hover:text-blue-400"
+                                                }`}
+                                              >
+                                                {model.label}
+                                              </Link>
+                                            </motion.div>
+                                          ))}
+                                        </div>
+                                      </div>
                                     ))}
                                   </div>
                                 </motion.div>

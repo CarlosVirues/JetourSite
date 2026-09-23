@@ -47,7 +47,7 @@ export default function VehicleShowcase() {
     },
     {
       id: 7,
-      name: "T2 PHEV",
+      name: "T2 PHEV 4X4",
       slug: "t2-phev",
       image: "/models/model-t2-phev.jpg",
     },

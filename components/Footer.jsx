@@ -117,7 +117,7 @@ export default function Footer() {
                 // acceso directo en la página web". Se saca del menú y del footer; la página
                 // /vehiculos/t2 sigue viva e indexada. Para reponerlo, descomentar.
                 // { href: "/vehiculos/t2", label: "T2" },
-                { href: "/vehiculos/t2-phev", label: "T2 PHEV" },
+                { href: "/vehiculos/t2-phev", label: "T2 PHEV 4X4" },
                 { href: "/vehiculos/g700", label: "G700" },
                 // F700: lanzamiento real (2026-07-30). Último, en el mismo orden que el menú.
                 // Vive en /f700 — la URL ya está en pauta.
