@@ -58,7 +58,7 @@ app/
 ├── page.js                          # Home
 ├── vehiculos/[model]/               # 10 modelos: t1, t1-phev, t2, t2-phev,
 │                                    # dashing, g700, x50, x70-plus, x70-sport (+1)
-├── noticias/                        # Listado de noticias (HARDCODED en lib/data-site.js)
+├── noticias/                        # Listado de noticias (Sanity `newsArticle`, desde 2026-09-21)
 │   └── [slug]/                      # Detalle de noticia
 ├── concesionarios/                  # Mapa de concesionarios (Google Maps)
 ├── contacto/                        # Form de contacto general
@@ -92,7 +92,8 @@ app/
 │   ├── sanity.js                    # Cliente Sanity + queries GROQ
 │   ├── db.js                        # Singleton de Prisma client
 │   ├── vehicle-models.js            # Config hardcoded de los 10 modelos
-│   ├── data-site.js                 # Noticias hardcoded (DEUDA TÉCNICA — debería ir a Sanity)
+│   ├── honeypot.js                  # Anti-bot de los 3 forms de leads (2026-09-21)
+│   ├── data-site.js                 # Sin consumidores desde 2026-09-21 — noticias ahora en Sanity. Candidato a borrar.
 │   ├── hero-data.js
 │   ├── page-data.js
 │   └── utils.js
@@ -222,7 +223,16 @@ Aproximadamente **980 MB** de media pesada vive **fuera del repo** (en bucket GC
 **Fase 2 cerrada técnicamente.** Lo que queda (staging, DNS, cutover) depende de los bloqueantes externos (§11).
 
 **Deuda técnica conocida (no tocar hasta post-cutover con QA):**
-- `lib/data-site.js` aún tiene `newsData` hardcoded y 4 componentes (`NewsGrid`, `FeaturedNews`, `RelatedNews`, `app/noticias/[slug]`) lo consumen. Aunque el dato existe en Sanity, los componentes NO se reconectaron. Rewirearlos ahora dejaría `/noticias` vacío hasta poblar news en Sanity prod. Diferido.
+- ~~`lib/data-site.js` aún tiene `newsData` hardcoded...~~ **Resuelto 2026-09-21** (pedido de
+  Carlos): `NewsGrid`, `FeaturedNews`, `RelatedNews`, `ArticleDetail` y `app/noticias/[slug]`
+  se reconectaron a Sanity (`getFeaturedNews`/`getAllNews`/`getNewsCategories`/
+  `getNewsArticleBySlug`/`getRelatedNews` en `lib/sanity.js`). `lib/data-site.js` quedó sin
+  consumidores — nadie lo importa, se puede borrar cuando alguien lo confirme. `/noticias`
+  vuelve al menú y al sitemap. Hay 18 `newsArticle` "zombie" en production (migrados de
+  `data-site.js` en una prueba anterior, sin imagen, excerpt Lorem ipsum) — las queries los
+  excluyen con `defined(mainImage.asset)` en vez de borrarlos; limpiarlos desde Studio es
+  opcional. `/noticias` va a mostrarse vacío en producción hasta que Cris/Carlos carguen
+  noticias reales desde `/studio`.
 
 **Pendientes que requieren acción externa (ver §11).**
 
@@ -317,7 +327,8 @@ npm run lint
 1. **Pérdida de posicionamiento SEO** durante cutover. Mitigación: Screaming Frog antes/después, mapa de 301s, sitemap.xml + GSC resubmit.
 2. **Bandwidth Vercel sobre 1 TB.** Mitigación: monitorear primer mes, evaluar CDN externo para video.
 3. **Si Sanity tiene outage**, secciones del home renderizan vacías (no rompe el sitio gracias al fix de Fase 0.5).
-4. **`lib/data-site.js` tiene noticias hardcoded.** Deuda técnica — migrar a Sanity en sprint posterior.
+4. ~~`lib/data-site.js` tiene noticias hardcoded.~~ Resuelto 2026-09-21 — ver §10. `/noticias`
+   ahora depende de que Sanity esté arriba (mismo riesgo que home/concesionarios, ver riesgo 3).
 5. **No hay tests automatizados.** Toda regresión depende de QA manual en staging.
 
 ---
@@ -339,5 +350,5 @@ Costo profesional de McCann (migración + mantenimiento) se cotiza aparte.
 
 ---
 
-*Última actualización: mayo 2026*
+*Última actualización: 2026-09-21*
 *Este archivo es la fuente de verdad. Si algo no está acá, preguntar antes de decidir.*
