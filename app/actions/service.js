@@ -4,6 +4,7 @@ import { z } from "zod";
 import { prisma } from "@/lib/db";
 import { leadWebhooksEnabled } from "@/lib/lead-sinks";
 import { getAttribution } from "@/lib/attribution";
+import { isBotSubmission } from "@/lib/honeypot";
 
 const tiposServicioEnum = [
   "Mantenimiento Preventivo",
@@ -29,6 +30,11 @@ const serviceSchema = z.object({
 });
 
 export async function submitServiceForm(prevState, formData) {
+  // Honeypot: no guardar ni avisar nada al bot, solo simular el éxito.
+  if (isBotSubmission(formData)) {
+    return { success: true, redirectTo: "/posventa/gracias#service-form" };
+  }
+
   const data = Object.fromEntries(formData.entries());
 
   const validated = serviceSchema.safeParse(data);

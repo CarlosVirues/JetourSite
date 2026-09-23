@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { leadWebhooksEnabled } from "@/lib/lead-sinks";
 import { getAttribution } from "@/lib/attribution";
+import { isBotSubmission } from "@/lib/honeypot";
 
 // Zod schema for quote form validation
 const quoteSchema = z.object({
@@ -18,6 +19,11 @@ const quoteSchema = z.object({
 });
 
 export async function submitQuoteForm(prevState, formData) {
+  // Honeypot: no guardar ni avisar nada al bot, solo simular el éxito.
+  if (isBotSubmission(formData)) {
+    return { success: true, redirectTo: "/gracias#quote-form" };
+  }
+
   // Convert FormData to object using Object.fromEntries
   const data = Object.fromEntries(formData.entries());
 

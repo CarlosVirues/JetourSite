@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { motion } from "framer-motion";
 import {
   User,
@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { submitQuoteForm } from "@/app/actions/quote";
+import { HONEYPOT_FIELD, HONEYPOT_TIMESTAMP_FIELD } from "@/lib/honeypot";
 
 export default function QuoteForm({ currentModel = null, source = null }) {
   const [state, action, isPending] = useActionState(submitQuoteForm, {
@@ -22,6 +23,7 @@ export default function QuoteForm({ currentModel = null, source = null }) {
     success: false,
     values: {},
   });
+  const [renderedAt] = useState(() => Date.now());
 
   if (state?.redirectTo) {
     window.location.href = state.redirectTo;
@@ -38,7 +40,7 @@ export default function QuoteForm({ currentModel = null, source = null }) {
     { id: "t1", name: "T1", image: "/mini/mini-t1.png" },
     { id: "t1-phev", name: "T1 PHEV", image: "/mini/mini-t1-phev.png" },
     { id: "t2", name: "T2", image: "/mini/mini-t2.png" },
-    { id: "t2-phev", name: "T2 PHEV", image: "/mini/mini-t2-phev.png" },
+    { id: "t2-phev", name: "T2 PHEV 4X4", image: "/mini/mini-t2-phev.png" },
     { id: "g700", name: "G700", image: "/mini/mini-g700.png" },
     { id: "f700", name: "F700", image: "/mini/mini-f700.png" },
   ];
@@ -55,6 +57,7 @@ export default function QuoteForm({ currentModel = null, source = null }) {
   const ciudades = [
     "ambato",
     "cuenca",
+    "el_coca",
     "guayaquil",
     "guayaquil_samborondon",
     "ibarra",
@@ -151,6 +154,22 @@ export default function QuoteForm({ currentModel = null, source = null }) {
             className="space-y-6"
             id="quote-form"
           >
+            {/* Honeypot anti-bot: invisible para personas, tentador para bots */}
+            <div
+              aria-hidden="true"
+              className="absolute -left-[9999px] w-px h-px overflow-hidden"
+            >
+              <label htmlFor={HONEYPOT_FIELD}>No llenar este campo</label>
+              <input
+                type="text"
+                id={HONEYPOT_FIELD}
+                name={HONEYPOT_FIELD}
+                tabIndex={-1}
+                autoComplete="off"
+              />
+            </div>
+            <input type="hidden" name={HONEYPOT_TIMESTAMP_FIELD} value={renderedAt} />
+
             {/* Form Fields */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Nombre y apellido */}

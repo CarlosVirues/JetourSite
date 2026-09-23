@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { leadWebhooksEnabled } from "@/lib/lead-sinks";
 import { getAttribution } from "@/lib/attribution";
+import { isBotSubmission } from "@/lib/honeypot";
 
 const contactSchema = z.object({
   nombre: z.string().min(2, "El nombre debe tener al menos 2 caracteres"),
@@ -19,6 +20,11 @@ const contactSchema = z.object({
 });
 
 export async function submitContactForm(prevState, formData) {
+  // Honeypot: no guardar ni avisar nada al bot, solo simular el éxito.
+  if (isBotSubmission(formData)) {
+    return { success: true, redirectTo: "/contacto/gracias#contact-form" };
+  }
+
   const data = Object.fromEntries(formData.entries());
 
   const validatedData = contactSchema.safeParse(data);

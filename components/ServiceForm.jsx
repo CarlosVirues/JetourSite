@@ -1,7 +1,7 @@
 "use client";
 
 import { useFormState } from "react-dom";
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -18,6 +18,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { motion } from "framer-motion";
+import { HONEYPOT_FIELD, HONEYPOT_TIMESTAMP_FIELD } from "@/lib/honeypot";
 
 // Default stub action to keep the component functional until the server action is wired
 async function defaultServiceAction(prevState, formData) {
@@ -39,6 +40,7 @@ export default function ServiceForm({
     success: false,
     values: {},
   });
+  const [renderedAt] = useState(() => Date.now());
 
   if (state?.redirectTo) {
     window.location.href = state.redirectTo;
@@ -47,6 +49,7 @@ export default function ServiceForm({
   const ciudades = [
     "ambato",
     "cuenca",
+    "el_coca",
     "guayaquil",
     "guayaquil_samborondon",
     "ibarra",
@@ -131,6 +134,22 @@ export default function ServiceForm({
       )}
 
       <form action={formAction} noValidate className="space-y-6">
+        {/* Honeypot anti-bot: invisible para personas, tentador para bots */}
+        <div
+          aria-hidden="true"
+          className="absolute -left-[9999px] w-px h-px overflow-hidden"
+        >
+          <label htmlFor={HONEYPOT_FIELD}>No llenar este campo</label>
+          <input
+            type="text"
+            id={HONEYPOT_FIELD}
+            name={HONEYPOT_FIELD}
+            tabIndex={-1}
+            autoComplete="off"
+          />
+        </div>
+        <input type="hidden" name={HONEYPOT_TIMESTAMP_FIELD} value={renderedAt} />
+
         {/* Nombre */}
         <div>
           <label htmlFor="nombre" className="block text-white text-sm font-medium mb-2">

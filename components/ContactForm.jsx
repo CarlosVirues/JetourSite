@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { useFormState } from "react-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { submitContactForm } from "@/app/actions/contact";
+import { HONEYPOT_FIELD, HONEYPOT_TIMESTAMP_FIELD } from "@/lib/honeypot";
 
 export default function ContactForm() {
   const [state, action, isPending] = useActionState(submitContactForm, {
@@ -27,6 +28,7 @@ export default function ContactForm() {
     success: false,
     values: {},
   });
+  const [renderedAt] = useState(() => Date.now());
 
   if (state?.redirectTo) {
     window.location.href = state.redirectTo;
@@ -35,6 +37,7 @@ export default function ContactForm() {
   const ciudades = [
     "ambato",
     "cuenca",
+    "el_coca",
     "guayaquil",
     "guayaquil_samborondon",
     "ibarra",
@@ -77,6 +80,22 @@ export default function ContactForm() {
       )}
 
       <form action={action} noValidate className="space-y-6">
+        {/* Honeypot anti-bot: invisible para personas, tentador para bots */}
+        <div
+          aria-hidden="true"
+          className="absolute -left-[9999px] w-px h-px overflow-hidden"
+        >
+          <label htmlFor={HONEYPOT_FIELD}>No llenar este campo</label>
+          <input
+            type="text"
+            id={HONEYPOT_FIELD}
+            name={HONEYPOT_FIELD}
+            tabIndex={-1}
+            autoComplete="off"
+          />
+        </div>
+        <input type="hidden" name={HONEYPOT_TIMESTAMP_FIELD} value={renderedAt} />
+
         {/* Nombre */}
         <div>
           <label htmlFor="nombre" className="block text-white text-sm font-medium mb-2">
