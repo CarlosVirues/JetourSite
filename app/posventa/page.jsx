@@ -8,6 +8,8 @@ import WhatsAppInfoButton from "@/components/WhatsAppInfoButton";
 import ServiceForm from "@/components/ServiceForm";
 import { submitServiceForm } from "@/app/actions/service";
 import Footer from "@/components/Footer";
+import ConcesionariosMap from "@/components/ConcesionariosMap";
+import { TALLERES } from "@/lib/talleres";
 import Image from "next/image";
 
 export default function PostventaPage() {
@@ -36,6 +38,16 @@ export default function PostventaPage() {
             </p>
           </div>
         </div>
+      </section>
+
+      {/* Red de talleres: mismo mapa + listado que /concesionarios (pedido del cliente 2026-10-06) */}
+      <section className="bg-black pt-16 lg:pt-24">
+        <ConcesionariosMap
+          title="Red de talleres"
+          cities={TALLERES}
+          emptyText="No hay talleres disponibles."
+          noResultsText="No se encontraron talleres que coincidan con tu búsqueda."
+        />
       </section>
 
 {/* Service Form */}

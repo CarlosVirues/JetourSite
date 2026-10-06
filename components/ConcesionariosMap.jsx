@@ -376,6 +376,9 @@ function getDefaultCities() {
 export default function ConcesionariosMap({
   title = "Nuestro equipo de especialistas está en 26 puntos de servicio en todo el país.",
   cities: citiesProp = [],
+  // Posventa reusa el componente con la red de talleres; estos textos cambian con el uso.
+  emptyText = "No hay datos de concesionarios disponibles.",
+  noResultsText = "No se encontraron concesionarios que coincidan con tu búsqueda.",
 }) {
   // Si Sanity trae datos, se usan; si viene vacío (concesionariosPage no migrado a Sanity),
   // caemos al listado hardcoded. Concesionarios = deuda técnica (ver MIGRACION-STATUS.md).
@@ -634,6 +637,9 @@ export default function ConcesionariosMap({
               <span style="color: #000;">${distributor.mobile || distributor.phone || "Contacto próximamente"}</span>
             </div>
             
+            ${
+              distributor.status
+                ? `
             <div style="margin-bottom: 8px; display: flex; align-items: center; font-size: 14px;">
               <span style="color: #9ca3af; margin-right: 8px;">🕒</span>
               <span style="color: ${
@@ -642,6 +648,9 @@ export default function ConcesionariosMap({
                 ${distributor.status}
               </span>
             </div>
+            `
+                : ""
+            }
             
             ${
               distributor.hours_weekdays
@@ -844,19 +853,14 @@ export default function ConcesionariosMap({
           >
             {cities.length === 0 ? (
               <div className="text-center py-8">
-                <p className="text-gray-400">
-                  No hay datos de concesionarios disponibles.
-                </p>
+                <p className="text-gray-400">{emptyText}</p>
                 <p className="text-gray-500 text-sm mt-2">
                   Configure los datos desde Sanity Studio.
                 </p>
               </div>
             ) : filteredCities.length === 0 ? (
               <div className="text-center py-8">
-                <p className="text-gray-400">
-                  No se encontraron concesionarios que coincidan con tu
-                  búsqueda.
-                </p>
+                <p className="text-gray-400">{noResultsText}</p>
               </div>
             ) : (
               filteredCities.map((city, cityIndex) => (
@@ -953,6 +957,7 @@ export default function ConcesionariosMap({
                                           .join(" / ")
                                       : "Contacto próximamente"}
                                   </div>
+                                  {distributor.status && (
                                   <div className="flex items-center">
                                     <motion.div
                                       whileHover={{ scale: 1.1 }}
@@ -970,6 +975,7 @@ export default function ConcesionariosMap({
                                       {distributor.status}
                                     </span>
                                   </div>
+                                  )}
                                   {distributor.hours_weekdays && (
                                     <div className="flex items-center text-gray-400 text-sm">
                                       <Clock className="w-4 h-4 mr-2" />
