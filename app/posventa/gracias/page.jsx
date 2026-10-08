@@ -21,19 +21,22 @@ export default function PostventaPage() {
       <section className="relative h-96 lg:h-[500px] bg-linear-to-r from-black to-gray-900 overflow-hidden">
         {/* Background Image Placeholder - You can replace this with an actual car image */}
         <Image
-          src="/bg-postventa.jpg"
+          src="/bg-posventa-2026.jpg"
           alt="Postventa"
           fill
           className="object-cover"
         />
+        {/* La foto (2026-10) tiene al técnico al centro: el texto va abajo en móvil y a la
+            izquierda en desktop, sobre un degradado, para no taparle la cara. */}
+        <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/20 to-transparent lg:bg-linear-to-r lg:from-black/80 lg:via-black/30 lg:to-transparent" />
 
         {/* Hero Content */}
-        <div className="relative z-10 flex items-center justify-center h-full">
-          <div className="text-center">
+        <div className="relative z-10 flex items-end lg:items-center h-full">
+          <div className="w-full max-w-7xl mx-auto px-6 lg:px-12 pb-10 lg:pb-0 text-center lg:text-left">
             <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold text-white mb-4">
               Posventa
             </h1>
-            <p className="md:text-xl">
+            <p className="md:text-xl lg:max-w-sm">
               El respaldo que esperas con la calidad que exiges
             </p>
           </div>

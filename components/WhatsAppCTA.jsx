@@ -53,8 +53,8 @@ export default function WhatsAppCTA() {
           >
             <div className="relative h-96 md:h-[500px] rounded-2xl overflow-hidden">
               <Image
-                src="/contact-car.png"
-                alt="JETOUR Vehicle"
+                src="/posventa-whatsapp-g700.jpg"
+                alt="Jetour G700"
                 fill
                 className="object-cover"
               />
