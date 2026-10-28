@@ -20,6 +20,28 @@ const portableTextComponents = {
         </div>
       );
     },
+    newsVideo: ({ value }) => {
+      if (!value?.videoUrl) return null;
+      return (
+        <figure className="my-8">
+          <video
+            controls
+            playsInline
+            preload="metadata"
+            aria-label={value.caption || "Video del evento JETOUR"}
+            className="w-full rounded-2xl bg-black"
+          >
+            <source src={value.videoUrl} type="video/mp4" />
+            Tu navegador no permite reproducir este video.
+          </video>
+          {value.caption && (
+            <figcaption className="mt-3 text-sm text-gray-400">
+              {value.caption}
+            </figcaption>
+          )}
+        </figure>
+      );
+    },
   },
   block: {
     h3: ({ children }) => (
