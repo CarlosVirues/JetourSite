@@ -37,3 +37,14 @@ Merge: `55541c1` (`feat/posventa-talleres` → `main`, commits `c5aaa48`, `0a5ae
 1. **3 coordenadas aproximadas** (Quito Norte, Cuenca Av. España, Yantzaza): pedir a Grupo Roldán el link de Google Maps de cada local y afinar los pines. Riobamba ya quedó con su ficha real.
 2. **Teléfono oficial de El Coca**: el publicado es el celular personal del jefe de taller (así vino en el Excel del cliente).
 3. Consumo de Google Maps: revisar el primer mes el cupo compartido de 10.000 cargas/mes (`/concesionarios` + `/posventa`).
+
+## Actualización 2026-10-28 (tarde) — merge `8944890`, con la respuesta de Verónica
+
+| Cambio | Resultado | Evidencia |
+|---|---|---|
+| Retiro de "Jetour Quito Norte" y "Juan Tanca Marengo · Taller JAC" (pedido de Verónica) | ✅ | HTML servido: 0 apariciones de ambos nombres; la red queda en 9 ciudades / 16 talleres |
+| Coordenada real de Cuenca Av. España ("Comercial Roldán - Jac Motors Ecuador", link de Verónica) | ✅ | HTML servido contiene `-2.8913733` |
+| Riobamba (ficha GBP) sigue presente | ✅ | HTML servido contiene `-1.6419872` |
+| Rutas y consola tras el deploy | ✅ | `/posventa` y `/noticias` 200; consola 0 errores; mapa cargado y 9 ciudades renderizando |
+
+Quedan de pendientes: **Yantzaza** (Verónica: PENDIENTE) y **teléfono oficial de El Coca** (Verónica preguntó por él). Nota: este deploy viajó junto con la publicación de noticias de otra sesión (`a0d0031`+`46b94e3`), sin conflicto.
