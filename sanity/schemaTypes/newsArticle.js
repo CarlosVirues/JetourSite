@@ -105,6 +105,25 @@ const newsArticle = {
           fields: [
             { name: "alt", title: "Texto Alternativo", type: "string" }
           ]
+        },
+        {
+          name: "newsVideo",
+          title: "Video",
+          type: "object",
+          fields: [
+            {
+              name: "file",
+              title: "Archivo MP4",
+              type: "file",
+              options: { accept: "video/mp4" },
+              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: "caption",
+              title: "Descripción del video",
+              type: "string",
+            },
+          ],
         }
       ],
       description: "Dejar vacío para mostrar 'Contenido próximamente'",
