@@ -8,6 +8,23 @@ const portableTextComponents = {
   types: {
     image: ({ value }) => {
       if (!value?.asset?.url) return null;
+      const { width, height } = value.asset;
+      // Con dimensiones conocidas se muestra la imagen completa (sin recorte);
+      // el texto y los logos dentro de las fotos del cliente no deben cortarse.
+      if (width && height) {
+        return (
+          <div className="my-8">
+            <Image
+              src={value.asset.url}
+              alt={value.alt || ""}
+              width={width}
+              height={height}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+              className="mx-auto block h-auto w-auto max-w-full max-h-[80vh] rounded-2xl"
+            />
+          </div>
+        );
+      }
       return (
         <div className="relative h-64 md:h-96 lg:h-[500px] rounded-2xl overflow-hidden my-8">
           <Image
@@ -29,7 +46,7 @@ const portableTextComponents = {
             playsInline
             preload="metadata"
             aria-label={value.caption || "Video del evento JETOUR"}
-            className="w-full rounded-2xl bg-black"
+            className="mx-auto block w-full max-h-[80vh] rounded-2xl bg-black"
           >
             <source src={value.videoUrl} type="video/mp4" />
             Tu navegador no permite reproducir este video.
@@ -98,22 +115,38 @@ export default function ArticleDetail({ article }) {
             </div>
           </motion.div>
 
-          {/* Hero Image */}
+          {/* Hero Image: proporción natural para no recortar texto/logos de la foto */}
           {article.image && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="relative h-64 md:h-96 lg:h-[500px] rounded-2xl overflow-hidden mb-12"
+              className={
+                article.imageWidth && article.imageHeight
+                  ? "mb-12"
+                  : "relative h-64 md:h-96 lg:h-[500px] rounded-2xl overflow-hidden mb-12"
+              }
             >
-              <Image
-                src={article.image}
-                alt={article.title}
-                fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
-                className="object-cover"
-                priority
-              />
+              {article.imageWidth && article.imageHeight ? (
+                <Image
+                  src={article.image}
+                  alt={article.title}
+                  width={article.imageWidth}
+                  height={article.imageHeight}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+                  className="mx-auto block h-auto w-auto max-w-full max-h-[80vh] rounded-2xl"
+                  priority
+                />
+              ) : (
+                <Image
+                  src={article.image}
+                  alt={article.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+                  className="object-cover"
+                  priority
+                />
+              )}
             </motion.div>
           )}
 
