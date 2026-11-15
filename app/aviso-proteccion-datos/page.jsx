@@ -52,14 +52,12 @@ export default function AvisoProteccionDatosPage() {
 
               {/* CTA Button */}
               <div className="mt-12 flex flex-col items-center gap-4">
-                <a
-                  href="/documentos/aviso-proteccion-datos-clientes-ecuabeiben.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  href="/aviso-proteccion-datos-clientes"
                   className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-lg transition-colors duration-300 text-lg"
                 >
                   Aviso de Protección y Uso de Datos Personales
-                </a>
+                </Link>
                 <Link
                   href="/proteccion-datos"
                   className="inline-block border border-blue-600 hover:bg-blue-600 text-white font-semibold py-4 px-8 rounded-lg transition-colors duration-300 text-lg"

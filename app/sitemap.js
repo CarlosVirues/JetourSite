@@ -90,6 +90,12 @@ export default async function sitemap() {
       changeFrequency: "yearly",
       priority: 0.3,
     },
+    {
+      url: `${baseUrl}/aviso-proteccion-datos-clientes`,
+      lastModified: currentDate,
+      changeFrequency: "yearly",
+      priority: 0.3,
+    },
   ];
 
   return [...mainPages, ...vehiclePages, ...newsPages, ...policyPages];
