@@ -24,34 +24,55 @@ const Lista = ({ items }) => (
 );
 
 const Tabla = ({ columnas, filas }) => (
-  <div className="overflow-x-auto">
-    <table className="w-full min-w-[640px] border-collapse text-base">
-      <thead>
-        <tr>
-          {columnas.map(([, titulo]) => (
-            <th
-              key={titulo}
-              scope="col"
-              className="border border-gray-700 bg-gray-900 p-3 text-left font-semibold text-white"
-            >
-              {titulo}
-            </th>
+  <>
+    {/* Celular: una tarjeta por fila, sin scroll horizontal */}
+    <div className="md:hidden space-y-4">
+      {filas.map((fila, i) => (
+        <dl
+          key={i}
+          className="border border-gray-700 rounded-lg p-4 space-y-3 text-base"
+        >
+          {columnas.map(([clave, titulo]) => (
+            <div key={clave}>
+              <dt className="text-sm font-semibold text-blue-400">{titulo}</dt>
+              <dd>{fila[clave]}</dd>
+            </div>
           ))}
-        </tr>
-      </thead>
-      <tbody>
-        {filas.map((fila, i) => (
-          <tr key={i}>
-            {columnas.map(([clave]) => (
-              <td key={clave} className="border border-gray-700 p-3 align-top">
-                {fila[clave]}
-              </td>
+        </dl>
+      ))}
+    </div>
+    <div className="hidden md:block overflow-x-auto">
+      <table className="w-full min-w-[640px] border-collapse text-base">
+        <thead>
+          <tr>
+            {columnas.map(([, titulo]) => (
+              <th
+                key={titulo}
+                scope="col"
+                className="border border-gray-700 bg-gray-900 p-3 text-left font-semibold text-white"
+              >
+                {titulo}
+              </th>
             ))}
           </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
+        </thead>
+        <tbody>
+          {filas.map((fila, i) => (
+            <tr key={i}>
+              {columnas.map(([clave]) => (
+                <td
+                  key={clave}
+                  className="border border-gray-700 p-3 align-top"
+                >
+                  {fila[clave]}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </>
 );
 
 const Definicion = ({ termino, children }) => (
@@ -128,9 +149,18 @@ export default function AvisoProteccionDatosClientesPage() {
               <p>Adicionalmente informamos lo siguiente:</p>
               <Lista
                 items={[
-                  <><strong className="text-white">Denominación social</strong>: ECUABEIBEN CIA. LTDA.</>,
-                  <><strong className="text-white">Dirección:</strong> Av. España 8-99 y Sevilla</>,
-                  <><strong className="text-white">Teléfono:</strong> (07) 280-7317</>,
+                  <>
+                    <strong className="text-white">Denominación social</strong>:
+                    ECUABEIBEN CIA. LTDA.
+                  </>,
+                  <>
+                    <strong className="text-white">Dirección:</strong> Av.
+                    España 8-99 y Sevilla
+                  </>,
+                  <>
+                    <strong className="text-white">Teléfono:</strong> (07)
+                    280-7317
+                  </>,
                 ]}
               />
             </section>
@@ -139,14 +169,23 @@ export default function AvisoProteccionDatosClientesPage() {
               <H2>2. Delegado de Protección de Datos Personales.</H2>
               <Lista
                 items={[
-                  <><strong className="text-white">Nombre:</strong> Pablo Andrés Dent Pons</>,
+                  <>
+                    <strong className="text-white">Nombre:</strong> Pablo Andrés
+                    Dent Pons
+                  </>,
                   <>
                     <strong className="text-white">Correo Electrónico:</strong>{" "}
-                    <a href="mailto:protecciondedatos@gruporoldan.com.ec" className="text-blue-400 underline break-all">
+                    <a
+                      href="mailto:protecciondedatos@gruporoldan.com.ec"
+                      className="text-blue-400 underline break-all"
+                    >
                       protecciondedatos@gruporoldan.com.ec
                     </a>
                   </>,
-                  <><strong className="text-white">Teléfono:</strong> (02) 298-6528</>,
+                  <>
+                    <strong className="text-white">Teléfono:</strong> (02)
+                    298-6528
+                  </>,
                   <>
                     <strong className="text-white">Dirección:</strong> Av. 12 de
                     Octubre, N26-97 y Lincoln, Ed. Torre 1492, 170516. Piso 10
@@ -166,9 +205,9 @@ export default function AvisoProteccionDatosClientesPage() {
                 Datos relativos a: etnia, identidad de género, identidad
                 cultural, religión, ideología, filiación política, pasado
                 judicial, condición migratoria, orientación sexual, salud, datos
-                biométricos, datos genéticos y aquellos cuyo tratamiento indebido
-                pueda dar origen a discriminación, atenten o puedan atentar
-                contra los derechos y libertades fundamentales.
+                biométricos, datos genéticos y aquellos cuyo tratamiento
+                indebido pueda dar origen a discriminación, atenten o puedan
+                atentar contra los derechos y libertades fundamentales.
               </Definicion>
               <Definicion termino="Base de datos o fichero">
                 Conjunto estructurado de datos cualquiera que fuera la forma,
@@ -198,8 +237,8 @@ export default function AvisoProteccionDatosClientesPage() {
               <Definicion termino="Consentimiento">
                 Manifestación de la voluntad libre, específica, informada e
                 inequívoca, por el que el titular de los datos personales
-                autoriza al responsable del tratamiento de los datos personales a
-                tratar los mismos.
+                autoriza al responsable del tratamiento de los datos personales
+                a tratar los mismos.
               </Definicion>
               <Definicion termino="Transferencia o comunicación">
                 Manifestación, declaración, entrega, consulta, interconexión,
@@ -285,13 +324,15 @@ export default function AvisoProteccionDatosClientesPage() {
               <p>
                 La no entrega de datos personales requeridos por ECUABEIBEN CIA.
                 LTDA. como Responsable de tratamiento puede generar la
-                imposibilidad de cumplir con las obligaciones existentes entre el
-                titular y la empresa.
+                imposibilidad de cumplir con las obligaciones existentes entre
+                el titular y la empresa.
               </p>
             </section>
 
             <section className="space-y-4">
-              <H2>8. Protección de datos personales de categorías especiales.</H2>
+              <H2>
+                8. Protección de datos personales de categorías especiales.
+              </H2>
               <p>
                 La normativa sobre tratamiento de datos clasifica como
                 “categorías especiales” ciertos datos sensibles, los cuales
@@ -326,9 +367,9 @@ export default function AvisoProteccionDatosClientesPage() {
                 garantizar la protección efectiva de sus datos, aplicamos de
                 manera estricta medidas técnicas, organizativas y legales
                 reforzadas. Los detalles sobre las categorías de datos,
-                finalidades titulares afectados y derechos de protección de datos
-                se encuentran en las secciones posteriores de este aviso de
-                protección de datos personales.
+                finalidades titulares afectados y derechos de protección de
+                datos se encuentran en las secciones posteriores de este aviso
+                de protección de datos personales.
               </p>
               <Tabla
                 columnas={[
@@ -344,8 +385,8 @@ export default function AvisoProteccionDatosClientesPage() {
               <H2>10. ¿Cuánto tiempo conservamos los datos personales?</H2>
               <p>
                 ECUABEIBEN CIA. LTDA. considera distintos plazos de conservación
-                según el tipo de tratamiento de datos personales que se refiera y
-                la norma que lo regule.
+                según el tipo de tratamiento de datos personales que se refiera
+                y la norma que lo regule.
               </p>
               <p>
                 Los datos personales tratados se conservarán mientras sean
@@ -355,7 +396,8 @@ export default function AvisoProteccionDatosClientesPage() {
                 ejercicio o la defensa de reclamaciones o mientras el Potencial
                 Cliente y/o Cliente no retire su consentimiento, cuando este
                 último ocurra, los datos serán eliminados, lo que implica su
-                bloqueo, a menos que exista una obligación legal de conservación.
+                bloqueo, a menos que exista una obligación legal de
+                conservación.
               </p>
               <p>
                 Para determinar el plazo en base a la obligación legal de
@@ -373,9 +415,9 @@ export default function AvisoProteccionDatosClientesPage() {
                 del tratamiento, durante el plazo de prescripción de éstas.
               </p>
               <p>
-                Transcurridos dichos plazos, cesará el tratamiento y se procederá
-                conforme a los establecido en la Ley Orgánica de Protección de
-                Datos Personales.
+                Transcurridos dichos plazos, cesará el tratamiento y se
+                procederá conforme a los establecido en la Ley Orgánica de
+                Protección de Datos Personales.
               </p>
             </section>
 
@@ -386,9 +428,9 @@ export default function AvisoProteccionDatosClientesPage() {
                 datos personales del Titular y de su representado si existe un
                 fundamento jurídico para ello o en todos aquellos casos en que
                 nos ha otorgado el consentimiento. Se entenderá que existe un
-                fundamento jurídico para realizar tales comunicaciones cuando una
-                norma jurídica obligue a la comunicación o resulte necesaria para
-                la prestación del servicio contratado.
+                fundamento jurídico para realizar tales comunicaciones cuando
+                una norma jurídica obligue a la comunicación o resulte necesaria
+                para la prestación del servicio contratado.
               </p>
               <p>Entre los destinatarios se encontrarán, los siguientes:</p>
               <Lista
@@ -403,28 +445,28 @@ export default function AvisoProteccionDatosClientesPage() {
                 ]}
               />
               <p>
-                Al momento de compartir los datos personales, nos aseguraremos de
-                que exista la protección adecuada para proteger la información
-                personal de acuerdo con las leyes de protección de datos
-                personales.
+                Al momento de compartir los datos personales, nos aseguraremos
+                de que exista la protección adecuada para proteger la
+                información personal de acuerdo con las leyes de protección de
+                datos personales.
               </p>
               <p>
                 Finalmente informamos que ECUABEIBEN CIA. LTDA. utiliza los
                 servicios de terceras empresas para la gestión comercial con el
                 Titular, para lo cual dichos terceros podrán tener que acceder a
-                datos personales. Dichas empresas proveedoras podrán clasificarse
-                en las siguientes categorías: proveedores de servicios
-                tecnológicos e informáticos, empresas de seguridad, empresas de
-                mensajería, servicios de atención y emisión de llamadas
-                telefónicas, empresas de gestión y mantenimiento de sistemas,
-                infraestructuras e inmuebles, servicios logísticos, servicios de
-                tasación, servicios de gestión de cobro y recuperación de cartera
-                por cuenta de terceros, proveedores de servicio de medios de
-                pago, proveedores de servicios de facturación electrónica,
-                entidades bancarias o financieras, servicios de asesoramiento
-                jurídico y tributario, agencias de publicidad y de servicios de
-                marketing y comunicación así como servicios profesionales
-                generales.
+                datos personales. Dichas empresas proveedoras podrán
+                clasificarse en las siguientes categorías: proveedores de
+                servicios tecnológicos e informáticos, empresas de seguridad,
+                empresas de mensajería, servicios de atención y emisión de
+                llamadas telefónicas, empresas de gestión y mantenimiento de
+                sistemas, infraestructuras e inmuebles, servicios logísticos,
+                servicios de tasación, servicios de gestión de cobro y
+                recuperación de cartera por cuenta de terceros, proveedores de
+                servicio de medios de pago, proveedores de servicios de
+                facturación electrónica, entidades bancarias o financieras,
+                servicios de asesoramiento jurídico y tributario, agencias de
+                publicidad y de servicios de marketing y comunicación así como
+                servicios profesionales generales.
               </p>
               <p>
                 Toda transferencia de los datos personales fuera del Ecuador se
@@ -436,20 +478,22 @@ export default function AvisoProteccionDatosClientesPage() {
             <section className="space-y-4">
               <H2>12. Transferencias Internacionales</H2>
               <p>
-                En el desarrollo de nuestras actividades, no requerimos comunicar
-                datos personales a terceros ubicados fuera del territorio
-                ecuatoriano. En caso de que, a futuro, sea necesario realizar
-                transferencias internacionales, nos comprometemos a cumplir
-                estrictamente con lo establecido en la Ley Orgánica de Protección
-                de Datos Personales (LOPDP), su Reglamento y la Norma General de
-                Transferencia emitida por la SPDP. Dichas transferencias se
-                ejecutarán bajo garantías adecuadas y serán comunicadas
-                oportunamente a los titulares de los datos.
+                En el desarrollo de nuestras actividades, no requerimos
+                comunicar datos personales a terceros ubicados fuera del
+                territorio ecuatoriano. En caso de que, a futuro, sea necesario
+                realizar transferencias internacionales, nos comprometemos a
+                cumplir estrictamente con lo establecido en la Ley Orgánica de
+                Protección de Datos Personales (LOPDP), su Reglamento y la Norma
+                General de Transferencia emitida por la SPDP. Dichas
+                transferencias se ejecutarán bajo garantías adecuadas y serán
+                comunicadas oportunamente a los titulares de los datos.
               </p>
             </section>
 
             <section className="space-y-4">
-              <H2>13. ¿Qué derechos se pueden ejercer sobre los datos personales?</H2>
+              <H2>
+                13. ¿Qué derechos se pueden ejercer sobre los datos personales?
+              </H2>
               <p>
                 El TITULAR podrá ejercer los siguientes derechos en relación con
                 el tratamiento de los datos personales:
@@ -471,11 +515,14 @@ export default function AvisoProteccionDatosClientesPage() {
                 otorgado para el tratamiento de los datos personales.
               </p>
               <p>
-                Para ejercer los indicados derechos o plantear cualquier cuestión
-                relativa al tratamiento de los datos personales, el Titular debe
-                dirigirse al Delegado de Protección de Datos Personales enviando
-                un correo electrónico a{" "}
-                <a href="mailto:protecciondedatos@gruporoldan.com.ec" className="text-blue-400 underline break-all">
+                Para ejercer los indicados derechos o plantear cualquier
+                cuestión relativa al tratamiento de los datos personales, el
+                Titular debe dirigirse al Delegado de Protección de Datos
+                Personales enviando un correo electrónico a{" "}
+                <a
+                  href="mailto:protecciondedatos@gruporoldan.com.ec"
+                  className="text-blue-400 underline break-all"
+                >
                   protecciondedatos@gruporoldan.com.ec
                 </a>{" "}
                 acreditando su identidad.
@@ -502,10 +549,10 @@ export default function AvisoProteccionDatosClientesPage() {
                 No obstante, no es posible asegurar la protección total de la
                 información proporcionada. En consecuencia, no garantizamos que
                 las comunicaciones realizadas a través de nuestros sitios web,
-                aplicaciones o herramientas digitales sean absolutamente seguras,
-                ni que los datos que se transmitan o almacenen mediante estos
-                medios estén libres de riesgos de pérdida, uso indebido o acceso
-                no autorizado por terceros.
+                aplicaciones o herramientas digitales sean absolutamente
+                seguras, ni que los datos que se transmitan o almacenen mediante
+                estos medios estén libres de riesgos de pérdida, uso indebido o
+                acceso no autorizado por terceros.
               </p>
             </section>
 
@@ -521,7 +568,9 @@ export default function AvisoProteccionDatosClientesPage() {
             </section>
 
             <section className="space-y-4">
-              <H2>16. Modificación del Aviso de Protección de Datos Personales</H2>
+              <H2>
+                16. Modificación del Aviso de Protección de Datos Personales
+              </H2>
               <p>
                 ECUABEIBEN CIA. LTDA. se reserva el derecho a modificar su Aviso
                 de Protección de Datos Personales, de acuerdo con su propio
@@ -531,9 +580,10 @@ export default function AvisoProteccionDatosClientesPage() {
                 actualización suponga un cambio sustancial en la misma.
                 Cualquier modificación del Aviso de Protección de Datos
                 Personales será publicada, previo a su efectiva aplicación. Es
-                responsabilidad del titular consultarla periódicamente en nuestro
-                sitio web <Enlace href="https://www.jetourecuador.com/" /> en la
-                sección de Avisos o a través del siguiente enlace:{" "}
+                responsabilidad del titular consultarla periódicamente en
+                nuestro sitio web{" "}
+                <Enlace href="https://www.jetourecuador.com/" /> en la sección
+                de Avisos o a través del siguiente enlace:{" "}
                 <Enlace href="https://drive.google.com/file/d/10mVszzrbnS_gCxRG4SdrNiGvpFnpiIgO/view?usp=drive_link" />
               </p>
               <p className="text-blue-400 font-medium">
