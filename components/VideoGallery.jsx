@@ -4,11 +4,13 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Play, ArrowRight, X } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function VideoGallery({
   title = "JETOUR en Ecuador y el mundo",
   videos = [],
 }) {
+  const router = useRouter();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedVideo, setSelectedVideo] = useState(null);
@@ -28,6 +30,12 @@ export default function VideoGallery({
   const openVideoModal = (video) => {
     setSelectedVideo(video);
     setIsModalOpen(true);
+  };
+
+  // Videos abren el modal; las notas del home (2026-11-17) traen href y llevan a /noticias/[slug].
+  const openItem = (item) => {
+    if (item?.type === "video") openVideoModal(item);
+    else if (item?.href) router.push(item.href);
   };
 
   const closeVideoModal = () => {
@@ -152,11 +160,7 @@ export default function VideoGallery({
                   className="relative group cursor-pointer"
                   whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.3 }}
-                  onClick={() => {
-                    if (videos[currentSlide]?.type === "video") {
-                      openVideoModal(videos[currentSlide]);
-                    }
-                  }}
+                  onClick={() => openItem(videos[currentSlide])}
                 >
                   <div className="relative h-64 md:h-80 lg:h-96 rounded-2xl overflow-hidden bg-gray-800">
                     {/* Video or Image Content */}
@@ -234,13 +238,9 @@ export default function VideoGallery({
                     className="relative group cursor-pointer hidden md:block"
                     whileHover={{ scale: 1.02 }}
                     transition={{ duration: 0.3 }}
-                    onClick={() => {
-                      const nextVideo =
-                        videos[(currentSlide + 1) % videos.length];
-                      if (nextVideo?.type === "video") {
-                        openVideoModal(nextVideo);
-                      }
-                    }}
+                    onClick={() =>
+                      openItem(videos[(currentSlide + 1) % videos.length])
+                    }
                   >
                     <div className="relative h-64 md:h-80 lg:h-96 rounded-2xl overflow-hidden bg-gray-800">
                       {/* Video or Image Content */}

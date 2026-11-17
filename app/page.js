@@ -10,7 +10,7 @@ import WhatsAppInfoButton from "@/components/WhatsAppInfoButton";
 import Image from "next/image";
 import { cache } from "react";
 import { getPageData } from "@/lib/page-data";
-import { getHomePageData } from "@/lib/sanity";
+import { getHomePageData, getAllNews } from "@/lib/sanity";
 import { buildMetadata } from "@/lib/seo";
 
 // cache() de React: generateMetadata y el componente necesitan los mismos datos, y sin esto
@@ -29,7 +29,17 @@ export async function generateMetadata() {
 export default async function HomePage() {
   // Obtener datos del hero desde Sanity con fallback seguro:
   // si Sanity falla o devuelve null, evitamos romper el render.
-  const sanityData = await getHomeData();
+  const [sanityData, news] = await Promise.all([getHomeData(), getAllNews()]);
+
+  // 2026-11-17 (pedido de Verónica, McCann): la sección «JETOUR en Ecuador y el mundo»
+  // muestra la previa de las últimas notas de /noticias en lugar de los videos de Sanity.
+  const newsPreviews = news.slice(0, 6).map((article) => ({
+    title: article.title,
+    thumbnail: article.image,
+    type: "news",
+    href: `/noticias/${article.slug}`,
+    views: "Leer más",
+  }));
 
   // Obtener datos estáticos para las otras secciones (temporal)
   const pageData = getPageData("home");
@@ -61,9 +71,12 @@ export default async function HomePage() {
         <RoldanSection {...sanityData.roldanSection} />
       )}
 
-      {/* Video Gallery Section */}
-      {sanityData.videoGallery?.videos?.length > 0 && (
-        <VideoGallery {...sanityData.videoGallery} />
+      {/* Últimas noticias (mismo carrusel que antes tenía los videos) */}
+      {newsPreviews.length > 0 && (
+        <VideoGallery
+          title={sanityData.videoGallery?.title}
+          videos={newsPreviews}
+        />
       )}
 
       {/* Quote Form Section */}
