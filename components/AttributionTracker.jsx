@@ -35,6 +35,7 @@ export default function AttributionTracker() {
         utm_content: get("utm_content"),
         gclid: get("gclid"),
         fbclid: get("fbclid"),
+        msclkid: get("msclkid"),
         landing_page: window.location.pathname.slice(0, 200),
         referrer: (document.referrer || "").slice(0, 200),
         first_visit: new Date().toISOString(),
@@ -49,6 +50,10 @@ export default function AttributionTracker() {
       if (data.fbclid && !data.utm_source) {
         data.utm_source = "facebook";
         data.utm_medium = "paid-social";
+      }
+      if (data.msclkid && !data.utm_source) {
+        data.utm_source = "bing";
+        data.utm_medium = "cpc";
       }
 
       const value = encodeURIComponent(JSON.stringify(data));
