@@ -71,39 +71,20 @@ export async function submitQuoteForm(prevState, formData) {
     webhook: "3gsucehc5964ebuy3ttxlblx", // el webhook del CRM
   };
 
-  // Webhooks externos (CRM JAC, Zapier, GTM) solo en producción real (ver lib/lead-sinks.js)
+  // Webhooks externos (CRM JAC, GTM) solo en producción real (ver lib/lead-sinks.js)
   if (leadWebhooksEnabled) {
-    // Enviar a CRM y Zapier en paralelo
     try {
-      const [crmResponse, zapierResponse] = await Promise.all([
-        fetch("https://crm.jacecuador.com/slt_crm/webhook", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(crmPayload),
-        }),
-        fetch("https://hooks.zapier.com/hooks/catch/3497280/uhtax59/", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            ...validatedData.data,
-            ...attribution,
-            formType: "quote",
-            timestamp: new Date().toISOString(),
-          }),
-        }),
-      ]);
+      const crmResponse = await fetch("https://crm.jacecuador.com/slt_crm/webhook", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(crmPayload),
+      });
 
       if (!crmResponse.ok) {
         console.error("Error enviando datos al CRM:", await crmResponse.text());
       }
-      if (!zapierResponse.ok) {
-        console.error(
-          "Error enviando datos a Zapier:",
-          await zapierResponse.text()
-        );
-      }
     } catch (webhookError) {
-      console.error("Error en envío a CRM/Zapier:", webhookError);
+      console.error("Error en envío a CRM:", webhookError);
     }
     await fetch("https://www.googletagmanager.com/collect", {
       method: "POST",

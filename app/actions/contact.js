@@ -58,28 +58,6 @@ export async function submitContactForm(prevState, formData) {
   const attribution = await getAttribution();
 
   if (leadWebhooksEnabled) {
-    // Enviar a Zapier
-    try {
-      const zapierRes = await fetch("https://hooks.zapier.com/hooks/catch/3497280/uhtw0kh/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...cleanData,
-          ...attribution,
-          formType: "contact",
-          timestamp: new Date().toISOString(),
-        }),
-      });
-
-      if (!zapierRes.ok) {
-        console.error("Zapier respondió con error:", zapierRes.status, await zapierRes.text());
-      } else {
-        console.log("Zapier recibió los datos correctamente");
-      }
-    } catch (err) {
-      console.error("Error enviando a Zapier:", err);
-    }
-
     // Enviar al CRM
     try {
       const crmRes = await fetch("https://crm.jacecuador.com/slt_crm/webhook", {
